@@ -1,0 +1,13 @@
+
+name: nohfibu
+description: nohkumados Finanz Buchhaltungs App
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+
+dependencies:
+  args: ^2.3.0
+  intl: ^0.17.0
+  sprintf: ^6.0.0
+  csv: ^5.0.0
