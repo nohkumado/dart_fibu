@@ -1,5 +1,14 @@
+Dart Fi(nanz) Bu(chhaltung)
+
+Dart implementation for financial accounting, according to the principle of the double account processing 
+first described in 1445 by Luca Paciolo.
+
+
+Getting Started
+
 How to run wbconvert on a raspberry pi (arm64)
 
+˛˛˛
 wget https://storage.googleapis.com/dart-archive/channels/stable/release/2.14.2/sdk/dartsdk-linux-arm64-release.zip
 unzip dartsdk-linux-arm64-release.zip 
 rm dartsdk-linux-arm64-release.zip 
@@ -7,6 +16,13 @@ dart-sdk/bin/dart --version # check that the dart interpreter is working
 export PATH=$PATH:`pwd`/dart-sdk/bin # to enable dart locally in the actual shell
 #git clone /media/omv/git/flutter/nohfibu/ .
 cd projects/fibu/ # or wherever you store your stuff
+˛˛˛
+
+
+
+Usage
+
+˛˛˛
 dart run lib/wbconvert.dart --help
 ##### sample output #################################
 ###  bboett@videopi:fibu$ dart run lib/wbconvert.dart --help
@@ -22,3 +38,16 @@ dart run lib/wbconvert.dart --help
 # easiest go to where the data is and call the script from there....
 dart run lib/wbconvert.dart -f modell -s
 # this will generate a csv that can be further processed
+˛˛˛
+
+Once this runs, you can activate the project:
+dart pub global activate --source path ~/projects/fibu/
+Resolving dependencies... (2.3s)
+Got dependencies in /home/bboett/projects/dartfibu!
+and after adding
+  export PATH="$PATH":"$HOME/.pub-cache/bin"
+to your ~ /.bashrc you can simply run 
+
+wbconvert -f modell -s
+
+
