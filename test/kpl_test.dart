@@ -64,14 +64,29 @@ void main() {
     });
   });
 
-  //group('int', ()
-  //{
-  //  test('.remainder() returns the remainder of division', () {
-  //    expect(11.remainder(3), equals(2));
-  //  });
 
-  //  test('.toRadixString() returns a hex string', () {
-  //    expect(11.toRadixString(16), equals('b'));
-  //  });
-  //});
+
+  //Journal(KontoPlan kplan ) {kpl = kplan;}
+  //void clear()
+  //void add(JrlLine jrlLine)
+  //String toString()
+  //List<List> asList(List<List> data)
+
+
+
+  group('Journal', ()
+  {
+      var kto1 = Konto(number : "1",name: "1001", plan: kpl, valuta:10000.99, cur:"EUR", budget:999.12);
+      var kto2 = Konto(number : "2",name: "2002", plan: kpl, valuta:80000.99, cur:"EUR", budget:888.12);
+    test('Journal Eintrag', () {
+      //print("global journal: $jrl");
+      var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 88888);
+      expect(line.desc, equals("test line"));
+      expect(line.toString(), equals("01-09-2021 1001 2002 test line                                         € 88,888.00"));
+      List<List> data = [];
+      line.asList(data);
+      expect(data, equals([['2021-09-01', '1001', '2002', 'test line', 'EUR', 88888]]));
+    });
+
+  });
 }
