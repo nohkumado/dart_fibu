@@ -148,7 +148,19 @@ class Konto
     {
       //maybe recurse?
       String key = ktoName[0];
-      if(children.containsKey(key)) return children[key]!.get(ktoName.substring(1), orgName: orgName);
+      String rest = ktoName.substring(1);
+      if(ktoName.startsWith(name)) 
+      {
+	rest = ktoName.substring(name.length);
+      key = rest[0];
+      rest = rest.substring(1);
+      if(rest.length <= 0)
+      {
+      children[key] = Konto(number: key, name: orgName);
+      return children[key]!;
+      }
+      }
+      if(children.containsKey(key)) return children[key]!.get(rest, orgName: orgName);
       // if(key !=number) //study more, o how to cope with unrelated names
       // {
       //   //orgName = name+orgName;
@@ -166,13 +178,17 @@ class Konto
     by recursing through the sub accounts below this one
     */
   @override
-  String toString({String indent: ""})
+  String toString({String indent: "", bool debug: false})
   {
-    String result = "$indent$number. +$name+  -$desc- ,=$cur=,  '$budget' #$valuta#";
+    String result = "";
+    var f = NumberFormat.currency(symbol: cur2sym(cur));
+    result = (debug)?"$indent$number. +$name+  -$desc- ,=$cur=,  '$budget' #$valuta#":
+      "$indent${sprintf("%#4s", [name])}  ${sprintf("%-49s", [desc])} ${f.format(budget )}  ${f.format(valuta)}";
+	
+	;
     if(recursive)
     {
       //var f = NumberFormat("###,###,###.00", "de_DE");
-      var f = NumberFormat.currency(symbol: cur2sym(cur));
       result = "$indent${sprintf("%#4s", [name])}  ${sprintf("%-49s", [desc])} ${f.format(budget )}  ${f.format(valuta)}";
       result += "\n";
       children.forEach((key, kto)

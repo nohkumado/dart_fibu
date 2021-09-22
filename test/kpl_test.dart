@@ -14,7 +14,6 @@ void main() {
     //print("in setup generated kpl : $kpl and jrl : $jrl");
       });
   group('Konto', () {
-    //String toString({String indent: ""})
     //printname()
     //void asList(List<List> asList)
       var kto = Konto(number : "1",name: "1001", plan: kpl, valuta:10000.99, cur:"EUR", budget:999.12);
@@ -31,18 +30,31 @@ void main() {
 
     test('Getter ', () {
       Konto secd = kto.get("oyoyoy");
-      print("retrieved  $secd");
       expect(secd.name, equals("oyoyoy"));
       kto.set(name:"1001", valuta: 11111.99);
       secd = kto.get("10010");
       expect(secd.name, equals("10010"));
-      print("getting oyooyo from $kto");
       secd = kto.get("oyoyoy");
+
+      //kto.recursive = true;
+      //print("wild stuff check $kto");
+      //kto.recursive = false;
       expect(secd.name, equals("oyoyoy"));
     });
     test('toString ', () {
-      kto.set(valuta: 10000.99);
-      expect(kto.toString(), equals("oyoyoy"));
+      kto.set(name:"1001",valuta: 10000.99);
+      expect(kto.toString(), equals("1001                                                    € 999.12  € 10,000.99"));
+      kto = Konto(number : "1",name: "1001", plan: kpl, valuta:10000.99, cur:"EUR", budget:999.12);
+       kto.get("10010");
+      kto.recursive = true;
+      String target = "1001                                                    € 999.12  € 10,000.99\n"+
+	  ' 10010                                                    € 0.00  € 0.00\n';
+      expect(kto.toString(), equals(target));
+    });
+    test('printname ', () {
+      //kto.set(name:"1001",valuta: 10000.99);
+      //print("kto check $kto");
+      expect(kto.printname(), equals("1001"));
     });
   });
 
