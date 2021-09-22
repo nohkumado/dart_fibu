@@ -1,0 +1,24 @@
+name: nohfibu
+description: nohkumados Finanz Buchhaltungs App
+publish_to: http://pub.dev
+
+version: 0.0.1-alpha
+homepage: https://www.nohkumado.eu/nohfibu/ 
+repository: https://git.nohkumado.eu/dart/fibu/
+
+executables:
+  wbconvert:
+
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+
+dependencies:
+  args: ^2.3.0
+  intl: ^0.17.0
+  sprintf: ^6.0.0
+  csv: ^5.0.0
+
+dev_dependencies:
+   test: '>=1.15.0 <2.0.0'
