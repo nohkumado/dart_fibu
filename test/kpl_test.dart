@@ -19,6 +19,8 @@ void main() {
     //void asList(List<List> asList)
     test('Konto ', () {
       var kto = Konto(number : "1",name: "1001", plan: kpl, valuta:10000.99, cur:"EUR", budget:999.12);
+      kto.recursive = true;
+      print("kto : $kto");
       expect(kto.name, equals("1001"));
     });
 

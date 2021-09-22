@@ -89,6 +89,7 @@ class Konto
   Konto({number,name= "kein Name", plan, valuta, cur, budget})
   {
     if(number != null) this.number = number;
+    if(name != null) this.name = name;
     if(desc != null) this.desc = desc;
     if(cur != null) this.cur = cur;
     if(valuta != null) this.valuta =valuta;
