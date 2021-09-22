@@ -66,13 +66,6 @@ void main() {
 
 
 
-  //Journal(KontoPlan kplan ) {kpl = kplan;}
-  //void clear()
-  //void add(JrlLine jrlLine)
-  //String toString()
-  //List<List> asList(List<List> data)
-
-
 
   group('Journal', ()
   {
@@ -88,5 +81,28 @@ void main() {
       expect(data, equals([['2021-09-01', '1001', '2002', 'test line', 'EUR', 88888]]));
     });
 
+
+
+    test('Journal Eintrag', () {
+      //print("global journal: $jrl");
+      var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 88888);
+      List<List> data = [];
+  jrl.asList(data);
+      expect(data, equals([['JRL'], ['date', 'ktominus', 'ktoplus', 'desc', 'cur', 'valuta']]));
+      data = [];
+  jrl.add(line);
+  jrl.asList(data);
+      expect(data.length == 3 && data[2][0] == '2021-09-01', equals(true));
+
+
+
+  jrl.clear();
+      data = [];
+  jrl.asList(data);
+      expect(data.length == 2, equals(true));
+  jrl.add(line);
+  String result = '            Journal\n'+ '01-09-2021 1001 2002 test line                                         € 88,888.00\n'+ '          Journal End';
+      expect(jrl.toString(), equals(result));
+    });
   });
 }

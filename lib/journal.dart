@@ -29,6 +29,7 @@ class Journal
   List<List> asList(List<List> data)
   {
     data = (data==null)? []: data;
+    
     data.add(["JRL"]);
   data.add(["date","ktominus","ktoplus","desc","cur","valuta"]);
   journal.forEach((line) {line.asList(data); });
