@@ -14,8 +14,6 @@ void main() {
     //print("in setup generated kpl : $kpl and jrl : $jrl");
       });
   group('Konto', () {
-    //printname()
-    //void asList(List<List> asList)
       var kto = Konto(number : "1",name: "1001", plan: kpl, valuta:10000.99, cur:"EUR", budget:999.12);
     test('Konto ', () {
       //kto.recursive = true;
@@ -52,9 +50,17 @@ void main() {
       expect(kto.toString(), equals(target));
     });
     test('printname ', () {
-      //kto.set(name:"1001",valuta: 10000.99);
-      //print("kto check $kto");
       expect(kto.printname(), equals("1001"));
+    });
+    //void asList(List<List> )
+    test('asList ', () {
+      kto.set(desc:"top account");
+      kto.get("10010").set(desc:"bottom  account");
+      //print("kto check $kto");
+      List<List<dynamic>>  res = [];
+      kto.asList(res);
+      //print("asList returned $res");
+      expect(res, equals([["1001", "top account", "EUR", 999.12, 10000.99], ["10010", "bottom  account", "EUR", 0.0, 0.0]]));
     });
   });
 

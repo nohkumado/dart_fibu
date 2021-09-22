@@ -100,10 +100,11 @@ class Konto
        budget a theoretical value that lapsed should generate warnings
 
     */
-  Konto({number,name= "kein Name", plan, valuta, cur, budget})
+  Konto({number,name= "kein Name", desc, plan, valuta, cur, budget})
   {
+    //set(number,name, plan, desc, valuta, cur, budget);
     if(number != null) this.number = number;
-    if(name != null) this.name = name;
+    if(name != null && name != "kein Name") this.name = name;
     if(desc != null) this.desc = desc;
     if(cur != null) this.cur = cur;
     if(valuta != null) this.valuta =valuta;
@@ -118,10 +119,10 @@ class Konto
        budget a theoretical value that lapsed should generate warnings
 
     */
-  Konto set({number,name= "kein Name", plan, valuta, cur, budget})
+  Konto set({number,name= "kein Name", plan, desc, valuta, cur, budget})
   {
     if(number != null) this.number = number;
-    if(name != null) this.name = name;
+    if(name != null && name != "kein Name") this.name = name;
     if(desc != null) this.desc = desc;
     if(cur != null) this.cur = cur;
     if(valuta != null) this.valuta =valuta;
@@ -220,6 +221,7 @@ class Konto
     //print("$number $name $desc tries to add to list");
     if(name == "no name" && desc.length >0) asList.add([number,desc,cur,budget,valuta]);
     else if(desc.length >0) asList.add([name,desc,cur,budget,valuta]);
+    else  asList.add([name,desc,cur,budget,valuta]);
     children.forEach((key, value) { value.asList(asList);});
   }
     //return "$number $name $desc $cur $valuta $budget";
