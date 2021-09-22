@@ -13,13 +13,14 @@ You will need a working dart (or today, flutter) installation
 ### How to run wbconvert on a raspberry pi (arm64)
 
 ```bash
+cd projects # or wherever you store your stuff
 wget https://storage.googleapis.com/dart-archive/channels/stable/release/2.14.2/sdk/dartsdk-linux-arm64-release.zip
 unzip dartsdk-linux-arm64-release.zip 
 rm dartsdk-linux-arm64-release.zip 
 dart-sdk/bin/dart --version # check that the dart interpreter is working
 export PATH=$PATH:`pwd`/dart-sdk/bin # to enable dart locally in the actual shell
-#git clone /media/omv/git/flutter/nohfibu/ .
-cd projects/fibu/ # or wherever you store your stuff
+git clone https://github.com/nohkumado/dart_fibu.git .
+cd dart_fibu/ # or wherever you store your stuff
 ```
 
 ### Usage
