@@ -1,10 +1,10 @@
 name: nohfibu
 description: nohkumados Finanz Buchhaltungs App
-ublish_to: none
+publish_to: http://pub.dev
 
 version: 0.0.1-alpha
 homepage: https://www.nohkumado.eu/nohfibu/ 
-repository: ssh://git.nohkumado.eu/dart/fibu/
+repository: https://git.nohkumado.eu/dart/fibu/
 
 executables:
   wbconvert:
