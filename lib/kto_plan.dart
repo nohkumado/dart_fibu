@@ -33,15 +33,20 @@ class KontoPlan
 
   Konto? get(String ktoName)
   {
-   if(konten.containsKey(ktoName))  return konten[ktoName];
-   //but maybe we must recurse?
-   if(ktoName.length >1)
-     {
-       String key = ktoName[0];
-       if(konten.containsKey(key))  return konten[key]!.get(ktoName.substring(1));
-       return null;
-     }
-   return null;
+    print("ktop get for $ktoName");
+    if(konten.containsKey(ktoName))  return konten[ktoName];
+    print("ktop seems we need to recurse");
+    //but maybe we must recurse?
+    if(ktoName.length >1)
+    {
+      print("name is long enough....");
+      String key = ktoName[0];
+      if(konten.containsKey(key))  return konten[key]!.get(ktoName.substring(1));
+      print("ktop but konten doesn't contain $key");
+      return null;
+    }
+      print("ktop far enough no lolly");
+    return null;
   }
   Konto put(String ktoName, Konto kto)
   {
@@ -86,6 +91,15 @@ class Konto
 
   bool recursive = false;
 
+  /**
+    CTOR where you can specify 
+       the number of the account, 
+       its name (the number is recursively consumed) 
+       to which account plan it relates
+       valute the actual value in the account
+       budget a theoretical value that lapsed should generate warnings
+
+    */
   Konto({number,name= "kein Name", plan, valuta, cur, budget})
   {
     if(number != null) this.number = number;
@@ -95,9 +109,19 @@ class Konto
     if(valuta != null) this.valuta =valuta;
     if(budget != null) this.budget = budget;
   }
+  /**
+    setter for the values concerning this object
+       the number of the account, 
+       its name (the number is recursively consumed) 
+       to which account plan it relates
+       valute the actual value in the account
+       budget a theoretical value that lapsed should generate warnings
+
+    */
   Konto set({number,name= "kein Name", plan, valuta, cur, budget})
   {
     if(number != null) this.number = number;
+    if(name != null) this.name = name;
     if(desc != null) this.desc = desc;
     if(cur != null) this.cur = cur;
     if(valuta != null) this.valuta =valuta;
@@ -105,18 +129,42 @@ class Konto
     return this;
   }
 
-  Konto get(String ktoName)
+  /**
+    get the target account, by descending into the tree of accounts
+    null safe, if no account was found a dummy one is generated
+    */
+  Konto get(String ktoName, {String orgName: "undef"})
   {
-    if(!children.containsKey(ktoName) && ktoName.length > 1)
+    if(orgName == "undef") orgName = ktoName;
+    if(name == ktoName )
+    {
+      return this;
+    }
+    else if(children.containsKey(ktoName))
+    {
+      return children[ktoName]!;
+    }
+    else if(!children.containsKey(ktoName) && ktoName.length > 1)
     {
       //maybe recurse?
       String key = ktoName[0];
-      if(children.containsKey(key)) return children[key]!.get(ktoName.substring(1));
+      if(children.containsKey(key)) return children[key]!.get(ktoName.substring(1), orgName: orgName);
+      // if(key !=number) //study more, o how to cope with unrelated names
+      // {
+      //   //orgName = name+orgName;
+      // print("ehm  $ktoName differs from me ($number) .... rewriting orgName to $orgName" );
+      // }
+      children[key] = Konto(number: key);
+      return children[key]!.get(ktoName.substring(1), orgName: orgName);
     }
-    else if(!children.containsKey(ktoName)) children[ktoName] = Konto(number: ktoName);
-
+    children[ktoName] = Konto(number: ktoName, name:orgName);
     return children[ktoName]!;
   }
+
+  /**
+    create a String representation of  this object, eventually
+    by recursing through the sub accounts below this one
+    */
   @override
   String toString({String indent: ""})
   {
@@ -138,12 +186,19 @@ class Konto
       return(result);
     }
 
+  /**
+    pretty print the account name, olb WB style fibu had 4 char wide account fields...
+    */
   printname()
   {
     String fn = (name == "no name")? "0":name;
     return(sprintf("%#4s", [fn]));
   }
 
+  /**
+    return this thins as a list, recurse through the tree
+    preparation for e.g. csv conversion
+    */
   void asList(List<List> asList)
   {
     //print("$number $name $desc tries to add to list");
