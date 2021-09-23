@@ -1,5 +1,6 @@
 import 'package:args/args.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class Settings
 {
@@ -38,15 +39,19 @@ class Settings
 	  data["base"]  = splitted.join(".");
 	}
 	if(data["type"] == "kpl" || data["type"]== "jrl") data["type"] = "wbstyle";
-	print("match! splitted ${data["base"]} from ${data["type"]}");
+	//print("match! splitted ${data["base"]} from ${data["type"]}");
 
       }
     }
     catch(e)
     {
-      print("unknown arguments, please stick to:\n"+parser.usage);
+      //print("unknown arguments, please stick to:\n"+parser.usage);
       data["error"]  = true;
     }
+    if(data["lang"].length == 2) data["lang"] = data["lang"].toLowerCase()+"_"+data["lang"].toUpperCase();
+    //print("default locale: ${data["lang"]}");
+    Intl.defaultLocale = data["lang"];
+   initializeDateFormatting(Intl.defaultLocale);
     return this;
   }
   dynamic operator [](String key)

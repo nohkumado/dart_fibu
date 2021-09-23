@@ -33,24 +33,40 @@ class KontoPlan
 
   Konto? get(String ktoName)
   {
-    print("ktop get for $ktoName");
+    //print("ktop get for $ktoName");
     if(konten.containsKey(ktoName))  return konten[ktoName];
-    print("ktop seems we need to recurse");
+    //print("ktop seems we need to recurse");
     //but maybe we must recurse?
     if(ktoName.length >1)
     {
-      print("name is long enough....");
+      //print("name is long enough....");
       String key = ktoName[0];
       if(konten.containsKey(key))  return konten[key]!.get(ktoName.substring(1));
-      print("ktop but konten doesn't contain $key");
+      //print("ktop but konten doesn't contain $key");
       return null;
     }
-      print("ktop far enough no lolly");
+      //print("ktop far enough no lolly");
     return null;
   }
   Konto put(String ktoName, Konto kto)
   {
-    konten[ktoName] = kto;
+    if(ktoName.length < 1) print("Error, KPL, don't know how to add $kto @ $ktoName");
+    else if(ktoName.length == 1) konten[ktoName] = kto;
+    else
+    {
+      String key = ktoName[0];
+      String rest = ktoName.substring(1, ktoName.length);
+      if(!konten.containsKey(key)) konten[key] = Konto(number: key);
+      //fetch the account, creating it on the way
+      var locK = konten[key]!.get(rest,  orgName: ktoName);
+      locK.name =  kto.name;
+      locK.plan =  kto.plan;
+      locK.desc =  kto.desc;
+      locK.cur =  kto.cur;
+      locK.budget =  kto.budget;
+      locK.valuta =  kto.valuta;
+      kto = locK;
+    }
     return kto;
   }
   @override
@@ -69,10 +85,10 @@ class KontoPlan
     return(result);
   }
 
-  List<List<dynamic>> asList()
+  List<List<dynamic>> asList({bool all: false})
   {
     List<List<dynamic>> asList = [["KPL"], ["kto","dsc","cur","budget","valuta"]];
-    konten.forEach((key, value) { value.asList(asList);});
+    konten.forEach((key, value) { value.asList(asList: asList, all:all);});
     return asList;
   }
 }
@@ -183,25 +199,26 @@ class Konto
   {
     String result = "";
     var f = NumberFormat.currency(symbol: cur2sym(cur));
-    result = (debug)?"$indent$number. +$name+  -$desc- ,=$cur=,  '$budget' #$valuta#":
-      "$indent${sprintf("%#4s", [name])}  ${sprintf("%-49s", [desc])} ${f.format(budget )}  ${f.format(valuta)}";
-	
-	;
+    String pname = (name == "no name")? "$number": name;
+    result = (debug)?"$indent$number. +$pname+  -$desc- ,=$cur=,  '$budget' #$valuta#":
+	(recursive && desc.length <=0)?"":  "$indent${sprintf("%#4s", [pname])}  ${sprintf("%-49s", [desc])} ${f.format(budget )}  ${f.format(valuta)}";
+
+    ;
     if(recursive)
     {
-      //var f = NumberFormat("###,###,###.00", "de_DE");
-      result = "$indent${sprintf("%#4s", [name])}  ${sprintf("%-49s", [desc])} ${f.format(budget )}  ${f.format(valuta)}";
-      result += "\n";
+      //var f = NumberFormat("###,###,###.00");
+      result += (desc.length >0)?"\n":"";
       children.forEach((key, kto)
-      {
-      kto.recursive = true;
-       result += kto.toString(indent:indent+" ");
-       kto.recursive = false;
-      });
+	  {
+	    kto.recursive = true;
+	    //result += kto.toString(indent:indent+"$number"); //debug, just to check depth
+	    result += kto.toString(indent:indent+" ");
+	    kto.recursive = false;
+	  });
     }
-      //print("extracted +$ktoName+  -$desc- ,=$w=,  '$budget' #$valuta#\n");
-      return(result);
-    }
+    //print("extracted +$ktoName+  -$desc- ,=$w=,  '$budget' #$valuta#\n");
+    return(result);
+  }
 
   /**
     pretty print the account name, olb WB style fibu had 4 char wide account fields...
@@ -216,13 +233,15 @@ class Konto
     return this thins as a list, recurse through the tree
     preparation for e.g. csv conversion
     */
-  void asList(List<List> asList)
+  List<List> asList( {List<List> asList : const [], bool all: false})
   {
+    if(asList == null) asList = [];
     //print("$number $name $desc tries to add to list");
     if(name == "no name" && desc.length >0) asList.add([number,desc,cur,budget,valuta]);
     else if(desc.length >0) asList.add([name,desc,cur,budget,valuta]);
-    else  asList.add([name,desc,cur,budget,valuta]);
-    children.forEach((key, value) { value.asList(asList);});
+    if(all) asList.add([name,desc,cur,budget,valuta]);
+    children.forEach((key, value) { value.asList(asList: asList);});
+    return asList;
   }
     //return "$number $name $desc $cur $valuta $budget";
 }

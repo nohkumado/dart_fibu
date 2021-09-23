@@ -44,7 +44,7 @@ class JrlLine
   late String desc;
   late DateTime datum;
   late String cur;
-  late int valuta;
+  late num valuta;
 
  JrlLine({datum, kmin, kplu, desc, cur, valuta})
  {
