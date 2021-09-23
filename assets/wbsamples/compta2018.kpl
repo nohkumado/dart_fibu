@@ -1,0 +1,32 @@
+  1001 Caisse                                           EUR           0
+  1010 Compte-Courant                                   EUR           0
+  1020 Livret bleu association 20167702                 EUR           0
+  1100 Credit a Proprietaire                            EUR           0
+  1101 Credits                                          EUR           0
+  1200 Materiel                                         EUR           0
+  1800 Pertes annees precedentes                        EUR           0
+  1999 Giroconto (saldo dovrebbe sempre essere zero)    EUR           0
+     0 *** fine degli conti attivi ***                  EUR           0
+  2001 Capital  Social                                  EUR           0
+  2010 Fond de reserve                                  EUR           0
+  2100 Dettes / factures a payer                        EUR           0
+  2101 Dettes a proprietaire                            EUR           0
+  2800 Utile d'esercizio precedente                     EUR           0
+     0 *** fine degli conti passivi ***                 EUR           0
+  3001 Administration  (banque,tel,porti,...)           EUR           0
+  3002 FFAAA                                            EUR           0
+  3010 Loyers                                           EUR           0
+  3100 Assurances                                       EUR           0
+  3300 Reparations                                      EUR           0
+  3500 Equipement                                       EUR           0
+  3600 Divers                                           EUR           0
+  3700 compensations a enseignant 1                     EUR           0
+  3701 compensations a enseignant 2                     EUR           0
+  3702 compensations diverses                           EUR           0
+     0 *** fine degli conti spese ***                   EUR           0
+  4400 Contributions                                    EUR           0
+  4499 Subventions                                      EUR           0
+  4410 Recettes                                         EUR           0
+  4500 Interets  bancaires                              EUR           0
+     0 *** fine degli conti proventi ***                EUR           0
+/*EOF

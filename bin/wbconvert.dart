@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:csv/csv.dart';
 
+import 'package:nohfibu/settings.dart';
 import 'package:nohfibu/journal.dart';
 import 'package:nohfibu/kto_plan.dart';
 import 'package:args/args.dart';
@@ -208,34 +209,29 @@ class WbConvert
 }
 main(List<String> arguments) //async
 {
-  final parser = ArgParser()
-    ..addOption('lang', abbr: 'l', defaultsTo: 'de', help: "Language setting")
-    ..addOption('file', abbr: 'f', help: "Basename of the dataset")
-    ..addOption('output', abbr: 'o', help: "output name")
-    ..addFlag('help', abbr: '\?', defaultsTo: false, help: "Help about the options")
-    ..addFlag('strict', abbr: 's', defaultsTo: false, help: "enforce old WB-Style parsing");
+  print("incoming : $arguments");
+  Settings settings = Settings();
+ settings.init(arguments);
 
-  final argResults = parser.parse(arguments);
-  print("applying args: lang:${argResults["lang"]} base:${argResults["file"]} out:${argResults["output"]} help:${argResults["help"]} strict:${argResults["strict"]}  rest: ${argResults.rest}");
   //print("result of arg run... : ${argResults["help"]}\n");
   //print("result of arg run... : ${argResults["help"]} sh: ${argResults["\?"]}\n");
 
-  if(argResults["help"])
+  if(settings["help"])
   {
-    print(parser.usage);
+    print(settings.usage);
     exit(0);
   }
   KontoPlan? plan ;
   Journal? jrl;
-  if(argResults["file"] != null )
+  if(settings["file"] != "" )
   {
-    print("opening file ${argResults["file"]}");
+    print("opening file ${settings["file"]}");
     //var myDir = Directory('.');
     //  await for (var entity in myDir.list(recursive: false, followLinks: false))
     //{
     //  print(entity.path);
     //}
-    String basename = argResults["file"];
+    String basename = settings["file"];
     if(basename.isNotEmpty)
     {
       //if(basename.endsWith("\.kpl")) basename = basename;
@@ -248,7 +244,7 @@ main(List<String> arguments) //async
     String fname = basename +".kpl";
     print("trying to fetch kpl file $fname");
     var srcFile = File(fname);
-    WbConvert converter = WbConvert(strict: argResults["strict"]);
+    WbConvert converter = WbConvert(strict: settings["strict"]);
     if(srcFile.existsSync())
     {
       //print("file exists\n");
@@ -287,7 +283,7 @@ main(List<String> arguments) //async
           //print("retrieved list\n$fibuAsList\n");
           //print("retrieved csv\n$res\n");
 
-          String fname = (argResults["output"] != null && argResults["output"].isNotEmpty())?argResults["output"]:basename+".csv";
+          String fname = (settings["output"] != null && settings["output"].isNotEmpty())?settings["output"]:basename+".csv";
           File(fname).writeAsString(res).then((file)
           {
             print("write seems successful, please check $fname\n");

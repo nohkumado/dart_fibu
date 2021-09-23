@@ -3,7 +3,7 @@
 Dart implementation for financial accounting, according to the principle of the double account processing 
 first described in 1445 by Luca Paciolo.
 
-So far only a file ocnverter from our old file format to a more modern csv format is available
+So far only a file converter from our old file format to a more modern csv format is available
 
 ## Getting Started
 

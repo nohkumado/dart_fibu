@@ -1,0 +1,28 @@
+  1001  Cassa                                             EUR         1000            0 
+  1010  C/C                                               EUR            0            0 
+  1100  CREDITO A X                                       EUR            0            0 
+  1200  MOBILI E ATTREZZI                                 EUR            0            0 
+  1800  PERDITE ANNI PRECEDENTI                           EUR            0            0 
+  1850  credito 1                                         EUR            0            0 
+  1851  credito 2                                         EUR            0            0 
+  1999  Giroconto (saldo dovrebbe sempre essere zero)     EUR            0            0 
+  0     *** fine degli conti attivi ***                   EUR            0            0 
+  2001  Capitale Sociale o PATRIMONIO                     EUR            0            0 
+  2010  FONDO RISERVA                                     EUR            0            0 
+  2100  DEBITI / FATTURE DA PAGARE                        EUR            0            0 
+  2800  Utile d'esercizio precedente                      EUR            0            0 
+  0     *** fine degli conti passivi ***                  EUR            0            0 
+  3001  Amministrazione (spese banca,tel,porti,...)       EUR            0            0 
+  3010  Spese per Energia                                 EUR            0            0 
+  3100  Diritti Communali                                 EUR            0            0 
+  3200  Assicurazioni                                     EUR            0            0 
+  3300  Riparazioni                                       EUR            0            0 
+  3400  Lavori di ristrutturazione                        EUR            0            0 
+  3500  Mobili e Attrezzi                                 EUR            0            0 
+  3600  Diversi                                           EUR            0            0 
+  3700  Accantonamento utile                              EUR            0            0 
+  0     *** fine degli conti spese ***                    EUR            0            0 
+  4400  Contributi                                        EUR            0            0 
+  4500  Interessi bancari                                 EUR            0            0 
+  4600  Contributi diversi                                EUR            0            0 
+  0     *** fine degli conti proventi ***                 EUR            0            0 
