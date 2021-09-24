@@ -22,7 +22,7 @@ class Settings
     try
     {
       var argResults = parser.parse(arguments);
-      print("applying args: lang:${argResults["lang"]} base:${argResults["base"]} out:${argResults["output"]} help:${argResults["help"]} strict:${argResults["strict"]}  rest: ${argResults.rest}");
+      //print("applying args: lang:${argResults["lang"]} base:${argResults["base"]} out:${argResults["output"]} help:${argResults["help"]} strict:${argResults["strict"]}  rest: ${argResults.rest}");
       argResults.options.forEach((key) {
 	var val = argResults[key];
 	data["$key"] = (val == null)? "null":val;
@@ -48,10 +48,14 @@ class Settings
       //print("unknown arguments, please stick to:\n"+parser.usage);
       data["error"]  = true;
     }
-    if(data["lang"].length == 2) data["lang"] = data["lang"].toLowerCase()+"_"+data["lang"].toUpperCase();
-    //print("default locale: ${data["lang"]}");
-    Intl.defaultLocale = data["lang"];
-   initializeDateFormatting(Intl.defaultLocale);
+    if(data.containsKey("lang"))
+    {
+      if(["lang"].length == 2) data["lang"] = data["lang"].toLowerCase()+"_"+data["lang"].toUpperCase();
+      if(data["lang"].length == 2) data["lang"] = data["lang"].toLowerCase()+"_"+data["lang"].toUpperCase();
+      //print("default locale: ${data["lang"]}");
+      Intl.defaultLocale = data["lang"];
+    }
+    initializeDateFormatting(Intl.defaultLocale);
     return this;
   }
   dynamic operator [](String key)
@@ -65,5 +69,4 @@ class Settings
     catch(e) {}
     return result;
   }
-
 }

@@ -4,6 +4,7 @@ import 'package:csv/csv.dart';
 import 'package:nohfibu/settings.dart';
 import 'package:nohfibu/journal.dart';
 import 'package:nohfibu/kto_plan.dart';
+import 'package:nohfibu/csv_handler.dart';
 import 'package:args/args.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -252,25 +253,11 @@ main(List<String> arguments) //async
 
     if(plan != null && jrl != null)
     {
-      List<List<dynamic>> fibuAsList = plan.asList();
-      fibuAsList = jrl.asList(fibuAsList);
-
-      final res = const ListToCsvConverter().convert(fibuAsList);
-
-      //print("retrieved list\n$fibuAsList\n");
-      //print("retrieved csv\n$res\n");
-
-      String fname = (settings["output"] != null && settings["output"].isNotEmpty())?settings["output"]:basename+".csv";
-      File(fname).writeAsString(res).then((file)
-	  {
-	    print("write seems successful, please check $fname");
-	    return null;
-	  });
+      CsvHandler().save(kpl: plan, jrl: jrl,conf: settings);
     }
     else
     {
       print("Error: conversion failed.....");
     }
   }
-
 }

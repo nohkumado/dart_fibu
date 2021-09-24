@@ -2,19 +2,18 @@
 import 'package:test/test.dart';
 import 'package:nohfibu/kto_plan.dart';
 import 'package:nohfibu/journal.dart';
+import 'package:nohfibu/book.dart';
+import 'package:nohfibu/csv_handler.dart';
 
 void main() {
-  //late KontoPlan kpl;
-  KontoPlan kpl= KontoPlan();
-  late Journal jrl;
+  Book book  = new Book();
   setUp(()
       {
-	kpl = KontoPlan();
-	  jrl = Journal( kpl);
-    //print("in setup generated kpl : $kpl and jrl : $jrl");
+	//book = new Book();
+    //print("in setup generated kpl : $book.kpl and book.jrl : $book.jrl");
       });
   group('Konto', () {
-      var kto = Konto(number : "1",name: "1001", plan: kpl, valuta:10000.99, cur:"EUR", budget:999.12);
+      var kto = Konto(number : "1",name: "1001", plan: book.kpl, valuta:10000.99, cur:"EUR", budget:999.12);
     test('Konto ', () {
       //kto.recursive = true;
       //print("kto : $kto");
@@ -42,12 +41,11 @@ void main() {
     test('toString ', () {
       kto.set(name:"1001",valuta: 10000.99);
       expect(kto.toString(), equals("1001                                                    € 999.12  € 10,000.99"));
-      kto = Konto(number : "1",name: "1001", plan: kpl, valuta:10000.99, cur:"EUR", budget:999.12);
-       kto.get("10010");
-      kto.recursive = true;
+      kto = Konto(number : "1",name: "1001", plan: book.kpl, valuta:10000.99, cur:"EUR", budget:999.12);
+      Konto sk =  kto.get("10010");
       String target = "1001                                                    € 999.12  € 10,000.99\n"+
 	  ' 10010                                                    € 0.00  € 0.00\n';
-      expect(kto.toString(), equals(target));
+      expect(kto.toString(recursive: true,empty:true), equals(target));
     });
     test('printname ', () {
       expect(kto.printname(), equals("1001"));
@@ -58,7 +56,7 @@ void main() {
       kto.get("10010").set(desc:"bottom  account");
       //print("kto check $kto");
       List<List<dynamic>>  res = [];
-      kto.asList(res);
+      kto.asList(asList: res);
       //print("asList returned $res");
       expect(res, equals([["1001", "top account", "EUR", 999.12, 10000.99], ["10010", "bottom  account", "EUR", 0.0, 0.0]]));
     });
@@ -69,10 +67,10 @@ void main() {
 
   group('Journal', ()
   {
-      var kto1 = Konto(number : "1",name: "1001", plan: kpl, valuta:10000.99, cur:"EUR", budget:999.12);
-      var kto2 = Konto(number : "2",name: "2002", plan: kpl, valuta:80000.99, cur:"EUR", budget:888.12);
+      var kto1 = Konto(number : "1",name: "1001", plan: book.kpl, valuta:10000.99, cur:"EUR", budget:999.12);
+      var kto2 = Konto(number : "2",name: "2002", plan: book.kpl, valuta:80000.99, cur:"EUR", budget:888.12);
     test('Journal Eintrag', () {
-      //print("global journal: $jrl");
+      //print("global journal: ${book.jrl}");
       var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 88888);
       expect(line.desc, equals("test line"));
       expect(line.toString(), equals("01-09-2021 1001 2002 test line                                         € 88,888.00"));
@@ -84,25 +82,25 @@ void main() {
 
 
     test('Journal Eintrag', () {
-      //print("global journal: $jrl");
+      //print("global journal: ${book.jrl}");
       var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 88888);
       List<List> data = [];
-  jrl.asList(data);
+  book.jrl.asList(data);
       expect(data, equals([['JRL'], ['date', 'ktominus', 'ktoplus', 'desc', 'cur', 'valuta']]));
       data = [];
-  jrl.add(line);
-  jrl.asList(data);
+  book.jrl.add(line);
+  book.jrl.asList(data);
       expect(data.length == 3 && data[2][0] == '2021-09-01', equals(true));
 
 
 
-  jrl.clear();
+  book.jrl.clear();
       data = [];
-  jrl.asList(data);
+  book.jrl.asList(data);
       expect(data.length == 2, equals(true));
-  jrl.add(line);
+  book.jrl.add(line);
   String result = '            Journal\n'+ '01-09-2021 1001 2002 test line                                         € 88,888.00\n'+ '          Journal End';
-      expect(jrl.toString(), equals(result));
+      expect(book.jrl.toString(), equals(result));
     });
   });
 }

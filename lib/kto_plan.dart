@@ -29,8 +29,6 @@ class KontoPlan
     konten.clear();
   }
 
-  void add(Konto konto) {}
-
   Konto? get(String ktoName)
   {
     //print("ktop get for $ktoName");
@@ -75,9 +73,7 @@ class KontoPlan
     String result = "              Konto Plan \n";
     konten.forEach((key, kto)
     {
-     kto.recursive = true;
-     result += kto.toString()+"\n";
-     kto.recursive = false;
+     result += kto.toString(recursive: true)+"\n";
     });
     result += "         Ende Konto Plan \n";
     //print("extracted +$ktoName+  -$desc- ,=$w=,  '$budget' #$valuta#\n");
@@ -105,7 +101,6 @@ class Konto
 
   String name = "no name";
 
-  bool recursive = false;
 
   /**
     CTOR where you can specify 
@@ -125,6 +120,7 @@ class Konto
     if(cur != null) this.cur = cur;
     if(valuta != null) this.valuta =valuta;
     if(budget != null) this.budget = budget;
+    if(this.number == null) this.number = name[name.length-1];
   }
   /**
     setter for the values concerning this object
@@ -143,6 +139,7 @@ class Konto
     if(cur != null) this.cur = cur;
     if(valuta != null) this.valuta =valuta;
     if(budget != null) this.budget = budget;
+    if(this.number == null) this.number = name[name.length-1];
     return this;
   }
 
@@ -195,25 +192,23 @@ class Konto
     by recursing through the sub accounts below this one
     */
   @override
-  String toString({String indent: "", bool debug: false})
+  String toString({String indent: "", bool debug: false,bool recursive = false, empty: false})
   {
     String result = "";
     var f = NumberFormat.currency(symbol: cur2sym(cur));
     String pname = (name == "no name")? "$number": name;
     result = (debug)?"$indent$number. +$pname+  -$desc- ,=$cur=,  '$budget' #$valuta#":
-	(recursive && desc.length <=0)?"":  "$indent${sprintf("%#4s", [pname])}  ${sprintf("%-49s", [desc])} ${f.format(budget )}  ${f.format(valuta)}";
+	(recursive && !empty && desc.length <=0)?"":  "$indent${sprintf("%#4s", [pname])}  ${sprintf("%-49s", [desc])} ${f.format(budget )}  ${f.format(valuta)}";
 
     ;
     if(recursive)
     {
       //var f = NumberFormat("###,###,###.00");
-      result += (desc.length >0)?"\n":"";
+      result += (desc.length >0 || empty)?"\n":"";
       children.forEach((key, kto)
 	  {
-	    kto.recursive = true;
 	    //result += kto.toString(indent:indent+"$number"); //debug, just to check depth
-	    result += kto.toString(indent:indent+" ");
-	    kto.recursive = false;
+	    result += kto.toString(indent:indent+" ", recursive: true, debug: debug, empty: true);
 	  });
     }
     //print("extracted +$ktoName+  -$desc- ,=$w=,  '$budget' #$valuta#\n");

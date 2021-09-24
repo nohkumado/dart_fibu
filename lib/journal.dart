@@ -13,9 +13,10 @@ class Journal
      journal = [];
   }
 
-  void add(JrlLine jrlLine)
+  JrlLine add(JrlLine jrlLine)
   {
     journal.add(jrlLine);
+    return jrlLine;
   }
   @override
   String toString()
@@ -35,20 +36,21 @@ class Journal
   journal.forEach((line) {line.asList(data); });
     return data;
   }
+  int count() => journal.length;
 }
 
 class JrlLine
 {
+  late DateTime datum;
   late Konto kplus;
   late Konto kminus;
   late String desc;
-  late DateTime datum;
   late String cur;
   late num valuta;
 
  JrlLine({datum, kmin, kplu, desc, cur, valuta})
  {
-   //print("jline incoming +$datum+ -$kmin- -$kplu- -$desc- ,=$cur=, #$valuta#\n");
+  // print("jline incoming +$datum+ -$kmin- -$kplu- -$desc- ,=$cur=, #$valuta#\n");
    kplus =(kplu != null)?  kplu:Konto();
    kminus = (kmin != null)? kmin:Konto();
    this.desc = (desc != null)? desc: "none";
