@@ -165,7 +165,7 @@ class WbConvert
 	  if(kplus.length == 1) //single digit? main account...
 	  {
 	    kp =  Konto(number: kplus);
-	    kpl.add(kp);
+	    kpl.put(kplus,kp);
 	  }
 	  else if(kplus.length >0)
 	  {
@@ -177,7 +177,7 @@ class WbConvert
 	  if(kminus.length == 1) //single digit? main account...
 	  {
 	    km =  Konto(number: kminus);
-	    kpl.add(km);
+	    kpl.put(kminus,km);
 	  }
 	  else if(kminus.length >0)
 	  {
