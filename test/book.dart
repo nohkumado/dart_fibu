@@ -12,15 +12,18 @@ void main() {
       regl.init(incoming);
       });
   group('Book', ()
-  {
-      var book = Book();
-    test('loading', () {
-      var handler = CsvHandler();
-      handler.load(book: book, conf: regl ) ;
-      expect(book.jrl.count(), equals(999));
-    });
+      {
+	var book = Book();
+	test('loading', () {
+	  var handler = CsvHandler();
+	  handler.load(book: book, conf: regl ) ;
+	  expect(book.jrl.count(), equals(999));
+	  regl["base"] = "assets/wbsamples/sample";
+	  handler.load(book: book, conf: regl ) ;
+	  expect(book.jrl.count(), equals(999));
+	});
 
-  });
+      });
 
 
 

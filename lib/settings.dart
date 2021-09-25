@@ -69,4 +69,9 @@ class Settings
     catch(e) {}
     return result;
   }
+  void operator []=(String key, dynamic val)
+  {
+    if(data == null) data = {};
+      data[key] = val;
+  }
 }

@@ -33,52 +33,60 @@ class WbConvert
     //print("splitted : $perLine\n");
     Konto? last;
     String toplvl = "";
+    Map<int,List<int>> wbcols = {
+      87 : [2,8,58,62,75],
+      71 : [2,7,56,60,72],
+    };
     for (String line in perLine)
     {
       if(line.isEmpty) continue;
-      String ktoName;
-      String budget;
+      String ktoName = "";
+      String budget = "";
       String valuta = "0";
-      String w ;
-      String desc;
-      if(strict)
-      {
-	//sscanf(zk,"%c %4d %49c%3c%12c", &kplc->seite,&kplc->knr,kplc->titel,&kplc->wn,tmpStr);
-	ktoName = line.substring(2,6).trim();
-	desc = line.substring(8,56).trim();
-	w = line.substring(58,61).trim();
-	//budget = line.substring(61).trim();
-	budget = line.substring(61,74).trim();
-	valuta = line.substring(75,88).trim();
-      }
-      else
-      {
-	//print("processing '$line'");
-	final pattern = RegExp('\\s+');
-	line = line.replaceAll(pattern, " ").trim();
-	List<String> spcRm = line.split(" ");
-	if(spcRm.length < 4) {print("reject line $line");continue;}
-	ktoName = spcRm.removeAt(0);
-	budget = spcRm.removeLast();
-	w = spcRm.removeLast();
-	try {
-	  if (double.parse(w) >=0) {
-	    valuta = budget;
-	    budget = w;
-	    w = spcRm.removeLast();
-	  }
-	}
-	catch(e) {
-	  //print("$w not a double...");
-	}
-	desc = spcRm.join(" ");
-      }
-      //print("extracted +$ktoName+  -$desc- ,=$w=,  '$budget' #$valuta#");
+      String w  = "";
+      String desc = "";
       try
       {
+	if(strict)
+	{
+      if(line == "/*EOF") continue;
+	  //sscanf(zk,"%c %4d %49c%3c%12c", &kplc->seite,&kplc->knr,kplc->titel,&kplc->wn,tmpStr);
+	  List<int> cols = (line.length <= 80)? wbcols[71]!:wbcols[87]!;
+	  //print("used cols : $cols");
+	  //print("parsing $line  of ${line.length}");
+	  ktoName = line.substring(cols[0],cols[1]).trim();
+	  desc = line.substring(cols[1],cols[2]).trim();
+	  w = line.substring(cols[2],cols[3]).trim();
+	  budget = line.substring(cols[3],cols[4]).trim();
+	  valuta = (line.length > cols[4])?line.substring(cols[4],line.length).trim():"0";
+	  //print("extracted  '$ktoName'  '$desc' '$w' '$budget' '$valuta'");
+	}
+	else
+	{
+	  //print("processing '$line'");
+	  final pattern = RegExp('\\s+');
+	  line = line.replaceAll(pattern, " ").trim();
+	  List<String> spcRm = line.split(" ");
+	  if(spcRm.length < 4) {print("reject line $line");continue;}
+	  ktoName = spcRm.removeAt(0);
+	  budget = spcRm.removeLast();
+	  w = spcRm.removeLast();
+	  try {
+	    if (double.parse(w) >=0) {
+	      valuta = budget;
+	      budget = w;
+	      w = spcRm.removeLast();
+	    }
+	  }
+	  catch(e) {
+	    //print("$w not a double...");
+	  }
+	  desc = spcRm.join(" ");
+	}
+	//print("extracted +$ktoName+  -$desc- ,=$w=,  '$budget' #$valuta#");
 	//print("trying kto $ktoName");
 	int kto =int.parse(ktoName);
-	double bval =double.parse(budget);
+	double bval =NumberFormat.currency().parse(budget).toDouble();
 	num vval = NumberFormat.currency().parse(valuta);
 	if(kto == 0)
 	{
@@ -96,7 +104,8 @@ class WbConvert
 	}
       }
       catch(e) {
-	print("Error, something went wrong with +$ktoName+  -$desc- ,=$w=,  '$budget' #$valuta# => $e");
+	print("Error: wbconvert. line '$line' failed :+$ktoName+  -$desc- ,=$w=,  '$budget' #$valuta#" );
+	print("Error, something went wrong with  => $e");
       }
     }
 
@@ -111,6 +120,10 @@ class WbConvert
     jrl.clear();
     List<String> perLine = rawinput.split("\n");
     //print("splitted : $perLine\n");
+    Map<int,List<int>> wbcols = {
+      80 : [0,9,14,19,64,69],
+      71 : [0,9,14,19,63,68],
+    };
     for (String line in perLine)
     {
       if(line.isEmpty) continue;
@@ -119,20 +132,27 @@ class WbConvert
 
       //print("parsing $line  of ${line.length}");
 
-      String datum;
+      String datum = "";
       String kplus, kminus;
       String valuta = "0";
-      String w ;
-      String desc;
+      String w = "" ;
+      String desc = "";
+      try
+      {
       if(strict)
       {
+      if(line == "/*EOF") continue;
 	//sscanf(zk,"%c %4d %49c%3c%12c", &kplc->seite,&kplc->knr,kplc->titel,&kplc->wn,tmpStr);
-	datum = line.substring(0,8).trim();
-	kminus = line.substring(9,13).trim();
-	kplus = line.substring(14,18).trim();
-	desc = line.substring(19,64).trim();
-	w = line.substring(64,68).trim();
-	valuta = line.substring(69,80).trim();
+	//print("line $line length = ${line.length}");
+	  List<int> cols = (line.length >= 80)? wbcols[80]!:wbcols[71]!;
+
+	datum = line.substring(cols[0],cols[1]).trim();
+	kminus = line.substring(cols[1],cols[2]).trim();
+	kplus = line.substring(cols[2],cols[3]).trim();
+	desc = line.substring(cols[3],cols[4]).trim();
+	w = line.substring(cols[4],cols[5]).trim();
+	valuta = line.substring(cols[5],line.length).trim();
+	//print("= '$datum' '$kminus' '$kplus' '$desc' '$w' '$valuta'");
       }
       else
       {
@@ -147,8 +167,6 @@ class WbConvert
 	w = spcRm.removeLast();
 	desc = spcRm.join(" ");
       }
-      try
-      {
 	DateFormat format = new DateFormat("dd.MM.yy");
 	//print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
 	var pdate = format.parse(datum);
@@ -215,7 +233,7 @@ main(List<String> arguments) //async
   }
   KontoPlan? plan ;
   Journal? jrl;
-  if(settings["base"] != "" )
+  if(settings["base"] != null && settings["base"] != "" )
   {
     //print("opening file ${settings["base"]}");
     String basename = settings["base"];
@@ -260,4 +278,5 @@ main(List<String> arguments) //async
       print("Error: conversion failed.....");
     }
   }
+    else print("nothing to do, did you forget to provide an input file wth -b <file> ?");
 }

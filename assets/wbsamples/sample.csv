@@ -1,57 +1,64 @@
-id,account,comment,Currency,Valuta,Budget
-6,0,*** fin des comptes actifs ***,EUR,0,0
-1,1100,Caisse,EUR,0,0
-2,1200,c/c BNP,EUR,0,0
-3,1500,Avoirs en vue d'encaissement,EUR,0,0
-4,1600,Pertes exercice (->report),EUR,0,0
-5,1999,Giroconto,EUR,0,0
-7,2300,Patrimoine,EUR,0,0
-8,2310,Reserve 1 / fonctionnement,EUR,0,0
-9,2320,Reserve 2 / actions sociales,EUR,0,0
-10,2500,Devoirs exercice  courant,EUR,0,0
-11,2510,Frais President   PACA,EUR,0,0
-12,2520,Frais Resp.SENECA PACA,EUR,0,0
-13,2530,Frais Tresorier   PACA,EUR,0,0
-14,2550,Frais Benevoles,EUR,0,0
-15,2600,Excedents exercice (->report),EUR,0,0
-16,3000,Budget Associatif (->report),EUR,0,0
-17,3002,Help Desk Associatif,EUR,0,60000
-18,3010,"Deplacements (viaMichelin,SNCF,Metro,...)",EUR,0,0
-19,3040,"Communications (Tel, Fax, Internet, Serveur ...)",EUR,0,0
-20,3050,Affranchissements,EUR,0,30000
-21,3060,Photocopies,EUR,0,30000
-22,3070,"Fournitures (Papier, Enveloppes, Cartouches,...)",EUR,0,10000
-23,3080,"Divers (gerbes, cadeaux .........)",EUR,0,50000
-24,3250,Frais bancaires,EUR,0,0
-25,3300,Assemblee Regionale Annuelle,EUR,0,50000
-26,3310,(reserve),EUR,0,0
-27,3500,Budget Actions Sociales (->report),EUR,0,0
-28,3702,Help Desk social PACA/Corse,EUR,0,120000
-29,3801,Postes et Telecom,EUR,0,100000
-30,3802,Guides et Brochures,EUR,0,20000
-31,3901,Formation benevoles,EUR,0,0
-32,3902,Deplacements benevoles,EUR,0,150000
-33,3903,Assurances et divers,EUR,0,0
-34,3951,Assistance sociale directe,EUR,0,0
-35,3952,Consultations juridiques,EUR,0,0
-36,3961,Divers,EUR,0,0
-37,4100,Dotation AIACE France / fonctionnement,EUR,0,230000
-38,4200,Dotation AIACE France / actions sociales,EUR,0,390000
-39,4300,Contributions / rencontre annuelle,EUR,0,0
-40,4400,Contributions / X,EUR,0,0
-id,Date,cto+,cto-,Comment,Currency,Sum
-1,Tue Nov 01 00:00:00 GMT+01:00 2016,1200,0,Report compte courant BNP,EUR,301860
-2,Tue Nov 01 00:00:00 GMT+01:00 2016,1600,0,Report pertes exercice 2015/2016,EUR,18077
-3,Tue Nov 01 00:00:00 GMT+01:00 2016,0,2300,Report patrimoine au 31/10/2016,EUR,242437
-4,Tue Nov 01 00:00:00 GMT+01:00 2016,0,2500,Report dette vers TRANSDEV fact. bus,EUR,65000
-5,Tue Nov 01 00:00:00 GMT+01:00 2016,0,2500,Report dette vers OfficeTourismeAix,EUR,12500
-6,Tue Nov 01 00:00:00 GMT+01:00 2016,2300,1600,Absorption pertes 2015/2016 par patrimoine,EUR,18077
-7,Tue Nov 15 00:00:00 GMT+01:00 2016,2500,1200,chq373 OfficeTourismeAix non enregistre,EUR,12500
-8,Mon Nov 28 00:00:00 GMT+01:00 2016,3050,2530,frais postaux /envoie documents,EUR,593
-9,Thu Dec 01 00:00:00 GMT+01:00 2016,2500,1200,encaissement chq par Transdev,EUR,65000
-10,Fri Apr 21 00:00:00 GMT+02:00 2017,3250,1200,commission act.dossier,EUR,9000
-11,Mon Oct 02 00:00:00 GMT+02:00 2017,3300,2530,Rencontre 2017 Corse: pbs guide,EUR,4000
-12,Mon Oct 02 00:00:00 GMT+02:00 2017,3300,2530,Rencontre 2017 Corse: pbs chauffeur,EUR,2000
-13,Tue Oct 03 00:00:00 GMT+02:00 2017,3300,2530,Rencontre 2017 Corse: pbs chauffeur,EUR,2000
-14,Wed Oct 04 00:00:00 GMT+02:00 2017,3300,2530,Rencontre 2017 Corse: pbs chauffeur,EUR,3000
-15,Mon Oct 09 00:00:00 GMT+02:00 2017,2530,1200,chq6646385 remb.frais tresorier,EUR,11593
+KPL
+kto,dsc,cur,budget,valuta
+1,*** fin des comptes actifs ***,EUR,0.0,0.0
+1100,Caisse,EUR,0.0,0.0
+1200,c/c BNP,EUR,0.0,0.0
+1500,Avoirs en vue d'encaissement,EUR,0.0,0.0
+1600,Pertes exercice (->report),EUR,0.0,0.0
+1999,Giroconto,EUR,0.0,0.0
+2,*** fin des comptes passifs ***,EUR,0.0,0.0
+2300,Patrimoine,EUR,0.0,0.0
+2310,Reserve 1 / fonctionnement,EUR,0.0,0.0
+2320,Reserve 2 / actions sociales,EUR,0.0,0.0
+2500,Devoirs exercice  courant,EUR,0.0,0.0
+2510,Frais President,EUR,0.0,0.0
+2520,Frais Secretaire,EUR,0.0,0.0
+2530,Frais Tresorier,EUR,0.0,0.0
+2550,Frais Benevoles,EUR,0.0,0.0
+2600,Excedents exercice (->report),EUR,0.0,0.0
+3,*** fin des comptes depenses ***,EUR,0.0,0.0
+3000,Budget Associatif (->report),EUR,0.0,0.0
+3002,Help Desk Associatif,EUR,600.0,0.0
+3010,"Deplacements (viaMichelin,SNCF,Metro,...)",EUR,0.0,0.0
+3040,"Communications (Tel, Fax, Internet, Serveur ...)",EUR,0.0,0.0
+3050,Affranchissements,EUR,300.0,0.0
+3060,Photocopies,EUR,300.0,0.0
+3070,"Fournitures (Papier, Enveloppes, Cartouches,...)",EUR,100.0,0.0
+3080,"Divers (gerbes, cadeaux .........)",EUR,500.0,0.0
+3250,Frais bancaires,EUR,0.0,0.0
+3300,Assemblee Regionale Annuelle,EUR,500.0,0.0
+3310,(reserve),EUR,0.0,0.0
+3500,Budget Actions Sociales (->report),EUR,0.0,0.0
+3702,Help Desk social site 2,EUR,1200.0,0.0
+3801,Postes et Telecom,EUR,1000.0,0.0
+3802,Guides et Brochures,EUR,200.0,0.0
+3901,Formation benevoles,EUR,0.0,0.0
+3902,Deplacements benevoles,EUR,1500.0,0.0
+3903,Assurances et divers,EUR,0.0,0.0
+3951,Assistance sociale directe,EUR,0.0,0.0
+3952,Consultations juridiques,EUR,0.0,0.0
+3961,Divers,EUR,0.0,0.0
+4,*** fin des comptes encaissement ***,EUR,0.0,0.0
+4100,Dotation Etat  France / fonctionnement,EUR,2300.0,0.0
+4200,Dotation Etat  France / actions sociales,EUR,3900.0,0.0
+4300,Contributions / rencontre annuelle,EUR,0.0,0.0
+4400,Contributions / X,EUR,0.0,0.0
+4999,Encaissements divers,EUR,0.0,0.0
+JRL
+date,ktominus,ktoplus,desc,cur,valuta
+2016-11-01,1200,   0,Report compte courant,EUR,3018.6
+2016-11-01,1600,   0,Report pertes exercice 2015/2016,EUR,180.77
+2016-11-01,   0,2300,Report patrimoine au 31/10/2016,EUR,2424.37
+2016-11-01,   0,2500,Report dette vers          fact. bus,EUR,650.0
+2016-11-01,   0,2500,Report dette vers OfficeTourisme,EUR,125.0
+2016-11-01,2300,1600,Absorption pertes 2015/2016 par patrimoine,EUR,180.77
+2016-11-15,2500,1200,chq373                   non enregistre,EUR,125.0
+2016-11-28,3050,2530,frais postaux /envoie documents,EUR,5.93
+2016-12-01,2500,1200,encaissement chq par Exemple,EUR,650.0
+2017-04-21,3250,1200,commission act.dossier,EUR,90.0
+2017-10-02,3300,2530,Rencontre 2017 Site2: pbs guide,EUR,40.0
+2017-10-02,3300,2530,Rencontre 2017 Site2: pbs chauffeur,EUR,20.0
+2017-10-03,3300,2530,Rencontre 2017 Site2: pbs chauffeur,EUR,20.0
+2017-10-04,3300,2530,Rencontre 2017 Site2: pbs chauffeur,EUR,30.0
+2017-10-09,2530,1200,chq1234567 remb.frais tresorier,EUR,115.93
+2017-10-31,1600,4999,encaissement fictif de cloture,EUR,205.93
