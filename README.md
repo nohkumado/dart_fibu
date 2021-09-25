@@ -33,6 +33,11 @@ cd dart_fibu/ # or wherever you store your stuff
 
 ### Usage
 
+#### The converter 
+
+this converter has the function to convert our old data into csv that will be imported into the new
+dart fibu
+
 ```bash
 dart run bin/wbconvert.dart --help
 ##### sample output #################################
@@ -51,12 +56,21 @@ dart run bin/wbconvert.dart -f <your kpl file> -s
 # this will generate a csv that can be further processed
 ```
 
-### Installation/activation
-
-Once this runs, you can activate the project:
+#### fibu 
 
 ```bash
-dart pub global activate --source path ~/projects/fibu/
+$ dart run bin/fibu.dart --help # to test directly from the source dir
+$ fibu --help # if you have activated the project
+```
+
+at the moment issues only to read in csv file, but will be extended in a future version
+
+### Installation/activation
+
+Once this runs, you can activate the project, we suppose you haven't done any cd'ing in the meantime:
+
+```bash
+dart pub global activate --source path `pwd`
 ```
 
 and after adding
@@ -67,5 +81,7 @@ to your `~/.bashrc` you can simply run
 
 ## Documentation
 
-one day soon, hopefully, i will extend https://www.nohkumado.eu/nohfibu/
+the documentation written for the C wb fibu, one day soon, hopefully, i will extend it to include the 
+dart version, https://www.nohkumado.eu/nohfibu/ still logic and theory will be the same, so please 
+adapt as fit, but its still usable.
 
