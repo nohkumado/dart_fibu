@@ -13,6 +13,11 @@ You will need a working dart (or today, flutter) installation
 
 ### How to run wbconvert on a raspberry pi (arm64)
 
+| WARNING: if not otherwise specified, never execute anything as root user |
+| if you do, be prepared for a hell of pain! |
+| you are warned! |
+| --- |
+
 ```bash
 cd projects # or wherever you store your stuff
 wget https://storage.googleapis.com/dart-archive/channels/stable/release/2.14.2/sdk/dartsdk-linux-arm64-release.zip

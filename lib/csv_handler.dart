@@ -101,9 +101,7 @@ class CsvHandler
 	   //print("added [$res]");
 	  }
 	}
-
       }
-      print("book so far: $book");
     }
     else
     {

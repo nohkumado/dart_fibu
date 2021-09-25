@@ -1,0 +1,45 @@
+P 1100 Caisse                                           EUR           0 
+  1200 c/c BNP                                          EUR           0 
+  1500 Avoirs en vue d'encaissement                     EUR           0 
+  1600 Pertes exercice (->report)                       EUR           0 
+P 1999 Giroconto                                        EUR           0 
+     0 *** fin des comptes actifs ***                   EUR           0 
+P 2300 Patrimoine                                       EUR           0 
+  2310 Reserve 1 / fonctionnement                       EUR           0 
+  2320 Reserve 2 / actions sociales                     EUR           0 
+  2500 Devoirs exercice  courant                        EUR           0 
+  2510 Frais President                                  EUR           0 
+  2520 Frais Secretaire                                 EUR           0 
+  2530 Frais Tresorier                                  EUR           0 
+  2550 Frais Benevoles                                  EUR           0 
+P 2600 Excedents exercice (->report)                    EUR           0 
+     0 *** fin des comptes passifs ***                  EUR           0 
+  3000 Budget Associatif (->report)                     EUR           0 
+  3002 Help Desk Associatif                             EUR      600,00 
+  3010 Deplacements (viaMichelin,SNCF,Metro,...)        EUR           0 
+  3040 Communications (Tel, Fax, Internet, Serveur ...) EUR           0 
+  3050 Affranchissements                                EUR      300,00 
+  3060 Photocopies                                      EUR      300,00 
+  3070 Fournitures (Papier, Enveloppes, Cartouches,...) EUR      100,00 
+  3080 Divers (gerbes, cadeaux .........)               EUR      500,00 
+  3250 Frais bancaires                                  EUR           0 
+  3300 Assemblee Regionale Annuelle                     EUR      500,00 
+  3310 (reserve)                                        EUR           0 
+  3500 Budget Actions Sociales (->report)               EUR           0 
+  3702 Help Desk social site 2                          EUR    1.200,00 
+  3801 Postes et Telecom                                EUR    1.000,00 
+  3802 Guides et Brochures                              EUR      200,00 
+  3901 Formation benevoles                              EUR           0 
+  3902 Deplacements benevoles                           EUR    1.500,00 
+  3903 Assurances et divers                             EUR           0 
+  3951 Assistance sociale directe                       EUR           0 
+  3952 Consultations juridiques                         EUR           0 
+  3961 Divers                                           EUR           0 
+     0 *** fin des comptes depenses ***                 EUR           0 
+P 4100 Dotation Etat  France / fonctionnement           EUR    2.300,00 
+  4200 Dotation Etat  France / actions sociales         EUR    3.900,00 
+  4300 Contributions / rencontre annuelle               EUR           0 
+  4400 Contributions / X                                EUR           0 
+  4999 Encaissements divers                             EUR           0 
+     0 *** fin des comptes encaissement ***             EUR           0 
+/*EOF

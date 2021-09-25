@@ -1,0 +1,233 @@
+
+paca17                                         -  1 -
+
+*  Kontoplan 
+P 1100 Caisse                                           EUR           0
+  1200 c/c                                              EUR           0
+  1500 Avoirs en vue d'encaissement                     EUR           0
+  1600 Pertes exercice (->report)                       EUR           0
+P 1999 Giroconto                                        EUR           0
+     0 *** fin des comptes actifs ***                   EUR           0
+P 2300 Patrimoine                                       EUR           0
+  2310 Reserve 1 / fonctionnement                       EUR           0
+  2320 Reserve 2 / actions sociales                     EUR           0
+  2500 Devoirs exercice  courant                        EUR           0
+  2510 Frais President                                  EUR           0
+  2520 Frais Secretaire                                 EUR           0
+  2530 Frais Tresorier                                  EUR           0
+  2550 Frais Benevoles                                  EUR           0
+P 2600 Excedents exercice (->report)                    EUR           0
+     0 *** fin des comptes passifs ***                  EUR           0
+  3000 Budget Associatif (->report)                     EUR           0
+  3002 Help Desk Associatif                             EUR      600,00
+  3010 Deplacements (viaMichelin,SNCF,Metro,...)        EUR           0
+  3040 Communications (Tel, Fax, Internet, Serveur ...) EUR           0
+  3050 Affranchissements                                EUR      300,00
+  3060 Photocopies                                      EUR      300,00
+  3070 Fournitures (Papier, Enveloppes, Cartouches,...) EUR      100,00
+  3080 Divers (gerbes, cadeaux .........)               EUR      500,00
+  3250 Frais bancaires                                  EUR           0
+  3300 Assemblee Regionale Annuelle                     EUR      500,00
+  3310 (reserve)                                        EUR           0
+  3500 Budget Actions Sociales (->report)               EUR           0
+  3702 Help Desk social     /Site1                      EUR    1.200,00
+  3801 Postes et Telecom                                EUR    1.000,00
+  3802 Guides et Brochures                              EUR      200,00
+  3901 Formation benevoles                              EUR           0
+  3902 Deplacements benevoles                           EUR    1.500,00
+  3903 Assurances et divers                             EUR           0
+  3951 Assistance sociale directe                       EUR           0
+  3952 Consultations juridiques                         EUR           0
+  3961 Divers                                           EUR           0
+     0 *** fin des comptes depenses ***                 EUR           0
+P 4100 Subventions Etat      / fonctionnement           EUR    2.300,00
+  4200 Subventions Etat      / actions sociales         EUR    3.900,00
+  4300 Contributions / rencontre annuelle               EUR           0
+  4400 Contributions / X                                EUR           0
+  4999 Encaissements divers                             EUR           0
+     0 *** fin des comptes encaissement ***             EUR           0
+
+
+
+
+Tabelle der Waehrungen 
+Vxx Land            Abk Format             Vxx/V00  
+V 0 Europa......... EUR 9999.999.999,99    1.00000
+V 1 Italia......... ITL 999.999.999.999 1936.27002
+V 2 France......... FRF 9999.999.999,99    6.55957
+V 3 Deutschland.... DEM 9999.999.999,99    1.95583
+V 4 Schweiz........ CHF 9999.999.999,99    1.46000
+V 5                                        0.00000
+V 6                                        0.00000
+V 7                                        0.00000
+V 8                                        0.00000
+V 9                                        0.00000
+
+paca17                                         -  2 -
+
+*  Journal 
+   Datum cto+ cto- Beschreibung                                         Betrag 
+01.11.16 1200    0 Report compte courant                       EUR    3.018,60
+01.11.16 1600    0 Report pertes exercice 2015/2016            EUR      180,77
+01.11.16    0 2300 Report patrimoine au 31/10/2016             EUR    2.424,37
+01.11.16    0 2500 Report dette vers Toto     fact. bus        EUR      650,00
+01.11.16    0 2500 Report dette vers intervenant               EUR      125,00
+01.11.16 2300 1600 Absorption pertes 2015/2016 par patrimoine  EUR      180,77
+15.11.16 2500 1200 chq373 intervenant       non enregistre     EUR      125,00
+28.11.16 3050 2530 frais postaux /envoie documents             EUR        5,93
+01.12.16 2500 1200 encaissement chq par Toto                   EUR      650,00
+21.04.17 3250 1200 commission act.dossier                      EUR       90,00
+02.10.17 3300 2530 Rencontre 2017 Site1: pbs guide             EUR       40,00
+02.10.17 3300 2530 Rencontre 2017 Site1: pbs chauffeur         EUR       20,00
+03.10.17 3300 2530 Rencontre 2017 Site1: pbs chauffeur         EUR       20,00
+04.10.17 3300 2530 Rencontre 2017 Site1: pbs chauffeur         EUR       30,00
+09.10.17 2530 1200 chq6646385 remb.frais tresorier             EUR      115,93
+31.10.17 1600 4999 encaissement fictif de cloture              EUR      205,93
+
+Buchungen:  16
+
+
+paca17                                         -  3 -
+
+
+
+
+
+*  Konto Nr.  1200 c/c                                              
+   Datum cto+ cto- Beschreibung                                         Betrag       Saldo 
+01.11.16 1200    0 Report compte courant                       EUR    3.018,60    3.018,60
+15.11.16 2500 1200 chq373 intervenant       non enregistre     EUR     -125,00    2.893,60
+01.12.16 2500 1200 encaissement chq par Toto                   EUR     -650,00    2.243,60
+21.04.17 3250 1200 commission act.dossier                      EUR      -90,00    2.153,60
+09.10.17 2530 1200 chq6646385 remb.frais tresorier             EUR     -115,93    2.037,67
+
+
+
+
+*  Konto Nr.  1600 Pertes exercice (->report)                       
+   Datum cto+ cto- Beschreibung                                         Betrag       Saldo 
+01.11.16 1600    0 Report pertes exercice 2015/2016            EUR      180,77      180,77
+01.11.16 2300 1600 Absorption pertes 2015/2016 par patrimoine  EUR     -180,77           0
+31.10.17 1600 4999 encaissement fictif de cloture              EUR      205,93      205,93
+
+paca17                                         -  4 -
+
+*  Konto Nr.  2300 Patrimoine                                       
+   Datum cto+ cto- Beschreibung                                         Betrag       Saldo 
+01.11.16    0 2300 Report patrimoine au 31/10/2016             EUR   -2.424,37   -2.424,37
+01.11.16 2300 1600 Absorption pertes 2015/2016 par patrimoine  EUR      180,77   -2.243,60
+
+
+
+
+*  Konto Nr.  2500 Devoirs exercice  courant                        
+   Datum cto+ cto- Beschreibung                                         Betrag       Saldo 
+01.11.16    0 2500 Report dette vers Toto     fact. bus        EUR     -650,00     -650,00
+01.11.16    0 2500 Report dette vers intervenant               EUR     -125,00     -775,00
+15.11.16 2500 1200 chq373 intervenant       non enregistre     EUR      125,00     -650,00
+01.12.16 2500 1200 encaissement chq par Toto                   EUR      650,00           0
+
+
+
+
+*  Konto Nr.  2530 Frais Tresorier                                  
+   Datum cto+ cto- Beschreibung                                         Betrag       Saldo 
+28.11.16 3050 2530 frais postaux /envoie documents             EUR       -5,93       -5,93
+02.10.17 3300 2530 Rencontre 2017 Site1: pbs guide             EUR      -40,00      -45,93
+02.10.17 3300 2530 Rencontre 2017 Site1: pbs chauffeur         EUR      -20,00      -65,93
+03.10.17 3300 2530 Rencontre 2017 Site1: pbs chauffeur         EUR      -20,00      -85,93
+04.10.17 3300 2530 Rencontre 2017 Site1: pbs chauffeur         EUR      -30,00     -115,93
+09.10.17 2530 1200 chq6646385 remb.frais tresorier             EUR      115,93           0
+
+
+
+
+*  Konto Nr.  3050 Affranchissements                                
+   Datum cto+ cto- Beschreibung                                         Betrag       Saldo 
+28.11.16 3050 2530 frais postaux /envoie documents             EUR        5,93        5,93
+
+
+
+
+*  Konto Nr.  3250 Frais bancaires                                  
+   Datum cto+ cto- Beschreibung                                         Betrag       Saldo 
+21.04.17 3250 1200 commission act.dossier                      EUR       90,00       90,00
+
+
+
+
+*  Konto Nr.  3300 Assemblee Regionale Annuelle                     
+   Datum cto+ cto- Beschreibung                                         Betrag       Saldo 
+02.10.17 3300 2530 Rencontre 2017 Site1: pbs guide             EUR       40,00       40,00
+02.10.17 3300 2530 Rencontre 2017 Site1: pbs chauffeur         EUR       20,00       60,00
+03.10.17 3300 2530 Rencontre 2017 Site1: pbs chauffeur         EUR       20,00       80,00
+04.10.17 3300 2530 Rencontre 2017 Site1: pbs chauffeur         EUR       30,00      110,00
+
+
+
+
+*  Konto Nr.  4999 Encaissements divers                             
+   Datum cto+ cto- Beschreibung                                         Betrag       Saldo 
+31.10.17 1600 4999 encaissement fictif de cloture              EUR     -205,93     -205,93
+
+paca17                                         -  5 -
+
+                            Bilanz zum 31.10.17
+     Aktiva                                                   Haben 
+1100 Caisse                                         EUR           0
+1200 c/c                                            EUR    2.037,67
+1500 Avoirs en vue d'encaissement                   EUR           0
+1600 Pertes exercice (->report)                     EUR      205,93
+1999 Giroconto                                      EUR           0
+                                    Aktiva insgesamt:      2.243,60
+
+     Passiva                                                   Soll 
+2300 Patrimoine                                     EUR   -2.243,60
+2310 Reserve 1 / fonctionnement                     EUR           0
+2320 Reserve 2 / actions sociales                   EUR           0
+2500 Devoirs exercice  courant                      EUR           0
+2510 Frais President                                EUR           0
+2520 Frais Secretaire                               EUR           0
+2530 Frais Tresorier                                EUR           0
+2550 Frais Benevoles                                EUR           0
+2600 Excedents exercice (->report)                  EUR           0
+                                   Passiva insgesamt:     -2.243,60
+                                         Ueberschuss:             0
+
+paca17                                         -  6 -
+
+               Wirtschaftsrechnung vom 01.11.16 bis 31.10.17
+
+     Kosten                                                     Ist Voranschlag 
+3000 Budget Associatif (->report)                   EUR           0           0
+3002 Help Desk Associatif                           EUR           0      600,00
+3010 Deplacements (viaMichelin,SNCF,Metro,...)      EUR           0           0
+3040 Communications (Tel, Fax, Internet, Serveur ...EUR           0           0
+3050 Affranchissements                              EUR        5,93      300,00
+3060 Photocopies                                    EUR           0      300,00
+3070 Fournitures (Papier, Enveloppes, Cartouches,...EUR           0      100,00
+3080 Divers (gerbes, cadeaux .........)             EUR           0      500,00
+3250 Frais bancaires                                EUR       90,00           0
+3300 Assemblee Regionale Annuelle                   EUR      110,00      500,00
+3310 (reserve)                                      EUR           0           0
+3500 Budget Actions Sociales (->report)             EUR           0           0
+3702 Help Desk social     /Site1                    EUR           0    1.200,00
+3801 Postes et Telecom                              EUR           0    1.000,00
+3802 Guides et Brochures                            EUR           0      200,00
+3901 Formation benevoles                            EUR           0           0
+3902 Deplacements benevoles                         EUR           0    1.500,00
+3903 Assurances et divers                           EUR           0           0
+3951 Assistance sociale directe                     EUR           0           0
+3952 Consultations juridiques                       EUR           0           0
+3961 Divers                                         EUR           0           0
+                                  Ausgaben insgesamt:        205,93
+     Einnahmen                                                  Ist Voranschlag 
+4100 Subventions Etat      / fonctionnement         EUR           0    2.300,00
+4200 Subventions Etat      / actions sociales       EUR           0    3.900,00
+4300 Contributions / rencontre annuelle             EUR           0           0
+4400 Contributions / X                              EUR           0           0
+4999 Encaissements divers                           EUR     -205,93           0
+                                 Einnahmen insgesamt:       -205,93
+                                         Ueberschuss:             0
+/*EOF
+
