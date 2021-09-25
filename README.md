@@ -70,10 +70,10 @@ at the moment issues only to read in csv file, but will be extended in a future 
 Once this runs, you can activate the project, we suppose you haven't done any cd'ing in the meantime:
 
 ```bash
-dart pub global activate --source path `pwd`
+$ dart pub global activate --source path `pwd`
 ```
 
-and after adding
+and after adding (don't forget the dart sdk path if you installed it locally)
 `  export PATH="$PATH":"$HOME/.pub-cache/bin"`
 to your `~/.bashrc` you can simply run 
 
