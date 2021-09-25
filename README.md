@@ -34,10 +34,10 @@ cd dart_fibu/ # or wherever you store your stuff
 ### Usage
 
 ```bash
-dart run lib/wbconvert.dart --help
+dart run bin/wbconvert.dart --help
 ##### sample output #################################
-###  bboett@videopi:fibu$ dart run lib/wbconvert.dart --help
-###  lib/wbconvert.dart: Warning: Interpreting this as package URI, 'package:nohfibu/wbconvert.dart'.
+###  bboett@videopi:fibu$ dart run bin/wbconvert.dart --help
+###  bin/wbconvert.dart: Warning: Interpreting this as package URI, 'package:nohfibu/wbconvert.dart'.
 ###  applying args: lang:de base:null out:null help:true strict:false  rest: []
 ###  -l, --lang           Language setting
 ###  		     (defaults to "de")
@@ -47,7 +47,7 @@ dart run lib/wbconvert.dart --help
 ###  -s, --[no-]strict    enforce old WB-Style parsing
 #to really convert something: relative pathes don't work, absolute do
 # easiest go to where the data is and call the script from there....
-dart run lib/wbconvert.dart -f modell -s
+dart run bin/wbconvert.dart -f <your kpl file> -s
 # this will generate a csv that can be further processed
 ```
 
