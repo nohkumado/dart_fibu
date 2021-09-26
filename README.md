@@ -3,7 +3,6 @@
 Dart implementation for financial accounting, according to the principle of the double account processing 
 first described in 1445 by Luca Paciolo.
 
-So far only a file converter from our old file format to a more modern csv format is available
 
 ## Getting Started
 
@@ -21,14 +20,14 @@ You will need a working dart (or today, flutter) installation
 
 
 ```bash
-cd projects # or wherever you store your stuff
-wget https://storage.googleapis.com/dart-archive/channels/stable/release/2.14.2/sdk/dartsdk-linux-arm64-release.zip
-unzip dartsdk-linux-arm64-release.zip 
-rm dartsdk-linux-arm64-release.zip 
-dart-sdk/bin/dart --version # check that the dart interpreter is working
-export PATH=$PATH:`pwd`/dart-sdk/bin # to enable dart locally in the actual shell
-git clone https://github.com/nohkumado/dart_fibu.git .
-cd dart_fibu/ # or wherever you store your stuff
+$ cd projects # or wherever you store your stuff
+$ wget https://storage.googleapis.com/dart-archive/channels/stable/release/2.14.2/sdk/dartsdk-linux-arm64-release.zip
+$ unzip dartsdk-linux-arm64-release.zip 
+$ rm dartsdk-linux-arm64-release.zip 
+$ dart-sdk/bin/dart --version # check that the dart interpreter is working
+$ export PATH=$PATH:`pwd`/dart-sdk/bin # to enable dart locally in the actual shell
+$ git clone https://github.com/nohkumado/dart_fibu.git .
+$ cd dart_fibu/ # or wherever you store your stuff
 ```
 
 ### Usage

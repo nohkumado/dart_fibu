@@ -18,9 +18,13 @@ void main() {
 	  var handler = CsvHandler();
 	  handler.load(book: book, conf: regl ) ;
 	  expect(book.jrl.count(), equals(999));
+	  book.clear();
 	  regl["base"] = "assets/wbsamples/sample";
 	  handler.load(book: book, conf: regl ) ;
-	  expect(book.jrl.count(), equals(999));
+	  expect(book.jrl.count(), equals(16));
+	  book.execute();
+	  print("after  execute : \n${book.kpl.get("3300")!.extract.toString()}");
+	  expect(book.kpl.get("3300")!.valuta, equals(16));
 	});
 
       });

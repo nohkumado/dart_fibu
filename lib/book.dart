@@ -19,4 +19,15 @@ class Book
     if(jrl != null) result += jrl.toString();
     return result;
   }
+  Book clear()
+  {
+    kpl.clear();
+    jrl.clear();
+    return this;
+  }
+  Book execute()
+  {
+    jrl.execute();
+    return this;
+  }
 }//class Book

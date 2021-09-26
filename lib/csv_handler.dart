@@ -85,7 +85,7 @@ class CsvHandler
 	  //print("treating[$mode] ${actLine}");
 	  if(mode == "kpl") 
 	  {
-	  //print("treating[$mode] ${actLine}");
+	  if(book.kpl == null) print("treating[$mode] ${actLine} ${book.kpl}");
 	    Konto res = book.kpl.put("${actLine[name]}", Konto(name: "${actLine[name]}", desc:actLine[desc], plan: book.kpl, valuta:actLine[valuta], cur:actLine[cur], budget:actLine[budget]));
 	  //print("added [$res]");
 	  }

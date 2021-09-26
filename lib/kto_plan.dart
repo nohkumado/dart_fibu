@@ -1,5 +1,9 @@
 import 'package:intl/intl.dart';
 import 'package:sprintf/sprintf.dart';
+import 'package:nohfibu/journal.dart';
+/**
+  a helper to add to currencies the right utf symbol
+  */
 String cur2sym(String name)
 {
 
@@ -15,6 +19,10 @@ String cur2sym(String name)
   }
   return sym;
 }
+
+
+/** the account plan
+  */
 class KontoPlan
 {
   //bestandsKonten
@@ -29,6 +37,8 @@ class KontoPlan
     konten.clear();
   }
 
+  /** return the asked account null if not found (BEWARE!!)
+    */
   Konto? get(String ktoName)
   {
     //print("ktop get for $ktoName");
@@ -46,6 +56,10 @@ class KontoPlan
       //print("ktop far enough no lolly");
     return null;
   }
+
+  /** set at ktoName (Treewise) the data if kto (kto will be discarded afterwards) 
+    create the account if needed
+    */
   Konto put(String ktoName, Konto kto)
   {
     if(ktoName.length < 1) print("Error, KPL, don't know how to add $kto @ $ktoName");
@@ -54,11 +68,12 @@ class KontoPlan
     {
       String key = ktoName[0];
       String rest = ktoName.substring(1, ktoName.length);
-      if(!konten.containsKey(key)) konten[key] = Konto(number: key);
+      if(!konten.containsKey(key)) konten[key] = Konto(number: key,  plan:this);
+
       //fetch the account, creating it on the way
       var locK = konten[key]!.get(rest,  orgName: ktoName);
       locK.name =  kto.name;
-      locK.plan =  kto.plan;
+      locK.plan =  this;
       locK.desc =  kto.desc;
       locK.cur =  kto.cur;
       locK.budget =  kto.budget;
@@ -67,6 +82,9 @@ class KontoPlan
     }
     return kto;
   }
+  /**
+    pretty print this thing
+    */
   @override
   String toString()
   {
@@ -81,6 +99,10 @@ class KontoPlan
     return(result);
   }
 
+  /**
+    return this as a list
+    used for exporting the data
+    */
   List<List<dynamic>> asList({bool all: false})
   {
     List<List<dynamic>> asList = [["KPL"], ["kto","dsc","cur","budget","valuta"]];
@@ -89,6 +111,9 @@ class KontoPlan
   }
 }
 
+/**
+  one account
+  */
 class Konto
 {
   String number  ="-1";
@@ -100,6 +125,7 @@ class Konto
   Map<String,Konto> children = {};
 
   String name = "no name";
+  late Journal extract;
 
 
   /**
@@ -121,6 +147,7 @@ class Konto
     if(valuta != null) this.valuta =valuta;
     if(budget != null) this.budget = budget;
     if(this.number == null) this.number = name[name.length-1];
+    extract = Journal(this.plan, caption: "Extract for ${this.name}");
   }
   /**
     setter for the values concerning this object
@@ -180,7 +207,7 @@ class Konto
       //   //orgName = name+orgName;
       // print("ehm  $ktoName differs from me ($number) .... rewriting orgName to $orgName" );
       // }
-      children[key] = Konto(number: key);
+      children[key] = Konto(number: key, plan:this);
       return children[key]!.get(ktoName.substring(1), orgName: orgName);
     }
     children[ktoName] = Konto(number: ktoName, name:orgName);
@@ -198,7 +225,7 @@ class Konto
     var f = NumberFormat.currency(symbol: cur2sym(cur));
     String pname = (name == "no name")? "$number": name;
     result = (debug)?"$indent$number. +$pname+  -$desc- ,=$cur=,  '$budget' #$valuta#":
-	(recursive && !empty && desc.length <=0)?"":  "$indent${sprintf("%#4s", [pname])}  ${sprintf("%-49s", [desc])} ${f.format(budget )}  ${f.format(valuta)}";
+	(recursive && !empty && desc.length <=0)?"":  "$indent${sprintf("%#4s", [pname])}  ${sprintf("%-49s", [desc])} ${sprintf("%12s", [f.format(budget)])}  ${sprintf("%12s", [f.format(valuta)])}";
 
     ;
     if(recursive)
@@ -238,19 +265,23 @@ class Konto
     children.forEach((key, value) { value.asList(asList: asList);});
     return asList;
   }
-    //return "$number $name $desc $cur $valuta $budget";
-}
-
-class KontoEintrag
-{
-  String name  ="";
-  KontoPlan plan = KontoPlan();
-  String titel = "kein  Titel";
-  //Waehrung wert;
-  //Waehrung budget;
-  //private Jrl myJournal;
-  //private ArrayList<BilanzLinie> block = new ArrayList<BilanzLinie>();
-  KontoEintrag({name, plan, titel})
+  /** 
+    add a journal line to our account extract, update the valuta
+    */
+  Konto action(JrlLine line, {String mode: "add"})
   {
+    if(mode == "add") valuta += line.valuta;
+    else valuta -= line.valuta;
+    //print("action for  $name ($mode) add line ${line.desc} and $valuta");
+    ExtractLine sline = new ExtractLine(line: line, sumup: valuta);
+    //print("$name adding to $extract \n $sline");
+    extract.add(new ExtractLine(line: line, sumup: valuta));
+    var f = NumberFormat.currency(symbol: cur2sym(cur));
+    String title = "  Extract for $name  ";
+    int tofill =  ((95 - title.length)/2).toInt();
+    extract.caption = "-"*tofill+title+"-"*tofill;
+    extract.endcaption = "_"*60+"Sum:  "+"_"*18+sprintf("%12s", [f.format(valuta)]);
+
+    return this;
   }
 }
