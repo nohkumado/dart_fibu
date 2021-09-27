@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:intl/intl.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:nohfibu/journal.dart';
+import 'dart:collection';
 /**
   a helper to add to currencies the right utf symbol
   */
@@ -27,7 +30,7 @@ class KontoPlan
 {
   //bestandsKonten
   //List<Konto> aktivKonten = [Konto(name: "soll"),Konto(name: "haben")], passivKonten= [Konto(name: "soll"),Konto(name: "haben")]; //jeweils gespalten in soll (vermehrung) und haben (verminderung)
-  Map<String, Konto> konten = {};
+  SplayTreeMap<String, Konto> konten = new SplayTreeMap<String, Konto>();
    //List<Konto> aktivKonten = [], passivKonten= []; //jeweils gespalten in soll (vermehrung) und haben (verminderung)
 
   void clear()
@@ -109,10 +112,37 @@ class KontoPlan
     konten.forEach((key, value) { value.asList(asList: asList, all:all);});
     return asList;
   }
+
+  String analysis()
+  {
+  String result = "="*30+"    Analysis    "+"="*30+"\n";
+  Konto activa = get("1")!;
+  Konto passiva = get("2")!;
+  Konto costs = get("3")!;
+  Konto incomes = get("4")!;
+  result += "Aktiva    \n"+ activa.toString(recursive: true)+"\n";
+  int sumActiva = activa.sum();
+  result += " " * 60+ "Aktiva insgesamt "+ activa.numFormat(sumActiva)+"\n";
+  result += "Passiva    \n"+ passiva.toString(recursive: true)+"\n";
+  int sumPassiva = activa.sum();
+  result += " " * 60+ "Passiva insgesamt "+ passiva.numFormat(sumPassiva)+"\n";
+  result += " " * 60+ "Ueberschuss "+ passiva.numFormat(sumActiva - sumPassiva)+"\n";
+  result += "Kosten    \n"+ costs.toString(recursive: true)+"\n";
+  int sumKosten = costs.sum();
+  result += " " * 60+ "Kosten insgesamt "+ activa.numFormat(sumKosten)+"\n";
+  result += "Einnahmen    \n"+ incomes.toString(recursive: true)+"\n";
+  int sumEinnahmen = incomes.sum();
+  result += " " * 60+ "Einnahmen insgesamt "+ passiva.numFormat(sumEinnahmen)+"\n";
+  result += " " * 60+ "Ueberschuss "+ passiva.numFormat(sumEinnahmen - sumKosten)+"\n";
+  result += " " * 50+ "Gueltigkeit (muss 0 sein) "+ passiva.numFormat((sumEinnahmen - sumKosten)+(sumActiva - sumPassiva))+"\n";
+  //print("retrieved : ${activa.toString(recursive: true)}");
+  return result;
+}
+
 }
 
 /**
-  one account
+    one account
   */
 class Konto
 {
@@ -301,5 +331,19 @@ class Konto
     extract.endcaption = "_"*60+"Sum:  "+"_"*18+sprintf("%12s", [f.format((valuta/100).toDouble())]);
 
     return this;
+  }
+  String numFormat(int toConvert )
+  {
+    var f = NumberFormat.currency(symbol: cur2sym(cur));
+    double valAsd = toConvert/100;
+    String result = "${sprintf("%12s", [f.format(valAsd)])}\n";
+    return result;
+  }
+
+  int sum()
+  {
+    int mysum = valuta;
+    children.forEach((key, value) { mysum += value.sum();});
+    return mysum;
   }
 }

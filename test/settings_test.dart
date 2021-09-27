@@ -19,12 +19,9 @@ void main() {
       regl.init(incoming);
       expect(regl["help"], equals(false));
       expect(regl["base"], equals(null));
-      expect(regl["type"], equals(null));
+      expect(regl["type"], equals("csv"));
       incoming = ["-q", "phan.kpl", "-v", "-e" , "de", "--help", "-o","test.csv"];;
       regl.init(incoming);
       expect(regl["error"], equals(true));
     });
-
-
-
 }

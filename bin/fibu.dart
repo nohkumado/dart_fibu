@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:nohfibu/settings.dart';
 import 'package:nohfibu/book.dart';
+import 'package:nohfibu/kto_plan.dart';
 import 'package:nohfibu/csv_handler.dart';
 
 class Fibu
@@ -20,9 +21,10 @@ class Fibu
     print("asked to run!");
     book.execute();//TODO we should report if there were errors....
 
-      String result = book.toString()+"\n";
-      result += book.kpl.toString(extracts: true);
-    return result; 
+    String result = book.toString()+"\n";
+    result += book.kpl.toString(extracts: true);
+    result += book.kpl.analysis();
+    return result;
   }
 
 }

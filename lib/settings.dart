@@ -8,14 +8,17 @@ class Settings
   List<String> rest = [];
   String usage = "";
   final parser = ArgParser();
-  Settings init(List<String> arguments)
+  Settings()
   {
-    data = {};
     parser..addOption('lang', abbr: 'l', defaultsTo: 'de', help: "Language setting")
 	..addOption('base', abbr: 'b', help: "Basename of the dataset, to set the type add the suffix, eg acc.kpl")
 	..addOption('output', abbr: 'o', help: "output name")
 	..addFlag('help', abbr: '\?', defaultsTo: false, help: "Help about the options")
 	..addFlag('strict', abbr: 's', defaultsTo: false, help: "enforce old WB-Style parsing");
+  }
+  Settings init(List<String> arguments)
+  {
+    data = {};
     usage = parser.usage;
     data["error"]  = false;
 
