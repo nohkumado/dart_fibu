@@ -96,6 +96,28 @@ dart compile exe  bin/fibu.dart -o ~/bin/fibu
 dart compile exe  bin/wbconvert.dart -o ~/bin/fibuwbconvert # to avoid name conflicts...
 ```
 
+You don't have to take my word for it, here an example of the speed up (on a raspberry pi, on my main comp, the times are all 0....):
+
+```bash
+bboett@videolan:~/projects/dart_fibu $ time ~/bin/fibu -r -b assets/wbsamples/me2000.csv 
+trying to fetch book from file assets/wbsamples/me2000.csv
+load Book: assets/wbsamples/me2000 csv  
+write seems successful, please check assets/wbsamples/me2000.lst
+
+real    0m0.819s
+user    0m0.732s
+sys     0m0.114s
+bboett@videolan:~/projects/dart_fibu $ time dart run bin/fibu.dart -r -b assets/wbsamples/me2000.csv 
+trying to fetch book from file assets/wbsamples/me2000.csv
+load Book: assets/wbsamples/me2000 csv  
+write seems successful, please check assets/wbsamples/me2000.lst
+
+real    0m15.438s
+user    0m22.081s
+sys     0m2.265s
+
+```
+
 
 ## Documentation
 
