@@ -1,12 +1,12 @@
 KPL
 kto,dsc,cur,budget,valuta
-1,*** fin des comptes actifs ***,EUR,0,0
+1,***comptes actifs ***,EUR,0,0
 1100,Caisse,EUR,0,0
 1200,c/c BNP,EUR,0,0
 1500,Avoirs en vue d'encaissement,EUR,0,0
 1600,Pertes exercice (->report),EUR,0,0
 1999,Giroconto,EUR,0,0
-2,*** fin des comptes passifs ***,EUR,0,0
+2,*** comptes passifs ***,EUR,0,0
 2300,Patrimoine,EUR,0,0
 2310,Reserve 1 / fonctionnement,EUR,0,0
 2320,Reserve 2 / actions sociales,EUR,0,0
@@ -16,7 +16,7 @@ kto,dsc,cur,budget,valuta
 2530,Frais Tresorier,EUR,0,0
 2550,Frais Benevoles,EUR,0,0
 2600,Excedents exercice (->report),EUR,0,0
-3,*** fin des comptes depenses ***,EUR,0,0
+3,*** comptes depenses ***,EUR,0,0
 3000,Budget Associatif (->report),EUR,0,0
 3002,Help Desk Associatif,EUR,60000,0
 3010,"Deplacements (viaMichelin,SNCF,Metro,...)",EUR,0,0
@@ -38,7 +38,7 @@ kto,dsc,cur,budget,valuta
 3951,Assistance sociale directe,EUR,0,0
 3952,Consultations juridiques,EUR,0,0
 3961,Divers,EUR,0,0
-4,*** fin des comptes encaissement ***,EUR,0,0
+4,*** comptes encaissement ***,EUR,0,0
 4100,Dotation Etat  France / fonctionnement,EUR,230000,0
 4200,Dotation Etat  France / actions sociales,EUR,390000,0
 4300,Contributions / rencontre annuelle,EUR,0,0

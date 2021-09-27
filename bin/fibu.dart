@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:nohfibu/settings.dart';
 import 'package:nohfibu/book.dart';
+import 'package:nohfibu/kto_plan.dart';
 import 'package:nohfibu/csv_handler.dart';
 
 class Fibu
@@ -24,8 +25,8 @@ class Fibu
     result += book.kpl.toString(extracts: true);
     result += "="*20+"    Analysis    "+"="*20+"\n";
     //result += "Aktiva    \n"+ (book.kpl.get("1")).toString(recursive: true)+"\n";
-    print("retrieved : ${book.kpl.get("1").toString(indent: " ")} of type ${book.kpl.get("1").runtimeType}");
-    return result; 
+    result += book.kpl.analysis();
+    return result;
   }
 
 }
