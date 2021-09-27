@@ -49,7 +49,7 @@ class WbConvert
       {
 	if(strict)
 	{
-      if(line == "/*EOF") continue;
+      if(line == "/*EOF"  ) break;
 	  //sscanf(zk,"%c %4d %49c%3c%12c", &kplc->seite,&kplc->knr,kplc->titel,&kplc->wn,tmpStr);
 	  List<int> cols = (line.length <= 80)? wbcols[71]!:wbcols[87]!;
 	  //print("used cols : $cols");
@@ -86,8 +86,8 @@ class WbConvert
 	//print("extracted +$ktoName+  -$desc- ,=$w=,  '$budget' #$valuta#");
 	//print("trying kto $ktoName");
 	int kto =int.parse(ktoName);
-	double bval =NumberFormat.currency().parse(budget).toDouble();
-	num vval = NumberFormat.currency().parse(valuta);
+	int bval =(NumberFormat.currency().parse(budget)*100).toInt();
+	int vval = (NumberFormat.currency().parse(valuta)*100).toInt();
 	if(kto == 0)
 	{
 	  //last.desc = desc;
@@ -98,7 +98,7 @@ class WbConvert
 	{
 	  toplvl = ktoName[0];
 	  //print("set topvö to $toplvl");
-	  Konto start= Konto(number: toplvl, name: ktoName, plan:  kpl, desc: desc, cur: w, budget: bval, valuta: vval.toDouble()) ;
+	  Konto start= Konto(number: toplvl, name: ktoName, plan:  kpl, desc: desc, cur: w, budget: bval, valuta: vval) ;
 	  kpl.put(ktoName,start);
 	  //print("filled kto : $start");
 	}
@@ -139,41 +139,42 @@ class WbConvert
       String desc = "";
       try
       {
-      if(strict)
-      {
-      if(line == "/*EOF") continue;
-	//sscanf(zk,"%c %4d %49c%3c%12c", &kplc->seite,&kplc->knr,kplc->titel,&kplc->wn,tmpStr);
-	//print("line $line length = ${line.length}");
+	if(strict)
+	{
+	  if(line == "/*EOF") break; //end parsing
+	  //sscanf(zk,"%c %4d %49c%3c%12c", &kplc->seite,&kplc->knr,kplc->titel,&kplc->wn,tmpStr);
+	  //print("line $line length = ${line.length}");
 	  List<int> cols = (line.length >= 80)? wbcols[80]!:wbcols[71]!;
 
-	datum = line.substring(cols[0],cols[1]).trim();
-	kminus = line.substring(cols[1],cols[2]).trim();
-	kplus = line.substring(cols[2],cols[3]).trim();
-	desc = line.substring(cols[3],cols[4]).trim();
-	w = line.substring(cols[4],cols[5]).trim();
-	valuta = line.substring(cols[5],line.length).trim();
-	//print("= '$datum' '$kminus' '$kplus' '$desc' '$w' '$valuta'");
-      }
-      else
-      {
-	final pattern = RegExp('\\s+');
-	line = line.replaceAll(pattern, " ").trim();
-	List<String> spcRm = line.split(" ");
-	if(spcRm.length < 6) {print("reject line $line");continue;}
-	datum = spcRm.removeAt(0);
-	kminus = spcRm.removeAt(0);
-	kplus = spcRm.removeAt(0);
-	valuta = spcRm.removeLast();
-	w = spcRm.removeLast();
-	desc = spcRm.join(" ");
-      }
+	  datum = line.substring(cols[0],cols[1]).trim();
+	  kplus = line.substring(cols[1],cols[2]).trim();
+	  kminus = line.substring(cols[2],cols[3]).trim();
+	  desc = line.substring(cols[3],cols[4]).trim();
+	  w = line.substring(cols[4],cols[5]).trim();
+	  valuta = line.substring(cols[5],line.length).trim();
+	  //print("= '$datum' '$kminus' '$kplus' '$desc' '$w' '$valuta'");
+	}
+	else
+	{
+	  if(line == "/*EOF") continue; //ignore this one
+	  final pattern = RegExp('\\s+');
+	  line = line.replaceAll(pattern, " ").trim();
+	  List<String> spcRm = line.split(" ");
+	  if(spcRm.length < 6) {print("reject line $line");continue;}
+	  datum = spcRm.removeAt(0);
+	  kminus = spcRm.removeAt(0);
+	  kplus = spcRm.removeAt(0);
+	  valuta = spcRm.removeLast();
+	  w = spcRm.removeLast();
+	  desc = spcRm.join(" ");
+	}
 	DateFormat format = new DateFormat("dd.MM.yy");
 	//print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
 	var pdate = format.parse(datum);
 	//print("extracted date +$pdate+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#\n");
 	//DateFormat format = DateFormat();
 	//double vval = (double.tryParse(valuta) != null)?double.tryParse(valuta):;
-	num vval = NumberFormat.currency().parse(valuta);
+	int vval = (NumberFormat.currency().parse(valuta)*100).toInt();
 	//print("extracted valuta loc:  as num +$valuta+ vs #$vval#");
 	//print("extracted valuta +$pdate+ -$kminus- -$kplus- -$desc- ,=$w=, #$vval#\n");
 	Konto? kp = kpl.get(kplus);

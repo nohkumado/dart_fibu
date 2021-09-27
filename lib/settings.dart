@@ -7,11 +7,11 @@ class Settings
   Map<String,dynamic> data = {};
   List<String> rest = [];
   String usage = "";
+  final parser = ArgParser();
   Settings init(List<String> arguments)
   {
     data = {};
-    final parser = ArgParser()
-	..addOption('lang', abbr: 'l', defaultsTo: 'de', help: "Language setting")
+    parser..addOption('lang', abbr: 'l', defaultsTo: 'de', help: "Language setting")
 	..addOption('base', abbr: 'b', help: "Basename of the dataset, to set the type add the suffix, eg acc.kpl")
 	..addOption('output', abbr: 'o', help: "output name")
 	..addFlag('help', abbr: '\?', defaultsTo: false, help: "Help about the options")
@@ -29,6 +29,7 @@ class Settings
       });
       rest = argResults.rest;
       //postprocessing
+      data["type"]  = "csv"; //csv is default
       if(data.containsKey("base") && data["base"].isNotEmpty) 
       {
 	//ok... we have a filled in base....
@@ -40,8 +41,9 @@ class Settings
 	}
 	if(data["type"] == "kpl" || data["type"]== "jrl") data["type"] = "wbstyle";
 	//print("match! splitted ${data["base"]} from ${data["type"]}");
-
+	if(data["output"] == null) data["output"] = data["base"]+".lst";
       }
+
     }
     catch(e)
     {
@@ -72,6 +74,6 @@ class Settings
   void operator []=(String key, dynamic val)
   {
     if(data == null) data = {};
-      data[key] = val;
+    data[key] = val;
   }
 }

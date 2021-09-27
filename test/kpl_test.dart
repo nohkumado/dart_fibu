@@ -10,25 +10,25 @@ void main() {
   setUp(()
       {
 	//book = new Book();
-    //print("in setup generated kpl : $book.kpl and book.jrl : $book.jrl");
+	//print("in setup generated kpl : $book.kpl and book.jrl : $book.jrl");
       });
   group('Konto', () {
-      var kto = Konto(number : "1",name: "1001", plan: book.kpl, valuta:10000.99, cur:"EUR", budget:999.12);
+    var kto = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
     test('Konto ', () {
       //kto.recursive = true;
       //print("kto : $kto");
       expect(kto.name, equals("1001"));
     });
     test('Setter ', () {
-      kto.set(name:"oyoyoy", valuta: 11111.99);
+      kto.set(name:"oyoyoy", valuta: 1111199);
       expect(kto.name, equals("oyoyoy"));
-      expect(kto.valuta, equals(11111.99));
+      expect(kto.valuta, equals(1111199));
     });
 
     test('Getter ', () {
       Konto secd = kto.get("oyoyoy");
       expect(secd.name, equals("oyoyoy"));
-      kto.set(name:"1001", valuta: 11111.99);
+      kto.set(name:"1001", valuta: 1111199);
       secd = kto.get("10010");
       expect(secd.name, equals("10010"));
       secd = kto.get("oyoyoy");
@@ -39,12 +39,12 @@ void main() {
       expect(secd.name, equals("oyoyoy"));
     });
     test('toString ', () {
-      kto.set(name:"1001",valuta: 10000.99);
-      expect(kto.toString(), equals("1001                                                    € 999.12  € 10,000.99"));
-      kto = Konto(number : "1",name: "1001", plan: book.kpl, valuta:10000.99, cur:"EUR", budget:999.12);
+      kto.set(name:"1001",valuta: 1000099);
+      expect(kto.toString(), equals("1001                                                        € 999.12   € 10,000.99"));
+      kto = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
       Konto sk =  kto.get("10010");
-      String target = "1001                                                    € 999.12  € 10,000.99\n"+
-	  ' 10010                                                    € 0.00  € 0.00\n';
+      String target = "1001                                                        € 999.12   € 10,000.99\n"+
+	  ' 10010                                                          € 0.00        € 0.00\n';
       expect(kto.toString(recursive: true,empty:true), equals(target));
     });
     test('printname ', () {
@@ -58,7 +58,7 @@ void main() {
       List<List<dynamic>>  res = [];
       kto.asList(asList: res);
       //print("asList returned $res");
-      expect(res, equals([["1001", "top account", "EUR", 999.12, 10000.99], ["10010", "bottom  account", "EUR", 0.0, 0.0]]));
+      expect(res, equals([["1001", "top account", "EUR", 99912, 1000099], ["10010", "bottom  account", "EUR", 00, 00]]));
     });
   });
 
@@ -66,41 +66,41 @@ void main() {
 
 
   group('Journal', ()
-  {
-      var kto1 = Konto(number : "1",name: "1001", plan: book.kpl, valuta:10000.99, cur:"EUR", budget:999.12);
-      var kto2 = Konto(number : "2",name: "2002", plan: book.kpl, valuta:80000.99, cur:"EUR", budget:888.12);
-    test('Journal Eintrag', () {
-      //print("global journal: ${book.jrl}");
-      var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 88888);
-      expect(line.desc, equals("test line"));
-      expect(line.toString(), equals("01-09-2021 1001 2002 test line                                         € 88,888.00"));
-      List<List> data = [];
-      line.asList(data);
-      expect(data, equals([['2021-09-01', '1001', '2002', 'test line', 'EUR', 88888]]));
-    });
+      {
+	var kto1 = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
+	var kto2 = Konto(number : "2",name: "2002", plan: book.kpl, valuta:8000099, cur:"EUR", budget:88812);
+	test('Journal Eintrag', () {
+	  //print("global journal: ${book.jrl}");
+	  var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
+	  expect(line.desc, equals("test line"));
+	  expect(line.toString(), equals("01-09-2021 1001 2002 test line                                          € 88,888.00"));
+	  List<List> data = [];
+	  line.asList(data);
+	  expect(data, equals([['2021-09-01', '1001', '2002', 'test line', 'EUR', 8888800]]));
+	});
 
 
 
-    test('Journal Eintrag', () {
-      //print("global journal: ${book.jrl}");
-      var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 88888);
-      List<List> data = [];
-  book.jrl.asList(data);
-      expect(data, equals([['JRL'], ['date', 'ktominus', 'ktoplus', 'desc', 'cur', 'valuta']]));
-      data = [];
-  book.jrl.add(line);
-  book.jrl.asList(data);
-      expect(data.length == 3 && data[2][0] == '2021-09-01', equals(true));
+	test('Journal Eintrag', () {
+	  //print("global journal: ${book.jrl}");
+	  var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
+	  List<List> data = [];
+	  book.jrl.asList(data);
+	  expect(data, equals([['JRL'], ['date', 'ktominus', 'ktoplus', 'desc', 'cur', 'valuta']]));
+	  data = [];
+	  book.jrl.add(line);
+	  book.jrl.asList(data);
+	  expect(data.length == 3 && data[2][0] == '2021-09-01', equals(true));
 
 
 
-  book.jrl.clear();
-      data = [];
-  book.jrl.asList(data);
-      expect(data.length == 2, equals(true));
-  book.jrl.add(line);
-  String result = '            Journal\n'+ '01-09-2021 1001 2002 test line                                         € 88,888.00\n'+ '          Journal End';
-      expect(book.jrl.toString(), equals(result));
-    });
-  });
+	  book.jrl.clear();
+	  data = [];
+	  book.jrl.asList(data);
+	  expect(data.length == 2, equals(true));
+	  book.jrl.add(line);
+	  String result = 'Journal\n'+ '01-09-2021 1001 2002 test line                                          € 88,888.00\n'+ 'Journal End';
+	  expect(book.jrl.toString(), equals(result));
+	});
+      });
 }

@@ -3,7 +3,7 @@ import 'package:nohfibu/kto_plan.dart';
 import 'package:sprintf/sprintf.dart';
 
 /**
-This class hold a list of lines, each caracterising an entry in an accounting journal
+  This class hold a list of lines, each caracterising an entry in an accounting journal
   */
 class Journal
 {
@@ -16,9 +16,9 @@ class Journal
     kpl = kplan; 
     //if(caption != null) 
     //{
-      this.caption = caption;
-      if(end == "End") endcaption = "$caption $end";
-      else  endcaption = "$end";
+    this.caption = caption;
+    if(end == "End") endcaption = "$caption $end";
+    else  endcaption = "$end";
     //}
   }
   List<JrlLine> journal = [];
@@ -27,7 +27,7 @@ class Journal
     */
   void clear()
   {
-     journal = [];
+    journal = [];
   }
 
   /**
@@ -56,14 +56,14 @@ class Journal
   List<List> asList(List<List> data)
   {
     data = (data==null)? []: data;
-    
+
     data.add(["JRL"]);
-  data.add(["date","ktominus","ktoplus","desc","cur","valuta"]);
-  journal.forEach((line) {line.asList(data); });
+    data.add(["date","ktominus","ktoplus","desc","cur","valuta"]);
+    journal.forEach((line) {line.asList(data); });
     return data;
   }
   /** return the number of entries in this journal
-    */
+  */
   int count() => journal.length;
   /** execute the accounting process, creating the subjournals, the account extracts for 
     each account update the valutas of each account
@@ -92,38 +92,39 @@ class JrlLine
   late Konto kminus; /// tghe account to be credited
   late String desc; ///  description of the transaction
   late String cur; /// the currency of the transaction
-  late num valuta; /// the value of the transaction
+  late int valuta; /// the value of the transaction
 
   /** CTOR
     the fields are optional, if omitted they will be filled with defaults
     */
- JrlLine({datum, kmin, kplu, desc, cur, valuta})
- {
-  // print("jline incoming +$datum+ -$kmin- -$kplu- -$desc- ,=$cur=, #$valuta#\n");
-   kplus =(kplu != null)?  kplu:Konto();
-   kminus = (kmin != null)? kmin:Konto();
-   this.desc = (desc != null)? desc: "none";
-   this.datum = (datum  != null )? datum: DateTime.now();
-   this.cur= (cur    != null )? cur :"EUR";
-   this.valuta =(valuta != null )? valuta: 0;
- }
+  JrlLine({datum, kmin, kplu, desc, cur, valuta})
+  {
+    // print("jline incoming +$datum+ -$kmin- -$kplu- -$desc- ,=$cur=, #$valuta#\n");
+    kplus =(kplu != null)?  kplu:Konto();
+    kminus = (kmin != null)? kmin:Konto();
+    this.desc = (desc != null)? desc: "none";
+    this.datum = (datum  != null )? datum: DateTime.now();
+    this.cur= (cur    != null )? cur :"EUR";
+    this.valuta =(valuta != null )? valuta: 0;
+  }
 
- /**
-   pretty print this thing
-   */
- @override
- String toString()
- {
-   final DateFormat formatter = DateFormat('dd-MM-yyyy');
-   final String formatted = formatter.format(datum);
-   var f = NumberFormat.currency(symbol: cur2sym(cur));
+  /**
+    pretty print this thing
+    */
+  @override
+  String toString()
+  {
+    final DateFormat formatter = DateFormat('dd-MM-yyyy');
+    final String formatted = formatter.format(datum);
+    var f = NumberFormat.currency(symbol: cur2sym(cur));
+    double valAsd = valuta/100;
 
-   String result = "$formatted ${kminus.printname()} ${kplus.printname()} ${sprintf("%-49s", [desc])} ${sprintf("%12s", [f.format(valuta)])}";
-   return result;
- }
+    String result = "$formatted ${kminus.printname()} ${kplus.printname()} ${sprintf("%-49s", [desc])} ${sprintf("%12s", [f.format(valAsd)])}";
+    return result;
+  }
 
- /** return a list abstraction model of this object
-   */
+  /** return a list abstraction model of this object
+  */
   void asList(List<List> data)
   {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
@@ -132,7 +133,7 @@ class JrlLine
   }
 
   /** ask the 2 accounts to add this line to their extracts
-    */
+  */
   JrlLine execute()
   {
     kminus.action(this,mode:"sub");
@@ -153,30 +154,30 @@ class ExtractLine implements JrlLine
   void set desc(value)     => values.desc = value   ; ///  description of the transaction
   String get cur      => values.cur    ; /// the currency of the transaction
   void set cur(value)      => values.cur  = value   ; /// the currency of the transaction
-  num get valuta     => valuta; /// the value of the transaction
+  int get valuta     => valuta; /// the value of the transaction
   void set valuta(value)     => valuta = value; /// the value of the transaction
-  double actSum = 0; //to store the intermediate sum of the account
+  int actSum = 0; //to store the intermediate sum of the account
   late JrlLine values; /// the value of the transaction
 
   /** CTOR
     the fields are optional, if omitted they will be filled with defaults
     */
- ExtractLine({JrlLine? line, double sumup: 0})
- {
-   values = (line == null)? JrlLine():line;
-   actSum = (sumup != null)? sumup:0;
- }
+  ExtractLine({JrlLine? line, int sumup: 0})
+  {
+    values = (line == null)? JrlLine():line;
+    actSum = (sumup != null)? sumup:0;
+  }
 
- /**
-   pretty print this thing
-   */
- @override
- String toString()
- {
-   var f = NumberFormat.currency(symbol: cur2sym(cur));
-   String result = "${values.toString()} ${sprintf("%12s", [f.format(actSum)])}";
-   return result;
- }
+  /**
+    pretty print this thing
+    */
+  @override
+  String toString()
+  {
+    var f = NumberFormat.currency(symbol: cur2sym(cur));
+    String result = "${values.toString()} ${sprintf("%12s", [f.format((actSum/100).toDouble())])}";
+    return result;
+  }
   void asList(List<List> data) => values.asList(data);
   JrlLine execute() => values.execute();
 }

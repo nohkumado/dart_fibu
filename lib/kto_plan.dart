@@ -86,12 +86,12 @@ class KontoPlan
     pretty print this thing
     */
   @override
-  String toString()
+  String toString({bool extracts: false})
   {
     String result = "              Konto Plan \n";
     konten.forEach((key, kto)
     {
-     result += kto.toString(recursive: true)+"\n";
+     result += kto.toString(recursive: true, extracts: extracts)+"\n";
     });
     result += "         Ende Konto Plan \n";
     //print("extracted +$ktoName+  -$desc- ,=$w=,  '$budget' #$valuta#\n");
@@ -120,8 +120,8 @@ class Konto
   String desc  ="";
   KontoPlan plan = KontoPlan();
   String cur = "EUR"; //currency
-  double valuta = 0;
-  double budget = 0;
+  int valuta = 0;
+  int budget = 0;
   Map<String,Konto> children = {};
 
   String name = "no name";
@@ -219,23 +219,41 @@ class Konto
     by recursing through the sub accounts below this one
     */
   @override
-  String toString({String indent: "", bool debug: false,bool recursive = false, empty: false})
+  String toString({String indent: "", bool debug: false,bool recursive = false, empty: false,bool extracts: false})
   {
     String result = "";
-    var f = NumberFormat.currency(symbol: cur2sym(cur));
-    String pname = (name == "no name")? "$number": name;
-    result = (debug)?"$indent$number. +$pname+  -$desc- ,=$cur=,  '$budget' #$valuta#":
-	(recursive && !empty && desc.length <=0)?"":  "$indent${sprintf("%#4s", [pname])}  ${sprintf("%-49s", [desc])} ${sprintf("%12s", [f.format(budget)])}  ${sprintf("%12s", [f.format(valuta)])}";
-
+    if(extracts) 
+    {
+      //print("trying to add '${extract.toString()}'");
+      if(empty) result += extract.toString();
+      else if(extract.journal.length >0) 
+      {
+	result += extract.toString()+"\n";
+	//String pff=  extract.toString();
+	//if(pff.isNotEmpty) { print("adding ### $pff ####");result += pff;}
+	//else print("rejecting $pff");
+      }
+    }
+    else
+    {
+      var f = NumberFormat.currency(symbol: cur2sym(cur));
+      double valAsd = valuta/100;
+      double budAsd = budget/100;
+      String pname = (name == "no name")? "$number": name;
+      result = (debug)?"$indent$number. +$pname+  -$desc- ,=$cur=,  '$budget' #$valuta#\n":
+	  (recursive && !empty && desc.length <=0)?"":  "$indent${sprintf("%#4s", [pname])}  ${sprintf("%-49s", [desc])} ${sprintf("%12s", [f.format(budAsd)])}  ${sprintf("%12s", [f.format(valAsd)])}\n";
+    }
     ;
+
     if(recursive)
     {
       //var f = NumberFormat("###,###,###.00");
-      result += (desc.length >0 || empty)?"\n":"";
+      //result += (desc.length >0 || empty)?"##$empty\n":"";
       children.forEach((key, kto)
 	  {
 	    //result += kto.toString(indent:indent+"$number"); //debug, just to check depth
-	    result += kto.toString(indent:indent+" ", recursive: true, debug: debug, empty: true);
+	    String sres = kto.toString(indent:indent+" ", recursive: true, debug: debug, empty: empty, extracts: extracts);
+	    if(sres.trim().isNotEmpty) result += "$sres";
 	  });
     }
     //print("extracted +$ktoName+  -$desc- ,=$w=,  '$budget' #$valuta#\n");
@@ -280,7 +298,7 @@ class Konto
     String title = "  Extract for $name  ";
     int tofill =  ((95 - title.length)/2).toInt();
     extract.caption = "-"*tofill+title+"-"*tofill;
-    extract.endcaption = "_"*60+"Sum:  "+"_"*18+sprintf("%12s", [f.format(valuta)]);
+    extract.endcaption = "_"*60+"Sum:  "+"_"*18+sprintf("%12s", [f.format((valuta/100).toDouble())]);
 
     return this;
   }

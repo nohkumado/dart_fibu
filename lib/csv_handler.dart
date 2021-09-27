@@ -40,7 +40,7 @@ class CsvHandler
     if(conf != null) settings= conf;
     if(settings["type"] != "csv")
     {
-      print("Error: csv handler can't write something aelse as csv");
+      print("Error: csv handler can't read  '${settings["type"]}' only .csv");
       return;
     }
     print("load Book: ${settings["base"]} ${settings["type"]}  ");

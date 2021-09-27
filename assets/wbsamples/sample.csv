@@ -1,64 +1,64 @@
 KPL
 kto,dsc,cur,budget,valuta
-1,*** fin des comptes actifs ***,EUR,0.0,0.0
-1100,Caisse,EUR,0.0,0.0
-1200,c/c BNP,EUR,0.0,0.0
-1500,Avoirs en vue d'encaissement,EUR,0.0,0.0
-1600,Pertes exercice (->report),EUR,0.0,0.0
-1999,Giroconto,EUR,0.0,0.0
-2,*** fin des comptes passifs ***,EUR,0.0,0.0
-2300,Patrimoine,EUR,0.0,0.0
-2310,Reserve 1 / fonctionnement,EUR,0.0,0.0
-2320,Reserve 2 / actions sociales,EUR,0.0,0.0
-2500,Devoirs exercice  courant,EUR,0.0,0.0
-2510,Frais President,EUR,0.0,0.0
-2520,Frais Secretaire,EUR,0.0,0.0
-2530,Frais Tresorier,EUR,0.0,0.0
-2550,Frais Benevoles,EUR,0.0,0.0
-2600,Excedents exercice (->report),EUR,0.0,0.0
-3,*** fin des comptes depenses ***,EUR,0.0,0.0
-3000,Budget Associatif (->report),EUR,0.0,0.0
-3002,Help Desk Associatif,EUR,600.0,0.0
-3010,"Deplacements (viaMichelin,SNCF,Metro,...)",EUR,0.0,0.0
-3040,"Communications (Tel, Fax, Internet, Serveur ...)",EUR,0.0,0.0
-3050,Affranchissements,EUR,300.0,0.0
-3060,Photocopies,EUR,300.0,0.0
-3070,"Fournitures (Papier, Enveloppes, Cartouches,...)",EUR,100.0,0.0
-3080,"Divers (gerbes, cadeaux .........)",EUR,500.0,0.0
-3250,Frais bancaires,EUR,0.0,0.0
-3300,Assemblee Regionale Annuelle,EUR,500.0,0.0
-3310,(reserve),EUR,0.0,0.0
-3500,Budget Actions Sociales (->report),EUR,0.0,0.0
-3702,Help Desk social site 2,EUR,1200.0,0.0
-3801,Postes et Telecom,EUR,1000.0,0.0
-3802,Guides et Brochures,EUR,200.0,0.0
-3901,Formation benevoles,EUR,0.0,0.0
-3902,Deplacements benevoles,EUR,1500.0,0.0
-3903,Assurances et divers,EUR,0.0,0.0
-3951,Assistance sociale directe,EUR,0.0,0.0
-3952,Consultations juridiques,EUR,0.0,0.0
-3961,Divers,EUR,0.0,0.0
-4,*** fin des comptes encaissement ***,EUR,0.0,0.0
-4100,Dotation Etat  France / fonctionnement,EUR,2300.0,0.0
-4200,Dotation Etat  France / actions sociales,EUR,3900.0,0.0
-4300,Contributions / rencontre annuelle,EUR,0.0,0.0
-4400,Contributions / X,EUR,0.0,0.0
-4999,Encaissements divers,EUR,0.0,0.0
+1,*** fin des comptes actifs ***,EUR,0,0
+1100,Caisse,EUR,0,0
+1200,c/c BNP,EUR,0,0
+1500,Avoirs en vue d'encaissement,EUR,0,0
+1600,Pertes exercice (->report),EUR,0,0
+1999,Giroconto,EUR,0,0
+2,*** fin des comptes passifs ***,EUR,0,0
+2300,Patrimoine,EUR,0,0
+2310,Reserve 1 / fonctionnement,EUR,0,0
+2320,Reserve 2 / actions sociales,EUR,0,0
+2500,Devoirs exercice  courant,EUR,0,0
+2510,Frais President,EUR,0,0
+2520,Frais Secretaire,EUR,0,0
+2530,Frais Tresorier,EUR,0,0
+2550,Frais Benevoles,EUR,0,0
+2600,Excedents exercice (->report),EUR,0,0
+3,*** fin des comptes depenses ***,EUR,0,0
+3000,Budget Associatif (->report),EUR,0,0
+3002,Help Desk Associatif,EUR,60000,0
+3010,"Deplacements (viaMichelin,SNCF,Metro,...)",EUR,0,0
+3040,"Communications (Tel, Fax, Internet, Serveur ...)",EUR,0,0
+3050,Affranchissements,EUR,30000,0
+3060,Photocopies,EUR,30000,0
+3070,"Fournitures (Papier, Enveloppes, Cartouches,...)",EUR,10000,0
+3080,"Divers (gerbes, cadeaux .........)",EUR,50000,0
+3250,Frais bancaires,EUR,0,0
+3300,Assemblee Regionale Annuelle,EUR,50000,0
+3310,(reserve),EUR,0,0
+3500,Budget Actions Sociales (->report),EUR,0,0
+3702,Help Desk social site 2,EUR,120000,0
+3801,Postes et Telecom,EUR,100000,0
+3802,Guides et Brochures,EUR,20000,0
+3901,Formation benevoles,EUR,0,0
+3902,Deplacements benevoles,EUR,150000,0
+3903,Assurances et divers,EUR,0,0
+3951,Assistance sociale directe,EUR,0,0
+3952,Consultations juridiques,EUR,0,0
+3961,Divers,EUR,0,0
+4,*** fin des comptes encaissement ***,EUR,0,0
+4100,Dotation Etat  France / fonctionnement,EUR,230000,0
+4200,Dotation Etat  France / actions sociales,EUR,390000,0
+4300,Contributions / rencontre annuelle,EUR,0,0
+4400,Contributions / X,EUR,0,0
+4999,Encaissements divers,EUR,0,0
 JRL
 date,ktominus,ktoplus,desc,cur,valuta
-2016-11-01,1200,   0,Report compte courant,EUR,3018.6
-2016-11-01,1600,   0,Report pertes exercice 2015/2016,EUR,180.77
-2016-11-01,   0,2300,Report patrimoine au 31/10/2016,EUR,2424.37
-2016-11-01,   0,2500,Report dette vers          fact. bus,EUR,650.0
-2016-11-01,   0,2500,Report dette vers OfficeTourisme,EUR,125.0
-2016-11-01,2300,1600,Absorption pertes 2015/2016 par patrimoine,EUR,180.77
-2016-11-15,2500,1200,chq373                   non enregistre,EUR,125.0
-2016-11-28,3050,2530,frais postaux /envoie documents,EUR,5.93
-2016-12-01,2500,1200,encaissement chq par Exemple,EUR,650.0
-2017-04-21,3250,1200,commission act.dossier,EUR,90.0
-2017-10-02,3300,2530,Rencontre 2017 Site2: pbs guide,EUR,40.0
-2017-10-02,3300,2530,Rencontre 2017 Site2: pbs chauffeur,EUR,20.0
-2017-10-03,3300,2530,Rencontre 2017 Site2: pbs chauffeur,EUR,20.0
-2017-10-04,3300,2530,Rencontre 2017 Site2: pbs chauffeur,EUR,30.0
-2017-10-09,2530,1200,chq1234567 remb.frais tresorier,EUR,115.93
-2017-10-31,1600,4999,encaissement fictif de cloture,EUR,205.93
+2016-11-01,   0,1200,Report compte courant,EUR,301860
+2016-11-01,   0,1600,Report pertes exercice 2015/2016,EUR,18077
+2016-11-01,2300,   0,Report patrimoine au 31/10/2016,EUR,242437
+2016-11-01,2500,   0,Report dette vers          fact. bus,EUR,65000
+2016-11-01,2500,   0,Report dette vers OfficeTourisme,EUR,12500
+2016-11-01,1600,2300,Absorption pertes 2015/2016 par patrimoine,EUR,18077
+2016-11-15,1200,2500,chq373                   non enregistre,EUR,12500
+2016-11-28,2530,3050,frais postaux /envoie documents,EUR,593
+2016-12-01,1200,2500,encaissement chq par Exemple,EUR,65000
+2017-04-21,1200,3250,commission act.dossier,EUR,9000
+2017-10-02,2530,3300,Rencontre 2017 Site2: pbs guide,EUR,4000
+2017-10-02,2530,3300,Rencontre 2017 Site2: pbs chauffeur,EUR,2000
+2017-10-03,2530,3300,Rencontre 2017 Site2: pbs chauffeur,EUR,2000
+2017-10-04,2530,3300,Rencontre 2017 Site2: pbs chauffeur,EUR,3000
+2017-10-09,1200,2530,chq1234567 remb.frais tresorier,EUR,11593
+2017-10-31,4999,1600,encaissement fictif de cloture,EUR,20593

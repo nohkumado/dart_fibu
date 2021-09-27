@@ -12,11 +12,17 @@ class Book
     if(jrl == null) this.jrl = Journal(this.kpl);
   }
   @override
-  String toString()
+  String toString({bool extracts: false})
   {
     String result  ="";
     if(kpl != null) result += kpl.toString()+"\n";
     if(jrl != null) result += jrl.toString();
+    if(kpl != null && extracts)
+    {
+      result += "\n";
+      result += kpl.toString(extracts: true)+"\n";
+
+    }
     return result;
   }
   Book clear()

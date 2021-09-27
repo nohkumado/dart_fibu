@@ -15,13 +15,22 @@ class Fibu
     if(strict) this.strict = true;
   }
 
+  String execute()
+  {
+    print("asked to run!");
+    book.execute();//TODO we should report if there were errors....
 
+      String result = book.toString()+"\n";
+      result += book.kpl.toString(extracts: true);
+    return result; 
+  }
 
 }
 main(List<String> arguments) //async
 {
   //print("incoming : $arguments");
   Settings settings = Settings();
+  settings.parser.addFlag('run', abbr: 'r', defaultsTo:false, help: "run the accounting process");
   settings.init(arguments);
   Fibu fibu = Fibu();
 
@@ -34,7 +43,7 @@ main(List<String> arguments) //async
     exit(0);
   }
 
-  if(settings["base"] != "" )
+  if(settings["base"] != null &&  settings["base"].isNotEmpty)
   {
     //print("opening file ${settings["base"]}");
     String basename = settings["base"];
@@ -42,7 +51,17 @@ main(List<String> arguments) //async
     print("trying to fetch book from file $fname");
     var handler = CsvHandler();
     handler.load(book: fibu.book, conf: settings );
-      print("book so far: ${fibu.book}");
+    if(settings["run"])
+    {
+      String result = fibu.execute();
+      fname = (settings["output"].isNotEmpty)?settings["output"]:basename+".lst";
+      //print ("retrieved\n$result");
+    File(fname).writeAsString(result).then((file)
+	{
+	  print("write seems successful, please check $fname");
+	});
+    }
+    else print("book so far: ${fibu.book}");
   }
   else print("no file to load");
   print("end of processing");

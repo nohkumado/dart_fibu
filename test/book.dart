@@ -24,7 +24,25 @@ void main() {
 	  expect(book.jrl.count(), equals(16));
 	  book.execute();
 	  print("after  execute : \n${book.kpl.get("3300")!.extract.toString()}");
-	  expect(book.kpl.get("3300")!.valuta, equals(16));
+	  expect(book.kpl.get("1200")!.valuta, equals(203767));
+	  expect(book.kpl.get("1600")!.valuta, equals(20593));
+	  expect(book.kpl.get("2300")!.valuta, equals(-224360));
+	  expect(book.kpl.get("2500")!.valuta, equals(0));
+	  expect(book.kpl.get("2530")!.valuta, equals(000));
+	  expect(book.kpl.get("3050")!.valuta, equals(593));
+	  expect(book.kpl.get("3250")!.valuta, equals(9000));
+	  expect(book.kpl.get("3300")!.valuta, equals(11000));
+	  expect(book.kpl.get("4999")!.valuta, equals(-20593));
+	  expect(book.kpl.get("3040")!.valuta, equals(0000));
+	  expect(book.kpl.get("3060")!.valuta, equals(0000));
+	  expect(book.kpl.get("3070")!.valuta, equals(0000));
+	  expect(book.kpl.get("3080")!.valuta, equals(0000));
+	  expect(book.kpl.get("3702")!.valuta, equals(0000));
+	  expect(book.kpl.get("3801")!.valuta, equals(0000));
+	  expect(book.kpl.get("3802")!.valuta, equals(0000));
+	  expect(book.kpl.get("3902")!.valuta, equals(0000));
+	  expect(book.kpl.get("4100")!.valuta, equals(0000));
+	  expect(book.kpl.get("4200")!.valuta, equals(000));
 	});
 
       });
