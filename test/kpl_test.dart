@@ -40,7 +40,7 @@ void main() {
     });
     test('toString ', () {
       kto.set(name:"1001",valuta: 1000099);
-      expect(kto.toString(), equals("1001                                                        € 999.12   € 10,000.99"));
+      expect(kto.toString(), equals("1001                                                        € 999.12   € 10,000.99\n"));
       kto = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
       Konto sk =  kto.get("10010");
       String target = "1001                                                        € 999.12   € 10,000.99\n"+

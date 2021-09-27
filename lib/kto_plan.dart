@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:nohfibu/journal.dart';
+import 'dart:collection';
 /**
   a helper to add to currencies the right utf symbol
   */
@@ -27,7 +28,7 @@ class KontoPlan
 {
   //bestandsKonten
   //List<Konto> aktivKonten = [Konto(name: "soll"),Konto(name: "haben")], passivKonten= [Konto(name: "soll"),Konto(name: "haben")]; //jeweils gespalten in soll (vermehrung) und haben (verminderung)
-  Map<String, Konto> konten = {};
+  SplayTreeMap<String, Konto> konten = new SplayTreeMap<String, Konto>();
    //List<Konto> aktivKonten = [], passivKonten= []; //jeweils gespalten in soll (vermehrung) und haben (verminderung)
 
   void clear()

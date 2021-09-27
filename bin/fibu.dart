@@ -20,8 +20,11 @@ class Fibu
     print("asked to run!");
     book.execute();//TODO we should report if there were errors....
 
-      String result = book.toString()+"\n";
-      result += book.kpl.toString(extracts: true);
+    String result = book.toString()+"\n";
+    result += book.kpl.toString(extracts: true);
+    result += "="*20+"    Analysis    "+"="*20+"\n";
+    //result += "Aktiva    \n"+ (book.kpl.get("1")).toString(recursive: true)+"\n";
+    print("retrieved : ${book.kpl.get("1").toString(indent: " ")} of type ${book.kpl.get("1").runtimeType}");
     return result; 
   }
 
