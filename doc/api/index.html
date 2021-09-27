@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 2.0.0">
+  <meta name="description" content="nohfibu API docs, for the Dart programming language.">
+  <title>nohfibu - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href=""
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="https://www.nohkumado.eu/nohfibu/">nohfibu package</a></li>
+  </ol>
+  <div class="self-name">nohfibu</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="dart-finanz-buchhaltung">Dart Fi(nanz) Bu(chhaltung)</h1>
+<p>Dart implementation for financial accounting, according to the principle of the double account processing 
+first described in 1445 by Luca Paciolo.</p>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="how-to-run-wbconvert">How to run wbconvert</h3>
+<p>You will need a working dart (or today, flutter) installation</p>
+<h3 id="how-to-run-wbconvert-on-a-raspberry-pi-arm64">How to run wbconvert on a raspberry pi (arm64)</h3>
+<blockquote>
+<p><strong>WARNING</strong>: if not otherwise specified, never execute anything as root user,</p>
+<p>if you do, be prepared for a hell of pain! 
+<strong>you are warned!</strong></p>
+</blockquote>
+<pre class="language-bash"><code class="language-bash">$ cd projects # or wherever you store your stuff
+$ wget https://storage.googleapis.com/dart-archive/channels/stable/release/2.14.2/sdk/dartsdk-linux-arm64-release.zip
+$ unzip dartsdk-linux-arm64-release.zip 
+$ rm dartsdk-linux-arm64-release.zip 
+$ dart-sdk/bin/dart --version # check that the dart interpreter is working
+$ export PATH=$PATH:`pwd`/dart-sdk/bin # to enable dart locally in the actual shell
+$ git clone https://github.com/nohkumado/dart_fibu.git .
+$ cd dart_fibu/ # or wherever you store your stuff
+</code></pre>
+<p>afterwards if you want to update the project to the actual active version you just need to</p>
+<pre class="language-dart"><code>git pull
+
+</code></pre>
+<h3 id="usage">Usage</h3>
+<h4 id="the-converter">The converter</h4>
+<p>this converter has the function to convert our old data into csv that will be imported into the new
+dart fibu</p>
+<pre class="language-bash"><code class="language-bash">dart run bin/wbconvert.dart --help
+##### sample output #################################
+###  bboett@videopi:fibu$ dart run bin/wbconvert.dart --help
+###  bin/wbconvert.dart: Warning: Interpreting this as package URI, 'package:nohfibu/wbconvert.dart'.
+###  applying args: lang:de base:null out:null help:true strict:false  rest: []
+###  -l, --lang           Language setting
+###  		     (defaults to "de")
+###  -f, --file           Basename of the dataset
+###  -o, --output         output name
+###  -?, --[no-]help      Help about the options
+###  -s, --[no-]strict    enforce old WB-Style parsing
+#to really convert something: relative pathes don't work, absolute do
+# easiest go to where the data is and call the script from there....
+dart run bin/wbconvert.dart -f &lt;your kpl file&gt; -s
+# this will generate a csv that can be further processed
+</code></pre>
+<h4 id="fibu">fibu</h4>
+<pre class="language-bash"><code class="language-bash">$ dart run bin/fibu.dart --help # to test directly from the source dir
+$ fibu --help # if you have activated the project, or precompiled
+$ fibu -r -b assets/wbsamples/sample # will analyze the .csv file and produce a .lst result file
+</code></pre>
+<p>at the moment issues only to read in csv file, but will be extended in a future version</p>
+<h3 id="installationactivation">Installation/activation</h3>
+<p>Once this runs, you can activate the project, we suppose you haven't done any cd'ing in the meantime:</p>
+<blockquote>
+<p><strong>You need to repeat this after updates  if some binaries are missing!</strong></p>
+</blockquote>
+<pre class="language-bash"><code class="language-bash">$ dart pub global activate --source path `pwd`
+</code></pre>
+<p>and after adding (don't forget the dart sdk path if you installed it locally)
+<code>export PATH="$PATH":"$HOME/.pub-cache/bin"</code>
+to your <code>~/.bashrc</code> you can simply run</p>
+<p><code>wbconvert -f modell -s</code></p>
+<h4 id="precompilation">Precompilation</h4>
+<p>instead of activating the project, you can also precompile them, which makes them way faster!</p>
+<pre class="language-bash"><code class="language-bash">dart compile exe  bin/fibu.dart -o ~/bin/fibu
+dart compile exe  bin/wbconvert.dart -o ~/bin/fibuwbconvert # to avoid name conflicts...
+</code></pre>
+<p>You don't have to take my word for it, here an example of the speed up (on a raspberry pi, on my main comp, the times are all 0....):</p>
+<pre class="language-bash"><code class="language-bash">bboett@videolan:~/projects/dart_fibu $ time ~/bin/fibu -r -b assets/wbsamples/me2000.csv 
+trying to fetch book from file assets/wbsamples/me2000.csv
+load Book: assets/wbsamples/me2000 csv  
+write seems successful, please check assets/wbsamples/me2000.lst
+
+real    0m0.819s
+user    0m0.732s
+sys     0m0.114s
+bboett@videolan:~/projects/dart_fibu $ time dart run bin/fibu.dart -r -b assets/wbsamples/me2000.csv 
+trying to fetch book from file assets/wbsamples/me2000.csv
+load Book: assets/wbsamples/me2000 csv  
+write seems successful, please check assets/wbsamples/me2000.lst
+
+real    0m15.438s
+user    0m22.081s
+sys     0m2.265s
+
+</code></pre>
+<h2 id="documentation">Documentation</h2>
+<p>the documentation written for the C wb fibu, one day soon, hopefully, i will extend it to include the 
+dart version, <a href="https://www.nohkumado.eu/nohfibu/">https://www.nohkumado.eu/nohfibu/</a> still logic and theory will be the same, so please 
+adapt as fit, but its still usable.</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="book">
+  <span class="name"><a href="book/book-library.html">book</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="csv_handler">
+  <span class="name"><a href="csv_handler/csv_handler-library.html">csv_handler</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="journal">
+  <span class="name"><a href="journal/journal-library.html">journal</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="kto_plan">
+  <span class="name"><a href="kto_plan/kto_plan-library.html">kto_plan</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="noh_fibu">
+  <span class="name"><a href="noh_fibu/noh_fibu-library.html">noh_fibu</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="settings">
+  <span class="name"><a href="settings/settings-library.html">settings</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="https://www.nohkumado.eu/nohfibu/">nohfibu package</a></li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">nohfibu</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="book/book-library.html">book</a></li>
+      <li><a href="csv_handler/csv_handler-library.html">csv_handler</a></li>
+      <li><a href="journal/journal-library.html">journal</a></li>
+      <li><a href="kto_plan/kto_plan-library.html">kto_plan</a></li>
+      <li><a href="noh_fibu/noh_fibu-library.html">noh_fibu</a></li>
+      <li><a href="settings/settings-library.html">settings</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    nohfibu
+      0.0.1-alpha
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+

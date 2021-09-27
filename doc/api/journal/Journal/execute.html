@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the execute method from the Journal class, for the Dart programming language.">
+  <title>execute method - Journal class - journal library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">nohfibu</a></li>
+    <li><a href="../../journal/journal-library.html">journal</a></li>
+    <li><a href="../../journal/Journal-class.html">Journal</a></li>
+    <li class="self-crumb">execute method</li>
+  </ol>
+  <div class="self-name">execute</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">execute</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="../../journal/Journal-class.html">Journal</a></span>
+<span class="name ">execute</span>(<wbr>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>execute the accounting process, creating the subjournals, the account extracts for 
+each account update the valutas of each account</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Journal execute()
+{
+  DateTime minTime = DateTime.now();
+  DateTime maxTime = DateTime.now().subtract(const Duration(days: 365));
+  journal.forEach((line)
+	{
+	  &#47;&#47;print(&quot;excuting exe for $line&quot;);
+	  if(line.datum.compareTo(minTime) &lt; 0) minTime = line.datum;
+	  if(line.datum.compareTo(maxTime)&gt;0) maxTime = line.datum;
+	  line.execute();
+	});
+  caption  =  &quot;Journal from $minTime to $maxTime&quot;;
+  return this;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">nohfibu</a></li>
+  <li><a href="../../journal/journal-library.html">journal</a></li>
+  <li><a href="../../journal/Journal-class.html">Journal</a></li>
+  <li class="self-crumb">execute method</li>
+</ol>
+
+
+    <h5>Journal class</h5>
+    <ol>
+
+    <li class="section-title"><a href="../../journal/Journal-class.html#constructors">Constructors</a></li>
+    <li><a href="../../journal/Journal/Journal.html">Journal</a></li>
+
+
+    <li class="section-title">
+      <a href="../../journal/Journal-class.html#instance-properties">Properties</a>
+    </li>
+    <li><a href="../../journal/Journal/caption.html">caption</a></li>
+    <li><a href="../../journal/Journal/endcaption.html">endcaption</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.14.2/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li><a href="../../journal/Journal/journal.html">journal</a></li>
+    <li><a href="../../journal/Journal/kpl.html">kpl</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.14.2/dart-core/Object/runtimeType.html">runtimeType</a></li>
+
+    <li class="section-title"><a href="../../journal/Journal-class.html#instance-methods">Methods</a></li>
+    <li><a href="../../journal/Journal/add.html">add</a></li>
+    <li><a href="../../journal/Journal/asList.html">asList</a></li>
+    <li><a href="../../journal/Journal/clear.html">clear</a></li>
+    <li><a href="../../journal/Journal/count.html">count</a></li>
+    <li><a href="../../journal/Journal/execute.html">execute</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.14.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li><a href="../../journal/Journal/toString.html">toString</a></li>
+
+    <li class="section-title inherited"><a href="../../journal/Journal-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.14.2/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    nohfibu
+      0.0.1-alpha
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+

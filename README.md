@@ -74,7 +74,7 @@ at the moment issues only to read in csv file, but will be extended in a future 
 ### Installation/activation
 
 Once this runs, you can activate the project, we suppose you haven't done any cd'ing in the meantime:
-> **You need to repat this after updates  if some binaries are missing!**
+> **You need to repeat this after updates  if some binaries are missing!**
 
 ```bash
 $ dart pub global activate --source path `pwd`
