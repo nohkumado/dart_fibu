@@ -1,11 +1,9 @@
 name: nohfibu
 description: nohkumados Finanz Buchhaltungs App
 
-  very simple fincnacial account library to implement a simple, filebased, 
-  double-entry accounting.
-  account plan and associated journali are stored in a csv file,
-  then validation of the journal with the plan, and computation of the financial 
-  analysis can be achieved with it.
+  very simple financial account library to implement a simple, filebased, 
+  double-entry accounting. 
+  Fast ops allow prepared statements.
 #publish_to: https://pub.dev
 
 version: 0.0.2-alpha

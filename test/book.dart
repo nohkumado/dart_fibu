@@ -17,7 +17,7 @@ void main() {
 	test('loading', () {
 	  var handler = CsvHandler();
 	  handler.load(book: book, conf: regl ) ;
-	  expect(book.jrl.count(), equals(999));
+	  expect(book.jrl.count(), equals(1152));
 	  book.clear();
 	  regl["base"] = "assets/wbsamples/sample";
 	  handler.load(book: book, conf: regl ) ;

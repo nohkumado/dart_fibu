@@ -467,9 +467,7 @@ class JrlLine {
     double valAsd = valuta / 100;
 
     String result =
-        "$formatted ${kminus.printname()} ${kplus.printname()} ${sprintf("%-49s", [
-          desc
-        ])} ${sprintf("%12s", [f.format(valAsd)])}";
+        "$formatted ${kminus.printname()} ${kplus.printname()} ${sprintf("%-49s", [ desc ])} ${sprintf("%12s", [f.format(valAsd)])}";
     return result;
   }
 
@@ -560,6 +558,7 @@ class ExtractLine implements JrlLine {
 class Book {
   KontoPlan kpl = KontoPlan();
   late Journal jrl;
+  Map<String,dynamic> ops = {};
 
   ///CTOR if no accountplan is given initializes with aen empty one
   Book({kpl, jrl}) {

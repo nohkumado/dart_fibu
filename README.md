@@ -64,9 +64,9 @@ dart run bin/wbconvert.dart -f <your kpl file> -s
 #### fibu 
 
 ```bash
-$ dart run bin/fibu.dart --help # to test directly from the source dir
-$ fibu --help # if you have activated the project, or precompiled
-$ fibu -r -b assets/wbsamples/sample # will analyze the .csv file and produce a .lst result file
+$ dart run bin/nohfibu.dart --help # to test directly from the source dir
+$ nohfibu --help # if you have activated the project, or precompiled
+$ nohfibu -r -b assets/wbsamples/sample # will analyze the .csv file and produce a .lst result file
 ```
 
 at the moment issues only to read in csv file, but will be extended in a future version
@@ -92,7 +92,7 @@ to your `~/.bashrc` you can simply run
 instead of activating the project, you can also precompile them, which makes them way faster!
 
 ```bash
-dart compile exe  bin/fibu.dart -o ~/bin/fibu
+dart compile exe  bin/nohfibu.dart -o ~/bin/fibu
 dart compile exe  bin/wbconvert.dart -o ~/bin/fibuwbconvert # to avoid name conflicts...
 ```
 

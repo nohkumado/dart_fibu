@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:csv/csv.dart';
 import 'package:nohfibu/nohfibu.dart';
 import 'package:nohfibu/settings.dart';
+import 'package:nohfibu/ops_handler.dart';
 
 /// Helper class to load and save the data in csv format.
 
@@ -16,8 +17,14 @@ class CsvHandler {
     if (jrl != null) book.jrl = jrl;
     if (conf != null) settings = conf;
 
+    ///Save the operations
     List<List<dynamic>> fibuAsList = book.kpl.asList();
     fibuAsList = book.jrl.asList(fibuAsList);
+    if(book.ops != null) {
+    fibuAsList.add(["OPS"]);
+    fibuAsList.add(["tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"]);
+      book.ops.forEach((key,val)=>(val as Operation).asList(fibuAsList));
+    }
 
     final res = const ListToCsvConverter().convert(fibuAsList);
 
@@ -68,6 +75,8 @@ class CsvHandler {
             mode = "kpl";
           else if (actLine[0] == "JRL")
             mode = "jrl";
+          else if (actLine[0] == "OPS")
+            mode = "ops";
           else {
             print("Error , unknown type: ${actLine[0]}");
             mode = "none";
@@ -118,7 +127,24 @@ class CsvHandler {
                 cur: actLine[cur],
                 valuta: vval));
             //print("added [$res]");
-          }
+          } else if (mode == "ops") {
+            DateTime point = (actLine[1]!= null && actLine[1].isNotEmpty)?DateTime.parse(actLine[1]):DateTime.now();
+	    //print("parsing  $actLine");
+	    try
+	    {
+	      //"tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"
+	      if(book.ops[actLine[0]] == null )book.ops[actLine[0]] = Operation(name: actLine[0], date: point,cplus: actLine[2],cminus: actLine[3],desc: actLine[4],cur: actLine[5], valuta:  actLine[6], mod:actLine[7]);
+	      else
+	      {
+		Operation anOp = book.ops[actLine[0]] as Operation;
+		anOp.add(date: point,cplus: actLine[2],cminus: actLine[3],desc: actLine[4],cur: actLine[5], valuta:  actLine[6], mod:actLine[7]);
+	      }
+	      //print("Created  $anOp");
+	    }
+	    catch(e) {
+	      print("failed to parse $actLine $e");
+	    }
+	  }
         }
       }
     } else {
