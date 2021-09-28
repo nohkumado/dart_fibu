@@ -3,4 +3,3 @@ log
 .packages
 pubspec.lock
 *.swp
-doc/api
