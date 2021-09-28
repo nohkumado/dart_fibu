@@ -1,13 +1,20 @@
 name: nohfibu
 description: nohkumados Finanz Buchhaltungs App
-publish_to: http://pub.dev
 
-version: 0.0.1-alpha
+  very simple fincnacial account library to implement a simple, filebased, 
+  double-entry accounting.
+  account plan and associated journali are stored in a csv file,
+  then validation of the journal with the plan, and computation of the financial 
+  analysis can be achieved with it.
+#publish_to: https://pub.dev
+
+version: 0.0.2-alpha
 homepage: https://www.nohkumado.eu/nohfibu/ 
-repository: https://git.nohkumado.eu/dart/fibu/
+repository: https://github.com/nohkumado/dart_fibu
 
 executables:
   wbconvert:
+  nohfibu:
 
 
 environment:

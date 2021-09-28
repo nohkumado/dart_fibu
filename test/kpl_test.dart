@@ -1,9 +1,6 @@
 // to run this :!dart test test/kpl_test.dart --chain-stack-traces
 import 'package:test/test.dart';
-import 'package:nohfibu/kto_plan.dart';
-import 'package:nohfibu/journal.dart';
-import 'package:nohfibu/book.dart';
-import 'package:nohfibu/csv_handler.dart';
+import 'package:nohfibu/nohfibu.dart';
 
 void main() {
   Book book  = new Book();
