@@ -428,24 +428,25 @@ class Journal {
 
 /// one line in an accounting journal.
 class JrlLine {
+  /// the date of the transaction
   late DateTime datum;
 
-  /// the date of the transaction
+  /// the account to be taken from
   late Konto kplus;
 
-  /// the account to be taken from
+  /// the account to be credited
   late Konto kminus;
 
-  /// tghe account to be credited
+  ///  description of the transaction
   late String desc;
 
-  ///  description of the transaction
+  /// the currency of the transaction
   late String cur;
 
-  /// the currency of the transaction
-  late int valuta;
-
   /// the value of the transaction
+  late int valuta;
+  ///eventual constraints on the input to the journal
+  Map? limits;
 
   /// CTOR the fields are optional, if omitted they will be filled with defaults .
   JrlLine({datum, kmin, kplu, desc, cur, valuta}) {
@@ -485,54 +486,38 @@ class JrlLine {
     kplus.action(this, mode: "add");
     return this;
   }
+  void addContraint(String key,List<String> boundaries)
+  {
+    if(limits == null) limits = {"kmin": {"min": 0, "max": 1000000},"kplu": {"min": 0, "max": 1000000}};
+
+    if(boundaries == null || boundaries.length <2 ) { print("boundaries needs to hold to vals, min, max"); return; }
+    if(key == "kmin") {
+      limits!["kmin"]["min"] = boundaries[0];
+      limits!["kmin"]["max"] = boundaries[1];
+    }
+    else if(key == "kplu") {
+      limits!["kplu"]["min"] = boundaries[0];
+      limits!["kmiplu"]["max"] = boundaries[1];
+    }
+  }
 }
 
 /// one line in an extract journal.
-class ExtractLine implements JrlLine {
-  DateTime get datum => values.datum;
-
-  /// the date of the transaction
-  void set datum(value) => values.datum = value;
-
-  /// the date of the transaction
-  Konto get kplus => values.kplus;
-
-  /// the account to be taken from
-  void set kplus(value) => values.kplus = value;
-
-  /// the account to be taken from
-  Konto get kminus => values.kminus;
-
-  /// tghe account to be credited
-  void set kminus(value) => values.kminus = value;
-
-  /// tghe account to be credited
-  String get desc => values.desc;
-
-  ///  description of the transaction
-  void set desc(value) => values.desc = value;
-
-  ///  description of the transaction
-  String get cur => values.cur;
-
-  /// the currency of the transaction
-  void set cur(value) => values.cur = value;
-
-  /// the currency of the transaction
-  int get valuta => valuta;
-
-  /// the value of the transaction
-  void set valuta(value) => valuta = value;
-
+class ExtractLine extends JrlLine {
   /// the value of the transaction
   int actSum = 0; //to store the intermediate sum of the account
-  late JrlLine values;
-
-  /// the value of the transaction
 
   /// CTOR the fields are optional, if omitted they will be filled with defaults .
   ExtractLine({JrlLine? line, int sumup = 0}) {
-    values = (line == null) ? JrlLine() : line;
+    if(line != null) {
+      datum = line.datum;
+      kplus = line.kplus;
+      kminus = line.kminus;
+      desc = line.desc;
+      cur = line.cur;
+      valuta = line.valuta;
+      limits = line.limits;
+    }
     actSum = (sumup != null) ? sumup : 0;
   }
 
@@ -540,14 +525,12 @@ class ExtractLine implements JrlLine {
   @override
   String toString() {
     var f = NumberFormat.currency(symbol: cur2sym(cur));
-    String result = "${values.toString()} ${sprintf("%12s", [
+    String result = "${super.toString()} ${sprintf("%12s", [
           f.format((actSum / 100).toDouble())
         ])}";
     return result;
   }
 
-  void asList(List<List> data) => values.asList(data);
-  JrlLine execute() => values.execute();
 }
 
 /// Book class, holds an accountplan and a journal.

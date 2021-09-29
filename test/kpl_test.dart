@@ -99,5 +99,13 @@ void main() {
 	  String result = 'Journal\n'+ '01-09-2021 1001 2002 test line                                          € 88,888.00\n'+ 'Journal End';
 	  expect(book.jrl.toString(), equals(result));
 	});
+
+	test('Journal Constraint', () {
+	  //print("global journal: ${book.jrl}");
+	  var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
+  line.addContraint("kmin",["100","300"]);
+	  expect(book.jrl.toString(), equals(result));
+	});
+
       });
 }
