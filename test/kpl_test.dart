@@ -102,11 +102,15 @@ void main() {
 
 	test('Journal Constraint', () {
 	  //print("global journal: ${book.jrl}");
+	  //var kto1 = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
+	  //var kto2 = Konto(number : "2",name: "2002", plan: book.kpl, valuta:8000099, cur:"EUR", budget:88812);
+	  book.kpl.put("1001", kto1);
+	  book.kpl.put("2002", kto2);
 	  var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
-  line.addContraint("kmin",["100","300"]);
 	  print("line 2002 journal: ${book.kpl.get('2002')}");
-  //line.kminus = 
-	  expect(book.jrl.toString(), equals(result));
+	  line.addConstraint("kmin",["100","300"]);
+	  line.kminus = book.kpl.get("2002")!;
+	  expect(line.kminus.printname(), equals("1001"));
 	});
 
       });

@@ -28,13 +28,15 @@ class CsvHandler {
 
     final res = const ListToCsvConverter().convert(fibuAsList);
 
-    //print("retrieved list\n$fibuAsList\n");
-    //print("retrieved csv\n$res\n");
+    print("retrieved list\n$fibuAsList\n");
+    print("retrieved csv\n$res\n");
 
+    print("check settings output = ${settings['output']}");
     String fname =
-        (settings["output"] != null && settings["output"].isNotEmpty())
+        ((settings["output"]) != null && (settings["output"].isNotEmpty))
             ? settings["output"]
             : settings["base"] + ".csv";
+    print("created fname = $fname");
     File(fname).writeAsString(res).then((file) {
       print("write seems successful, please check $fname");
     });
@@ -133,7 +135,7 @@ class CsvHandler {
 	    try
 	    {
 	      //"tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"
-	      if(book.ops[actLine[0]] == null )book.ops[actLine[0]] = Operation(name: actLine[0], date: point,cplus: actLine[2],cminus: actLine[3],desc: actLine[4],cur: actLine[5], valuta:  actLine[6], mod:actLine[7]);
+	      if(book.ops[actLine[0]] == null )book.ops[actLine[0]] = Operation(book,name: actLine[0], date: point,cplus: actLine[2],cminus: actLine[3],desc: actLine[4],cur: actLine[5], valuta:  actLine[6], mod:actLine[7]);
 	      else
 	      {
 		Operation anOp = book.ops[actLine[0]] as Operation;

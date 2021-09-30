@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:intl/intl.dart';
 import 'package:sprintf/sprintf.dart';
 import 'dart:collection';
@@ -181,7 +180,7 @@ class Konto {
     if (cur != null) this.cur = cur;
     if (valuta != null) this.valuta = valuta;
     if (budget != null) this.budget = budget;
-    if (this.number == null) this.number = name[name.length - 1];
+    if (this.number.isEmpty) this.number = name[name.length - 1];
     extract = Journal(this.plan, caption: "Extract for ${this.name}");
   }
 
@@ -198,7 +197,7 @@ class Konto {
     if (cur != null) this.cur = cur;
     if (valuta != null) this.valuta = valuta;
     if (budget != null) this.budget = budget;
-    if (this.number == null) this.number = name[name.length - 1];
+    if (this.number.isEmpty) this.number = name[name.length - 1];
     return this;
   }
 
@@ -301,7 +300,6 @@ class Konto {
   /// return this thins as a list, recurse through the tree
   ///preparation for e.g. csv conversion .
   List<List> asList({List<List> asList = const [], bool all = false}) {
-    if (asList == null) asList = [];
     //print("$number $name $desc tries to add to list");
     if (name == "no name" && desc.length > 0)
       asList.add([number, desc, cur, budget, valuta]);
@@ -320,12 +318,12 @@ class Konto {
     else
       valuta -= line.valuta;
     //print("action for  $name ($mode) add line ${line.desc} and $valuta");
-    ExtractLine sline = ExtractLine(line: line, sumup: valuta);
+    //ExtractLine sline = ExtractLine(line: line, sumup: valuta);
     //print("$name adding to $extract \n $sline");
     extract.add(ExtractLine(line: line, sumup: valuta));
     var f = NumberFormat.currency(symbol: cur2sym(cur));
     String title = "  Extract for $name  ";
-    int tofill = ((95 - title.length) / 2).toInt();
+    int tofill = (95 - title.length) ~/ 2;
     extract.caption = "-" * tofill + title + "-" * tofill;
     extract.endcaption = "_" * 60 +
         "Sum:  " +
@@ -397,8 +395,6 @@ class Journal {
 
   /// return the journal as a list .
   List<List> asList(List<List> data) {
-    data = (data == null) ? [] : data;
-
     data.add(["JRL"]);
     data.add(["date", "ktominus", "ktoplus", "desc", "cur", "valuta"]);
     journal.forEach((line) {
@@ -416,7 +412,7 @@ class Journal {
     DateTime minTime = DateTime.now();
     DateTime maxTime = DateTime.now().subtract(const Duration(days: 365));
     journal.forEach((line) {
-      //print("excuting exe for $line");
+      //print("executing exe for $line");
       if (line.datum.compareTo(minTime) < 0) minTime = line.datum;
       if (line.datum.compareTo(maxTime) > 0) maxTime = line.datum;
       line.execute();
@@ -432,10 +428,10 @@ class JrlLine {
   late DateTime datum;
 
   /// the account to be taken from
-  late Konto kplus;
+  late Konto _kplus;
 
   /// the account to be credited
-  late Konto kminus;
+  late Konto _kminus;
 
   ///  description of the transaction
   late String desc;
@@ -451,8 +447,8 @@ class JrlLine {
   /// CTOR the fields are optional, if omitted they will be filled with defaults .
   JrlLine({datum, kmin, kplu, desc, cur, valuta}) {
     // print("jline incoming +$datum+ -$kmin- -$kplu- -$desc- ,=$cur=, #$valuta#\n");
-    kplus = (kplu != null) ? kplu : Konto();
-    kminus = (kmin != null) ? kmin : Konto();
+    _kplus = (kplu != null) ? kplu : Konto();
+    _kminus = (kmin != null) ? kmin : Konto();
     this.desc = (desc != null) ? desc : "none";
     this.datum = (datum != null) ? datum : DateTime.now();
     this.cur = (cur != null) ? cur : "EUR";
@@ -468,7 +464,7 @@ class JrlLine {
     double valAsd = valuta / 100;
 
     String result =
-        "$formatted ${kminus.printname()} ${kplus.printname()} ${sprintf("%-49s", [ desc ])} ${sprintf("%12s", [f.format(valAsd)])}";
+        "$formatted ${_kminus.printname()} ${_kplus.printname()} ${sprintf("%-49s", [ desc ])} ${sprintf("%12s", [f.format(valAsd)])}";
     return result;
   }
 
@@ -477,28 +473,46 @@ class JrlLine {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     final String date = formatter.format(datum);
     data.add(
-        [date, kminus.printname(), kplus.printname(), "$desc", cur, valuta]);
+        [date, _kminus.printname(), _kplus.printname(), "$desc", cur, valuta]);
   }
 
   /// ask the 2 accounts to add this line to their extracts.
   JrlLine execute() {
-    kminus.action(this, mode: "sub");
-    kplus.action(this, mode: "add");
+    _kminus.action(this, mode: "sub");
+    _kplus.action(this, mode: "add");
     return this;
   }
-  void addContraint(String key,List<String> boundaries)
+  void addConstraint(String key,List<String> boundaries)
   {
     if(limits == null) limits = {"kmin": {"min": 0, "max": 1000000},"kplu": {"min": 0, "max": 1000000}};
 
-    if(boundaries == null || boundaries.length <2 ) { print("boundaries needs to hold to vals, min, max"); return; }
+    if(boundaries.length == 0 || boundaries.length <2 ) { print("boundaries needs to hold to vals, min, max"); return; }
     if(key == "kmin") {
-      limits!["kmin"]["min"] = boundaries[0];
-      limits!["kmin"]["max"] = boundaries[1];
+      limits!["kmin"]["min"] = int.parse(boundaries[0]);
+      limits!["kmin"]["max"] = int.parse(boundaries[1]);
     }
     else if(key == "kplu") {
-      limits!["kplu"]["min"] = boundaries[0];
-      limits!["kmiplu"]["max"] = boundaries[1];
+      limits!["kplu"]["min"] = int.parse(boundaries[0]);
+      limits!["kplu"]["max"] = int.parse(boundaries[1]);
     }
+  }
+  /// getter for kminus and kplus
+  Konto get kminus  => _kminus;
+  Konto get kplus  => _kplus;
+  /// we need to check if we have the right to change the account, otherwise leave it as is, in the framework you need to check if the value changed....
+  set kminus (Konto other)
+  {
+    int otherint = (int.tryParse(other.name) != null)?int.tryParse(other.name)!:0;
+    if(limits== null ) _kminus = other;
+    else if(limits!["kmin"]["min"]== 0 && limits!["kmin"]["max"] ==1000000 ) _kminus = other;
+    else if(limits!["kmin"]["min"]<= otherint && limits!["kmin"]["max"] >=1000000 ) _kminus = other;
+  }
+  set kplus (Konto other)
+  {
+    int otherint = (int.tryParse(other.name) != null)?int.tryParse(other.name)!:0;
+    if(limits== null ) _kplus = other;
+    else if(limits!["kplu"]["min"]== 0 && limits!["kplu"]["max"] ==1000000 ) _kplus = other;
+    else if(limits!["kplu"]["min"]<= otherint && limits!["kplu"]["max"] >=1000000 ) _kplus = other;
   }
 }
 
@@ -518,7 +532,7 @@ class ExtractLine extends JrlLine {
       valuta = line.valuta;
       limits = line.limits;
     }
-    actSum = (sumup != null) ? sumup : 0;
+    actSum =  sumup ;
   }
 
   /// pretty print this thing .
@@ -556,9 +570,9 @@ class Book {
   @override
   String toString({bool extracts = false}) {
     String result = "";
-    if (kpl != null) result += kpl.toString() + "\n";
-    if (jrl != null) result += jrl.toString();
-    if (kpl != null && extracts) {
+    result += kpl.toString() + "\n";
+    result += jrl.toString();
+    if (extracts) {
       result += "\n";
       result += kpl.toString(extracts: true) + "\n";
     }
