@@ -3,3 +3,4 @@ log
 .packages
 pubspec.lock
 *.swp
+tags

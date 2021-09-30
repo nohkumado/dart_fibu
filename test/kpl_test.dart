@@ -104,6 +104,8 @@ void main() {
 	  //print("global journal: ${book.jrl}");
 	  var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
   line.addContraint("kmin",["100","300"]);
+	  print("line 2002 journal: ${book.kpl.get('2002')}");
+  //line.kminus = 
 	  expect(book.jrl.toString(), equals(result));
 	});
 
