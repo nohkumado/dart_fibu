@@ -71,7 +71,7 @@ class Operation
       {
 	var splitted = cminus[i].split("-");
 	print("range!! ${cminus[i]} $splitted");
-	line.addContraint("kmin",splitted);
+	line.addConstraint("kmin",splitted);
       }
       else if(cplus[i].isEmpty) {}//do nothing
       else line.kminus=book.kpl.get(cminus[i])!;
@@ -79,7 +79,7 @@ class Operation
       {
 	var splitted = cplus[i].split("-");
 	print("range!! ${cplus[i]} $splitted");
-	line.addContraint("kplu",splitted);
+	line.addConstraint("kplu",splitted);
       }
       else if(cplus[i].isEmpty) {}//do nothing
       else line.kplus=book.kpl.get(cminus[i])!;
