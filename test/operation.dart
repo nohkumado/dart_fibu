@@ -44,7 +44,10 @@ void main() {
 		              'MERCH,21-09-2021,100-103,400-499,Contribution #merchant,,, multi\n';
 
 	    expect("${ops['MERCH']}", equals(should));
-	  });
+			Operation anOp = ops['MERCH']!;
+			anOp.prepare();
+
+		});
 
       });
 }

@@ -444,6 +444,8 @@ class JrlLine {
   ///eventual constraints on the input to the journal
   Map? limits;
 
+  Map<String, dynamic> vars = {};
+
   /// CTOR the fields are optional, if omitted they will be filled with defaults .
   JrlLine({datum, kmin, kplu, desc, cur, valuta}) {
     // print("jline incoming +$datum+ -$kmin- -$kplu- -$desc- ,=$cur=, #$valuta#\n");
@@ -482,19 +484,26 @@ class JrlLine {
     _kplus.action(this, mode: "add");
     return this;
   }
-  void addConstraint(String key,List<String> boundaries)
+  void addConstraint(String key,{ List<String> boundaries : const [], Map<String, dynamic>vars: const {}})
   {
     if(limits == null) limits = {"kmin": {"min": 0, "max": 1000000},"kplu": {"min": 0, "max": 1000000}};
 
-    if(boundaries.length == 0 || boundaries.length <2 ) { print("boundaries needs to hold to vals, min, max"); return; }
-    if(key == "kmin") {
-      limits!["kmin"]["min"] = int.parse(boundaries[0]);
-      limits!["kmin"]["max"] = int.parse(boundaries[1]);
+    if(key == "kmin"||key == "kplu") {
+      if (boundaries.length == 0 || boundaries.length < 2) {
+        print("boundaries($boundaries) needs to hold to vals, min, max");
+        return;
+      }
+
+      if (key == "kmin") {
+        limits!["kmin"]["min"] = int.parse(boundaries[0]);
+        limits!["kmin"]["max"] = int.parse(boundaries[1]);
+      }
+      else if (key == "kplu") {
+        limits!["kplu"]["min"] = int.parse(boundaries[0]);
+        limits!["kplu"]["max"] = int.parse(boundaries[1]);
+      }
     }
-    else if(key == "kplu") {
-      limits!["kplu"]["min"] = int.parse(boundaries[0]);
-      limits!["kplu"]["max"] = int.parse(boundaries[1]);
-    }
+    else if(key == "desc") this.vars["desc"] = vars;
   }
   /// getter for kminus and kplus
   Konto get kminus  => _kminus;
@@ -513,6 +522,12 @@ class JrlLine {
     if(limits== null ) _kplus = other;
     else if(limits!["kplu"]["min"]== 0 && limits!["kplu"]["max"] ==1000000 ) _kplus = other;
     else if(limits!["kplu"]["min"]<= otherint && limits!["kplu"]["max"] >=1000000 ) _kplus = other;
+  }
+
+  void setValuta(String toParse)
+  {
+    print("aboutto number parse '$toParse' ser");
+    valuta = (NumberFormat.currency().parse(toParse) * 100).toInt();
   }
 }
 

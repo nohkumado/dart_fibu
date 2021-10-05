@@ -5,10 +5,10 @@ import 'package:nohfibu/nohfibu.dart';
 void main() {
   Book book  = new Book();
   setUp(()
-      {
-	//book = new Book();
-	//print("in setup generated kpl : $book.kpl and book.jrl : $book.jrl");
-      });
+  {
+    //book = new Book();
+    //print("in setup generated kpl : $book.kpl and book.jrl : $book.jrl");
+  });
   group('Konto', () {
     var kto = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
     test('Konto ', () {
@@ -41,7 +41,7 @@ void main() {
       kto = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
       Konto sk =  kto.get("10010");
       String target = "1001                                                        € 999.12   € 10,000.99\n"+
-	  ' 10010                                                          € 0.00        € 0.00\n';
+          ' 10010                                                          € 0.00        € 0.00\n';
       expect(kto.toString(recursive: true,empty:true), equals(target));
     });
     test('printname ', () {
@@ -63,54 +63,54 @@ void main() {
 
 
   group('Journal', ()
-      {
-	var kto1 = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
-	var kto2 = Konto(number : "2",name: "2002", plan: book.kpl, valuta:8000099, cur:"EUR", budget:88812);
-	test('Journal Eintrag', () {
-	  //print("global journal: ${book.jrl}");
-	  var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
-	  expect(line.desc, equals("test line"));
-	  expect(line.toString(), equals("01-09-2021 1001 2002 test line                                          € 88,888.00"));
-	  List<List> data = [];
-	  line.asList(data);
-	  expect(data, equals([['2021-09-01', '1001', '2002', 'test line', 'EUR', 8888800]]));
-	});
+  {
+    var kto1 = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
+    var kto2 = Konto(number : "2",name: "2002", plan: book.kpl, valuta:8000099, cur:"EUR", budget:88812);
+    test('Journal Eintrag', () {
+      //print("global journal: ${book.jrl}");
+      var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
+      expect(line.desc, equals("test line"));
+      expect(line.toString(), equals("01-09-2021 1001 2002 test line                                          € 88,888.00"));
+      List<List> data = [];
+      line.asList(data);
+      expect(data, equals([['2021-09-01', '1001', '2002', 'test line', 'EUR', 8888800]]));
+    });
 
 
 
-	test('Journal Eintrag', () {
-	  //print("global journal: ${book.jrl}");
-	  var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
-	  List<List> data = [];
-	  book.jrl.asList(data);
-	  expect(data, equals([['JRL'], ['date', 'ktominus', 'ktoplus', 'desc', 'cur', 'valuta']]));
-	  data = [];
-	  book.jrl.add(line);
-	  book.jrl.asList(data);
-	  expect(data.length == 3 && data[2][0] == '2021-09-01', equals(true));
+    test('Journal Eintrag', () {
+      //print("global journal: ${book.jrl}");
+      var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
+      List<List> data = [];
+      book.jrl.asList(data);
+      expect(data, equals([['JRL'], ['date', 'ktominus', 'ktoplus', 'desc', 'cur', 'valuta']]));
+      data = [];
+      book.jrl.add(line);
+      book.jrl.asList(data);
+      expect(data.length == 3 && data[2][0] == '2021-09-01', equals(true));
 
 
 
-	  book.jrl.clear();
-	  data = [];
-	  book.jrl.asList(data);
-	  expect(data.length == 2, equals(true));
-	  book.jrl.add(line);
-	  String result = 'Journal\n'+ '01-09-2021 1001 2002 test line                                          € 88,888.00\n'+ 'Journal End';
-	  expect(book.jrl.toString(), equals(result));
-	});
+      book.jrl.clear();
+      data = [];
+      book.jrl.asList(data);
+      expect(data.length == 2, equals(true));
+      book.jrl.add(line);
+      String result = 'Journal\n'+ '01-09-2021 1001 2002 test line                                          € 88,888.00\n'+ 'Journal End';
+      expect(book.jrl.toString(), equals(result));
+    });
 
-	test('Journal Constraint', () {
-	  //print("global journal: ${book.jrl}");
-    //var kto1 = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
-    //var kto2 = Konto(number : "2",name: "2002", plan: book.kpl, valuta:8000099, cur:"EUR", budget:88812);
-    book.kpl.put("1001", kto1);
-    book.kpl.put("2002", kto2);
-	  var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
-  line.addConstraint("kmin",["100","300"]);
-    line.kminus = book.kpl.get("2002")!;
-	  expect(line.kminus.printname(), equals("1001"));
-	});
+    test('Journal Constraint', () {
+      //print("global journal: ${book.jrl}");
+      //var kto1 = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
+      //var kto2 = Konto(number : "2",name: "2002", plan: book.kpl, valuta:8000099, cur:"EUR", budget:88812);
+      book.kpl.put("1001", kto1);
+      book.kpl.put("2002", kto2);
+      var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
+      line.addConstraint("kmin",boundaries:["100","300"]);
+      line.kminus = book.kpl.get("2002")!;
+      expect(line.kminus.printname(), equals("1001"));
+    });
 
-      });
+  });
 }

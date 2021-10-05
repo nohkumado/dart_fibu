@@ -63,34 +63,56 @@ class Operation
   ///extract the needed vars 
   void prepare()
   {
-
     for(int i = 0; i < cplus.length; i++)
     {
       JrlLine line = JrlLine(datum: datum[i]);
       if(cminus[i].contains("-"))
       {
-	var splitted = cminus[i].split("-");
-	print("range!! ${cminus[i]} $splitted");
-	line.addConstraint("kmin",splitted);
+        var splitted = cminus[i].split("-");
+        print("range!! ${cminus[i]} $splitted");
+        line.addConstraint("kmin",boundaries: splitted);
       }
       else if(cplus[i].isEmpty) {}//do nothing
       else line.kminus=book.kpl.get(cminus[i])!;
       if(cplus[i].contains("-"))
       {
-	var splitted = cplus[i].split("-");
-	print("range!! ${cplus[i]} $splitted");
-	line.addConstraint("kplu",splitted);
+        var splitted = cplus[i].split("-");
+        print("range!! ${cplus[i]} $splitted");
+        line.addConstraint("kplu",boundaries: splitted);
       }
       else if(cplus[i].isEmpty) {}//do nothing
       else line.kplus=book.kpl.get(cminus[i])!;
       if(desc[i].contains("#"))
       {
-	//we need to extract the variables
-	RegExp rex = RegExp(r"#(\w+)");
-	print("found matches for vars : $rex");
+        //we need to extract the variables
+        RegExp rex = RegExp(r"#(\w+)");
+        print("found matches for vars : $rex");
+        Map<String, dynamic> vars = {};
+        rex.allMatches(desc[i]).forEach((match) { vars[match.group(1)!] = match.group(1); });
+        print("extracted varaibles : $vars");
+        line.addConstraint("desc",vars: vars);
       }
+      line.desc = desc[i];
+      print("ops perparer valuta '${valuta[i]}'");
+      if(valuta[i].contains("#"))
+      {
+        //we need to extract the variables
+        RegExp rex = RegExp(r"#(\w+)");
+        Map<String, dynamic> vars = {};
+        rex.allMatches(valuta[i]).forEach((match) { vars[match.group(1)!] = match.group(1); });
+        line.addConstraint("valuta",vars: vars);
+      }
+      else  if(valuta[i].isNotEmpty) line.setValuta(valuta[i]);
+      if(mod[i].isNotEmpty) print("ehm op should do something with ${mod[i]}");
 
 
+
+
+
+
+
+      print("added $line");
+      preparedLines.add(line);
       //data.add( [name, date, cplus[i], cminus[i], "${desc[i]}", cur[i], valuta[i], mod[i]]);
     }
 
