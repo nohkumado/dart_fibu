@@ -3,6 +3,6 @@ log
 .packages
 pubspec.lock
 *.swp
-/tags
+tags
 /assets/wbsamples/sample.lst
 nt21*
