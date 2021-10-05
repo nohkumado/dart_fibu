@@ -75,12 +75,12 @@ main(List<String> arguments) //async
     fibu.book.ops.forEach((key, val)=>print("$key"));
       print("End of List");
     }
-   else if (settings["fastop"]) {
-      print("we need to call on fast op ${settings['run']}");
-    Operation? actOp = fibu.book.ops[settings['run']];
+   else if (settings["fastop"].isNotEmpty) {
+      print("we need to call on fast op ${settings['fastop']}");
+    Operation? actOp = fibu.book.ops[settings['fastop']];
     if(actOp == null)
     {
-      print("Fast op '${settings['run']}' unknown, plese check the name");
+      print("Fast op '${settings['fastop']}' unknown, plese check the name");
     }
     else
     {

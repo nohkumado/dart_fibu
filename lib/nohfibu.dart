@@ -526,8 +526,9 @@ class JrlLine {
 
   void setValuta(String toParse)
   {
+    toParse = toParse.trim();
     print("aboutto number parse '$toParse' ser");
-    valuta = (NumberFormat.currency().parse(toParse) * 100).toInt();
+    valuta = (toParse.isNotEmpty)?(NumberFormat.currency().parse(toParse) * 100).toInt():0;
   }
 }
 
