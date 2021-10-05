@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:nohfibu/settings.dart';
 import 'package:nohfibu/csv_handler.dart';
 import 'package:nohfibu/nohfibu.dart';
+import 'package:nohfibu/ops_handler.dart';
 
 /// Launcher for the accounting analysis
 ///
@@ -35,8 +36,13 @@ main(List<String> arguments) //async
 {
   //print("incoming : $arguments");
   Settings settings = Settings();
-  settings.parser.addFlag('run',
-      abbr: 'r', defaultsTo: false, help: "run the accounting process");
+  settings..parser.addFlag('run',
+      abbr: 'r', defaultsTo: false, help: "run the accounting process")
+..parser.addFlag('list',
+       defaultsTo: false, help: "list the available fast ops")
+
+  ..parser.addOption('fastop',
+      abbr: 'f',  help: "call fast operation <name>");
   settings.init(arguments);
   Fibu fibu = Fibu();
 
@@ -62,8 +68,26 @@ main(List<String> arguments) //async
           : basename + ".lst";
       //print ("retrieved\n$result");
       File(fname).writeAsString(result).then((file) {
-        print("write seems successful, please check $fname");
+	print("write seems successful, please check $fname");
       });
+    } else if (settings["list"]) {
+      print("Available fast operations:");
+    fibu.book.ops.forEach((key, val)=>print("$key"));
+      print("End of List");
+    }
+   else if (settings["fastop"]) {
+      print("we need to call on fast op ${settings['run']}");
+    Operation? actOp = fibu.book.ops[settings['run']];
+    if(actOp == null)
+    {
+      print("Fast op '${settings['run']}' unknown, plese check the name");
+    }
+    else
+    {
+      print("Found fast op '${actOp}' ");
+      actOp.prepare();
+      actOp.preparedLines.forEach((line) => print("to fill $line"));
+    }
     } else
       print("book so far: ${fibu.book}");
   } else

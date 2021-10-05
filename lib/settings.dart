@@ -17,7 +17,7 @@ class Settings {
               "Basename of the dataset, to set the type add the suffix, eg acc.kpl")
       ..addOption('output', abbr: 'o', help: "output name")
       ..addFlag('help',
-          abbr: '\?', defaultsTo: false, help: "Help about the options")
+          abbr: 'h', defaultsTo: false, help: "Help about the options")
       ..addFlag('strict',
           abbr: 's', defaultsTo: false, help: "enforce old WB-Style parsing");
   }

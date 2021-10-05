@@ -105,12 +105,6 @@ class Operation
       else  if(valuta[i].isNotEmpty) line.setValuta(valuta[i]);
       if(mod[i].isNotEmpty) print("ehm op should do something with ${mod[i]}");
 
-
-
-
-
-
-
       print("added $line");
       preparedLines.add(line);
       //data.add( [name, date, cplus[i], cminus[i], "${desc[i]}", cur[i], valuta[i], mod[i]]);
