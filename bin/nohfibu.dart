@@ -58,9 +58,9 @@ class Fibu {
 		try
 		{
 		  //DateTime point = DateTime.parse(answer);
-        DateFormat format = DateFormat("dd-MM-yyyy");
-        //print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
-        var point = format.parse(answer);
+		  DateFormat format = DateFormat("dd-MM-yyyy");
+		  //print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
+		  var point = format.parse(answer);
 		  line.datum = point;
 		  invalid =false;
 		}
@@ -77,32 +77,104 @@ class Fibu {
 		    invalid =false;
 		  }
 		  catch(e) {
-		  try
-		  {
-		    //DateTime point = DateTime.parse(answer);
-        DateFormat format = DateFormat("dd.MM.yyyy");
-		    //print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
-		    var point = format.parse(answer);
-		    line.datum = point;
-		    invalid =false;
-		  }
-		  catch(e) {
-		  try
-		  {
-		    //DateTime point = DateTime.parse(answer);
-        DateFormat format = DateFormat("dd.MM.yy");
-		    //print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
-		    var point = format.parse(answer);
-		    line.datum = point;
-		    invalid =false;
-		  }
-		  catch(e) {print("couldn't understand the date....");}
-		  }
+		    try
+		    {
+		      //DateTime point = DateTime.parse(answer);
+		      DateFormat format = DateFormat("dd.MM.yyyy");
+		      //print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
+		      var point = format.parse(answer);
+		      line.datum = point;
+		      invalid =false;
+		    }
+		    catch(e) {
+		      try
+		      {
+			//DateTime point = DateTime.parse(answer);
+			DateFormat format = DateFormat("dd.MM.yy");
+			//print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
+			var point = format.parse(answer);
+			line.datum = point;
+			invalid =false;
+		      }
+		      catch(e) {print("couldn't understand the date....");}
+		    }
 		  }
 		}
-	      }
+	      } 
 	      else invalid =false;
 	    }
+
+
+	    //fill in kto -
+	    //print("constraints -[${line.limits}]");
+
+	    String defaultKtoName =line.kminus.printname().trim();
+	    late List<Konto> ktoList; 
+	    if(line.limits != null && line.limits!.containsKey("kmin"))
+	    {
+	      var limits = line.limits!["kmin"];
+	      ktoList = book.kpl.getRange(limits);
+	      defaultKtoName =limits["min"];
+	      print("selecting from :\n $ktoList");
+	    }
+	    print("kto-[${defaultKtoName}]");
+
+	    invalid = true;
+	    while(invalid)
+	    {
+	      String? answer = stdin.readLineSync();
+	      answer ??= defaultKtoName;
+	      //print("answer is '$answer'");
+	      if(answer.isEmpty) answer = defaultKtoName;
+	      Konto ? selected =book.kpl.get(answer.trim()); 
+	      //print("found Konto is '$selected");
+	      if(selected != null) 
+	      {
+		line.kminus = selected;
+		if(line.kminus.name ==selected.name) invalid =false;
+		else print("Account not existent,try again");
+	      }
+	      else print("please select from : \n$ktoList\nkto-[${defaultKtoName}]");
+	    }
+
+
+	    print("constraints -[${line.limits}]");
+	    //fill in kto +
+	    //print("constraints -[${line.limits}]");
+
+	    defaultKtoName =line.kplus.printname().trim();
+	    if(line.limits != null && line.limits!.containsKey("kplu"))
+	    {
+	      var limits = line.limits!["kplu"];
+	    print("retrieved + [${limits}]");
+	      ktoList = book.kpl.getRange(limits);
+	      defaultKtoName =limits["min"];
+	      print("selecting [$defaultKtoName]from : '$ktoList'");
+	    }
+	    print("kto+[${defaultKtoName}]");
+
+	    invalid = true;
+	    while(invalid)
+	    {
+	      String? answer = stdin.readLineSync();
+	      answer ??= defaultKtoName;
+	      //print("answer is '$answer'");
+	      if(answer.isEmpty) answer = defaultKtoName;
+	      Konto ? selected =book.kpl.get(answer.trim()); 
+	      //print("found Konto is '$selected");
+	      if(selected != null) 
+	      {
+		line.kplus = selected;
+		if(line.kplus.name ==selected.name) invalid =false;
+		else print("Account not existent,try again");
+	      }
+	      else print("please select from : \n$ktoList\nkto-[${defaultKtoName}]");
+	    }
+
+
+	    print("desc [${line.desc}]");
+	    print("cur [${line.cur}]");
+	    print("valuta [${line.valuta}]");
 	  }
       );
     }

@@ -69,7 +69,7 @@ class Operation
       if(cminus[i].contains("-"))
       {
         var splitted = cminus[i].split("-");
-        print("range!! ${cminus[i]} $splitted");
+        //print("range!! ${cminus[i]} $splitted");
         line.addConstraint("kmin",boundaries: splitted);
       }
       else if(cplus[i].isEmpty) {}//do nothing
@@ -77,7 +77,7 @@ class Operation
       if(cplus[i].contains("-"))
       {
         var splitted = cplus[i].split("-");
-        print("range!! ${cplus[i]} $splitted");
+        //print("range!! ${cplus[i]} $splitted");
         line.addConstraint("kplu",boundaries: splitted);
       }
       else if(cplus[i].isEmpty) {}//do nothing
@@ -86,14 +86,14 @@ class Operation
       {
         //we need to extract the variables
         RegExp rex = RegExp(r"#(\w+)");
-        print("found matches for vars : $rex");
+      //print("found matches for vars : $rex");
         Map<String, dynamic> vars = {};
         rex.allMatches(desc[i]).forEach((match) { vars[match.group(1)!] = match.group(1); });
-        print("extracted varaibles : $vars");
+      //print("extracted varaibles : $vars");
         line.addConstraint("desc",vars: vars);
       }
       line.desc = desc[i];
-      print("ops perparer valuta '${valuta[i]}'");
+    //print("ops perparer valuta '${valuta[i]}'");
       if(valuta[i].contains("#"))
       {
         //we need to extract the variables
@@ -105,10 +105,9 @@ class Operation
       else  if(valuta[i].isNotEmpty) line.setValuta(valuta[i]);
       if(mod[i].isNotEmpty) print("ehm op should do something with ${mod[i]}");
 
-      print("added $line");
+    //print("added $line");
       preparedLines.add(line);
       //data.add( [name, date, cplus[i], cminus[i], "${desc[i]}", cur[i], valuta[i], mod[i]]);
     }
-
   }
 }

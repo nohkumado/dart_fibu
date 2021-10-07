@@ -151,6 +151,21 @@ class KontoPlan {
     //print("retrieved : ${activa.toString(recursive: true)}");
     return result;
   }
+  List<Konto> getRange(Map<String,String> minmax,{List<Konto>? passthrough} )
+  {
+    List<Konto> result = (passthrough != null)? passthrough:[];
+    String min =(minmax.containsKey("min"))?minmax["min"]!:"0";
+    String max =(minmax.containsKey("max"))?minmax["max"]!:"0";
+    //print("in getRange : $minmax, $min-$max");
+    //select common part
+    int n =0; 
+    while(min[n] == max[n]) n++;
+    String common = min.substring(0,n);
+    Konto parent = (get(common)==null)?Konto():get(common)!;
+    //print("common : $n=> '$common';");
+    parent.getRange(min.substring(n),max.substring(n),passthrough:result);
+    return result;
+  }
 }
 
 /// one account .
@@ -161,7 +176,7 @@ class Konto {
   String cur = "EUR"; //currency
   int valuta = 0;
   int budget = 0;
-  Map<String, Konto> children = {};
+  SplayTreeMap<String, Konto> children = SplayTreeMap<String, Konto>();
 
   String name = "no name";
   late Journal extract;
@@ -349,6 +364,36 @@ class Konto {
     });
     return mysum;
   }
+  List<Konto> getRange(String min,String max,{List<Konto>? passthrough} )
+  {
+    List<Konto> result = (passthrough!= null)?passthrough:[];
+    //print("searching for $min to $max in $children");
+    if(min =="all" || min.length == 1)
+    {
+      children.forEach((key, val) { if((min =="all" ||key.compareTo(min) >=0) && (max == "all" || key.compareTo(max) <=0)) result.add(val);});
+    }
+    else if(min.length > 1)
+    {
+      String keyMin = min[0];
+      String keyMax = max[0];
+      String restMin = min.substring(1);
+      String restMax = max.substring(1);
+      //print("need to recurse deeper [$keyMin, $keyMax] [$restMin, $restMax]...");
+      children.forEach((key, val)
+	  {
+	    if(key.compareTo(keyMin) ==0) val.getRange(restMin,"all",passthrough:result);
+	    else if(key.compareTo(keyMin) >0 && key.compareTo(keyMax) <0)val.getRange("all","all",passthrough:result);
+	    else if(key.compareTo(keyMin) >0 && key.compareTo(keyMax) ==0)val.getRange("all",restMax,passthrough:result);
+	    //else key < min or key > max, so ignore it
+
+	  }
+
+      );
+    } 
+    else
+      print("Konto Error, nevershould be here");
+    return result;
+  }
 }
 
 /// This class hold a list of lines, each caracterising an entry in an accounting journal.
@@ -486,7 +531,7 @@ class JrlLine {
   }
   void addConstraint(String key,{ List<String> boundaries : const [], Map<String, dynamic>vars: const {}})
   {
-    if(limits == null) limits = {"kmin": {"min": 0, "max": 1000000},"kplu": {"min": 0, "max": 1000000}};
+    if(limits == null) limits = {"kmin": {"min": "0", "max": "1000000"},"kplu": {"min": "0", "max": "1000000"}};
 
     if(key == "kmin"||key == "kplu") {
       if (boundaries.length == 0 || boundaries.length < 2) {
@@ -495,12 +540,14 @@ class JrlLine {
       }
 
       if (key == "kmin") {
-        limits!["kmin"]["min"] = int.parse(boundaries[0]);
-        limits!["kmin"]["max"] = int.parse(boundaries[1]);
+        //limits!["kmin"]["min"] = int.parse(boundaries[0]);
+        // //limits!["kmin"]["max"] = int.parse(boundaries[1]);
+        limits!["kmin"]["min"] = boundaries[0];
+        limits!["kmin"]["max"] = boundaries[1];
       }
       else if (key == "kplu") {
-        limits!["kplu"]["min"] = int.parse(boundaries[0]);
-        limits!["kplu"]["max"] = int.parse(boundaries[1]);
+        limits!["kplu"]["min"] = boundaries[0];
+        limits!["kplu"]["max"] = boundaries[1];
       }
     }
     else if(key == "desc") this.vars["desc"] = vars;
@@ -511,17 +558,29 @@ class JrlLine {
   /// we need to check if we have the right to change the account, otherwise leave it as is, in the framework you need to check if the value changed....
   set kminus (Konto other)
   {
-    int otherint = (int.tryParse(other.name) != null)?int.tryParse(other.name)!:0;
     if(limits== null ) _kminus = other;
-    else if(limits!["kmin"]["min"]== 0 && limits!["kmin"]["max"] ==1000000 ) _kminus = other;
-    else if(limits!["kmin"]["min"]<= otherint && limits!["kmin"]["max"] >=1000000 ) _kminus = other;
+    {
+    int otherint = (int.tryParse(other.name) != null)?int.tryParse(other.name)!:0;
+    int min = (limits!["kmin"].containsKey("min"))?int.tryParse(limits!["kmin"]["min"])!:0;
+    int max = (limits!["kmin"].containsKey("max"))?int.tryParse(limits!["kmin"]["max"])!:0;
+
+    if(min== 0 && max ==1000000 ) _kminus = other;//{print("invalid ranges : changing value");}
+    else if(min<= otherint && max >=otherint ) _kminus = other;//{print("inside range, change!");}
+    //else print("invalid range... unchanged");
+    }
   }
   set kplus (Konto other)
   {
-    int otherint = (int.tryParse(other.name) != null)?int.tryParse(other.name)!:0;
     if(limits== null ) _kplus = other;
-    else if(limits!["kplu"]["min"]== 0 && limits!["kplu"]["max"] ==1000000 ) _kplus = other;
-    else if(limits!["kplu"]["min"]<= otherint && limits!["kplu"]["max"] >=1000000 ) _kplus = other;
+    {
+      int otherint = (int.tryParse(other.name) != null)?int.tryParse(other.name)!:0;
+      int min = (limits!["kplu"].containsKey("min"))?int.tryParse(limits!["kplu"]["min"])!:0;
+      int max = (limits!["kplu"].containsKey("max"))?int.tryParse(limits!["kplu"]["max"])!:0;
+
+      if(min== 0 && max ==1000000 ) _kplus = other;//{print("invalid ranges : changing value");}
+      else if(min<= otherint && max >=otherint ) _kplus = other;//{print("inside range, change!");}
+      //else print("invalid range... unchanged");
+    }
   }
 
   void setValuta(String toParse)
