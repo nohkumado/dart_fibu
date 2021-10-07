@@ -110,6 +110,16 @@ void main() {
       line.addConstraint("kmin",boundaries:["100","300"]);
       line.kminus = book.kpl.get("2002")!;
       expect(line.kminus.printname(), equals("1001"));
+      line.addConstraint("kmin",boundaries:["1000","3000"]);
+      line.kminus = book.kpl.get("2002")!;
+      expect(line.kminus.printname(), equals("2002"));
+      line.kplus = book.kpl.get("1001")!;
+      expect(line.kplus.printname(), equals("1001"));
+      line.addConstraint("kplu",boundaries:["1000","3000"]);
+      line.kplus = book.kpl.get("2002")!;
+      expect(line.kplus.printname(), equals("2002"));
+      line.kplus = book.kpl.get("2001")!;
+      expect(line.kplus.printname(), equals("2002"));
     });
 
   });

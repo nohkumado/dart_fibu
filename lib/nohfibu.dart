@@ -156,13 +156,13 @@ class KontoPlan {
     List<Konto> result = (passthrough != null)? passthrough:[];
     String min =(minmax.containsKey("min"))?minmax["min"]!:"0";
     String max =(minmax.containsKey("max"))?minmax["max"]!:"0";
-    //print("in getRange : $minmax, $min-$max");
+    print("in getRange : $minmax, $min-$max from ${konten.keys}");
     //select common part
     int n =0; 
     while(min[n] == max[n]) n++;
     String common = min.substring(0,n);
     Konto parent = (get(common)==null)?Konto():get(common)!;
-    //print("common : $n=> '$common';");
+    print("common : $n=> '$common';");
     parent.getRange(min.substring(n),max.substring(n),passthrough:result);
     return result;
   }
@@ -368,9 +368,13 @@ class Konto {
   {
     List<Konto> result = (passthrough!= null)?passthrough:[];
     //print("searching for $min to $max in $children");
-    if(min =="all" || min.length == 1)
+    if(min.length == 1)
     {
-      children.forEach((key, val) { if((min =="all" ||key.compareTo(min) >=0) && (max == "all" || key.compareTo(max) <=0)) result.add(val);});
+      children.forEach((key, val) { if((key.compareTo(min) >=0) && (max == "all" || key.compareTo(max) <=0)) result.add(val);});
+    }
+    else if(min =="all" )
+    {
+      children.forEach((key, val) { if((min =="all" ||key.compareTo(min) >=0) && (max == "all" || key.compareTo(max) <=0)) {if(val.children.length <=0)result.add(val); else val.getRange("all","all",passthrough:result);}});
     }
     else if(min.length > 1)
     {
@@ -384,8 +388,7 @@ class Konto {
 	    if(key.compareTo(keyMin) ==0) val.getRange(restMin,"all",passthrough:result);
 	    else if(key.compareTo(keyMin) >0 && key.compareTo(keyMax) <0)val.getRange("all","all",passthrough:result);
 	    else if(key.compareTo(keyMin) >0 && key.compareTo(keyMax) ==0)val.getRange("all",restMax,passthrough:result);
-	    //else key < min or key > max, so ignore it
-
+	    //else print("should bee: $key < $min or $key > $max, so ignore it");
 	  }
 
       );
@@ -559,6 +562,7 @@ class JrlLine {
   set kminus (Konto other)
   {
     if(limits== null ) _kminus = other;
+    else
     {
     int otherint = (int.tryParse(other.name) != null)?int.tryParse(other.name)!:0;
     int min = (limits!["kmin"].containsKey("min"))?int.tryParse(limits!["kmin"]["min"])!:0;
@@ -572,6 +576,7 @@ class JrlLine {
   set kplus (Konto other)
   {
     if(limits== null ) _kplus = other;
+    else
     {
       int otherint = (int.tryParse(other.name) != null)?int.tryParse(other.name)!:0;
       int min = (limits!["kplu"].containsKey("min"))?int.tryParse(limits!["kplu"]["min"])!:0;

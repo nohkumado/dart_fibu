@@ -23,7 +23,7 @@ void main() {
 	  handler.load(book: book, conf: regl ) ;
 	  expect(book.jrl.count(), equals(16));
 	  book.execute();
-	  print("after  execute : \n${book.kpl.get("3300")!.extract.toString()}");
+	  //print("after  execute : \n${book.kpl.get("3300")!.extract.toString()}");
 	  expect(book.kpl.get("1200")!.valuta, equals(203767));
 	  expect(book.kpl.get("1600")!.valuta, equals(20593));
 	  expect(book.kpl.get("2300")!.valuta, equals(-224360));
@@ -43,6 +43,13 @@ void main() {
 	  expect(book.kpl.get("3902")!.valuta, equals(0000));
 	  expect(book.kpl.get("4100")!.valuta, equals(0000));
 	  expect(book.kpl.get("4200")!.valuta, equals(000));
+	 //	List<Konto>list = book.kpl.getRange({"min":"3000", "max": "3009"} );
+	 //	expect(list.length, equals(2));
+		//print("using kpl ${book.kpl}");
+		List<Konto>list = book.kpl.getRange({"min":"2200", "max": "2500"} );
+		//print("list got back $list");
+		expect(list.length, equals(4));
+		expect(list[0].desc, equals("Patrimoine"));
 	});
 
       });
