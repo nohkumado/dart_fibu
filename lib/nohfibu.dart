@@ -154,15 +154,15 @@ class KontoPlan {
   List<Konto> getRange(Map<String,String> minmax,{List<Konto>? passthrough} )
   {
     List<Konto> result = (passthrough != null)? passthrough:[];
-    String min =(minmax.containsKey("min"))?minmax["min"]!:"0";
-    String max =(minmax.containsKey("max"))?minmax["max"]!:"0";
-    print("in getRange : $minmax, $min-$max from ${konten.keys}");
+    String min =(minmax.containsKey("min"))?minmax["min"]!.trim():"0";
+    String max =(minmax.containsKey("max"))?minmax["max"]!.trim():"0";
+    //print("in getRange : $minmax, '$min'-'$max' from ${konten.keys}");
     //select common part
     int n =0; 
     while(min[n] == max[n]) n++;
     String common = min.substring(0,n);
     Konto parent = (get(common)==null)?Konto():get(common)!;
-    print("common : $n=> '$common';");
+    //print("common : $n=> '$common'; kto: ${parent.desc} ${parent.children.keys}");
     parent.getRange(min.substring(n),max.substring(n),passthrough:result);
     return result;
   }
@@ -367,14 +367,32 @@ class Konto {
   List<Konto> getRange(String min,String max,{List<Konto>? passthrough} )
   {
     List<Konto> result = (passthrough!= null)?passthrough:[];
-    //print("searching for $min to $max in $children");
-    if(min.length == 1)
+    //print("searching for $min to $max in $name/$children");
+    if(children.length == 0) {
+      //print("ehm.... '$name,$desc'  missed something somewhere..... adding ourselves??");
+      result.add(this);
+      }
+    else if(min.length == 1)
     {
-      children.forEach((key, val) { if((key.compareTo(min) >=0) && (max == "all" || key.compareTo(max) <=0)) result.add(val);});
+      children.forEach((key, val) { if((key.compareTo(min) >=0) && (max == "all" || key.compareTo(max) <=0))
+      {
+        result.add(val);
+        //print("added direct ${val.desc}");
+        }});
     }
     else if(min =="all" )
     {
-      children.forEach((key, val) { if((min =="all" ||key.compareTo(min) >=0) && (max == "all" || key.compareTo(max) <=0)) {if(val.children.length <=0)result.add(val); else val.getRange("all","all",passthrough:result);}});
+      //print("adding all children ");
+      children.forEach((key, val) { if(max == "all" || key.compareTo(max) <=0) {if(val.children.length <=0)
+      {
+        //print("val has no children adding $key ${val.desc}");
+        result.add(val);
+      }
+      else
+        {
+          //print("val has  ${val.children} diving from ${val.desc}");
+          val.getRange("all","all",passthrough:result);
+        }}});
     }
     else if(min.length > 1)
     {
@@ -382,12 +400,18 @@ class Konto {
       String keyMax = max[0];
       String restMin = min.substring(1);
       String restMax = max.substring(1);
-      //print("need to recurse deeper [$keyMin, $keyMax] [$restMin, $restMax]...");
+      //print("$name need to recurse deeper [$keyMin, $keyMax] [$restMin, $restMax]...");
       children.forEach((key, val)
 	  {
-	    if(key.compareTo(keyMin) ==0) val.getRange(restMin,"all",passthrough:result);
-	    else if(key.compareTo(keyMin) >0 && key.compareTo(keyMax) <0)val.getRange("all","all",passthrough:result);
-	    else if(key.compareTo(keyMin) >0 && key.compareTo(keyMax) ==0)val.getRange("all",restMax,passthrough:result);
+	    if(key.compareTo(keyMin) ==0) {
+	      //print("entering $key for $restMin to all");
+	      val.getRange(restMin,"all",passthrough:result);}
+	    else if(key.compareTo(keyMin) >0 && key.compareTo(keyMax) <0){
+	      //print("entering $key for all");
+	      val.getRange("all","all",passthrough:result);}
+	    else if(key.compareTo(keyMin) >0 && key.compareTo(keyMax) ==0){
+	      //print("entering $key for all to $restMax");
+	      val.getRange("all",restMax,passthrough:result);}
 	    //else print("should bee: $key < $min or $key > $max, so ignore it");
 	  }
 

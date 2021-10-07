@@ -34,6 +34,7 @@ class Fibu {
   ///Execute a preprared statement
   void opExe(String key)
 	{
+	  Map<String,dynamic> storedVars = {};
 		print("we need to call on fast op ${key}");
 		Operation? actOp = book.ops[key];
 		if(actOp == null) print("Fast op '${key}' unknown, plese check the name");
@@ -44,146 +45,163 @@ class Fibu {
 			actOp.preparedLines.forEach((line)
 			{
 				print("to fill $line");
-				final DateFormat formatter = DateFormat('dd-MM-yyyy');
-				final String formatted = formatter.format(line.datum);
-				print("Date[$formatted]");
-				bool invalid = true;
-				while(invalid)
+				selectDate(line);
+				selectAccount(line, minus:true);
+				selectAccount(line, minus:false);
+				selectDescription(line, storedVars);
+				selectCurrency(line);
+				selectValuta(line,storedVars);
+			}
+			);
+		}
+	}
+	///select a date, had to implement the different shortcuts that are usual
+	void selectDate(JrlLine line) {
+		final DateFormat formatter = DateFormat('dd-MM-yyyy');
+		final String formatted = formatter.format(line.datum);
+		print("Date[$formatted]");
+		bool invalid = true;
+		while(invalid)
+		{
+			String? answer = stdin.readLineSync();
+			answer ??= "";
+			if( answer.isNotEmpty)
+			{
+				print("answered: '$answer'");
+				try
 				{
-					String? answer = stdin.readLineSync();
-					answer ??= "";
-					if( answer.isNotEmpty)
+					//DateTime point = DateTime.parse(answer);
+					DateFormat format = DateFormat("dd-MM-yyyy");
+					//print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
+					var point = format.parse(answer);
+					line.datum = point;
+					invalid =false;
+				}
+				catch(e)
+				{
+					//print("couldn*t undestand the date....");
+					try
 					{
-						print("answered: '$answer'");
+						//DateTime point = DateTime.parse(answer);
+						DateFormat format = DateFormat("dd-MM-yy");
+						//print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
+						var point = format.parse(answer);
+						line.datum = point;
+						invalid =false;
+					}
+					catch(e) {
 						try
 						{
 							//DateTime point = DateTime.parse(answer);
-							DateFormat format = DateFormat("dd-MM-yyyy");
+							DateFormat format = DateFormat("dd.MM.yyyy");
 							//print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
 							var point = format.parse(answer);
 							line.datum = point;
 							invalid =false;
 						}
-						catch(e)
-						{
-							//print("couldn*t undestand the date....");
+						catch(e) {
 							try
 							{
 								//DateTime point = DateTime.parse(answer);
-								DateFormat format = DateFormat("dd-MM-yy");
+								DateFormat format = DateFormat("dd.MM.yy");
 								//print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
 								var point = format.parse(answer);
 								line.datum = point;
 								invalid =false;
 							}
-							catch(e) {
-								try
-								{
-									//DateTime point = DateTime.parse(answer);
-									DateFormat format = DateFormat("dd.MM.yyyy");
-									//print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
-									var point = format.parse(answer);
-									line.datum = point;
-									invalid =false;
-								}
-								catch(e) {
-									try
-									{
-										//DateTime point = DateTime.parse(answer);
-										DateFormat format = DateFormat("dd.MM.yy");
-										//print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
-										var point = format.parse(answer);
-										line.datum = point;
-										invalid =false;
-									}
-									catch(e) {print("couldn't understand the date....");}
-								}
-							}
+							catch(e) {print("couldn't understand the date....");}
 						}
 					}
-					else invalid =false;
 				}
-
-
-				//fill in kto -
-				//print("constraints -[${line.limits}]");
-
-				String defaultKtoName =line.kminus.printname().trim();
-				late List<Konto> ktoList;
-				if(line.limits != null && line.limits!.containsKey("kmin"))
-				{
-					var limits = line.limits!["kmin"];
-					ktoList = book.kpl.getRange(limits);
-					defaultKtoName =limits["min"];
-					print("selecting from :\n $ktoList");
-				}
-				print("kto-[${defaultKtoName}]");
-
-				invalid = true;
-				while(invalid)
-				{
-					String? answer = stdin.readLineSync();
-					answer ??= defaultKtoName;
-					//print("answer is '$answer'");
-					if(answer.isEmpty) answer = defaultKtoName;
-					Konto ? selected =book.kpl.get(answer.trim());
-					//print("found Konto is '$selected");
-					if(selected != null)
-					{
-						line.kminus = selected;
-						if(line.kminus.name ==selected.name) invalid =false;
-						else print("Account not existent,try again");
-					}
-					else print("please select from : \n$ktoList\nkto-[${defaultKtoName}]");
-				}
-
-
-				//fill in kto +
-				//print("constraints -[${line.limits}]");
-
-				print("constraints -[${line.limits}]");
-				defaultKtoName =line.kplus.printname().trim();
-				if(line.limits != null && line.limits!.containsKey("kplu"))
-				{
-					var limits = line.limits!["kplu"];
-					print("retrieved + [${limits}]");
-					ktoList = book.kpl.getRange(limits);
-					defaultKtoName =limits["min"];
-					print("selecting [$defaultKtoName]from : '$ktoList'");
-				}
-				print("kto+[${defaultKtoName}]");
-
-				invalid = true;
-				while(invalid)
-				{
-					String? answer = stdin.readLineSync();
-					answer ??= defaultKtoName;
-					//print("answer is '$answer'");
-					if(answer.isEmpty) answer = defaultKtoName;
-					Konto ? selected =book.kpl.get(answer.trim());
-					//print("found Konto is '$selected");
-					if(selected != null)
-					{
-						line.kplus = selected;
-						if(line.kplus.name ==selected.name) invalid =false;
-						else print("Account not existent,try again");
-					}
-					else print("please select from : \n$ktoList\nkto-[${defaultKtoName}]");
-				}
-
-
-				print("desc [${line.desc}]");
-				print("cur [${line.cur}]");
-				print("valuta [${line.valuta}]");
 			}
-			);
+			else invalid =false;
 		}
+	}
+	///select an account, per default the minus account with minus to false the plus account
+	void selectAccount(JrlLine line, {bool minus:true})
+	{
+		String defaultKtoName =(minus)?line.kminus.printname().trim():line.kplus.printname().trim();
+		late List<Konto> ktoList;
+		String setKey = (minus)? "kmin":"kplu";
+		if(line.limits != null && line.limits!.containsKey(setKey))
+		{
+			var limits = line.limits![setKey];
+			//print("retrieved + [${limits}]");
+			ktoList = book.kpl.getRange(limits);
+			//defaultKtoName =limits["min"]; //lower limit? or
+			defaultKtoName =ktoList.first.name;//first valid account?
+			print("selecting from :\n $ktoList");
+		}
+		print("kto"+((minus)?"-":"+")+"[${defaultKtoName}]");
+
+		bool invalid = true;
+		while(invalid)
+		{
+			String? answer = stdin.readLineSync();
+			answer ??= defaultKtoName;
+			//print("answer is '$answer'");
+			if(answer.isEmpty) answer = defaultKtoName;
+			Konto ? selected =book.kpl.get(answer.trim());
+			//print("found Konto is '$selected");
+			if(selected != null)
+			{
+				if(minus) {
+					line.kminus = selected;
+					if (line.kminus.name == selected.name)
+						invalid = false;
+					else
+						print("Account not existent,try again");
+				}
+				else{
+					line.kplus = selected;
+					if (line.kplus.name == selected.name)
+						invalid = false;
+					else
+						print("Account not existent,try again");
+				}
+			}
+			else print("please select from : \n$ktoList\nkto-[${defaultKtoName}]");
+		}
+	}
+
+	///input a description, if variables are in it store them and expand
+  void selectDescription(JrlLine line, Map<String, dynamic> storedVars)
+	{
+		print("desc [${line.desc}] ");
+		String tmpDesc =line.desc;
+		if(line.vars != null && line.vars.containsKey("desc"))
+		{
+			var locVars = line.vars["desc"]!;
+			//print("local variables: $locVars");
+			locVars.keys.forEach((key)
+			{
+				print("please provide data for $key:");
+				String? answer = stdin.readLineSync();
+				answer ??= "";
+				locVars[key] = answer;
+				tmpDesc = tmpDesc.replaceAll("#$key", answer);
+			});
+			line.desc = tmpDesc; //ask for confirmation?
+		}
+	}
+
+  void selectCurrency(JrlLine line)
+	{
+		print("currency [${line.cur}] ");
+		String? answer = stdin.readLineSync();
+		answer ??= "";
+		if(answer.isNotEmpty)line.cur = answer;
+	}
+
+  void selectValuta(JrlLine line, Map<String, dynamic> storedVars)
+	{
+		print("valuta [${line.valuta}]");
 	}
 }
 
 main(List<String> arguments) //async
 {
-  //print("incoming : $arguments");
+	//print("incoming : $arguments");
   Settings settings = Settings();
   settings..parser.addFlag('run',
       abbr: 'r', defaultsTo: false, help: "run the accounting process")

@@ -43,13 +43,23 @@ void main() {
 	  expect(book.kpl.get("3902")!.valuta, equals(0000));
 	  expect(book.kpl.get("4100")!.valuta, equals(0000));
 	  expect(book.kpl.get("4200")!.valuta, equals(000));
-	 //	List<Konto>list = book.kpl.getRange({"min":"3000", "max": "3009"} );
-	 //	expect(list.length, equals(2));
+	 	List<Konto>list = book.kpl.getRange({"min":"3000", "max": "3009"} );
+	 	expect(list.length, equals(2));
 		//print("using kpl ${book.kpl}");
-		List<Konto>list = book.kpl.getRange({"min":"2200", "max": "2500"} );
+		//List<Konto>
+		list = book.kpl.getRange({"min":"2200", "max": "2500"} );
 		//print("list got back $list");
 		expect(list.length, equals(4));
 		expect(list[0].desc, equals("Patrimoine"));
+		regl["base"] = "assets/wbsamples/me2000";
+		book.clear();
+		handler.load(book: book, conf: regl ) ;
+		//print("using kpl ${book.kpl}");
+		//List<Konto>
+		list = book.kpl.getRange({"min":"400", "max": "499"} );
+		//print("list got back \n$list");
+		expect(list.length, equals(27));
+		expect(list[2].desc, equals("Contribution of Lasade"));
 	});
 
       });

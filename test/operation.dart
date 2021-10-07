@@ -46,6 +46,7 @@ void main() {
 	    expect("${ops['MERCH']}", equals(should));
 			Operation anOp = ops['MERCH']!;
 			anOp.prepare();
+			//TODO need to check complex case Bouffe achetée chez Auchan EUR (#payement - #montant - #couches - #divers)", "", "(#payement - #montant - #couches - #divers)",""
 
 		});
 
