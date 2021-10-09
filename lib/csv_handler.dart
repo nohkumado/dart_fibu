@@ -131,22 +131,26 @@ class CsvHandler {
             //print("added [$res]");
           } else if (mode == "ops") {
             DateTime point = (actLine[1]!= null && actLine[1].isNotEmpty)?DateTime.parse(actLine[1]):DateTime.now();
-	    //print("parsing  $actLine");
-	    try
-	    {
-	      //"tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"
-	      if(book.ops[actLine[0]] == null )book.ops[actLine[0]] = Operation(book,name: actLine[0], date: point,cplus: actLine[2],cminus: actLine[3],desc: actLine[4],cur: actLine[5], valuta:  actLine[6], mod:actLine[7]);
-	      else
-	      {
-		Operation anOp = book.ops[actLine[0]] as Operation;
-		anOp.add(date: point,cplus: actLine[2],cminus: actLine[3],desc: actLine[4],cur: actLine[5], valuta:  actLine[6], mod:actLine[7]);
-	      }
-	      //print("Created  $anOp");
-	    }
-	    catch(e) {
-	      print("failed to parse $actLine $e");
-	    }
-	  }
+            //print("parsing  ops $actLine");
+            try
+            {
+              //"tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"
+              if(book.ops[actLine[0]] == null )
+                {
+                  book.ops[actLine[0]] = Operation(book,name: actLine[0], date: point,cplus: actLine[2],cminus: actLine[3],desc: actLine[4],cur: actLine[5], valuta:  actLine[6], mod:actLine[7]);
+                  //print("created   ${book.ops[actLine[0]]}");
+                }
+              else
+              {
+                Operation anOp = book.ops[actLine[0]] as Operation;
+                anOp.add(date: point,cplus: actLine[2],cminus: actLine[3],desc: actLine[4],cur: actLine[5], valuta:  actLine[6], mod:actLine[7]);
+                //print("modified   ${book.ops[actLine[0]]}");
+              }
+            }
+            catch(e) {
+              print("failed to parse $actLine $e");
+            }
+          }
         }
       }
     } else {

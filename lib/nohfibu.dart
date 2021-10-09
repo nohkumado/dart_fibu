@@ -556,7 +556,7 @@ class JrlLine {
     _kplus.action(this, mode: "add");
     return this;
   }
-  void addConstraint(String key,{ List<String> boundaries : const [], Map<String, dynamic>vars: const {}})
+  void addConstraint(String key,{ List<String> boundaries : const [], String mode: ""})
   {
     if(limits == null) limits = {"kmin": {"min": "0", "max": "1000000"},"kplu": {"min": "0", "max": "1000000"}};
 
@@ -577,7 +577,7 @@ class JrlLine {
         limits!["kplu"]["max"] = boundaries[1];
       }
     }
-    else if(key == "desc") this.vars["desc"] = vars;
+    else if(key == "mode") this.vars["mode"] = mode;
   }
   /// getter for kminus and kplus
   Konto get kminus  => _kminus;

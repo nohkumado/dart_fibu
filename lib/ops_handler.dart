@@ -1,3 +1,4 @@
+import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 import 'nohfibu.dart';
 /// an Operation class
@@ -9,6 +10,8 @@ class Operation
   List<DateTime> datum = [];
   String name = "tag";List<String> cplus = [],cminus =[],desc = [],cur = [],mod = [],valuta = [];
   List<JrlLine> preparedLines = [];
+  Map<String, dynamic> vars = {};
+  Map<String, dynamic> expressions = {};
   //CTOR
   Operation(book, {name,date,cplus,cminus,desc,cur,valuta, mod})
   {
@@ -26,7 +29,6 @@ class Operation
       else if(date is DateTime) this.datum.add(date);
       else this.datum.add(DateTime.now());
     }
-    this.desc.add( (desc != null) ? desc : "none");
     this.cplus.add( (cplus != null) ? "$cplus" : "none");
     this.cminus.add( (cminus != null) ? "$cminus" : "none");
     this.desc.add( (desc != null) ? desc : "none");
@@ -63,6 +65,8 @@ class Operation
   ///extract the needed vars 
   void prepare()
   {
+    vars = {};//reset the variables
+    expressions = {};
     for(int i = 0; i < cplus.length; i++)
     {
       JrlLine line = JrlLine(datum: datum[i]);
@@ -84,30 +88,63 @@ class Operation
       else line.kplus=book.kpl.get(cminus[i])!;
       if(desc[i].contains("#"))
       {
+        //check if it can be evaluated with expressions: ^0.2.3:
         //we need to extract the variables
         RegExp rex = RegExp(r"#(\w+)");
       //print("found matches for vars : $rex");
-        Map<String, dynamic> vars = {};
         rex.allMatches(desc[i]).forEach((match) { vars[match.group(1)!] = match.group(1); });
       //print("extracted varaibles : $vars");
-        line.addConstraint("desc",vars: vars);
       }
+
+      RegExp expPresent = RegExp(r'[()]+');
+      print("checking for presence of $expPresent in ${desc[i]}");
+      if(desc[i].contains(expPresent)) parseExpression(desc[i], expPresent);
+      if(valuta[i].contains(expPresent)) parseExpression(valuta[i], expPresent);
       line.desc = desc[i];
     //print("ops perparer valuta '${valuta[i]}'");
       if(valuta[i].contains("#"))
       {
         //we need to extract the variables
         RegExp rex = RegExp(r"#(\w+)");
-        Map<String, dynamic> vars = {};
         rex.allMatches(valuta[i]).forEach((match) { vars[match.group(1)!] = match.group(1); });
-        line.addConstraint("valuta",vars: vars);
       }
       else  if(valuta[i].isNotEmpty) line.setValuta(valuta[i]);
-      if(mod[i].isNotEmpty) print("ehm op should do something with ${mod[i]}");
+      if(mod[i].isNotEmpty) line.addConstraint("mode", mode:mod[i]);
 
     //print("added $line");
       preparedLines.add(line);
       //data.add( [name, date, cplus[i], cminus[i], "${desc[i]}", cur[i], valuta[i], mod[i]]);
     }
+  }
+
+  ///check if it can be evaluated with expressions: ^0.2.3:
+  void parseExpression(String source, RegExp expPresent) {
+      //we need to extract the variables
+      RegExp rex = RegExp(r"(\(.*\))");
+      print("found expresion matches for exprtession : $rex");
+      rex.allMatches(source).forEach((match)
+      {
+        String testExp = match.group(1).toString();
+        testExp = testExp.replaceAll("#", "");
+        print("trying to parse  ${testExp}");
+        try {
+          Expression expression = Expression.parse(testExp);
+          expressions[match.group(1)!] = expression;
+        }
+        catch(e){
+          print("error parsing expression '$testExp'");
+        }
+      });
+      print("extracted expressions : $expressions");
+  }
+  dynamic eval(String key)
+  {
+    if(expressions.containsKey(key)) {
+      final evaluator = const ExpressionEvaluator();
+      var r = evaluator.eval(expressions[key], vars);
+      print("evaled result = $r");
+      return(r);
+    }
+    return(-1);
   }
 }

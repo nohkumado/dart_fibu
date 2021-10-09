@@ -1244,6 +1244,7 @@ OPS
 "AUCHAN","","1999",      "3080",  "Couches bébé ", "", "#couches",""
 "AUCHAN","","1999",      "3080",  "Divers bébé (#objet)", "", "#divers",""
 "AUCHAN","","1999",      "3011",  "Bouffe achetée chez Auchan EUR (#payement - #montant - #couches - #divers)", "", "(#payement - #montant - #couches - #divers)",""
+"AUCHAN","","1999",      "3011",  "Test (#payement - #toto - #couches - #divers", "", "(#beuh - #argh )",""
 "VIR","","230-249","120","Virements reguliers Operation (#MONT * #somme)","EUR","",""
 "BANQUE","","180","140-150","Virements reguliers2","EUR","20","",""
 "VIR","","250","160","Operation de virement regulier3","EUR","03",""

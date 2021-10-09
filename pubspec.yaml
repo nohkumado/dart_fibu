@@ -24,6 +24,7 @@ dependencies:
   intl: ^0.17.0
   sprintf: ^6.0.0
   csv: ^5.0.0
+  expressions: ^0.2.3
 
 dev_dependencies:
    test: '>=1.15.0 <2.0.0'
