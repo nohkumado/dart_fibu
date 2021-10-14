@@ -63,15 +63,20 @@ void main() {
 			anOp.prepare();
 			expect(anOp.vars.length, equals(5));
 			List<JrlLine> preJrl = anOp.preparedLines;
+			anOp.vars['payement'] = 100;
+			anOp.vars['couches'] = 5;
+			anOp.vars['divers'] = 9;
+			anOp.vars['montant'] = 10;
 			print("vars ${anOp.vars}");
 			print("expressions ${anOp.expressions}");
 			Expression expression = anOp.expressions[anOp.expressions.keys.last];
 			var context = {'payement': 100, 'montant': 10, 'couches': 5, 'divers': 9};
-
 			final evaluator = const ExpressionEvaluator();
 			var r = evaluator.eval(expression, context);
 			print("result = $r");
 			expect(r, equals(76));
+			print("expressions from op ${anOp.eval(anOp.expressions.keys.last)}");
+			expect(anOp.eval(anOp.expressions.keys.last), equals(76));
 
 		  //	print("jrl Lines");
 		  //	for (var line in preJrl) {

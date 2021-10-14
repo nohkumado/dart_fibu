@@ -1,0 +1,59 @@
+Raspberry pi:
+
+bboett@videolan:~/projects/dart_fibu $ time dart run bin/nohfibu.dart -b assets/wbsamples/me2000.csv  -r
+trying to fetch book from file assets/wbsamples/me2000.csv
+load Book: assets/wbsamples/me2000 csv  
+asked to run!
+end of processing
+write seems successful, please check assets/wbsamples/me2000.lst
+
+real    0m22.078s
+user    0m29.947s
+sys     0m2.788s
+
+Desktop:
+bboett@hayate:~/AndroidStudioProjects/dart_fibu$ time dart run bin/nohfibu.dart -b assets/wbsamples/me2000.csv  -r
+trying to fetch book from file assets/wbsamples/me2000.csv
+load Book: assets/wbsamples/me2000 csv
+asked to run!
+end of processing
+write seems successful, please check assets/wbsamples/me2000.lst
+
+real	0m1,826s
+user	0m2,517s
+sys	0m0,487s
+bboett@hayate:~/AndroidStudioProjects/dart_fibu$ uname -a
+Linux hayate 5.10.0-8-amd64 #1 SMP Debian 5.10.46-4 (2021-08-03) x86_64 GNU/Linux
+
+Android Tablet with termux
+~/projects/dart_fibu$ time dart run bin/nohfibu.dart -b assets/wbsamples/me2000.csv -r
+trying to fetch book from file assets/wbsamples/me2000.csv
+load Book: assets/wbsamples/me2000 csv
+asked to run!
+end of processing
+write seems successful, please check assets/wbsamples/me2000.lst
+
+real    1m6.049s
+user    1m29.900s
+sys     0m8.316s
+
+Jinpad
+bboett@JingOS:~/projects/dart_fibu$ time dart run bin/nohfibu.dart -b assets/wbsamples/me2000.csv -r
+trying to fetch book from file assets/wbsamples/me2000.csv
+load Book: assets/wbsamples/me2000 csv  
+asked to run!
+end of processing
+write seems successful, please check assets/wbsamples/me2000.lst
+
+real    0m12.802s
+user    0m18.093s
+sys     0m1.080s
+
+
+short:
+
+~/projects/dart_fibu $ time dart run bin/nohfibu.dart -b assets/wbsamples/me2000.csv  -r
+Desktop:       real    0m01,826s
+Raspberry pi4: real    0m22.078s
+Android Tablet:real    1m06.049s
+Jinpad:        real    0m12.802s

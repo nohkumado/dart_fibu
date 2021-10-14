@@ -97,7 +97,7 @@ class Operation
       }
 
       RegExp expPresent = RegExp(r'[()]+');
-      print("checking for presence of $expPresent in ${desc[i]}");
+      //print("checking for presence of $expPresent in ${desc[i]}");
       if(desc[i].contains(expPresent)) parseExpression(desc[i], expPresent);
       if(valuta[i].contains(expPresent)) parseExpression(valuta[i], expPresent);
       line.desc = desc[i];
@@ -121,12 +121,10 @@ class Operation
   void parseExpression(String source, RegExp expPresent) {
       //we need to extract the variables
       RegExp rex = RegExp(r"(\(.*\))");
-      print("found expresion matches for exprtession : $rex");
       rex.allMatches(source).forEach((match)
       {
         String testExp = match.group(1).toString();
         testExp = testExp.replaceAll("#", "");
-        print("trying to parse  ${testExp}");
         try {
           Expression expression = Expression.parse(testExp);
           expressions[match.group(1)!] = expression;
@@ -135,7 +133,6 @@ class Operation
           print("error parsing expression '$testExp'");
         }
       });
-      print("extracted expressions : $expressions");
   }
   dynamic eval(String key)
   {
