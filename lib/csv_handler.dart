@@ -34,7 +34,7 @@ class CsvHandler {
     print("check settings output = ${settings['output']}");
     String fname =
         ((settings["output"]) != null && (settings["output"].isNotEmpty))
-            ? settings["output"]
+            ? settings["output"] + ".csv"
             : settings["base"] + ".csv";
     print("created fname = $fname");
     File(fname).writeAsString(res).then((file) {
@@ -54,6 +54,7 @@ class CsvHandler {
     print("load Book: ${settings["base"]} ${settings["type"]}  ");
     var srcFile = File(settings["base"] + "." + settings["type"]);
     if (srcFile.existsSync()) {
+      book.name = settings["base"].split("/").last;
       //print("file exists\n");
       String rawTxt = srcFile.readAsStringSync();
       //print("got file $rawTxt");
@@ -132,13 +133,14 @@ class CsvHandler {
           } else if (mode == "ops") {
             DateTime point = (actLine[1]!= null && actLine[1].isNotEmpty)?DateTime.parse(actLine[1]):DateTime.now();
             //print("parsing  ops $actLine");
-            try
+            //try
             {
               //"tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"
               if(book.ops[actLine[0]] == null )
                 {
-                  book.ops[actLine[0]] = Operation(book,name: actLine[0], date: point,cplus: actLine[2],cminus: actLine[3],desc: actLine[4],cur: actLine[5], valuta:  actLine[6], mod:actLine[7]);
-                  //print("created   ${book.ops[actLine[0]]}");
+                  //print("adding op ${actLine[0]}  to ${book.name} with $actLine");
+                  book.ops[actLine[0]] = Operation(book,name: actLine[0].trim(), date: point,cplus: actLine[3],cminus: actLine[2],desc: actLine[4].trim(),cur: actLine[5].trim(), valuta:  actLine[6], mod:actLine[7].trim());
+                  //print("created  op  ${actLine[0]} in book ${book.ops[actLine[0]].book.name}");
                 }
               else
               {
@@ -147,9 +149,7 @@ class CsvHandler {
                 //print("modified   ${book.ops[actLine[0]]}");
               }
             }
-            catch(e) {
-              print("failed to parse $actLine $e");
-            }
+            //catch(e) { print("failed to parse $actLine $e"); }
           }
         }
       }

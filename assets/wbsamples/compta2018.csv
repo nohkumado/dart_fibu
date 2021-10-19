@@ -1,70 +1,80 @@
 KPL
 kto,dsc,cur,budget,valuta
-1001,Caisse,EUR,0.0,0.0
-1010,Compte-Courant,EUR,0.0,0.0
-1020,Livret bleu association 20167702,EUR,0.0,0.0
-1100,Credit a Proprietaire,EUR,0.0,0.0
-1101,Credits,EUR,0.0,0.0
-1200,Materiel,EUR,0.0,0.0
-1800,Pertes annees precedentes,EUR,0.0,0.0
-1999,Giroconto (saldo dovrebbe sempre essere zero),EUR,0.0,0.0
-0,*** fine degli conti proventi ***,EUR,0.0,0.0
-2001,Capital Social,EUR,0.0,0.0
-2010,Fond de reserve,EUR,0.0,0.0
-2100,Dettes / factures a payer,EUR,0.0,0.0
-2101,Dettes a proprietaire,EUR,0.0,0.0
-2800,Utile d'esercizio precedente,EUR,0.0,0.0
-3001,"Administration (banque,tel,porti,...)",EUR,0.0,0.0
-3002,FFAAA,EUR,0.0,0.0
-3010,Loyers,EUR,0.0,0.0
-3100,Assurances,EUR,0.0,0.0
-3300,Reparations,EUR,0.0,0.0
-3500,Equipement,EUR,0.0,0.0
-3600,Divers,EUR,0.0,0.0
-3700,compensations a enseignant 1,EUR,0.0,0.0
-3701,compensations a enseignant 2,EUR,0.0,0.0
-3702,compensations diverses,EUR,0.0,0.0
-4400,Contributions,EUR,0.0,0.0
-4499,Subventions,EUR,0.0,0.0
-4410,Recettes,EUR,0.0,0.0
-4500,Interets bancaires,EUR,0.0,0.0
+1,*** fine degli conti attivi ***,EUR,0,0
+1001,Caisse,EUR,0,0
+1010,Compte-Courant,EUR,0,0
+1020,Livret bleu association 20167702,EUR,0,0
+1100,Credit a Proprietaire,EUR,0,0
+1101,Credits,EUR,0,0
+1200,Materiel,EUR,0,0
+1800,Pertes annees precedentes,EUR,0,0
+1999,Giroconto (saldo dovrebbe sempre essere zero),EUR,0,0
+2,*** fine degli conti passivi ***,EUR,0,0
+2001,Capital Social,EUR,0,0
+2010,Fond de reserve,EUR,0,0
+2100,Dettes / factures a payer,EUR,0,0
+2101,Dettes a proprietaire,EUR,0,0
+2800,Utile d'esercizio precedente,EUR,0,0
+3,*** fine degli conti spese ***,EUR,0,0
+3001,"Administration (banque,tel,porti,...)",EUR,0,0
+3002,FFAAA,EUR,0,0
+3010,Loyers,EUR,0,0
+3100,Assurances,EUR,0,0
+3300,Reparations,EUR,0,0
+3500,Equipement,EUR,0,0
+3600,Divers,EUR,0,0
+3700,compensations a enseignant 1,EUR,0,0
+3701,compensations a enseignant 2,EUR,0,0
+3702,compensations diverses,EUR,0,0
+4,*** fine degli conti proventi ***,EUR,0,0
+4400,Contributions,EUR,0,0
+4410,Recettes,EUR,0,0
+4499,Subventions,EUR,0,0
+4500,Interets bancaires,EUR,0,0
 JRL
 date,ktominus,ktoplus,desc,cur,valuta
-2018-09-01,1001,   0,Report Caisse,EUR,0.0
-2018-09-01,1010,2001,Report Compte Courant CM,EUR,66.74
-2018-09-01,1020,2001,Report Livret bleu CM,EUR,2654.71
-2018-09-01,   0,2001,Report Capitale Social/Patrimoine,EUR,0.0
-2018-09-01,   0,2101,Report dette chez Proprietaire,EUR,0.0
-2018-09-01,   0,2800,Report utile 2016-2016,EUR,0.0
-2018-09-01,3010,2101,participation forfaitaire entretien dojo,EUR,125.0
-2018-09-01,2101,1001,rembourement frais Proprietaire,EUR,125.0
-2018-09-01,2101,4400,cotisation pratiquant 0,EUR,1.0
-2018-09-01,2101,4400,cotisation pratiquant 1 OK,EUR,35.0
-2018-09-01,2101,4400,cotisation pratiquant 2 OK,EUR,35.0
-2018-09-04,1001,4400,cotisation pratiquant 3 OK liquide,EUR,170.0
-2018-09-06,1010,4400,cotisation pratiquant 4 OK c:0012345,EUR,170.0
-2018-09-08,1010,4400,cotisation pratiquant 5 OK v:,EUR,150.0
-2018-09-21,1010,4400,cotisation pratiquant 6 OK c:0000000,EUR,170.0
-2018-09-21,1010,4400,cotisation pratiquant 7 c:,EUR,135.0
-2018-09-21,1010,4400,cotisation pratiquant 8 OK c:,EUR,170.0
-2018-09-21,1010,4400,cotisation pratiquant 9 OK c:,EUR,150.0
-2018-09-23,3702,4400,cotisation pratiquant 10 OK c:,EUR,35.0
-2018-09-23,1010,4400,cotisation pratiquant 11 OK c:,EUR,170.0
-2018-10-01,3010,2101,participation forfaitaire entretien dojo,EUR,125.0
-2018-10-02,3002,1010,c: / licences FFAAA,EUR,370.0
-2018-10-02,3002,1010,c: inscription ligue Alsace,EUR,46.0
-2018-10-04,2101,1001,rembourement frais Proprietaire,EUR,125.0
-2018-10-04,1001,4400,cotisation pratiquant 12 m: liquide,EUR,170.0
-2018-10-02,3002,1010,c: / licences FFAAA,EUR,37.0
-2018-10-16,1010,4400,cotisation pratiquant 13 OK c: 4158807,EUR,150.0
-2018-10-17,3002,1010,c: / licences FFAAA,EUR,37.0
-2018-11-01,3010,2101,participation forfaitaire entretien dojo,EUR,125.0
-2018-12-01,3010,2101,participation forfaitaire entretien dojo,EUR,125.0
-2019-01-01,3010,2101,participation forfaitaire entretien dojo,EUR,125.0
-2019-02-01,3010,2101,participation forfaitaire entretien dojo,EUR,125.0
-2019-03-01,3010,2101,participation forfaitaire entretien dojo,EUR,125.0
-2019-04-01,3010,2101,participation forfaitaire entretien dojo,EUR,125.0
-2019-05-01,3010,2101,participation forfaitaire entretien dojo,EUR,125.0
-2019-06-01,3010,2101,participation forfaitaire entretien dojo,EUR,125.0
-2019-07-01,3010,2101,participation forfaitaire entretien dojo,EUR,125.0
-2019-08-01,3010,2101,participation forfaitaire entretien dojo,EUR,125.0
+2018-09-01,1001,   0,Report Caisse,EUR,0
+2018-09-01,1010,2001,Report Compte Courant CM,EUR,6673
+2018-09-01,1020,2001,Report Livret bleu CM,EUR,265471
+2018-09-01,   0,2001,Report Capitale Social/Patrimoine,EUR,0
+2018-09-01,   0,2101,Report dette chez Proprietaire,EUR,0
+2018-09-01,   0,2800,Report utile 2016-2016,EUR,0
+2018-09-01,3010,2101,participation forfaitaire entretien dojo,EUR,12500
+2018-09-01,2101,1001,rembourement frais Proprietaire,EUR,12500
+2018-09-01,2101,4400,cotisation pratiquant 0,EUR,100
+2018-09-01,2101,4400,cotisation pratiquant 1 OK,EUR,3500
+2018-09-01,2101,4400,cotisation pratiquant 2 OK,EUR,3500
+2018-09-04,1001,4400,cotisation pratiquant 3 OK liquide,EUR,17000
+2018-09-06,1010,4400,cotisation pratiquant 4 OK c:0012345,EUR,17000
+2018-09-08,1010,4400,cotisation pratiquant 5 OK v:,EUR,15000
+2018-09-21,1010,4400,cotisation pratiquant 6 OK c:0000000,EUR,17000
+2018-09-21,1010,4400,cotisation pratiquant 7 c:,EUR,13500
+2018-09-21,1010,4400,cotisation pratiquant 8 OK c:,EUR,17000
+2018-09-21,1010,4400,cotisation pratiquant 9 OK c:,EUR,15000
+2018-09-23,3702,4400,cotisation pratiquant 10 OK c:,EUR,3500
+2018-09-23,1010,4400,cotisation pratiquant 11 OK c:,EUR,17000
+2018-10-01,3010,2101,participation forfaitaire entretien dojo,EUR,12500
+2018-10-02,3002,1010,c: / licences FFAAA,EUR,37000
+2018-10-02,3002,1010,c: inscription ligue Alsace,EUR,4600
+2018-10-04,2101,1001,rembourement frais Proprietaire,EUR,12500
+2018-10-04,1001,4400,cotisation pratiquant 12 m: liquide,EUR,17000
+2018-10-02,3002,1010,c: / licences FFAAA,EUR,3700
+2018-10-16,1010,4400,cotisation pratiquant 13 OK c: 4158807,EUR,15000
+2018-10-17,3002,1010,c: / licences FFAAA,EUR,3700
+2018-11-01,3010,2101,participation forfaitaire entretien dojo,EUR,12500
+2018-12-01,3010,2101,participation forfaitaire entretien dojo,EUR,12500
+2019-01-01,3010,2101,participation forfaitaire entretien dojo,EUR,12500
+2019-02-01,3010,2101,participation forfaitaire entretien dojo,EUR,12500
+2019-03-01,3010,2101,participation forfaitaire entretien dojo,EUR,12500
+2019-04-01,3010,2101,participation forfaitaire entretien dojo,EUR,12500
+2019-05-01,3010,2101,participation forfaitaire entretien dojo,EUR,12500
+2019-06-01,3010,2101,participation forfaitaire entretien dojo,EUR,12500
+2019-07-01,3010,2101,participation forfaitaire entretien dojo,EUR,12500
+2019-08-01,3010,2101,participation forfaitaire entretien dojo,EUR,12500
+OPS
+"tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"
+"FUJI","","1000-1100", "1999",  "Courses Fuji", "","#payement", ""
+"FUJI","","1999",      "2100-2200",  "Vêtements achetés chez Fuji", "", "#montant", ""
+"FUJI","","1999",      "3500",  "Materiel ", "", "#materiel",""
+"FUJI","","1999",      "3600",  "Divers (#objet)", "", "#divers",""
+"FUJI","","1999",      "3500",  "Armes achetés chez FUJI (#payement - #montant - #materiel - #divers)", "", "(#payement - #montant - #materiel - #divers)",""

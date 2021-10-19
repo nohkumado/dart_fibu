@@ -1,3 +1,4 @@
+import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 import 'package:sprintf/sprintf.dart';
 import 'dart:collection';
@@ -518,6 +519,10 @@ class JrlLine {
 
   Map<String, dynamic> vars = {};
 
+  Expression? valexp ;
+
+  String? valname;
+
   /// CTOR the fields are optional, if omitted they will be filled with defaults .
   JrlLine({datum, kmin, kplu, desc, cur, valuta}) {
     // print("jline incoming +$datum+ -$kmin- -$kplu- -$desc- ,=$cur=, #$valuta#\n");
@@ -558,7 +563,7 @@ class JrlLine {
   }
   void addConstraint(String key,{ List<String> boundaries : const [], String mode: ""})
   {
-    if(limits == null) limits = {"kmin": {"min": "0", "max": "1000000"},"kplu": {"min": "0", "max": "1000000"}};
+    if(limits == null) limits = {"kmin": {"min": "-1", "max": "1000000"},"kplu": {"min": "-1", "max": "1000000"}};
 
     if(key == "kmin"||key == "kplu") {
       if (boundaries.length == 0 || boundaries.length < 2) {
@@ -615,7 +620,7 @@ class JrlLine {
   void setValuta(String toParse)
   {
     toParse = toParse.trim();
-    print("aboutto number parse '$toParse' ser");
+    //print("aboutto number parse '$toParse' ser");
     valuta = (toParse.isNotEmpty)?(NumberFormat.currency().parse(toParse) * 100).toInt():0;
   }
 }
@@ -660,6 +665,8 @@ class Book {
   KontoPlan kpl = KontoPlan();
   late Journal jrl;
   Map<String,dynamic> ops = {};
+
+  String name = "a Book";
 
   ///CTOR if no accountplan is given initializes with aen empty one
   Book({kpl, jrl}) {

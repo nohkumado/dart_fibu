@@ -8,17 +8,20 @@ import 'package:nohfibu/ops_handler.dart';
 
 /// Launcher for the accounting analysis
 ///
-/// -r launches the analysys
+/// -r launches the analysis
 /// -b <name> set the base name to work on
 ///
 /// Issues a result file with the accounting analysis
 class Fibu {
   bool strict = false;
   Book book = Book();
+  late Settings settings;
 
-  Fibu({strict = false}) {
+  Fibu({strict = false, Settings? settings}) {
     if (strict) this.strict = true;
-  }
+		if (settings != null) this.settings = settings;
+		else this.settings = Settings();
+	}
 
   String execute() {
     print("asked to run!");
@@ -31,38 +34,63 @@ class Fibu {
     result += book.kpl.analysis();
     return result;
   }
-  ///Execute a preprared statement
+  ///Execute a prepared statement
   void opExe(String key)
 	{
-	  Map<String,dynamic> storedVars = {};
-		print("we need to call on fast op ${key}");
-		Operation? actOp = book.ops[key];
-		if(actOp == null) print("Fast op '${key}' unknown, plese check the name");
-		else
+		//print("we need to call on fast op ${key}");
+		bool ok = true;
+		while(ok)
 		{
-			print("Found fast op '${actOp}' ");
-			actOp.prepare();
-			actOp.preparedLines.forEach((line)
+			Operation? actOp = book.ops[key];
+			if(actOp == null) {print("Fast op '${key}' unknown, please check the name"); ok = false;}
+			else
 			{
-				print("to fill $line");
-				selectDate(line);
-				selectAccount(line, minus:true);
-				selectAccount(line, minus:false);
-				selectDescription(line, storedVars);
-				selectCurrency(line);
-				selectValuta(line,storedVars);
+				//print("Found fast op '${actOp}' ");
+				actOp.prepare();
+				bool firstLine = true;
+				//actOp.preparedLines.forEach((line)
+				for(int i = 0; i < actOp.length; i++)
+				{
+					JrlLine line  = actOp[i];
+					print("to fill $line");
+					if(firstLine){ selectDate(line); firstLine = false;}
+					print("proceeding to acc -");
+					selectAccount(line, minus:true);
+					print("proceeding to acc +");
+					selectAccount(line, minus:false);
+					print("proceeding to desc");
+					selectDescription(line, actOp);
+					if(!settings["autocur"]) {
+						print("proceeding to cur");
+						selectCurrency(line);
+					}
+					print("proceeding to val");
+					selectValuta(line,actOp);
+				}
+				//);
+				print("please check new jrl lines:");
+				actOp.result().forEach((line) { print("${line}" );});
+				print("ok?");
+				String? answer = stdin.readLineSync();
+				answer ??= "";
+				if( answer.isEmpty || answer.toLowerCase() == "y")
+					{
+						ok = false;
+						actOp.result().forEach((line) { book.jrl.add(line);});
+						print("jrl now: ${book.jrl}");
+					}
 			}
-			);
 		}
+	//handler.save(book: book, conf: settings);
 	}
 	///select a date, had to implement the different shortcuts that are usual
 	void selectDate(JrlLine line) {
 		final DateFormat formatter = DateFormat('dd-MM-yyyy');
 		final String formatted = formatter.format(line.datum);
-		print("Date[$formatted]");
 		bool invalid = true;
 		while(invalid)
 		{
+			print("Date[$formatted]");
 			String? answer = stdin.readLineSync();
 			answer ??= "";
 			if( answer.isNotEmpty)
@@ -79,7 +107,7 @@ class Fibu {
 				}
 				catch(e)
 				{
-					//print("couldn*t undestand the date....");
+					//print("couldn't*t understand the date....");
 					try
 					{
 						//DateTime point = DateTime.parse(answer);
@@ -114,29 +142,38 @@ class Fibu {
 					}
 				}
 			}
-			else invalid =false;
+			else
+				{
+					invalid =false;
+					print("default answer....");
+				}
 		}
+		print("set Date to [${formatter.format(line.datum)}]");
 	}
 	///select an account, per default the minus account with minus to false the plus account
 	void selectAccount(JrlLine line, {bool minus:true})
 	{
 		String defaultKtoName =(minus)?line.kminus.printname().trim():line.kplus.printname().trim();
+		String defaultKtoDesc =(minus)?line.kminus.desc.trim():line.kplus.desc.trim();
+		//print("selecting for $defaultKtoName, $defaultKtoDesc prefilled: ${line}");
 		late List<Konto> ktoList;
 		String setKey = (minus)? "kmin":"kplu";
-		if(line.limits != null && line.limits!.containsKey(setKey))
+		//print("limits? ${line.limits}");
+		if(line.limits != null && line.limits!.containsKey(setKey)&& line.limits![setKey]["min"] != "-1")
 		{
 			var limits = line.limits![setKey];
 			//print("retrieved + [${limits}]");
 			ktoList = book.kpl.getRange(limits);
 			//defaultKtoName =limits["min"]; //lower limit? or
 			defaultKtoName =ktoList.first.name;//first valid account?
+			defaultKtoDesc =ktoList.first.desc.trim();
 			print("selecting from :\n $ktoList");
 		}
-		print("kto"+((minus)?"-":"+")+"[${defaultKtoName}]");
 
 		bool invalid = true;
 		while(invalid)
 		{
+			print("kto"+((minus)?"-":"+")+"[${defaultKtoName}, ${defaultKtoDesc} ]");
 			String? answer = stdin.readLineSync();
 			answer ??= defaultKtoName;
 			//print("answer is '$answer'");
@@ -165,14 +202,15 @@ class Fibu {
 	}
 
 	///input a description, if variables are in it store them and expand
-  void selectDescription(JrlLine line, Map<String, dynamic> storedVars)
+  void selectDescription(JrlLine line, Operation myOp)
 	{
 		print("desc [${line.desc}] ");
 		String tmpDesc =line.desc;
-		if(line.vars != null && line.vars.containsKey("desc"))
+		print("searching desc in local variables: ${line.vars}");
+		if(line.vars.containsKey("desc"))
 		{
 			var locVars = line.vars["desc"]!;
-			//print("local variables: $locVars");
+			print("local variables: $locVars");
 			locVars.keys.forEach((key)
 			{
 				print("please provide data for $key:");
@@ -193,9 +231,33 @@ class Fibu {
 		if(answer.isNotEmpty)line.cur = answer;
 	}
 
-  void selectValuta(JrlLine line, Map<String, dynamic> storedVars)
+  void selectValuta(JrlLine line, Operation myOp)
 	{
 		print("valuta [${line.valuta}]");
+		if(line.valname != null)
+			{
+				print("need to supply value for variable [${line.valname}] ");
+				String? answer = stdin.readLineSync();
+				answer ??= "0";
+				line.setValuta(answer);
+				myOp.vars[line.valname!] = line.valuta;
+				print("stored for ${line.valname} ${line.valuta}");
+			}
+		else
+		if(line.valexp != null)
+		{
+			print("need to fill with exp ");
+			line.valuta = myOp.eval(exp:line.valexp);
+			print("computed for ${line.valname} ${line.valuta}");
+		}
+		else
+		{
+			String? answer = stdin.readLineSync();
+			answer ??= "";
+			if(answer.isNotEmpty) line.setValuta(answer);
+			print("inputted valuta ${line.valuta}");
+		}
+
 	}
 }
 
@@ -207,11 +269,12 @@ main(List<String> arguments) //async
       abbr: 'r', defaultsTo: false, help: "run the accounting process")
       ..parser.addFlag('list',
 	  defaultsTo: false, help: "list the available fast ops")
-
-      ..parser.addOption('fastop',
+		..parser.addFlag('autocur',
+				defaultsTo: true, help: "leaves currency at default without asking")
+		..parser.addOption('fastop',
 	  abbr: 'f',  help: "call fast operation <name>");
   settings.init(arguments);
-  Fibu fibu = Fibu();
+  Fibu fibu = Fibu(settings: settings);
 
   //print("result of arg run... : ${argResults["help"]}\n");
   //print("result of arg run... : ${argResults["help"]} sh: ${argResults["\?"]}\n");
@@ -226,7 +289,7 @@ main(List<String> arguments) //async
     String basename = settings["base"];
     String fname = basename + ".csv";
     print("trying to fetch book from file $fname");
-    var handler = CsvHandler();
+var handler = CsvHandler();
     handler.load(book: fibu.book, conf: settings);
     if (settings["run"]) {
       String result = fibu.execute();
@@ -244,6 +307,17 @@ main(List<String> arguments) //async
     }
     else if (settings["fastop"].isNotEmpty) {
       fibu.opExe(settings["fastop"]);
+      //settings["output"] = "assets/wbsamples/testres.csv";
+			print("saving ${settings["output"]}");
+			print("save (y/n)?");
+			String? answer = stdin.readLineSync();
+			answer ??= "";
+			if(answer.toLowerCase() == "y")
+			{
+			  handler.save(book: fibu.book, conf: settings);
+			}
+
+			//var handler = CsvHandler();
     } else
       print("book so far: ${fibu.book}");
   } else
