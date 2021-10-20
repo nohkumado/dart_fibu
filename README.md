@@ -48,7 +48,7 @@ at the moment the data-source is only in a (local) csv file, but will be extende
 
 ## Documentation
 
-concerning the fast operations, read the [docu](docs/FASTOPS.md)
+concerning the fast operations, read the [docu](doc/FASTOPS.md)
 
 the documentation written for the C wb fibu, one day soon, hopefully, i will extend it to include the 
 dart version, https://www.nohkumado.eu/nohfibu/ still logic and theory will be the same, so please 
