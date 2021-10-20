@@ -112,7 +112,7 @@ to your `~/.bashrc` you can simply run e.g.
 
 `wbconvert -f modell -s`
 
-#### Precompilation
+### Precompilation
 
 instead of activating the project, you can also precompile them, which makes them way faster!
 
