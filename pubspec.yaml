@@ -6,7 +6,7 @@ description: nohkumados Finanz Buchhaltungs App
   Fast ops allow prepared statements.
 #publish_to: https://pub.dev
 
-version: 0.0.2-alpha
+version: 0.0.3
 homepage: https://www.nohkumado.eu/nohfibu/ 
 repository: https://github.com/nohkumado/dart_fibu
 
