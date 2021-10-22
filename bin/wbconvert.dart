@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:nohfibu/settings.dart';
+import 'package:nohfibu/fibusettings.dart';
 import 'package:nohfibu/nohfibu.dart';
 import 'package:nohfibu/csv_handler.dart';
 import 'package:intl/intl.dart';
@@ -215,7 +215,7 @@ class WbConvert {
 main(List<String> arguments) //async
 {
   //print("incoming : $arguments");
-  Settings settings = Settings();
+  FibuSettings settings = FibuSettings();
   settings.init(arguments);
 
   //print("result of arg run... : ${argResults["help"]}\n");

@@ -194,8 +194,8 @@ class Konto {
     if (name != null && name != "kein Name") this.name = name;
     if (desc != null) this.desc = desc;
     if (cur != null) this.cur = cur;
-    if (valuta != null) this.valuta = valuta;
-    if (budget != null) this.budget = budget;
+    if (valuta != null) this.valuta = (valuta is double)? valuta.toInt():valuta;
+    if (budget != null) this.budget = (budget is double)? budget.toInt():budget;
     if (this.number.isEmpty) this.number = name[name.length - 1];
     extract = Journal(this.plan, caption: "Extract for ${this.name}");
   }
@@ -531,7 +531,7 @@ class JrlLine {
     this.desc = (desc != null) ? desc : "none";
     this.datum = (datum != null) ? datum : DateTime.now();
     this.cur = (cur != null) ? cur : "EUR";
-    this.valuta = (valuta != null) ? valuta : 0;
+    this.valuta = (valuta != null) ? (valuta is double)? valuta.toInt():valuta : 0;
   }
 
   /// pretty print this thing .

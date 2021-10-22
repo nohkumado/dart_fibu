@@ -1,13 +1,13 @@
 // to run this :!dart test test/operation.dart --chain-stack-traces
 import 'package:nohfibu/csv_handler.dart';
 import 'package:test/test.dart';
-import 'package:nohfibu/settings.dart';
+import 'package:nohfibu/fibusettings.dart';
 import 'package:nohfibu/nohfibu.dart';
 import 'package:nohfibu/ops_handler.dart';
 import 'package:expressions/expressions.dart';
 
 void main() {
-	Settings regl = Settings();
+	FibuSettings regl = FibuSettings();
 	Book book = Book();
 	setUp(()
 	{

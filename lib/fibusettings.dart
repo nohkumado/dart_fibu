@@ -3,12 +3,12 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 /// Settings adapter reads in the arguments and allows for a central repository where to fetch data from
-class Settings {
+class FibuSettings {
   Map<String, dynamic> data = {};
   List<String> rest = [];
   String usage = "";
   final parser = ArgParser();
-  Settings() {
+  FibuSettings() {
     parser
       ..addOption('lang', abbr: 'l', defaultsTo: 'de', help: "Language setting")
       ..addOption('base',
@@ -23,7 +23,7 @@ class Settings {
   }
 
   /// lauchnch the process here feeding typicaly the command line arguments
-  Settings init(List<String> arguments) {
+  FibuSettings init(List<String> arguments) {
     data = {};
     usage = parser.usage;
     data["error"] = false;

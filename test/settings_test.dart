@@ -1,9 +1,9 @@
 // to run this :!dart test test/kpl_test.dart --chain-stack-traces
 import 'package:test/test.dart';
-import 'package:nohfibu/settings.dart';
+import 'package:nohfibu/fibusettings.dart';
 
 void main() {
-  Settings regl = Settings();
+  FibuSettings regl = FibuSettings();
   setUp(()
       {
       });

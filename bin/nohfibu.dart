@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:intl/intl.dart';
 
-import 'package:nohfibu/settings.dart';
+import 'package:nohfibu/fibusettings.dart';
 import 'package:nohfibu/csv_handler.dart';
 import 'package:nohfibu/nohfibu.dart';
 import 'package:nohfibu/ops_handler.dart';
@@ -15,12 +15,12 @@ import 'package:nohfibu/ops_handler.dart';
 class Fibu {
   bool strict = false;
   Book book = Book();
-  late Settings settings;
+  late FibuSettings settings;
 
-  Fibu({strict = false, Settings? settings}) {
+  Fibu({strict = false, FibuSettings? settings}) {
     if (strict) this.strict = true;
 		if (settings != null) this.settings = settings;
-		else this.settings = Settings();
+		else this.settings = FibuSettings();
 	}
 
   String execute() {
@@ -264,7 +264,7 @@ class Fibu {
 main(List<String> arguments) //async
 {
 	//print("incoming : $arguments");
-  Settings settings = Settings();
+  FibuSettings settings = FibuSettings();
   settings..parser.addFlag('run',
       abbr: 'r', defaultsTo: false, help: "run the accounting process")
       ..parser.addFlag('list',

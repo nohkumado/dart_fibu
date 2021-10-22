@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:nohfibu/settings.dart';
+import 'package:nohfibu/fibusettings.dart';
 import 'package:nohfibu/csv_handler.dart';
 import 'package:nohfibu/nohfibu.dart';
 
@@ -42,7 +42,7 @@ main(List<String> arguments) //async
 {
   //print("incoming : $arguments");
   ///add command line argument parsing
-  Settings settings = Settings();
+  FibuSettings settings = FibuSettings();
   settings.parser.addFlag('run',
       abbr: 'r', defaultsTo: false, help: "run the accounting process");
   settings.init(arguments);

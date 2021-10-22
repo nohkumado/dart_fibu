@@ -1,17 +1,17 @@
 import 'dart:io';
 import 'package:csv/csv.dart';
 import 'package:nohfibu/nohfibu.dart';
-import 'package:nohfibu/settings.dart';
+import 'package:nohfibu/fibusettings.dart';
 import 'package:nohfibu/ops_handler.dart';
 
 /// Helper class to load and save the data in csv format.
 
 class CsvHandler {
-  Settings settings = Settings();
+  FibuSettings settings = FibuSettings();
   bool loading = false;
 
   /// save a book.
-  void save({Book? book, KontoPlan? kpl, Journal? jrl, Settings? conf}) {
+  void save({Book? book, KontoPlan? kpl, Journal? jrl, FibuSettings? conf}) {
     if (book == null) book = Book();
     if (kpl != null) book.kpl = kpl;
     if (jrl != null) book.jrl = jrl;
@@ -43,7 +43,7 @@ class CsvHandler {
   }
 
   /// load a book.
-  void load({Book? book, Settings? conf}) {
+  void load({Book? book, FibuSettings? conf}) {
     if (book == null) book = Book();
     if (conf != null) settings = conf;
     if (conf != null) settings = conf;
