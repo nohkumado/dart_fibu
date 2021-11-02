@@ -89,6 +89,7 @@ class CsvHandler {
       for (int i = 0; i < rowsAsListOfValues.length; i++) {
         var actLine = rowsAsListOfValues[i];
         if (actLine.length == 1) {
+          //print("found administtrative data [${actLine.length}] ${actLine}");
           if (actLine[0] == "KPL")
             mode = "kpl";
           else if (actLine[0] == "JRL")
@@ -109,7 +110,7 @@ class CsvHandler {
           if (mode == "kpl") {
             name = header.indexOf("kto");
             budget = header.indexOf("budget");
-          } else if (mode == "jrl") ;
+          } else if (mode == "jrl") 
           {
             datum = header.indexOf("date");
             kplu = header.indexOf("ktoplus");
@@ -129,7 +130,7 @@ class CsvHandler {
                     valuta: actLine[valuta],
                     cur: actLine[cur],
                     budget: actLine[budget]));
-            //print("added [$res]");
+            print("added [$res]");
           } else if (mode == "jrl") {
             //print("treating[$mode] ${actLine}");
             DateTime point = DateTime.parse(actLine[datum]);
