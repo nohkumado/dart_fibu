@@ -43,7 +43,7 @@ class CsvHandler {
   }
 
   /// load a book.
-  void load({Book? book, FibuSettings? conf}) {
+  void load({Book? book, FibuSettings? conf, String data : ""}) {
     if (book == null) book = Book();
     if (conf != null) settings = conf;
     if (conf != null) settings = conf;
@@ -52,11 +52,26 @@ class CsvHandler {
       return;
     }
     print("load Book: ${settings["base"]} ${settings["type"]}  ");
-    var srcFile = File(settings["base"] + "." + settings["type"]);
-    if (srcFile.existsSync()) {
-      book.name = settings["base"].split("/").last;
+
+      String rawTxt = (data.isNotEmpty)? data : "";
+      if(rawTxt.isEmpty)
+      {
+	var srcFile = File(settings["base"] + "." + settings["type"]);
+	if (srcFile.existsSync()) {
+	  book.name = settings["base"].split("/").last;
+	  //print("file exists\n");
+	  rawTxt = srcFile.readAsStringSync();
+	}
+      }
+
+
+    //var srcFile = File(settings["base"] + "." + settings["type"]);
+    //if (srcFile.existsSync()) 
+      if(rawTxt.isNotEmpty)
+    {
+      //book.name = settings["base"].split("/").last;
       //print("file exists\n");
-      String rawTxt = srcFile.readAsStringSync();
+      //String rawTxt = srcFile.readAsStringSync();
       //print("got file $rawTxt");
       List<List<dynamic>> rowsAsListOfValues =
           const CsvToListConverter().convert(rawTxt);
@@ -74,6 +89,7 @@ class CsvHandler {
       for (int i = 0; i < rowsAsListOfValues.length; i++) {
         var actLine = rowsAsListOfValues[i];
         if (actLine.length == 1) {
+          //print("found administtrative data [${actLine.length}] ${actLine}");
           if (actLine[0] == "KPL")
             mode = "kpl";
           else if (actLine[0] == "JRL")
@@ -94,7 +110,7 @@ class CsvHandler {
           if (mode == "kpl") {
             name = header.indexOf("kto");
             budget = header.indexOf("budget");
-          } else if (mode == "jrl") ;
+          } else if (mode == "jrl") 
           {
             datum = header.indexOf("date");
             kplu = header.indexOf("ktoplus");
@@ -114,7 +130,7 @@ class CsvHandler {
                     valuta: actLine[valuta],
                     cur: actLine[cur],
                     budget: actLine[budget]));
-            //print("added [$res]");
+            print("added [$res]");
           } else if (mode == "jrl") {
             //print("treating[$mode] ${actLine}");
             DateTime point = DateTime.parse(actLine[datum]);

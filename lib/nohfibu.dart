@@ -100,8 +100,8 @@ class KontoPlan {
 
   /// return this as a list
   ///  used for exporting the data .
-  List<List<dynamic>> asList({bool all = false}) {
-    List<List<dynamic>> asList = [
+  List<List<dynamic>> asList({bool all = false, bool silent: false}) {
+    List<List<dynamic>> asList = (silent)? []:[
       ["KPL"],
       ["kto", "dsc", "cur", "budget", "valuta"]
     ];
@@ -467,9 +467,9 @@ class Journal {
   }
 
   /// return the journal as a list .
-  List<List> asList(List<List> data) {
-    data.add(["JRL"]);
-    data.add(["date", "ktominus", "ktoplus", "desc", "cur", "valuta"]);
+  List<List> asList(List<List> data, { bool silent: false}) {
+    if(!silent)data.add(["JRL"]);
+    if(!silent)data.add(["date", "ktominus", "ktoplus", "desc", "cur", "valuta"]);
     journal.forEach((line) {
       line.asList(data);
     });
