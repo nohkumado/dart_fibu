@@ -32,7 +32,7 @@ bboett@[videolan,desktop, android pad, jingpad]:~/projects/dart_fibu $ time dart
 |:--- | :--- | :---|
 |1m6.049s|1m29.900s|0m8.316s|
 
-#### Jinpad
+#### JingPad
 
 |real|user|sys|
 |:--- | :--- | :---|
