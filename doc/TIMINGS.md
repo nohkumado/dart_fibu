@@ -2,7 +2,7 @@
 
 1. Raspberry pi: Linux videolan 5.10.60-v8+ #1449 SMP PREEMPT Wed Aug 25 15:01:33 BST 2021 aarch64 GNU/Linux
 2. Desktop: Linux hayate 5.10.0-8-amd64 #1 SMP Debian 5.10.46-4 (2021-08-03) x86_64 GNU/Linux
-3. Android Tablet:
+3. Android Tablet: Linux localhost 4.19.127-00093-g346b5a40acd7 #2 SMP PREEMPT Thu Apr 1 15:33:26 CST 2021 aarch64 Android
 4. JingPad: Linux JingOS 4.14.133-202109280105+ #9-JingOS SMP PREEMPT Tue Sep 28 01:15:40 CST 2021 aarch64 aarch64 aarch64 GNU/Linux 
 5. Librem5:librem5
 
