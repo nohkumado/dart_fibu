@@ -26,6 +26,7 @@ $ unzip dartsdk-linux-arm64-release.zip
 $ rm dartsdk-linux-arm64-release.zip 
 $ dart-sdk/bin/dart --version # check that the dart interpreter is working
 $ export PATH=$PATH:`pwd`/dart-sdk/bin # to enable dart locally in the actual shell
+$ export CHROME_EXECUTABLE=`which chromium` # to allow web dev, using, linux usually present, chromium instead of chrome 
 ```
 
 ### Installing dart on an android tablet (arm64)
