@@ -40,8 +40,12 @@ real    3m38.662s user    5m34.640s sys     0m25.483s
 dart compile exe  bin/wbconvert.dart -o ~/bin/fibuwbconvert # to avoid name conflicts...
 ```
 
-Desktop:       real    0m01,826s
-Raspberry pi4: real    0m22.078s
-Android Tablet:real    1m06.049s
-JingPad:       real    0m01.575s
-Librem 5:      real    0m05.524s
+|--------------------------------|
+|platform       |type   | timing |
+|--------------------------------|
+|Desktop:       |real  |0m01,826s|
+|Raspberry pi4: |real  |0m22.078s|
+|Android Tablet:|real  |1m06.049s|
+|JingPad:       |real  |0m01.575s|
+|Librem 5:      |real  |0m05.524s|
+|--------------------------------|
