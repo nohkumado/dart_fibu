@@ -25,7 +25,7 @@ bboett@[videolan,desktop, android pad, jingpad]:~/projects/dart_fibu $ time dart
 |real|user|sys|
 |:--- | :--- | :---|
 |0m1,826s|0m2,517s|0m0,487s|
-bboett@hayate:~/AndroidStudioProjects/dart_fibu$ uname -a
+
 
 #### Android Tablet with termux
 |real|user|sys|
