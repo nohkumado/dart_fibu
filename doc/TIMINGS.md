@@ -18,25 +18,30 @@ bboett@[videolan,desktop, android pad, jingpad]:~/projects/dart_fibu $ time dart
 
 #### Raspberry pi:
 |real|user|sys|
+|:--- | :--- | :---|
 |0m22.078s|0m29.947s|0m2.788s|
 
 #### Desktop:
 |real|user|sys|
+|:--- | :--- | :---|
 |0m1,826s|0m2,517s|0m0,487s|
 bboett@hayate:~/AndroidStudioProjects/dart_fibu$ uname -a
 
 #### Android Tablet with termux
 |real|user|sys|
+|:--- | :--- | :---|
 |1m6.049s|1m29.900s|0m8.316s|
 
 #### Jinpad
 
 |real|user|sys|
+|:--- | :--- | :---|
 |0m12.802s|0m18.093s|0m1.080s|
 
 #### Librem 5
 
 |real|user|sys|
+|:--- | :--- | :---|
 |3m38.662s|5m34.640s|0m25.483s|
 
 ### compiled mode 
