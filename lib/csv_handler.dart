@@ -28,15 +28,15 @@ class CsvHandler {
 
     final res = const ListToCsvConverter().convert(fibuAsList);
 
-    print("retrieved list\n$fibuAsList\n");
-    print("retrieved csv\n$res\n");
+    //print("retrieved list\n$fibuAsList\n");
+    //print("retrieved csv\n$res\n");
 
-    print("check settings output = ${settings['output']}");
+    //print("check settings output = ${settings['output']}");
     String fname =
         ((settings["output"]) != null && (settings["output"].isNotEmpty))
             ? settings["output"] + ".csv"
             : settings["base"] + ".csv";
-    print("created fname = $fname");
+    //print("created fname = $fname");
     File(fname).writeAsString(res).then((file) {
       print("write seems successful, please check $fname");
     });
@@ -51,7 +51,7 @@ class CsvHandler {
       print("Error: csv handler can't read  '${settings["type"]}' only .csv");
       return;
     }
-    print("load Book: ${settings["base"]} ${settings["type"]}  ");
+    //print("load Book: ${settings["base"]} ${settings["type"]}  ");
 
       String rawTxt = (data.isNotEmpty)? data : "";
       if(rawTxt.isEmpty)
@@ -120,7 +120,7 @@ class CsvHandler {
           //print("treating[$mode] ${actLine}");
           if (mode == "kpl") {
             if (book.kpl == null)
-              print("treating[$mode] ${actLine} ${book.kpl}");
+              //print("treating[$mode] ${actLine} ${book.kpl}");
             Konto res = book.kpl.put(
                 "${actLine[name]}",
                 Konto(
@@ -130,7 +130,7 @@ class CsvHandler {
                     valuta: actLine[valuta],
                     cur: actLine[cur],
                     budget: actLine[budget]));
-            print("added [$res]");
+            //print("added [$res]");
           } else if (mode == "jrl") {
             //print("treating[$mode] ${actLine}");
             DateTime point = DateTime.parse(actLine[datum]);

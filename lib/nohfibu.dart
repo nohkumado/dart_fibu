@@ -100,13 +100,13 @@ class KontoPlan {
 
   /// return this as a list
   ///  used for exporting the data .
-  List<List<dynamic>> asList({bool all = false, bool silent: false}) {
+  List<List<dynamic>> asList({bool all = false, bool silent: false, formatted:false}) {
     List<List<dynamic>> asList = (silent)? []:[
       ["KPL"],
       ["kto", "dsc", "cur", "budget", "valuta"]
     ];
     konten.forEach((key, value) {
-      value.asList(asList: asList, all: all);
+      value.asList(asList: asList, all: all, formatted: formatted);
     });
     return asList;
   }
@@ -315,14 +315,18 @@ class Konto {
 
   /// return this thins as a list, recurse through the tree
   ///preparation for e.g. csv conversion .
-  List<List> asList({List<List> asList = const [], bool all = false}) {
+  List<List> asList({List<List> asList = const [], bool all = false, formatted:false}) {
     //print("$number $name $desc tries to add to list");
+    var f = NumberFormat.currency(symbol: cur2sym(cur));
+
+    var budgetS = (formatted)? "${sprintf("%12s", [f.format(budget/100)])}": budget;
+    var valutaS = (formatted)? "${sprintf("%12s", [f.format(valuta/100)])}": valuta;
     if (name == "no name" && desc.length > 0)
-      asList.add([number, desc, cur, budget, valuta]);
-    else if (desc.length > 0) asList.add([name, desc, cur, budget, valuta]);
-    if (all) asList.add([name, desc, cur, budget, valuta]);
+      asList.add([number, desc, cur, budgetS, valutaS]);
+    else if (desc.length > 0) asList.add([name, desc, cur, budgetS, valutaS]);
+    if (all) asList.add([name, desc, cur, budgetS, valutaS]);
     children.forEach((key, value) {
-      value.asList(asList: asList);
+      value.asList(asList: asList, formatted: formatted);
     });
     return asList;
   }
@@ -467,11 +471,11 @@ class Journal {
   }
 
   /// return the journal as a list .
-  List<List> asList(List<List> data, { bool silent: false}) {
+  List<List> asList(List<List> data, { bool silent: false, bool formatted: false}) {
     if(!silent)data.add(["JRL"]);
-    if(!silent)data.add(["date", "ktominus", "ktoplus", "desc", "cur", "valuta"]);
+    if(!silent)data.add(["date", "ktominus", "ktoplus", "desc", "cur", "valuta", "actSum"]);
     journal.forEach((line) {
-      line.asList(data);
+      line.asList(data, formatted: formatted);
     });
     return data;
   }
@@ -548,11 +552,14 @@ class JrlLine {
   }
 
   /// return a list abstraction model of this object .
-  void asList(List<List> data) {
+  void asList(List<List> data,{bool formatted: false}) {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     final String date = formatter.format(datum);
+    var f = NumberFormat.currency(symbol: cur2sym(cur));
+
+    var valutaS = (formatted)? "${sprintf("%12s", [f.format(valuta/100)])}": valuta;
     data.add(
-        [date, _kminus.printname(), _kplus.printname(), "$desc", cur, valuta]);
+        [date, _kminus.printname(), _kplus.printname(), "$desc", cur, valutaS]);
   }
 
   /// ask the 2 accounts to add this line to their extracts.
@@ -652,6 +659,16 @@ class ExtractLine extends JrlLine {
           f.format((actSum / 100).toDouble())
         ])}";
     return result;
+  }
+  /// return a list abstraction model of this object .
+  void asList(List<List> data,{bool formatted: false}) {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final String date = formatter.format(datum);
+    var f = NumberFormat.currency(symbol: cur2sym(cur));
+    var valutaS = (formatted)? "${sprintf("%12s", [f.format(valuta/100)])}": valuta;
+    var actSumS = (formatted)? "${sprintf("%12s", [f.format(actSum/100)])}": actSum;
+    data.add(
+        [date, _kminus.printname(), _kplus.printname(), "$desc", cur, valutaS,actSumS]);
   }
 
 }
