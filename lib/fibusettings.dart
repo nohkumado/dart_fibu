@@ -82,5 +82,22 @@ class FibuSettings {
   void operator []=(String key, dynamic val) {
     if (data == null) data = {};
     data[key] = val;
-  }
+    String tildeExpansion(String path){
+      if(path.startsWith('~'))
+      {
+        List<String> parts = path.split(separator);
+        if(parts[0] == '~') parts[0] = ((Platform.environment.containsKey('HOME'))?Platform.environment['HOME']:"")!;
+        else {
+          String user = parts[0].replaceAll('~', '');
+          try {
+            parts[0] = getpwnam(user).homePathTo;
+          }
+          catch(e){
+            //print("failed to find user $user");
+          }
+        }
+        path = parts.join(separator);
+      }
+      return path;
+    } }
 }
