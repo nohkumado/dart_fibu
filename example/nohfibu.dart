@@ -62,7 +62,6 @@ main(List<String> arguments) //async
     //print("opening file ${settings["base"]}");
     String basename = settings["base"];
     String fname = basename + ".csv";
-    print("trying to fetch book from file $fname");
     var handler = CsvHandler();
     handler.load(book: fibu.book, conf: settings);
     if (settings["run"]) {
@@ -75,7 +74,7 @@ main(List<String> arguments) //async
         print("write seems successful, please check $fname");
       });
     } else
-      print("book so far: ${fibu.book}");
+      print("book so far: ${fibu.book} you need to set run if you want a compilation");
   } else
     print("no file to load");
   print("end of processing");

@@ -71,7 +71,7 @@ class Operation extends Object with IterableMixin<JrlLine>
     for(int i = 0; i < cplus.length; i++)
     {
       final String formatted = formatter.format(datum[i]);
-      var f = NumberFormat.currency(symbol: cur2sym(cur[i]));
+      //var f = NumberFormat.currency(symbol: cur2sym(cur[i]));
       // "$formatted ${kminus.printname()} ${kplus.printname()} ${sprintf("%-49s", [ desc ])} ${sprintf("%12s", [f.format(valAsd)])}";
       result += "${name},${formatted},+:${cplus[i]},-:${cminus[i]},${desc[i]},${cur[i]},${valuta[i]}, ${mod[i]}\n";
     }
@@ -186,14 +186,10 @@ class Operation extends Object with IterableMixin<JrlLine>
       return(-1);
     }
 
-
-    if(torun != null) {
       final evaluator = const ExpressionEvaluator();
       var r = evaluator.eval(torun, vars);
       print("evaled result = '$r'");
       return(r);
-    }
-    return(-1);
   }
 
   List<JrlLine>result() {

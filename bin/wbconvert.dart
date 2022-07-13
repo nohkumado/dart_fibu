@@ -25,7 +25,7 @@ class WbConvert {
     //kpl.add(Konto(number : 1,name: "", plan : kpl, title : "Aktiva" )) ;
     List<String> perLine = rawinput.split("\n");
     //print("splitted : $perLine\n");
-    Konto? last;
+    //Konto? last;
     String toplvl = "";
     Map<int, List<int>> wbcols = {
       87: [2, 8, 58, 62, 75],

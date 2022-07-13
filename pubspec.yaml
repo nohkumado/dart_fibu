@@ -20,11 +20,12 @@ environment:
 
 
 dependencies:
-  args: ^2.3.0
+  args: ^2.3.1
   intl: ^0.17.0
   sprintf: ^6.0.0
-  csv: ^5.0.0
-  expressions: ^0.2.3
+  csv: ^5.0.1
+  expressions: ^0.2.4
+  posix: ^3.1.0
 
 dev_dependencies:
    test: '>=1.15.0 <2.0.0'

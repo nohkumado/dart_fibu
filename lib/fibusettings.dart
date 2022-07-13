@@ -1,3 +1,6 @@
+import 'dart:io' show Platform;
+
+import 'package:posix/posix.dart';
 import 'package:args/args.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -8,6 +11,9 @@ class FibuSettings {
   List<String> rest = [];
   String usage = "";
   final parser = ArgParser();
+
+
+
   FibuSettings() {
     parser
       ..addOption('lang', abbr: 'l', defaultsTo: 'de', help: "Language setting")
@@ -70,7 +76,6 @@ class FibuSettings {
 
   /// to be able to get the data like from a map
   dynamic operator [](String key) {
-    if (data == null) return "";
     String result = "";
     try {
       return data[key];
@@ -80,24 +85,25 @@ class FibuSettings {
 
   /// the setter to set the data if needed
   void operator []=(String key, dynamic val) {
-    if (data == null) data = {};
     data[key] = val;
-    String tildeExpansion(String path){
-      if(path.startsWith('~'))
-      {
-        List<String> parts = path.split(separator);
-        if(parts[0] == '~') parts[0] = ((Platform.environment.containsKey('HOME'))?Platform.environment['HOME']:"")!;
-        else {
-          String user = parts[0].replaceAll('~', '');
-          try {
-            parts[0] = getpwnam(user).homePathTo;
-          }
-          catch(e){
-            //print("failed to find user $user");
-          }
+     }
+  String tildeExpansion(String path){
+    if(path.startsWith('~'))
+    {
+      String separator = Platform.pathSeparator;
+      List<String> parts = path.split(separator);
+      if(parts[0] == '~') parts[0] = ((Platform.environment.containsKey('HOME'))?Platform.environment['HOME']:"")!;
+      else {
+        String user = parts[0].replaceAll('~', '');
+        try {
+          parts[0] = getpwnam(user).homePathTo;
         }
-        path = parts.join(separator);
+        catch(e){
+          //print("failed to find user $user");
+        }
       }
-      return path;
-    } }
+      path = parts.join(separator);
+    }
+    return path;
+  }
 }

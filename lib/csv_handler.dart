@@ -20,11 +20,10 @@ class CsvHandler {
     ///Save the operations
     List<List<dynamic>> fibuAsList = book.kpl.asList();
     fibuAsList = book.jrl.asList(fibuAsList);
-    if(book.ops != null) {
+
     fibuAsList.add(["OPS"]);
     fibuAsList.add(["tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"]);
       book.ops.forEach((key,val)=>(val as Operation).asList(fibuAsList));
-    }
 
     final res = const ListToCsvConverter().convert(fibuAsList);
 
@@ -119,9 +118,9 @@ class CsvHandler {
         } else {
           //print("treating[$mode] ${actLine}");
           if (mode == "kpl") {
-            if (book.kpl == null)
               //print("treating[$mode] ${actLine} ${book.kpl}");
-            Konto res = book.kpl.put(
+            //Konto res =
+            book.kpl.put(
                 "${actLine[name]}",
                 Konto(
                     name: "${actLine[name]}",
@@ -138,7 +137,8 @@ class CsvHandler {
             Konto? plus = book.kpl.get("${actLine[kplu]}");
             //num vval = num.parse(actLine[valuta]);
             num vval = actLine[valuta];
-            JrlLine res = book.jrl.add(JrlLine(
+            //JrlLine res =
+            book.jrl.add(JrlLine(
                 datum: point,
                 kmin: minus,
                 kplu: plus,

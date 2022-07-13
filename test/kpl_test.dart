@@ -39,7 +39,9 @@ void main() {
       kto.set(name:"1001",valuta: 1000099);
       expect(kto.toString(), equals("1001                                                        € 999.12   € 10,000.99\n"));
       kto = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
-      Konto sk =  kto.get("10010");
+      //Konto sk =
+      kto.get("10010");
+      //print("kto sk = $sk");
       String target = "1001                                                        € 999.12   € 10,000.99\n"+
           ' 10010                                                          € 0.00        € 0.00\n';
       expect(kto.toString(recursive: true,empty:true), equals(target));
@@ -83,7 +85,7 @@ void main() {
       var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
       List<List> data = [];
       book.jrl.asList(data);
-      expect(data, equals([['JRL'], ['date', 'ktominus', 'ktoplus', 'desc', 'cur', 'valuta']]));
+      expect(data, equals([['JRL'], ['date', 'ktominus', 'ktoplus', 'desc', 'cur', 'valuta','actSum']]));
       data = [];
       book.jrl.add(line);
       book.jrl.asList(data);

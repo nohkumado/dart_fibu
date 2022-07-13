@@ -305,7 +305,7 @@ var handler = CsvHandler();
       fibu.book.ops.forEach((key, val)=>print("$key"));
       print("End of List");
     }
-    else if (settings["fastop"].isNotEmpty) {
+    else if (settings["fastop"] != null && settings["fastop"].isNotEmpty) {
       fibu.opExe(settings["fastop"]);
       //settings["output"] = "assets/wbsamples/testres.csv";
 			print("saving ${settings["output"]}");
@@ -319,7 +319,7 @@ var handler = CsvHandler();
 
 			//var handler = CsvHandler();
     } else
-      print("book so far: ${fibu.book}");
+      print("empty run (-h for other options) book so far: \n${fibu.book}");
   } else
     print("no file to load");
   print("end of processing");

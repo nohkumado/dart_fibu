@@ -31,7 +31,7 @@ void main() {
 		];
 		test('instantiating and toString', () {
 			List<String> actLine = defs[0];
-			DateTime point = (actLine[1]!= null && actLine[1].isNotEmpty)?DateTime.parse(actLine[1]):DateTime.parse("2021-09-21");
+			DateTime point = (actLine[1].isNotEmpty)?DateTime.parse(actLine[1]):DateTime.parse("2021-09-21");
 			Operation anOp = Operation(book,name: actLine[0], date: point,cplus: actLine[2],cminus: actLine[3],desc: actLine[4],cur: actLine[5], valuta:  actLine[6], mod:actLine[7]);
 			expect(anOp.toString(), equals("AUCHAN,21-09-2021,1000-1003,1999,Courses Auchan,,#payement, \n"));
 		});
@@ -39,7 +39,7 @@ void main() {
 			//print("kpl so far: ${book.kpl}");
 			for(List<String> actLine  in defs)
 			{
-				DateTime point = (actLine[1]!= null && actLine[1].isNotEmpty)?DateTime.parse(actLine[1]):DateTime.parse("2021-09-21");
+				DateTime point = (actLine[1].isNotEmpty)?DateTime.parse(actLine[1]):DateTime.parse("2021-09-21");
 				if(ops[actLine[0]] == null) ops[actLine[0]] = Operation(book,name: actLine[0]);
 				Operation anOp = ops[actLine[0]]!;
 				anOp.add(date: point,cplus: actLine[2],cminus: actLine[3],desc: actLine[4],cur: actLine[5], valuta:  actLine[6], mod:actLine[7]);
@@ -62,7 +62,7 @@ void main() {
 			anOp.book = book; //somehow....
 			anOp.prepare();
 			expect(anOp.vars.length, equals(5));
-			List<JrlLine> preJrl = anOp.preparedLines;
+			//List<JrlLine> preJrl = anOp.preparedLines;
 
 			//arrray like test
 			JrlLine first = anOp[0];
