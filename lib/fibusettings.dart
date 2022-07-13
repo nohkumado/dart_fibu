@@ -28,7 +28,7 @@ class FibuSettings {
           abbr: 's', defaultsTo: false, help: "enforce old WB-Style parsing");
   }
 
-  /// lauchnch the process here feeding typicaly the command line arguments
+  /// launch the process here feeding typically the command line arguments
   FibuSettings init(List<String> arguments) {
     data = {};
     usage = parser.usage;

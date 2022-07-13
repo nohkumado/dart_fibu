@@ -70,7 +70,7 @@ void main() {
 			//print("lines(${anOp.length}) : ${first}");
 			if(first.valuta < 0)
 				{
-					//print("valuta invalid, need to inverstigate");
+					//print("valuta invalid, need to investigate");
 					//if(first.valname != null) print("need to fill ${first.valname}");
 					//else print("shouldn't happen....");
 				}

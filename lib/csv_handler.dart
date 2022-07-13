@@ -88,7 +88,6 @@ class CsvHandler {
       for (int i = 0; i < rowsAsListOfValues.length; i++) {
         var actLine = rowsAsListOfValues[i];
         if (actLine.length == 1) {
-          //print("found administtrative data [${actLine.length}] ${actLine}");
           if (actLine[0] == "KPL")
             mode = "kpl";
           else if (actLine[0] == "JRL")

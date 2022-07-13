@@ -40,7 +40,7 @@ pkg install dart
 ```
 
 and you are good
-You probably want to install also vim (+dart pugins), git and you other usual tools.
+You probably want to install also vim (+dart plugins), git and you other usual tools.
 
 ### Installing dart on a linux tablet (arm64)
 
@@ -52,7 +52,7 @@ OpenGL implementation, you need to disable the OpenGl rendering and forcing , sl
 unset LD_LIBRARY_PATH
 ```
 
-## NohFibu installation/source managment
+## NohFibu installation/source management
 
 ### How to fetch the sources from git
 
@@ -78,7 +78,7 @@ $ dart run bin/wbconvert.dart --help
 
 The last line is to check that all went well and the thing is working
 
-### to refresh/resync the sources with the git version
+### to refresh/rsync the sources with the git version
 
 afterwards if you want to update the project to the actual active version you just need to
 ```
@@ -113,7 +113,7 @@ to your `~/.bashrc` you can simply run e.g.
 
 `wbconvert -f modell -s`
 
-### Precompilation
+### Compilation
 
 instead of activating the project, you can also precompile them, which makes them way faster!
 

@@ -6,7 +6,7 @@ import 'package:nohfibu/nohfibu.dart';
 
 /// Launcher for the accounting analysis
 ///
-/// -r launches the analysys
+/// -r launches the analysis
 /// -b <name> set the base name to work on
 ///
 /// Issues a result file with the accounting analysis
@@ -37,7 +37,7 @@ class Fibu {
   }
 }
 
-///to have a cammand line version of this program
+///to have a command line version of this program
 main(List<String> arguments) //async
 {
   //print("incoming : $arguments");

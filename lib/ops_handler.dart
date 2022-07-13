@@ -110,8 +110,8 @@ class Operation extends Object with IterableMixin<JrlLine>
       }
       else if(cplus[i].isEmpty) {}//do nothing
       else line.kplus=book.kpl.get(cplus[i])!;
-      if(line.kminus.number != "-1" && line.kminus.desc.isEmpty) print("Warning!! minus(${cminus[i]},${line.kminus.name},${line.kminus.number}) account probably erroneaous");
-      if(line.kplus.number != "-1" &&line.kplus.desc.isEmpty) print("Warning!! plus(${cplus[i]},${line.kplus.name},${line.kminus.number}) account probably erroneaous");
+      if(line.kminus.number != "-1" && line.kminus.desc.isEmpty) print("Warning!! minus(${cminus[i]},${line.kminus.name},${line.kminus.number}) account probably erroneous");
+      if(line.kplus.number != "-1" &&line.kplus.desc.isEmpty) print("Warning!! plus(${cplus[i]},${line.kplus.name},${line.kminus.number}) account probably erroneous");
       //print("set c+ to ${line.kplus} c- to ${line.kminus}");
       if(desc[i].contains("#"))
       {
@@ -132,8 +132,8 @@ class Operation extends Object with IterableMixin<JrlLine>
       //print("checking for presence of $expPresent in ${desc[i]}");
       if(desc[i].contains(expPresent)) parseExpression(line,desc[i], expPresent);
       line.desc = desc[i];
-      //print("ops perparer valuta '${valuta[i]}'");
-      //valuta is either a vairable name or an expression can't be both....
+      //print("ops preparer valuta '${valuta[i]}'");
+      //valuta is either a variable name or an expression can't be both....
       if(valuta[i].contains(expPresent)) parseExpression(line,valuta[i], expPresent);
       else if(valuta[i].contains("#"))
       {

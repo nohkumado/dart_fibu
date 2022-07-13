@@ -17,7 +17,21 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/assets/wbsamples/modell.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/assets/wbsamples/nt21.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/assets/wbsamples/sample.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

@@ -27,7 +27,7 @@ dart run bin/wbconvert.dart --help
 ###  -o, --output         output name
 ###  -?, --[no-]help      Help about the options
 ###  -s, --[no-]strict    enforce old WB-Style parsing
-#to really convert something: relative pathes don't work, absolute do
+#to really convert something: relative paths don't work, absolute do
 # easiest go to where the data is and call the script from there....
 dart run bin/wbconvert.dart -f <your kpl file> -s
 # this will generate a csv that can be further processed
