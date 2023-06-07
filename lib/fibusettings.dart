@@ -25,7 +25,9 @@ class FibuSettings {
       ..addFlag('help',
           abbr: 'h', defaultsTo: false, help: "Help about the options")
       ..addFlag('strict',
-          abbr: 's', defaultsTo: false, help: "enforce old WB-Style parsing");
+          abbr: 's', defaultsTo: false, help: "enforce old WB-Style parsing")
+    ..addFlag('version',
+    abbr: 'v', defaultsTo: false, help: "Version info");
   }
 
   /// launch the process here feeding typically the command line arguments

@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:git/git.dart';
+import 'package:path/path.dart' as gitweg;
 import 'package:intl/intl.dart';
 
 import 'package:nohfibu/fibusettings.dart';
@@ -151,7 +153,7 @@ class Fibu {
 		print("set Date to [${formatter.format(line.datum)}]");
 	}
 	///select an account, per default the minus account with minus to false the plus account
-	void selectAccount(JrlLine line, {bool minus:true})
+	void selectAccount(JrlLine line, {bool minus =true})
 	{
 		String defaultKtoName =(minus)?line.kminus.printname().trim():line.kplus.printname().trim();
 		String defaultKtoDesc =(minus)?line.kminus.desc.trim():line.kplus.desc.trim();
@@ -262,7 +264,7 @@ class Fibu {
 }
 
 main(List<String> arguments) //async
-{
+async {
 	//print("incoming : $arguments");
   FibuSettings settings = FibuSettings();
   settings..parser.addFlag('run',
@@ -283,6 +285,30 @@ main(List<String> arguments) //async
     print(settings.usage);
     exit(0);
   }
+	if (settings["version"]) {
+		// Versionsnummer abrufen
+
+		String version = "Version 0.";
+
+		if (await GitDir.isGitDir(gitweg.current)) {
+			final gitDir = await GitDir.fromExisting(gitweg.current);
+			final commitCount = await gitDir.commitCount();
+			version += "$commitCount";
+		} else {
+			print('Not a Git directory');
+		}
+
+
+
+
+		/*final gitDir = await GitDir.fromExisting('.git');
+		final head = await gitDir.getHead();
+		final revision = await head.getSha();
+		*/
+		print(version);
+
+		exit(0);
+	}
 
   if (settings["base"] != null && settings["base"].isNotEmpty) {
     //print("opening file ${settings["base"]}");
