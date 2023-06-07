@@ -106,4 +106,10 @@ class FibuSettings {
     }
     return path;
   }
+
+  @override
+  String toString() {
+    return 'FibuSettings{data: $data}';
+  }
+  bool empty() => data.isEmpty;
 }

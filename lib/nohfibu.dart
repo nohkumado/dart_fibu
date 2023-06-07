@@ -43,54 +43,72 @@ class KontoPlan {
   }
 
   /// return the asked account null if not found (BEWARE!!) .
-  Konto? get(String ktoName) {
-    //print("ktop get for $ktoName");
-    if (konten.containsKey(ktoName)) return konten[ktoName];
-    //print("ktop seems we need to recurse");
-    //but maybe we must recurse?
-    if (ktoName.length > 1) {
-      //print("name is long enough....");
-      String key = ktoName[0];
-      if (konten.containsKey(key))
-        return konten[key]!.get(ktoName.substring(1));
-      //print("ktop but konten doesn't contain $key");
-      return null;
+  Konto? get(String ktoName,{debug: false}) {
+    if(debug) print("ktop get for '$ktoName'");
+    if (konten.containsKey(ktoName)) {
+      if(debug) print("direct match $ktoName returning ${konten[ktoName]}");
+      return konten[ktoName];
     }
-    //print("ktop far enough no lolly");
-    return null;
-  }
+        if(debug) print("kto get no $ktoName in ${konten.keys.toList()}");
+        //but maybe we must recurse?
+        if (ktoName.length > 1) {
+          String key = ktoName[0];
+         String subkey = ktoName.substring(1);
+          if(debug) print("name is long enough.... extracted key $key and $subkey");
+          if (konten.containsKey(key)) {
+            if(debug) print("returning ${konten[key]!.get(subkey,debug:debug)}");
+            return konten[key]!.get(subkey);
+          }
+          else
+            {
+              if(debug) print("no $key in  ${konten.keys.toList()}");
+
+            }
+          if(debug) print("ktop but konten doesn't contain $key");
+          return null;
+        }
+        if(debug) print("ktop far enough no lolly");
+        return null;
+      }
 
   /// set at ktoName (Treewise) the data if kto (kto will be discarded afterwards) create the account if needed .
-  Konto put(String ktoName, Konto kto) {
+  Konto put(String ktoName, Konto kto,{debug:false}) {
+    if(debug) print("PUT DEBUG FOR $ktoName and $kto ");
     if (ktoName.length < 1)
       print("Error, KPL, don't know how to add $kto @ $ktoName");
-    else if (ktoName.length == 1)
+    else if (ktoName.length == 1) {
+      if(debug)print("single digit name, adding $ktoName $kto to ${konten.keys}");
       konten[ktoName] = kto;
+    }
     else {
       String key = ktoName[0];
       String rest = ktoName.substring(1, ktoName.length);
-      if (!konten.containsKey(key))
-        konten[key] = Konto(number: key, plan: this);
-
-      //fetch the account, creating it on the way
-      var locK = konten[key]!.get(rest, orgName: ktoName);
-      locK.name = kto.name;
-      locK.plan = this;
-      locK.desc = kto.desc;
-      locK.cur = kto.cur;
-      locK.budget = kto.budget;
-      locK.valuta = kto.valuta;
-      kto = locK;
+      if(debug)print("split name, to $key and $rest");
+      if (!konten.containsKey(key)) {
+        if(debug)print("adding new intermediary Kto $key");
+        konten[key] = Konto(number: key, plan: this,prefix:"");
+      }
+konten[key]!.put(rest,kto,debug:debug, prefix:"$key");
+     ////fetch the account, creating it on the way
+     //if(debug)print("going into get $key, rest ");
+     //var locK = konten[key]!.get(rest, orgName: ktoName, debug: debug,kto:kto);
+     //locK.name = kto.name;
+     //locK.plan = this;
+     //locK.desc = kto.desc;
+     //locK.cur = kto.cur;
+     //locK.budget = kto.budget;
+     //locK.valuta = kto.valuta;
+     //kto = locK;
     }
     return kto;
   }
 
   /// pretty print this thing .
   @override
-  String toString({bool extracts = false}) {
+  String toString({bool extracts = false,astree:false, recursive:true}) {
     String result = "              Konto Plan \n";
     konten.forEach((key, kto) {
-      result += kto.toString(recursive: true, extracts: extracts) + "\n";
+      result += kto.toString(recursive: true, extracts: extracts,astree:astree) + "\n";
     });
     result += "         Ende Konto Plan \n";
     //print("extracted +$ktoName+  -$desc- ,=$w=,  '$budget' #$valuta#\n");
@@ -172,6 +190,7 @@ class KontoPlan {
 /// one account .
 class Konto {
   String number = "-1";
+  String prefix = "";
   String desc = "";
   KontoPlan plan = KontoPlan();
   String cur = "EUR"; //currency
@@ -188,9 +207,13 @@ class Konto {
   ///   to which account plan it relates
   ///   valute the actual value in the account
   ///   budget a theoretical value that lapsed should generate warnings .
-  Konto({number, name = "kein Name", desc, plan, valuta, cur, budget}) {
+  Konto({number, name = "kein Name", desc, plan, valuta, cur, budget, String prefix:""}) {
     //set(number,name, plan, desc, valuta, cur, budget);
     if (number != null) this.number = number;
+    if (prefix.isNotEmpty ) {
+      //print("set prefix for $number/$name as $prefix");
+      this.prefix = prefix;
+    }
     if (name != null && name != "kein Name") this.name = name;
     if (desc != null) this.desc = desc;
     if (cur != null) this.cur = cur;
@@ -219,35 +242,46 @@ class Konto {
 
   /// get the target account, by descending into the tree of accounts
   /// null safe, if no account was found a dummy one is generated .
-  Konto get(String ktoName, {String orgName = "undef"}) {
+  Konto get(String ktoName, {String orgName = "undef",debug: false, Konto? kto}) {
     if (orgName == "undef") orgName = ktoName;
-    if (name == ktoName) {
+    if (name.length == 1 && (name == ktoName && orgName == name)) {
+      if(debug) print("returning myself");
       return this;
     } else if (children.containsKey(ktoName)) {
+      if(debug) print("found key in children, returning child");
       return children[ktoName]!;
     } else if (!children.containsKey(ktoName) && ktoName.length > 1) {
       //maybe recurse?
       String key = ktoName[0];
       String rest = ktoName.substring(1);
-      if (ktoName.startsWith(name)) {
-        rest = ktoName.substring(name.length);
-        key = rest[0];
-        rest = rest.substring(1);
-        if (rest.length <= 0) {
-          children[key] = Konto(number: key, name: orgName);
-          return children[key]!;
-        }
+      if(debug) print("$ktoName not found, split $key and $rest recurse?");
+      if (!children.containsKey(key)) {
+        if(debug) print("created 2 $key  ");
+        children[key] = Konto(number: key, plan: this);
       }
-      if (children.containsKey(key))
-        return children[key]!.get(rest, orgName: orgName);
+      if(debug) print("child found $key  in recursing");
+      return children[key]!.get(rest, orgName: orgName,debug: debug);
       // if(key !=number) //study more, o how to cope with unrelated names
       // {
       //   //orgName = name+orgName;
       // print("ehm  $ktoName differs from me ($number) .... rewriting orgName to $orgName" );
       // }
-      children[key] = Konto(number: key, plan: this);
-      return children[key]!.get(ktoName.substring(1), orgName: orgName);
+      return children[key]!.get(ktoName.substring(1), orgName: orgName,debug: debug);
+/*
+      if (ktoName.startsWith(name)) {
+        rest = ktoName.substring(name.length);
+        key = rest[0];
+        rest = rest.substring(1);
+        if(debug) print("$ktoName starts with name, trying with $key and $rest");
+        if (rest.length <= 0) {
+          if(debug) print("created $key  name=$orgName");
+          children[key] = Konto(number: key, name: orgName);
+          return children[key]!;
+        }
+      }
+*/
     }
+    if(debug) print("created 3 $ktoName  $orgName");
     children[ktoName] = Konto(number: ktoName, name: orgName);
     return children[ktoName]!;
   }
@@ -260,8 +294,9 @@ class Konto {
       bool debug = false,
       bool recursive = false,
       empty = false,
-      bool extracts = false}) {
+      bool extracts = false, astree: false}) {
     String result = "";
+    if(astree) result += "{name}";
     if (extracts) {
       //print("trying to add '${extract.toString()}'");
       if (empty)
@@ -425,6 +460,30 @@ class Konto {
     else
       print("Konto Error, nevershould be here");
     return result;
+  }
+
+  Konto put(String ktoName, Konto kto, {debug:false, String prefix:""}) {
+
+    if(debug) print("KTO[${name}] PUT DEBUG FOR $ktoName and $kto");
+    if (ktoName.length < 1)
+      print("Error, KPL, don't know how to add $kto @ $ktoName");
+    else if (ktoName.length == 1) {
+      if(debug)print("single digit name, atting to $ktoName $kto");
+      children[ktoName] = kto;
+    }
+    else {
+      String key = ktoName[0];
+      prefix += key;
+      String rest = ktoName.substring(1, ktoName.length);
+      if(debug)print("split name, to $key and $rest");
+      if (!children.containsKey(key)) {
+        children[key] = Konto(number: key, name: prefix,plan: this);
+        if(debug)print("adding new intermediary Kto $key : ${children[key]}");
+      }
+      if(debug) print("should be calling on $key put for $rest");
+      children[key]!.put(rest,kto,debug:debug,prefix: prefix);
+    }
+    return kto;
   }
 }
 

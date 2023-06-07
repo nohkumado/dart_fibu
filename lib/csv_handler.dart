@@ -1,4 +1,6 @@
 import 'dart:io';
+//import 'dart:js_util';
+//import 'dart:js_util';
 import 'package:csv/csv.dart';
 import 'package:nohfibu/nohfibu.dart';
 import 'package:nohfibu/fibusettings.dart';
@@ -45,35 +47,36 @@ class CsvHandler {
   void load({Book? book, FibuSettings? conf, String data : ""}) {
     if (book == null) book = Book();
     if (conf != null) settings = conf;
-    if (conf != null) settings = conf;
     if (settings["type"] != "csv") {
       print("Error: csv handler can't read  '${settings["type"]}' only .csv");
       return;
     }
     //print("load Book: ${settings["base"]} ${settings["type"]}  ");
 
-      String rawTxt = (data.isNotEmpty)? data : "";
-      if(rawTxt.isEmpty)
-      {
-	var srcFile = File(settings["base"] + "." + settings["type"]);
-	if (srcFile.existsSync()) {
-	  book.name = settings["base"].split("/").last;
-	  //print("file exists\n");
-	  rawTxt = srcFile.readAsStringSync();
-	}
+    String rawTxt = (data.isNotEmpty)? data : "";
+    if(rawTxt.isEmpty)
+    {
+      var srcFile = File(settings["base"] + "." + settings["type"]);
+      if (srcFile.existsSync()) {
+        book.name = settings["base"].split("/").last;
+        //print("file exists\n");
+        rawTxt = srcFile.readAsStringSync();
+        //print("file exists\n$rawTxt");
       }
+      else {print("File ${settings["base"]}.${settings["type"]} does not exist");}
+    }
 
 
     //var srcFile = File(settings["base"] + "." + settings["type"]);
     //if (srcFile.existsSync()) 
-      if(rawTxt.isNotEmpty)
+    if(rawTxt.isNotEmpty)
     {
       //book.name = settings["base"].split("/").last;
       //print("file exists\n");
       //String rawTxt = srcFile.readAsStringSync();
       //print("got file $rawTxt");
       List<List<dynamic>> rowsAsListOfValues =
-          const CsvToListConverter().convert(rawTxt);
+      const CsvToListConverter(eol: "\n").convert(rawTxt);
       //print("extracted  $rowsAsListOfValues");
       String mode = "none";
       List header = [];
@@ -87,6 +90,7 @@ class CsvHandler {
           kplu = 0;
       for (int i = 0; i < rowsAsListOfValues.length; i++) {
         var actLine = rowsAsListOfValues[i];
+
         if (actLine.length == 1) {
           if (actLine[0] == "KPL")
             mode = "kpl";
@@ -108,32 +112,54 @@ class CsvHandler {
           if (mode == "kpl") {
             name = header.indexOf("kto");
             budget = header.indexOf("budget");
-          } else if (mode == "jrl") 
+          } else if (mode == "jrl")
           {
+            //print("KPL so far ${book.kpl}");
             datum = header.indexOf("date");
             kplu = header.indexOf("ktoplus");
             kmin = header.indexOf("ktominus");
           }
+        //print("set node to  $mode");
         } else {
           //print("treating[$mode] ${actLine}");
           if (mode == "kpl") {
-              //print("treating[$mode] ${actLine} ${book.kpl}");
-            //Konto res =
+            //print("treating[$mode] ${actLine} ${book.kpl}");
+            String ktoname = "${actLine[name]}";
+            //print("treating[$mode] adding $ktoname prefix = ${(ktoname.length>1)?ktoname.substring(0,ktoname.length-1):''}");
+            Konto res =
             book.kpl.put(
-                "${actLine[name]}",
+                ktoname,
                 Konto(
-                    name: "${actLine[name]}",
+                    name: ktoname,
+                    prefix: (ktoname.length>1)?ktoname.substring(0,ktoname.length-2):"",
                     desc: actLine[desc],
                     plan: book.kpl,
                     valuta: actLine[valuta],
                     cur: actLine[cur],
-                    budget: actLine[budget]));
-            //print("added [$res]");
+                    budget: actLine[budget]),
+                debug: false);//("${actLine[name]}" =="4400")?true:false
+            //print("added kplline [$res]");
+            Konto? check =book.kpl.get("${actLine[name]}");
+            if("${check?.name}" != "${actLine[name]}") {
+              print("ERROR CSVLOAD ${check?.name} does not match ${actLine[name]}");
+              check = book.kpl.get("${actLine[name]}", debug: true);
+              print("NO  ${actLine[name]} in ${book.kpl.toString(astree: true,recursive: true)}");
+            }
+
           } else if (mode == "jrl") {
             //print("treating[$mode] ${actLine}");
             DateTime point = DateTime.parse(actLine[datum]);
             Konto? minus = book.kpl.get("${actLine[kmin]}");
             Konto? plus = book.kpl.get("${actLine[kplu]}");
+            if("${minus?.name}" != "${actLine[kmin]}") {
+              print("error ${minus?.name} does not match ${actLine[kmin]}");
+              minus = book.kpl.get("${actLine[kmin]}", debug: true);
+            }
+            if("${plus?.name}" != "${actLine[kplu]}") {
+              print("error ${plus?.name} does not match ${actLine[kplu]}");
+              plus = book.kpl.get("${actLine[kplu]}", debug: true);
+            }
+            //print("treating[$mode] ${actLine}\n search ${actLine[kmin]} and ${actLine[kplu]} ${minus?.name},${minus?.number} and ${plus?.name},${plus?.number}");
             //num vval = num.parse(actLine[valuta]);
             num vval = actLine[valuta];
             //JrlLine res =
@@ -149,14 +175,14 @@ class CsvHandler {
             DateTime point = (actLine[1]!= null && actLine[1].isNotEmpty)?DateTime.parse(actLine[1]):DateTime.now();
             //print("parsing  ops $actLine");
             //try
-            {
+                {
               //"tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"
               if(book.ops[actLine[0]] == null )
-                {
-                  //print("adding op ${actLine[0]}  to ${book.name} with $actLine");
-                  book.ops[actLine[0]] = Operation(book,name: actLine[0].trim(), date: point,cplus: actLine[3],cminus: actLine[2],desc: actLine[4].trim(),cur: actLine[5].trim(), valuta:  actLine[6], mod:actLine[7].trim());
-                  //print("created  op  ${actLine[0]} in book ${book.ops[actLine[0]].book.name}");
-                }
+              {
+                //print("adding op ${actLine[0]}  to ${book.name} with $actLine");
+                book.ops[actLine[0]] = Operation(book,name: actLine[0].trim(), date: point,cplus: actLine[3],cminus: actLine[2],desc: actLine[4].trim(),cur: actLine[5].trim(), valuta:  actLine[6], mod:actLine[7].trim());
+                //print("created  op  ${actLine[0]} in book ${book.ops[actLine[0]].book.name}");
+              }
               else
               {
                 Operation anOp = book.ops[actLine[0]] as Operation;

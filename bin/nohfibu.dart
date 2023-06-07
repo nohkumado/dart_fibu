@@ -24,7 +24,7 @@ class Fibu {
 	}
 
   String execute() {
-    print("asked to run!");
+    print("asked to run!"+book.toString());
     book.execute(); //TODO we should report if there were errors....
 
     String result = book.toString() + "\n";
@@ -291,12 +291,14 @@ main(List<String> arguments) //async
     print("trying to fetch book from file $fname");
 var handler = CsvHandler();
     handler.load(book: fibu.book, conf: settings);
+		//print("retrieved book "+fibu.book.toString());
+
     if (settings["run"]) {
       String result = fibu.execute();
       fname = (settings["output"].isNotEmpty)
 	  ? settings["output"]
 	  : basename + ".lst";
-      //print ("retrieved\n$result");
+      print ("retrieved\n$result");
       File(fname).writeAsString(result).then((file) {
 	print("write seems successful, please check $fname");
       });
