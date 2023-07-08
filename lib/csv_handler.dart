@@ -161,7 +161,13 @@ class CsvHandler {
             }
             //print("treating[$mode] ${actLine}\n search ${actLine[kmin]} and ${actLine[kplu]} ${minus?.name},${minus?.number} and ${plus?.name},${plus?.number}");
             //num vval = num.parse(actLine[valuta]);
-            num vval = actLine[valuta];
+            num vval = 0;
+            try {
+              vval = actLine[valuta];
+            }
+            catch (e) {
+              print("error!!!  ${actLine[valuta]} not a num in ${actLine} with $e");
+            }
             //JrlLine res =
             book.jrl.add(JrlLine(
                 datum: point,
