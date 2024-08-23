@@ -176,7 +176,7 @@ class Operation extends Object with IterableMixin<JrlLine>
       }
     });
   }
-  dynamic eval( {String key : "",Expression? exp})
+  dynamic eval( {String key = "",Expression? exp})
   {
     late Expression torun;
     if(exp != null) { torun = exp; }

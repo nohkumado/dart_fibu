@@ -43,7 +43,7 @@ class KontoPlan {
   }
 
   /// return the asked account null if not found (BEWARE!!) .
-  Konto? get(String ktoName,{debug: false}) {
+  Konto? get(String ktoName,{debug = false}) {
     if(debug) print("ktop get for '$ktoName'");
     if (konten.containsKey(ktoName)) {
       if(debug) print("direct match $ktoName returning ${konten[ktoName]}");
@@ -72,7 +72,7 @@ class KontoPlan {
       }
 
   /// set at ktoName (Treewise) the data if kto (kto will be discarded afterwards) create the account if needed .
-  Konto put(String ktoName, Konto kto,{debug:false}) {
+  Konto put(String ktoName, Konto kto,{debug =false}) {
     if(debug) print("PUT DEBUG FOR $ktoName and $kto ");
     if (ktoName.length < 1)
       print("Error, KPL, don't know how to add $kto @ $ktoName");
@@ -105,7 +105,7 @@ konten[key]!.put(rest,kto,debug:debug, prefix:"$key");
 
   /// pretty print this thing .
   @override
-  String toString({bool extracts = false,astree:false, recursive:true}) {
+  String toString({bool extracts = false,astree =false, recursive =true}) {
     String result = "              Konto Plan \n";
     konten.forEach((key, kto) {
       result += kto.toString(recursive: true, extracts: extracts,astree:astree) + "\n";
@@ -118,7 +118,7 @@ konten[key]!.put(rest,kto,debug:debug, prefix:"$key");
 
   /// return this as a list
   ///  used for exporting the data .
-  List<List<dynamic>> asList({bool all = false, bool silent: false, formatted:false}) {
+  List<List<dynamic>> asList({bool all = false, bool silent = false, formatted =false}) {
     List<List<dynamic>> asList = (silent)? []:[
       ["KPL"],
       ["kto", "dsc", "cur", "budget", "valuta"]
@@ -131,6 +131,8 @@ konten[key]!.put(rest,kto,debug:debug, prefix:"$key");
 
   /// run the analysis, comparing the 4 blocs against each other to see if the data is valid
   String analysis() {
+	  if(get("1") == null ||get("2")== null ||get("3")== null ||get("4")== null) throw Exception("Invalid account plan, no analysis possible");
+
     String result = "=" * 30 + "    Analysis    " + "=" * 30 + "\n";
     Konto activa = get("1")!;
     Konto passiva = get("2")!;
@@ -207,7 +209,7 @@ class Konto {
   ///   to which account plan it relates
   ///   valute the actual value in the account
   ///   budget a theoretical value that lapsed should generate warnings .
-  Konto({number, name = "kein Name", desc, plan, valuta, cur, budget, String prefix:""}) {
+  Konto({number, name = "kein Name", desc, plan, valuta, cur, budget, String prefix =""}) {
     //set(number,name, plan, desc, valuta, cur, budget);
     if (number != null) this.number = number;
     if (prefix.isNotEmpty ) {
@@ -242,7 +244,7 @@ class Konto {
 
   /// get the target account, by descending into the tree of accounts
   /// null safe, if no account was found a dummy one is generated .
-  Konto get(String ktoName, {String orgName = "undef",debug: false, Konto? kto}) {
+  Konto get(String ktoName, {String orgName = "undef",debug = false, Konto? kto}) {
     if (orgName == "undef") orgName = ktoName;
     if (name.length == 1 && (name == ktoName && orgName == name)) {
       if(debug) print("returning myself");
@@ -294,7 +296,7 @@ class Konto {
       bool debug = false,
       bool recursive = false,
       empty = false,
-      bool extracts = false, astree: false}) {
+      bool extracts = false, astree = false}) {
     String result = "";
     if(astree) result += "{name}";
     if (extracts) {
@@ -350,7 +352,7 @@ class Konto {
 
   /// return this thins as a list, recurse through the tree
   ///preparation for e.g. csv conversion .
-  List<List> asList({List<List> asList = const [], bool all = false, formatted:false}) {
+  List<List> asList({List<List> asList = const [], bool all = false, formatted =false}) {
     //print("$number $name $desc tries to add to list");
     var f = NumberFormat.currency(symbol: cur2sym(cur));
 
@@ -462,7 +464,7 @@ class Konto {
     return result;
   }
 
-  Konto put(String ktoName, Konto kto, {debug:false, String prefix:""}) {
+  Konto put(String ktoName, Konto kto, {debug =false, String prefix =""}) {
 
     if(debug) print("KTO[${name}] PUT DEBUG FOR $ktoName and $kto");
     if (ktoName.length < 1)
@@ -530,7 +532,7 @@ class Journal {
   }
 
   /// return the journal as a list .
-  List<List> asList(List<List> data, { bool silent: false, bool formatted: false}) {
+  List<List> asList(List<List> data, { bool silent = false, bool formatted = false}) {
     if(!silent)data.add(["JRL"]);
     if(!silent)data.add(["date", "ktominus", "ktoplus", "desc", "cur", "valuta", "actSum"]);
     journal.forEach((line) {
@@ -611,7 +613,7 @@ class JrlLine {
   }
 
   /// return a list abstraction model of this object .
-  void asList(List<List> data,{bool formatted: false}) {
+  void asList(List<List> data,{bool formatted = false}) {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     final String date = formatter.format(datum);
     var f = NumberFormat.currency(symbol: cur2sym(cur));
@@ -627,7 +629,7 @@ class JrlLine {
     _kplus.action(this, mode: "add");
     return this;
   }
-  void addConstraint(String key,{ List<String> boundaries : const [], String mode: ""})
+  void addConstraint(String key,{ List<String> boundaries = const [], String mode = ""})
   {
     if(limits == null) limits = {"kmin": {"min": "-1", "max": "1000000"},"kplu": {"min": "-1", "max": "1000000"}};
 
@@ -720,7 +722,7 @@ class ExtractLine extends JrlLine {
     return result;
   }
   /// return a list abstraction model of this object .
-  void asList(List<List> data,{bool formatted: false}) {
+  void asList(List<List> data,{bool formatted = false}) {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     final String date = formatter.format(datum);
     var f = NumberFormat.currency(symbol: cur2sym(cur));

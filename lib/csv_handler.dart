@@ -1,6 +1,4 @@
 import 'dart:io';
-//import 'dart:js_util';
-//import 'dart:js_util';
 import 'package:csv/csv.dart';
 import 'package:nohfibu/nohfibu.dart';
 import 'package:nohfibu/fibusettings.dart';
@@ -25,7 +23,7 @@ class CsvHandler {
 
     fibuAsList.add(["OPS"]);
     fibuAsList.add(["tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"]);
-      book.ops.forEach((key,val)=>(val as Operation).asList(fibuAsList));
+    book.ops.forEach((key,val)=>(val as Operation).asList(fibuAsList));
 
     final res = const ListToCsvConverter().convert(fibuAsList);
 
@@ -35,8 +33,8 @@ class CsvHandler {
     //print("check settings output = ${settings['output']}");
     String fname =
         ((settings["output"]) != null && (settings["output"].isNotEmpty))
-            ? settings["output"] + ".csv"
-            : settings["base"] + ".csv";
+        ? settings["output"] + ".csv"
+        : settings["base"] + ".csv";
     //print("created fname = $fname");
     File(fname).writeAsString(res).then((file) {
       print("write seems successful, please check $fname");
@@ -44,7 +42,7 @@ class CsvHandler {
   }
 
   /// load a book.
-  void load({Book? book, FibuSettings? conf, String data : ""}) {
+  void load({Book? book, FibuSettings? conf, String data = ""}) {
     if (book == null) book = Book();
     if (conf != null) settings = conf;
     if (settings["type"] != "csv") {
@@ -74,32 +72,35 @@ class CsvHandler {
       //book.name = settings["base"].split("/").last;
       //print("file exists\n");
       //String rawTxt = srcFile.readAsStringSync();
-      //print("got file $rawTxt");
+      String eol = detectEOL(rawTxt);
+
       List<List<dynamic>> rowsAsListOfValues =
-      const CsvToListConverter(eol: "\n").convert(rawTxt);
+          CsvToListConverter(eol: eol).convert(rawTxt);
       //print("extracted  $rowsAsListOfValues");
       String mode = "none";
       List header = [];
       int name = 0,
-          desc = 0,
-          valuta = 0,
-          cur = 0,
-          budget = 0,
-          datum = 0,
-          kmin = 0,
-          kplu = 0;
+      desc = 0,
+      valuta = 0,
+      cur = 0,
+      budget = 0,
+      datum = 0,
+      kmin = 0,
+      kplu = 0;
       for (int i = 0; i < rowsAsListOfValues.length; i++) {
         var actLine = rowsAsListOfValues[i];
 
         if (actLine.length == 1) {
-          if (actLine[0] == "KPL")
+          String tag = actLine[0].trim();
+          //print("check start of section : '$tag'");
+          if (tag == "KPL")
             mode = "kpl";
-          else if (actLine[0] == "JRL")
+          else if (tag == "JRL")
             mode = "jrl";
-          else if (actLine[0] == "OPS")
+          else if (tag == "OPS")
             mode = "ops";
           else {
-            print("Error , unknown type: ${actLine[0]}");
+            print("Error, unknown type: '${tag}'");
             mode = "none";
           }
           i++;
@@ -108,6 +109,7 @@ class CsvHandler {
               ? header.indexOf("desc")
               : header.indexOf("dsc");
           valuta = header.indexOf("valuta");
+          if(valuta == -1 && mode != "ops") throw Exception("[$mode] valuta not found in $header");
           cur = header.indexOf("cur");
           if (mode == "kpl") {
             name = header.indexOf("kto");
@@ -119,17 +121,16 @@ class CsvHandler {
             kplu = header.indexOf("ktoplus");
             kmin = header.indexOf("ktominus");
           }
-        //print("set node to  $mode");
+          //print("set node to  $mode");
         } else {
           //print("treating[$mode] ${actLine}");
           if (mode == "kpl") {
-            //print("treating[$mode] ${actLine} ${book.kpl}");
             String ktoname = "${actLine[name]}";
             //print("treating[$mode] adding $ktoname prefix = ${(ktoname.length>1)?ktoname.substring(0,ktoname.length-1):''}");
             Konto res =
-            book.kpl.put(
-                ktoname,
-                Konto(
+                book.kpl.put(
+                  ktoname,
+                  Konto(
                     name: ktoname,
                     prefix: (ktoname.length>1)?ktoname.substring(0,ktoname.length-2):"",
                     desc: actLine[desc],
@@ -137,8 +138,8 @@ class CsvHandler {
                     valuta: actLine[valuta],
                     cur: actLine[cur],
                     budget: actLine[budget]),
-                debug: false);//("${actLine[name]}" =="4400")?true:false
-            //print("added kplline [$res]");
+                  debug: false);//("${actLine[name]}" =="4400")?true:false
+                                //print("added kplline [$res]");
             Konto? check =book.kpl.get("${actLine[name]}");
             if("${check?.name}" != "${actLine[name]}") {
               print("ERROR CSVLOAD ${check?.name} does not match ${actLine[name]}");
@@ -181,7 +182,7 @@ class CsvHandler {
             DateTime point = (actLine[1]!= null && actLine[1].isNotEmpty)?DateTime.parse(actLine[1]):DateTime.now();
             //print("parsing  ops $actLine");
             //try
-                {
+            {
               //"tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"
               if(book.ops[actLine[0]] == null )
               {
@@ -204,4 +205,26 @@ class CsvHandler {
       print("book file doesn't exist");
     }
   }
+
+  String detectEOL(String fileContent) 
+  {
+    // Check for Windows EOL
+    if (fileContent.contains('\r\n')) {
+      return '\r\n'; // Windows EOL sequence (CRLF)
+    }
+    // Check for Unix EOL
+    else if (fileContent.contains('\n')) {
+      return '\n'; // Unix EOL sequence (LF)
+    } else {
+      return 'unknown'; // No recognizable EOL sequence found
+    }
+  }
+
+  bool unixEOL(String fileContent) 
+  {
+    if(detectEOL(fileContent) == '\n') return true;
+    return false;
+  }
+
+
 }

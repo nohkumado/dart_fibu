@@ -28,5 +28,6 @@ dependencies:
   posix: ^5.0.0
   git: ^2.2.1
 
+  path: any
 dev_dependencies:
    test: '>=1.15.0 <2.0.0'

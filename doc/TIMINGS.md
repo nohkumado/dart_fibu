@@ -57,3 +57,6 @@ dart compile exe  bin/wbconvert.dart -o ~/bin/fibuwbconvert # to avoid name conf
 |Android Tablet:|real  |1m06.049s|
 |JingPad:       |real  |0m01.575s|
 |Librem 5:      |real  |0m05.524s|
+|Librem 11:     |real  |0m00,304s|
+
+The librem11 test was donw with a way more recent dart install, should redo all the tests,...
