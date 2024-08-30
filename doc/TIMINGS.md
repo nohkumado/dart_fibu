@@ -50,13 +50,12 @@ bboett@[videolan,desktop, android pad, jingpad]:~/projects/dart_fibu $ time dart
 dart compile exe  bin/wbconvert.dart -o ~/bin/fibuwbconvert # to avoid name conflicts...
 ```
 
-|platform       |type   | timing |
+|platform       |type  | timing 2.7 |timing 3.5 |
 |:--- | --- | :---|
-|Desktop:       |real  |0m01,826s|
-|Raspberry pi4: |real  |0m22.078s|
-|Android Tablet:|real  |1m06.049s|
-|JingPad:       |real  |0m01.575s|
-|Librem 5:      |real  |0m05.524s|
-|Librem 11:     |real  |0m00,304s|
+|Desktop:       |real  |0m01,826s|0m0,185s|
+|Raspberry pi4: |real  |0m22.078s||
+|Android Tablet:|real  |1m06.049s||
+|JingPad:       |real  |0m01.575s||
+|Librem 5:      |real  |0m05.524s||
+|Librem 11:     |real  |         |0m00,304s|
 
-The librem11 test was donw with a way more recent dart install, should redo all the tests,...
