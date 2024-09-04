@@ -16,17 +16,17 @@ executables:
 
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 
 dependencies:
-  args: ^2.4.2
-  intl: ^0.18.1
+  args: ^2.5.0
+  intl: ^0.19.0
   sprintf: ^7.0.0
-  csv: ^5.0.2
-  expressions: ^0.2.5
-  posix: ^5.0.0
-  git: ^2.2.1
+  csv: ^6.0.0
+  expressions: ^0.2.5+1
+  posix: ^6.0.1
+  git: ^2.3.0
 
   path: any
 dev_dependencies:

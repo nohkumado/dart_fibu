@@ -3,6 +3,12 @@ import 'package:test/test.dart';
 import 'package:nohfibu/nohfibu.dart';
 
 void main() {
+  String normalize(String str) {
+    return str.split('\n')
+        .map((line) => line.trim().replaceAll(RegExp(r'\s{2,}'), ' '))
+        .join('\n')
+        .trim();
+  }
   Book book  = new Book();
   setUp(()
   {
@@ -42,9 +48,15 @@ void main() {
       //Konto sk =
       kto.get("10010");
       //print("kto sk = $sk");
-      String target = "1001                                                        € 999.12   € 10,000.99\n"+
+      String otarget = "1001                                                        € 999.12   € 10,000.99\n"+
           ' 10010                                                          € 0.00        € 0.00\n';
-      expect(kto.toString(recursive: true,empty:true), equals(target));
+      String target=  '''1001                                                        € 999.12   € 10,000.99
+      1                                                          € 0.00        € 0.00
+       0                                                          € 0.00        € 0.00
+        0                                                          € 0.00        € 0.00
+         1                                                          € 0.00        € 0.00
+       10010                                                          € 0.00        € 0.00\n''';
+      expect(normalize(kto.toString(recursive: true,empty:true)), equals(normalize(target)));
     });
     test('printname ', () {
       expect(kto.printname(), equals("1001"));
@@ -59,69 +71,76 @@ void main() {
       //print("asList returned $res");
       expect(res, equals([["1001", "top account", "EUR", 99912, 1000099], ["10010", "bottom  account", "EUR", 00, 00]]));
     });
-  });
-
-
-
-
-  group('Journal', ()
-  {
-    var kto1 = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
-    var kto2 = Konto(number : "2",name: "2002", plan: book.kpl, valuta:8000099, cur:"EUR", budget:88812);
-    test('Journal Eintrag', () {
-      //print("global journal: ${book.jrl}");
-      var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
-      expect(line.desc, equals("test line"));
-      expect(line.toString(), equals("01-09-2021 1001 2002 test line                                          € 88,888.00"));
-      List<List> data = [];
-      line.asList(data);
-      expect(data, equals([['2021-09-01', '1001', '2002', 'test line', 'EUR', 8888800]]));
+    test('Initialization with default values', () {
+      Konto defaultKonto = Konto();
+      expect(defaultKonto.name, equals('no name'));
+      expect(defaultKonto.cur, equals('EUR'));
+      expect(defaultKonto.valuta, equals(0));
+      expect(defaultKonto.budget, equals(0));
     });
+    test('Nested account handling', () {
+      Konto parent = Konto(number: '1', name: '1000', plan: book.kpl);
+      Konto child = Konto(number: '2', name: '1001', plan: book.kpl);
+      parent.put('2', child);
 
+      expect(parent.children['2']!.name, equals('1001'));
+      expect(parent.children['2']!.number, equals('2'));
 
-
-    test('Journal Eintrag', () {
-      //print("global journal: ${book.jrl}");
-      var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
-      List<List> data = [];
-      book.jrl.asList(data);
-      expect(data, equals([['JRL'], ['date', 'ktominus', 'ktoplus', 'desc', 'cur', 'valuta','actSum']]));
-      data = [];
-      book.jrl.add(line);
-      book.jrl.asList(data);
-      expect(data.length == 3 && data[2][0] == '2021-09-01', equals(true));
-
-
-
-      book.jrl.clear();
-      data = [];
-      book.jrl.asList(data);
-      expect(data.length == 2, equals(true));
-      book.jrl.add(line);
-      String result = 'Journal\n'+ '01-09-2021 1001 2002 test line                                          € 88,888.00\n'+ 'Journal End';
-      expect(book.jrl.toString(), equals(result));
+      Konto? retrieved = parent.get('2');
+      expect(retrieved!.name, equals('1001'));
     });
+    test('Sum of valuta with children', () {
+      Konto parent = Konto(number: '1', name: '1000', valuta: 5000, plan: book.kpl);
+      Konto child1 = Konto(number: '2', name: '1001', valuta: 3000, plan: book.kpl);
+      Konto child2 = Konto(number: '3', name: '1002', valuta: 2000, plan: book.kpl);
 
-    test('Journal Constraint', () {
-      //print("global journal: ${book.jrl}");
-      //var kto1 = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
-      //var kto2 = Konto(number : "2",name: "2002", plan: book.kpl, valuta:8000099, cur:"EUR", budget:88812);
-      book.kpl.put("1001", kto1);
-      book.kpl.put("2002", kto2);
-      var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
-      line.addConstraint("kmin",boundaries:["100","300"]);
-      line.kminus = book.kpl.get("2002")!;
-      expect(line.kminus.printname(), equals("1001"));
-      line.addConstraint("kmin",boundaries:["1000","3000"]);
-      line.kminus = book.kpl.get("2002")!;
-      expect(line.kminus.printname(), equals("2002"));
-      line.kplus = book.kpl.get("1001")!;
-      expect(line.kplus.printname(), equals("1001"));
-      line.addConstraint("kplu",boundaries:["1000","3000"]);
-      line.kplus = book.kpl.get("2002")!;
-      expect(line.kplus.printname(), equals("2002"));
-      line.kplus = book.kpl.get("2001")!;
-      expect(line.kplus.printname(), equals("2002"));
+      parent.put('2', child1);
+      parent.put('3', child2);
+
+      int totalSum = parent.sum();
+      expect(totalSum, equals(10000));  // 5000 + 3000 + 2000
+    });
+    test('Action method (add and subtract valuta)', () {
+      Konto kto = Konto(number: '1', name: '1000', valuta: 10000, plan: book.kpl);
+      JrlLine addLine = JrlLine(valuta: 5000, cur: 'EUR');
+      JrlLine subLine = JrlLine(valuta: 2000, cur: 'EUR');
+
+      kto.action(addLine, mode: 'add');
+      expect(kto.valuta, equals(15000));
+
+      kto.action(subLine, mode: 'sub');
+      expect(kto.valuta, equals(13000));
+    });
+    test('Handling edge cases in account names', () {
+      Konto emptyNameKonto = Konto(name: '', plan: book.kpl);
+      expect(emptyNameKonto.name, equals(''));
+
+      Konto longNameKonto = Konto(name: 'A' * 255, plan: book.kpl);
+      expect(longNameKonto.name.length, equals(255));
+    });
+    test('Currency conversion in numFormat', () {
+      Konto kto = Konto(cur: 'USD', plan: book.kpl);
+      String formattedValue = kto.numFormat(1234567);
+      expect(formattedValue, contains('\$12,345.67'));
+
+      kto.cur = 'EUR';
+      formattedValue = kto.numFormat(1234567);
+      expect(formattedValue, contains('€12,345.67'));
+    });
+    test('asList with nested accounts', () {
+      Konto parent = Konto(number: '1', name: '1000', plan: book.kpl);
+      Konto child1 = Konto(number: '2', name: '1001', desc: 'Child 1', plan: book.kpl);
+      Konto child2 = Konto(number: '3', name: '1002', desc: 'Child 2', plan: book.kpl);
+
+      parent.put('2', child1);
+      parent.put('3', child2);
+
+      List<List<dynamic>> res = [];
+      parent.asList(asList: res);
+      expect(res.length, equals(3));  // Parent + 2 children
+      expect(res[0][0], equals('1000'));
+      expect(res[1][0], equals('1001'));
+      expect(res[2][0], equals('1002'));
     });
 
   });

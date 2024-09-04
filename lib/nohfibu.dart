@@ -44,61 +44,61 @@ class KontoPlan {
 
   /// return the asked account null if not found (BEWARE!!) .
   Konto? get(String ktoName,{debug = false}) {
-    if(debug) print("ktop get for '$ktoName'");
+    if(debug) {print("kto: get for '$ktoName'"); throw Exception("Arghhh....");}
     if (konten.containsKey(ktoName)) {
       if(debug) print("direct match $ktoName returning ${konten[ktoName]}");
       return konten[ktoName];
     }
-        if(debug) print("kto get no $ktoName in ${konten.keys.toList()}");
-        //but maybe we must recurse?
-        if (ktoName.length > 1) {
-          String key = ktoName[0];
-         String subkey = ktoName.substring(1);
-          if(debug) print("name is long enough.... extracted key $key and $subkey");
-          if (konten.containsKey(key)) {
-            if(debug) print("returning ${konten[key]!.get(subkey,debug:debug)}");
-            return konten[key]!.get(subkey);
-          }
-          else
-            {
-              if(debug) print("no $key in  ${konten.keys.toList()}");
-
-            }
-          if(debug) print("ktop but konten doesn't contain $key");
-          return null;
-        }
-        if(debug) print("ktop far enough no lolly");
-        return null;
+    if(debug) print("kto get no $ktoName in ${konten.keys.toList()}");
+    //but maybe we must recurse?
+    if (ktoName.length > 1) {
+      String key = ktoName[0];
+      String subkey = ktoName.substring(1);
+      if(debug) print("name is long enough.... extracted key $key and $subkey");
+      if (konten.containsKey(key)) {
+        if(debug) print("returning ${konten[key]!.get(subkey,debug:debug)}");
+        return konten[key]!.get(subkey);
       }
+      else
+      {
+        if(debug) print("no $key in  ${konten.keys.toList()}");
+
+      }
+      if(debug) print("ktop but konten doesn't contain $key");
+      return null;
+    }
+    if(debug) print("kto far enough no lolly");
+    return null;
+  }
 
   /// set at ktoName (Treewise) the data if kto (kto will be discarded afterwards) create the account if needed .
   Konto put(String ktoName, Konto kto,{debug =false}) {
-    if(debug) print("PUT DEBUG FOR $ktoName and $kto ");
+    if(debug) print("KPL:PUT DEBUG FOR $ktoName and $kto ");
     if (ktoName.length < 1)
       print("Error, KPL, don't know how to add $kto @ $ktoName");
     else if (ktoName.length == 1) {
-      if(debug)print("single digit name, adding $ktoName $kto to ${konten.keys}");
+      if(debug)print("KPL: single digit name, adding to $ktoName $kto to ${konten.keys}");
       konten[ktoName] = kto;
     }
     else {
       String key = ktoName[0];
       String rest = ktoName.substring(1, ktoName.length);
-      if(debug)print("split name, to $key and $rest");
+      if(debug)print("KPL:split name, to $key and $rest");
       if (!konten.containsKey(key)) {
-        if(debug)print("adding new intermediary Kto $key");
-        konten[key] = Konto(number: key, plan: this,prefix:"");
+        if(debug)print("KPL: adding new intermediary Kto $key");
+        konten[key] = Konto(number: key, name: '$key', plan: this,prefix:"");
       }
-konten[key]!.put(rest,kto,debug:debug, prefix:"$key");
-     ////fetch the account, creating it on the way
-     //if(debug)print("going into get $key, rest ");
-     //var locK = konten[key]!.get(rest, orgName: ktoName, debug: debug,kto:kto);
-     //locK.name = kto.name;
-     //locK.plan = this;
-     //locK.desc = kto.desc;
-     //locK.cur = kto.cur;
-     //locK.budget = kto.budget;
-     //locK.valuta = kto.valuta;
-     //kto = locK;
+      konten[key]!.put(rest,kto,debug:debug, prefix:"$key");
+      ////fetch the account, creating it on the way
+      //if(debug)print("going into get $key, rest ");
+      //var locK = konten[key]!.get(rest, orgName: ktoName, debug: debug,kto:kto);
+      //locK.name = kto.name;
+      //locK.plan = this;
+      //locK.desc = kto.desc;
+      //locK.cur = kto.cur;
+      //locK.budget = kto.budget;
+      //locK.valuta = kto.valuta;
+      //kto = locK;
     }
     return kto;
   }
@@ -131,7 +131,7 @@ konten[key]!.put(rest,kto,debug:debug, prefix:"$key");
 
   /// run the analysis, comparing the 4 blocs against each other to see if the data is valid
   String analysis() {
-	  if(get("1") == null ||get("2")== null ||get("3")== null ||get("4")== null) throw Exception("Invalid account plan, no analysis possible");
+    if(get("1") == null ||get("2")== null ||get("3")== null ||get("4")== null) throw Exception("Invalid account plan, no analysis possible");
 
     String result = "=" * 30 + "    Analysis    " + "=" * 30 + "\n";
     Konto activa = get("1")!;
@@ -179,7 +179,7 @@ konten[key]!.put(rest,kto,debug:debug, prefix:"$key");
     String max =(minmax.containsKey("max"))?minmax["max"]!.trim():"0";
     //print("in getRange : $minmax, '$min'-'$max' from ${konten.keys}");
     //select common part
-    int n =0; 
+    int n =0;
     while(min[n] == max[n]) n++;
     String common = min.substring(0,n);
     Konto parent = (get(common)==null)?Konto():get(common)!;
@@ -293,10 +293,10 @@ class Konto {
   @override
   String toString(
       {String indent = "",
-      bool debug = false,
-      bool recursive = false,
-      empty = false,
-      bool extracts = false, astree = false}) {
+        bool debug = false,
+        bool recursive = false,
+        empty = false,
+        bool extracts = false, astree = false}) {
     String result = "";
     if(astree) result += "{name}";
     if (extracts) {
@@ -316,13 +316,14 @@ class Konto {
       String pname = (name == "no name") ? "$number" : name;
       result = (debug)
           ? "$indent$number. +$pname+  -$desc- ,=$cur=,  '$budget' #$valuta#\n"
-          : (recursive && !empty && desc.length <= 0)
-              ? ""
-              : "$indent${sprintf("%#4s", [pname])}  ${sprintf("%-49s", [
-                      desc
-                    ])} ${sprintf("%12s", [
-                      f.format(budAsd)
-                    ])}  ${sprintf("%12s", [f.format(valAsd)])}\n";
+          : (recursive && !empty && desc.isEmpty)
+          ? ""
+          : "$indent${sprintf("%#4s", [pname])}  ${sprintf("%-49s", [
+        desc
+      ])} ${sprintf("%12s", [
+        f.format(budAsd)
+      ])}  ${sprintf("%12s", [f.format(valAsd)])}\n";
+
     }
     ;
 
@@ -413,14 +414,14 @@ class Konto {
     if(children.length == 0) {
       //print("ehm.... '$name,$desc'  missed something somewhere..... adding ourselves??");
       result.add(this);
-      }
+    }
     else if(min.length == 1)
     {
       children.forEach((key, val) { if((key.compareTo(min) >=0) && (max == "all" || key.compareTo(max) <=0))
       {
         result.add(val);
         //print("added direct ${val.desc}");
-        }});
+      }});
     }
     else if(min =="all" )
     {
@@ -431,10 +432,10 @@ class Konto {
         result.add(val);
       }
       else
-        {
-          //print("val has  ${val.children} diving from ${val.desc}");
-          val.getRange("all","all",passthrough:result);
-        }}});
+      {
+        //print("val has  ${val.children} diving from ${val.desc}");
+        val.getRange("all","all",passthrough:result);
+      }}});
     }
     else if(min.length > 1)
     {
@@ -444,21 +445,21 @@ class Konto {
       String restMax = max.substring(1);
       //print("$name need to recurse deeper [$keyMin, $keyMax] [$restMin, $restMax]...");
       children.forEach((key, val)
-	  {
-	    if(key.compareTo(keyMin) ==0) {
-	      //print("entering $key for $restMin to all");
-	      val.getRange(restMin,"all",passthrough:result);}
-	    else if(key.compareTo(keyMin) >0 && key.compareTo(keyMax) <0){
-	      //print("entering $key for all");
-	      val.getRange("all","all",passthrough:result);}
-	    else if(key.compareTo(keyMin) >0 && key.compareTo(keyMax) ==0){
-	      //print("entering $key for all to $restMax");
-	      val.getRange("all",restMax,passthrough:result);}
-	    //else print("should bee: $key < $min or $key > $max, so ignore it");
-	  }
+      {
+        if(key.compareTo(keyMin) ==0) {
+          //print("entering $key for $restMin to all");
+          val.getRange(restMin,"all",passthrough:result);}
+        else if(key.compareTo(keyMin) >0 && key.compareTo(keyMax) <0){
+          //print("entering $key for all");
+          val.getRange("all","all",passthrough:result);}
+        else if(key.compareTo(keyMin) >0 && key.compareTo(keyMax) ==0){
+          //print("entering $key for all to $restMax");
+          val.getRange("all",restMax,passthrough:result);}
+        //else print("should bee: $key < $min or $key > $max, so ignore it");
+      }
 
       );
-    } 
+    }
     else
       print("Konto Error, nevershould be here");
     return result;
@@ -468,10 +469,11 @@ class Konto {
 
     if(debug) print("KTO[${name}] PUT DEBUG FOR $ktoName and $kto");
     if (ktoName.length < 1)
-      print("Error, KPL, don't know how to add $kto @ $ktoName");
+      print("Error, KTO, don't know how to add $kto @ $ktoName");
     else if (ktoName.length == 1) {
-      if(debug)print("single digit name, atting to $ktoName $kto");
+      if(debug)print("KTO single digit name, atting to $ktoName $kto children now: $children");
       children[ktoName] = kto;
+      if(debug)print("KTO children added: $children");
     }
     else {
       String key = ktoName[0];
@@ -661,13 +663,13 @@ class JrlLine {
     if(limits== null ) _kminus = other;
     else
     {
-    int otherint = (int.tryParse(other.name) != null)?int.tryParse(other.name)!:0;
-    int min = (limits!["kmin"].containsKey("min"))?int.tryParse(limits!["kmin"]["min"])!:0;
-    int max = (limits!["kmin"].containsKey("max"))?int.tryParse(limits!["kmin"]["max"])!:0;
+      int otherint = (int.tryParse(other.name) != null)?int.tryParse(other.name)!:0;
+      int min = (limits!["kmin"].containsKey("min"))?int.tryParse(limits!["kmin"]["min"])!:0;
+      int max = (limits!["kmin"].containsKey("max"))?int.tryParse(limits!["kmin"]["max"])!:0;
 
-    if(min== 0 && max ==1000000 ) _kminus = other;//{print("invalid ranges : changing value");}
-    else if(min<= otherint && max >=otherint ) _kminus = other;//{print("inside range, change!");}
-    //else print("invalid range... unchanged");
+      if(min<= 0 && max >=1000000 ) _kminus = other;//{print("invalid ranges : changing value");}
+      else if(min<= otherint && max >=otherint ) _kminus = other;//{print("inside range, change!");}
+      else print("Error setting kminus :invalid range... unchanged");
     }
   }
   set kplus (Konto other)
@@ -681,7 +683,7 @@ class JrlLine {
 
       if(min== 0 && max ==1000000 ) _kplus = other;//{print("invalid ranges : changing value");}
       else if(min<= otherint && max >=otherint ) _kplus = other;//{print("inside range, change!");}
-      //else print("invalid range... unchanged");
+      else print("Error setting kplus :invalid range... unchanged");
     }
   }
 
@@ -717,8 +719,8 @@ class ExtractLine extends JrlLine {
   String toString() {
     var f = NumberFormat.currency(symbol: cur2sym(cur));
     String result = "${super.toString()} ${sprintf("%12s", [
-          f.format((actSum / 100).toDouble())
-        ])}";
+      f.format((actSum / 100).toDouble())
+    ])}";
     return result;
   }
   /// return a list abstraction model of this object .

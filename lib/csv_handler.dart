@@ -153,12 +153,14 @@ class CsvHandler {
             Konto? minus = book.kpl.get("${actLine[kmin]}");
             Konto? plus = book.kpl.get("${actLine[kplu]}");
             if("${minus?.name}" != "${actLine[kmin]}") {
-              print("error ${minus?.name} does not match ${actLine[kmin]}");
-              minus = book.kpl.get("${actLine[kmin]}", debug: true);
+              print("csvhandler[jrl.minus] error ${minus?.name} does not match ${actLine[kmin]} check manually");
+              book.kpl.put("${actLine[kmin]}", Konto(name: "${actLine[kmin]}", desc: "unknown check manually "));
+              //minus = book.kpl.get("${actLine[kmin]}", debug: true);
             }
             if("${plus?.name}" != "${actLine[kplu]}") {
-              print("error ${plus?.name} does not match ${actLine[kplu]}");
-              plus = book.kpl.get("${actLine[kplu]}", debug: true);
+              print("csvhandler[jrl.plus] error ${plus?.name} does not match ${actLine[kplu]} check manually");
+              book.kpl.put("{$actLine[kmin]}", Konto(name: "{$actLine[kmin]}", desc: "unknown check manually "));
+              //plus = book.kpl.get("${actLine[kplu]}", debug: true);
             }
             //print("treating[$mode] ${actLine}\n search ${actLine[kmin]} and ${actLine[kplu]} ${minus?.name},${minus?.number} and ${plus?.name},${plus?.number}");
             //num vval = num.parse(actLine[valuta]);
@@ -167,7 +169,7 @@ class CsvHandler {
               vval = actLine[valuta];
             }
             catch (e) {
-              print("error!!!  ${actLine[valuta]} not a num in ${actLine} with $e");
+              print("cvshandler: error!!!  ${actLine[valuta]} not a num in ${actLine} with $e");
             }
             //JrlLine res =
             book.jrl.add(JrlLine(

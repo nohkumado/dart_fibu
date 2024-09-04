@@ -8,4 +8,5 @@ please  follow the following suggestions:
 not break the whole.
 
 - please, and i know myself that it is hard, don't stint on the comments ;)
+- also, don't forget to run all tests before commiting to the repo!
 

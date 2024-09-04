@@ -90,6 +90,7 @@ class Operation extends Object with IterableMixin<JrlLine>
   void prepare()
   {
     vars = {};//reset the variables
+    //print("preparing $name, +:$cplus, -:$cminus, dsc: $desc, cur: $cur, val: $valuta");
     expressions = {};
     for(int i = 0; i < cplus.length; i++)
     {
@@ -118,14 +119,17 @@ class Operation extends Object with IterableMixin<JrlLine>
         //check if it can be evaluated with expressions: ^0.2.3:
         //we need to extract the variables
         RegExp rex = RegExp(r"#(\w+)");
-        //print("found matches for vars in desc: $rex");
-        rex.allMatches(desc[i]).forEach((match)
+        final matches = rex.allMatches(desc[i]);
+        // Print all groups found
+        final extractedVariables = matches.map((match) => match.group(1)).toList();
+        // Update line.vars dictionary (optional)
+        line.vars["desc"] ??= {}; // Initialize if needed
+        for (final variable in extractedVariables)
         {
-          //vars[match.group(1)!] = match.group(1);
-          line.vars["desc"] ??= {};//initialise if needed
-          if(!vars.containsKey(match.group(1))) line.vars["desc"][match.group(1)!] = match.group(1); //add only if not allready present?
-        });
-        //print("extracted varaibles : $vars");
+          if (!vars.containsKey(variable)) {
+            vars[variable!] = variable;  // Add only if not already present
+          }
+        }
       }
 
       RegExp expPresent = RegExp(r'[()]+');
