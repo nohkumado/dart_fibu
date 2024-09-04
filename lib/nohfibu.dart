@@ -598,7 +598,31 @@ class JrlLine {
     this.desc = (desc != null) ? desc : "none";
     this.datum = (datum != null) ? datum : DateTime.now();
     this.cur = (cur != null) ? cur : "EUR";
-    this.valuta = (valuta != null) ? (valuta is double)? valuta.toInt():valuta : 0;
+
+    if(valuta == null) this.valuta = 0;
+    else
+    switch(valuta.runtimeType)
+    {
+      case int: this.valuta = valuta;break;
+      case double:
+        if(valuta != valuta.roundToDouble()) {
+          this.valuta = (valuta*100).toInt(); //if there is a decimal point in, the user went wrong and didn't give centsbut euros
+        } else {
+          this.valuta = valuta.toInt();
+        }
+        break;
+      case String:
+       double tmpVal = (double.tryParse(valuta.replaceAll(",", ""))??-1);
+       if(tmpVal != tmpVal.roundToDouble()) {
+         this.valuta = (tmpVal*100).toInt(); //if there is a decimal point in, the user went wrong and didn't give centsbut euros
+       } else {
+         this.valuta = tmpVal.toInt();
+       }
+         break;
+      default: print("dont know how to handle valuta ${valuta.runtimeType}");
+    }
+    if(this.valuta == -1 && "${this.valuta}" != "$valuta") print("JrLine ERROR in parsing valuta!! $valuta unparsable");
+    //this.valuta = (valuta != null) ? (valuta is double)? valuta.toInt():valuta : 0;
   }
 
   /// pretty print this thing .
@@ -687,11 +711,12 @@ class JrlLine {
     }
   }
 
-  void setValuta(String toParse)
+  void setValuta(String toParse, {bool debug = false})
   {
-    toParse = toParse.trim();
-    //print("aboutto number parse '$toParse' ser");
-    valuta = (toParse.isNotEmpty)?(NumberFormat.currency().parse(toParse) * 100).toInt():0;
+    toParse = toParse.trim().replaceAll('\.', '');
+    if(debug)print("aboutto number parse '$toParse' ser");
+
+    valuta = (toParse.isNotEmpty)?(NumberFormat.currency().tryParse(toParse)??0 * 100).toInt():0;
   }
 }
 

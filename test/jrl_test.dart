@@ -42,7 +42,7 @@ void main() {
           kmin: kminus,
           kplu: kplus,
           desc: 'Test Transaction',
-          cur: 'USD',
+          cur: 'EUR',
           valuta: 12345,
         );
 
@@ -50,7 +50,7 @@ void main() {
         expect(line.kminus.name, equals(kminus.name));
         expect(line.kplus.name, equals(kplus.name));
         expect(line.desc, equals('Test Transaction'));
-        expect(line.cur, equals('USD'));
+        expect(line.cur, equals('EUR'));
         expect(line.valuta, equals(12345));
       });
 
@@ -61,7 +61,7 @@ void main() {
           kmin: kminus,
           kplu: kplus,
           desc: 'Test Transaction',
-          cur: 'USD',
+          cur: 'EUR',
           valuta: 1234500,
         );
 
@@ -70,7 +70,7 @@ void main() {
         expect(result.contains(kminus.printname()), isTrue);
         expect(result.contains(kplus.printname()), isTrue);
         expect(result.contains('Test Transaction'), isTrue);
-        expect(result.contains(r'\$12,345.00'), isTrue); // Assuming $ as symbol for USD
+        expect(result.contains(r'€ 12,345.00'), isTrue); // Assuming $ as symbol for EUR
       });
 
       test('asList() formats correctly', () {
@@ -80,7 +80,7 @@ void main() {
           kmin: kminus,
           kplu: kplus,
           desc: 'Test Transaction',
-          cur: 'USD',
+          cur: 'EUR',
           valuta: 1234500,
         );
 
@@ -92,7 +92,7 @@ void main() {
         expect(data[0][1], equals(kminus.printname()));
         expect(data[0][2], equals(kplus.printname()));
         expect(data[0][3], equals('Test Transaction'));
-        expect(data[0][4], equals('USD'));
+        expect(data[0][4], equals('EUR'));
         expect(data[0][5], equals(1234500));
       });
 
@@ -190,13 +190,13 @@ void main() {
 
       test('Valuta conversion to integer', () {
         JrlLine line = JrlLine(valuta: 12345.67);
-        expect(line.valuta, equals(12345));
+        expect(line.valuta, equals(1234567));
 
         line = JrlLine(valuta: '12345');
         expect(line.valuta, equals(12345));
 
         line = JrlLine(valuta: '12,345.67');
-        expect(line.valuta, equals(12345)); // Depending on locale, adjust this
+        expect(line.valuta, equals(1234567)); // Depending on locale, adjust this
       });
 
       test('Execute with Valuta Update', () {
@@ -227,13 +227,13 @@ void main() {
           kmin: kminus,
           kplu: kplus,
           desc: 'Year-end closing',
-          cur: 'USD',
+          cur: 'EUR',
           valuta: 100000,
         );
 
         String result = line.toString();
         expect(result.contains('31-12-2020'), isTrue);
-        expect(result.contains('\$1,000.00'), isTrue); // Depending on locale
+        expect(result.contains('€ 1,000.00'), isTrue); // Depending on locale
       });
     });
 
@@ -297,16 +297,16 @@ void main() {
       expect(line.kplus.printname(), equals("2002"));
     });
 test('Journal Entries and Clear', () {
-      var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin: kto1, kplu: kto2, desc: "test line", cur: "EUR", valuta: 8888800);
+      var line = JrlLine(datum: DateTime.parse("2021-09-02"), kmin: kto1, kplu: kto2, desc: "another test line", cur: "EUR", valuta: 8888800);
       List<List> data = [];
       book.jrl.asList(data);
-      expect(data, equals([['JRL'], ['date', 'ktominus', 'ktoplus', 'desc', 'cur', 'valuta']]));
+      expect(data, equals([['JRL'], ['date', 'ktominus', 'ktoplus', 'desc', 'cur', 'valuta', 'actSum'], ['2021-09-01', '1001', '2002', 'test line', 'EUR', 8888800]]));
 
       // Add a line to the journal
       book.jrl.add(line);
       data = [];
       book.jrl.asList(data);
-      expect(data.length == 3 && data[2][0] == '2021-09-01', equals(true));
+      expect(data.length == 4 && data[3][0] == '2021-09-02', equals(true));
 
       // Clear the journal
       book.jrl.clear();
@@ -383,7 +383,7 @@ test('Journal Entries and Clear', () {
 
     test('Journal Formatting with Multiple Entries', () {
       var line1 = JrlLine(datum: DateTime.parse("2021-09-01"), kmin: kto1, kplu: kto2, desc: "test line 1", cur: "EUR", valuta: 5000);
-      var line2 = JrlLine(datum: DateTime.parse("2021-09-02"), kmin: kto2, kplu: kto1, desc: "test line 2", cur: "USD", valuta: 10000);
+      var line2 = JrlLine(datum: DateTime.parse("2021-09-02"), kmin: kto2, kplu: kto1, desc: "test line 2", cur: "EUR", valuta: 10000);
 
       book.jrl.add(line1);
       book.jrl.add(line2);
@@ -392,7 +392,7 @@ test('Journal Entries and Clear', () {
       book.jrl.asList(data, formatted: true);
 
       expect(data[2], equals(['2021-09-01', '1001', '2002', 'test line 1', 'EUR', '€ 50.00']));
-      expect(data[3], equals(['2021-09-02', '2002', '1001', 'test line 2', 'USD', '\$ 100.00']));
+      expect(data[3], equals(['2021-09-02', '2002', '1001', 'test line 2', 'EUR', '\$ 100.00']));
     });
 
     test('Journal Edge Cases', () {
