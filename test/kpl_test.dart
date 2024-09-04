@@ -119,16 +119,16 @@ void main() {
       expect(longNameKonto.name.length, equals(255));
     });
     test('Currency conversion in numFormat', () {
-      Konto kto = Konto(cur: 'USD', plan: book.kpl);
+      Konto kto = Konto(cur: 'EUR', plan: book.kpl);
       String formattedValue = kto.numFormat(1234567);
-      expect(formattedValue, contains('\$12,345.67'));
+      expect(formattedValue, contains('€ 12,345.67'));
 
       kto.cur = 'EUR';
       formattedValue = kto.numFormat(1234567);
-      expect(formattedValue, contains('€12,345.67'));
+      expect(formattedValue, contains('€ 12,345.67'));
     });
     test('asList with nested accounts', () {
-      Konto parent = Konto(number: '1', name: '1000', plan: book.kpl);
+      Konto parent = Konto(number: '1', name: '1000', desc: 'a parent?', plan: book.kpl);
       Konto child1 = Konto(number: '2', name: '1001', desc: 'Child 1', plan: book.kpl);
       Konto child2 = Konto(number: '3', name: '1002', desc: 'Child 2', plan: book.kpl);
 
