@@ -268,20 +268,7 @@ class Konto {
       //   //orgName = name+orgName;
       // print("ehm  $ktoName differs from me ($number) .... rewriting orgName to $orgName" );
       // }
-      return children[key]!.get(ktoName.substring(1), orgName: orgName,debug: debug);
-/*
-      if (ktoName.startsWith(name)) {
-        rest = ktoName.substring(name.length);
-        key = rest[0];
-        rest = rest.substring(1);
-        if(debug) print("$ktoName starts with name, trying with $key and $rest");
-        if (rest.length <= 0) {
-          if(debug) print("created $key  name=$orgName");
-          children[key] = Konto(number: key, name: orgName);
-          return children[key]!;
-        }
-      }
-*/
+      //return children[key]!.get(ktoName.substring(1), orgName: orgName,debug: debug);
     }
     if(debug) print("created 3 $ktoName  $orgName");
     children[ktoName] = Konto(number: ktoName, name: orgName);
@@ -371,11 +358,13 @@ class Konto {
 
   /// add a journal line to our account extract, update the valuta .
   Konto action(JrlLine line, {String mode = "add"}) {
+    //int oldval = valuta;
     if (mode == "add")
       valuta += line.valuta;
     else
       valuta -= line.valuta;
-    //print("action for  $name ($mode) add line ${line.desc} and $valuta");
+    //print("Line s valuta : ${line.valuta} valuta went from $oldval to $valuta");
+    //print("action for  $name ($mode) add line ${line.desc} and $valuta : $line");
     //ExtractLine sline = ExtractLine(line: line, sumup: valuta);
     //print("$name adding to $extract \n $sline");
     extract.add(ExtractLine(line: line, sumup: valuta));
@@ -387,7 +376,6 @@ class Konto {
         "Sum:  " +
         "_" * 18 +
         sprintf("%12s", [f.format((valuta / 100).toDouble())]);
-
     return this;
   }
 
@@ -557,7 +545,8 @@ class Journal {
       if (line.datum.compareTo(maxTime) > 0) maxTime = line.datum;
       line.execute();
     });
-    caption = "Journal from $minTime to $maxTime";
+  final formatter = DateFormat('yyyy-MM-dd');
+    caption = "Journal from ${formatter.format(minTime)} to ${formatter.format(maxTime)}";
     return this;
   }
 }
@@ -693,7 +682,7 @@ class JrlLine {
 
       if(min<= 0 && max >=1000000 ) _kminus = other;//{print("invalid ranges : changing value");}
       else if(min<= otherint && max >=otherint ) _kminus = other;//{print("inside range, change!");}
-      else print("Error setting kminus :invalid range... unchanged");
+      else print("Error setting kminus :(${other.name}) invalid range ($min - $max)... unchanged ${_kminus.name}");
     }
   }
   set kplus (Konto other)
@@ -701,13 +690,13 @@ class JrlLine {
     if(limits== null ) _kplus = other;
     else
     {
-      int otherint = (int.tryParse(other.name) != null)?int.tryParse(other.name)!:0;
+      int othername = (int.tryParse(other.name) != null)?int.tryParse(other.name)!:0;
       int min = (limits!["kplu"].containsKey("min"))?int.tryParse(limits!["kplu"]["min"])!:0;
-      int max = (limits!["kplu"].containsKey("max"))?int.tryParse(limits!["kplu"]["max"])!:0;
+      int max = (limits!["kplu"].containsKey("max"))?int.tryParse(limits!["kplu"]["max"])!:100000;
 
       if(min== 0 && max ==1000000 ) _kplus = other;//{print("invalid ranges : changing value");}
-      else if(min<= otherint && max >=otherint ) _kplus = other;//{print("inside range, change!");}
-      else print("Error setting kplus :invalid range... unchanged");
+      else if(min<= othername && max >=othername ) _kplus = other;//{print("inside range, change!");}
+      else print("Error setting kplus :invalid range ($min - $max) vs $othername... unchanged ${_kplus.name}");
     }
   }
 

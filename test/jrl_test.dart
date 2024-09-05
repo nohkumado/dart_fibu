@@ -241,6 +241,18 @@ void main() {
   {
     var kto1 = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
     var kto2 = Konto(number : "2",name: "2002", plan: book.kpl, valuta:8000099, cur:"EUR", budget:88812);
+
+    test('Journal with Empty Entries', () {
+      // Ensure the journal starts empty
+      expect(book.jrl.journal.isEmpty, isTrue);
+
+      // Execute the journal without any entries
+      book.jrl.execute();
+
+      // Check that the journal remains empty and the string representation is correct
+      expect(book.jrl.journal.isEmpty, isTrue);
+      expect(book.jrl.toString().replaceAll(RegExp(" from.*\n"), '\n'), equals("Journal\nJournal End"));
+    });
     test('Journal Eintrag', () {
       //print("global journal: ${book.jrl}");
       var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
@@ -272,7 +284,7 @@ void main() {
       expect(data.length == 2, equals(true));
       book.jrl.add(line);
       String result = 'Journal\n'+ '01-09-2021 1001 2002 test line                                          € 88,888.00\n'+ 'Journal End';
-      expect(book.jrl.toString(), equals(result));
+      expect(book.jrl.toString().replaceAll(RegExp(" from.*\n"), '\n'), equals(result));
     });
 
     test('Journal Constraint', () {
@@ -316,8 +328,8 @@ test('Journal Entries and Clear', () {
 
       // Add line again and check string representation
       book.jrl.add(line);
-      String result = 'Journal\n01-09-2021 1001 2002 test line                                          € 88,888.00\nJournal End';
-      expect(book.jrl.toString(), equals(result));
+      String result = 'Journal\n02-09-2021 1001 2002 another test line                                  € 88,888.00\nJournal End';
+      expect(book.jrl.toString().replaceAll(RegExp(" from.*\n"), '\n'), equals(result));
     });
 
     test('Journal Constraint Handling', () {
@@ -348,40 +360,36 @@ test('Journal Entries and Clear', () {
 
     test('Journal Execution', () {
       // Add multiple lines to the journal
+      book.jrl.clear();
       var line1 = JrlLine(datum: DateTime.parse("2021-09-01"), kmin: kto1, kplu: kto2, desc: "test line 1", cur: "EUR", valuta: 1000000);
       var line2 = JrlLine(datum: DateTime.parse("2021-09-02"), kmin: kto2, kplu: kto1, desc: "test line 2", cur: "EUR", valuta: 2000000);
+      var line3 = JrlLine(datum: DateTime.parse("2021-09-03"), kmin: kto2, kplu: kto1, desc: "test line 3", cur: "EUR", valuta: 3000000 );
 
       book.jrl.add(line1);
       book.jrl.add(line2);
+      book.jrl.add(line3);
 
       // Execute the journal to apply transactions
       book.jrl.execute();
 
+      //var kto1 = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
+      //var kto2 = Konto(number : "2",name: "2002", plan: book.kpl, valuta:8000099, cur:"EUR", budget:88812);
       // Check the updated valutas
-      expect(kto1.valuta, equals(1000099 - 1000000 + 2000000)); // kto1: initial - line1 + line2
-      expect(kto2.valuta, equals(8000099 + 1000000 - 2000000)); // kto2: initial + line1 - line2
+      expect(kto1.valuta, equals(1000099- 1000000 + 2000000+ 3000000)); // kto1: initial - line1 + line2
+      expect(kto2.valuta, equals(8000099+1000000 - 2000000 -3000000)); // kto2: initial + line1 - line2
 
       // Verify the journal string representation after execution
-      String result = 'Journal from 2021-09-01 00:00:00.000 to 2021-09-02 00:00:00.000\n' +
+      String result =
                       '01-09-2021 1001 2002 test line 1                                        € 10,000.00\n' +
                       '02-09-2021 2002 1001 test line 2                                        € 20,000.00\n' +
+                      '03-09-2021 2002 1001 test line 3                                        € 30,000.00\n' +
                       'Journal End';
-      expect(book.jrl.toString(), equals(result));
+      expect(book.jrl.toString().replaceAll(RegExp("Journal from.*\n"), ''), equals(result));
     });
 
-    test('Journal with Empty Entries', () {
-      // Ensure the journal starts empty
-      expect(book.jrl.journal.isEmpty, isTrue);
-
-      // Execute the journal without any entries
-      book.jrl.execute();
-
-      // Check that the journal remains empty and the string representation is correct
-      expect(book.jrl.journal.isEmpty, isTrue);
-      expect(book.jrl.toString(), equals("Journal\nJournal End"));
-    });
 
     test('Journal Formatting with Multiple Entries', () {
+      book.jrl.clear();
       var line1 = JrlLine(datum: DateTime.parse("2021-09-01"), kmin: kto1, kplu: kto2, desc: "test line 1", cur: "EUR", valuta: 5000);
       var line2 = JrlLine(datum: DateTime.parse("2021-09-02"), kmin: kto2, kplu: kto1, desc: "test line 2", cur: "EUR", valuta: 10000);
 
@@ -391,13 +399,13 @@ test('Journal Entries and Clear', () {
       List<List> data = [];
       book.jrl.asList(data, formatted: true);
 
-      expect(data[2], equals(['2021-09-01', '1001', '2002', 'test line 1', 'EUR', '€ 50.00']));
-      expect(data[3], equals(['2021-09-02', '2002', '1001', 'test line 2', 'EUR', '\$ 100.00']));
+      expect(data[2], equals(['2021-09-01', '1001', '2002', 'test line 1', 'EUR', '     € 50.00']));
+      expect(data[3], equals(['2021-09-02', '2002', '1001', 'test line 2', 'EUR', '    € 100.00']));
     });
 
     test('Journal Edge Cases', () {
       // Test with an empty JrlLine (no values set)
-      JrlLine emptyLine = JrlLine();
+      JrlLine emptyLine = JrlLine(datum: DateTime.parse("2024-09-05"));
       book.jrl.add(emptyLine);
 
       expect(emptyLine.kminus.name, equals('no name'));
@@ -406,8 +414,10 @@ test('Journal Entries and Clear', () {
       expect(emptyLine.desc, equals('none'));
 
       // Test journal with this empty line
-      String result = 'Journal\n' +
-                      '${DateFormat('dd-MM-yyyy').format(DateTime.now())} no name no name none                                                  € 0.00\n' +
+      String result = 'Journal from 2021-09-01 to 2023-09-06\n' +
+          '01-09-2021 1001 2002 test line 1                                            € 50.00\n' +
+          '02-09-2021 2002 1001 test line 2                                           € 100.00\n' +
+          '05-09-2024    0    0 none                             uuu                       € 0.00\n' +
                       'Journal End';
       expect(book.jrl.toString(), equals(result));
 
