@@ -3,7 +3,11 @@ import 'package:intl/intl.dart';
 import 'package:sprintf/sprintf.dart';
 import 'dart:collection';
 
-/// a helper to add to currencies the right utf symbol .
+//Enum to set mode
+enum Mode {add,sub}
+/// Converts currency code to its corresponding symbol.
+/// Supported currencies include EUR, GBP, USD, YEN, and LIR.
+/// Defaults to € if the currency is unrecognized.
 String cur2sym(String name) {
   String sym = "€";
   switch (name) {
@@ -29,7 +33,8 @@ String cur2sym(String name) {
   return sym;
 }
 
-/// the account plan .
+/// Represents the account plan in the accounting system.
+/// It organizes accounts and allows for tree-like structures of accounts.
 class KontoPlan {
   //bestandsKonten
   //List<Konto> aktivKonten = [Konto(name: "soll"),Konto(name: "haben")], passivKonten= [Konto(name: "soll"),Konto(name: "haben")]; //jeweils gespalten in soll (vermehrung) und haben (verminderung)
@@ -42,6 +47,8 @@ class KontoPlan {
     konten.clear();
   }
 
+  /// Retrieves the account by its name.
+  /// Supports recursive lookup based on the tree structure.
   /// return the asked account null if not found (BEWARE!!) .
   Konto? get(String ktoName,{debug = false}) {
     if(debug) {print("kto: get for '$ktoName'"); throw Exception("Arghhh....");}
@@ -71,6 +78,8 @@ class KontoPlan {
     return null;
   }
 
+  /// Adds or updates an account in the plan.
+  /// The account is added to the tree structure.
   /// set at ktoName (Treewise) the data if kto (kto will be discarded afterwards) create the account if needed .
   Konto put(String ktoName, Konto kto,{debug =false}) {
     if(debug) print("KPL:PUT DEBUG FOR $ktoName and $kto ");
@@ -103,6 +112,8 @@ class KontoPlan {
     return kto;
   }
 
+  /// Returns a string representation of the account plan.
+  /// Can print the accounts recursively or non-recursively.
   /// pretty print this thing .
   @override
   String toString({bool extracts = false,astree =false, recursive =true}) {
@@ -116,8 +127,7 @@ class KontoPlan {
     return (result);
   }
 
-  /// return this as a list
-  ///  used for exporting the data .
+  /// Exports the account plan as a list, useful for CSV export.
   List<List<dynamic>> asList({bool all = false, bool silent = false, formatted =false}) {
     List<List<dynamic>> asList = (silent)? []:[
       ["KPL"],
@@ -129,7 +139,8 @@ class KontoPlan {
     return asList;
   }
 
-  /// run the analysis, comparing the 4 blocs against each other to see if the data is valid
+  /// Analyzes the account plan, comparing different account groups.
+  /// Ensures that the data is consistent across activas, passivas, incomes, and costs.
   String analysis() {
     if(get("1") == null ||get("2")== null ||get("3")== null ||get("4")== null) throw Exception("Invalid account plan, no analysis possible");
 
@@ -172,6 +183,8 @@ class KontoPlan {
     //print("retrieved : ${activa.toString(recursive: true)}");
     return result;
   }
+  /// Retrieves a range of accounts based on the provided `min` and `max` boundaries.
+  /// This is useful for exporting or processing a subset of accounts.
   List<Konto> getRange(Map<String,String> minmax,{List<Konto>? passthrough} )
   {
     List<Konto> result = (passthrough != null)? passthrough:[];
@@ -190,18 +203,20 @@ class KontoPlan {
 }
 
 /// one account .
+/// Represents an account in the accounting system.
+/// Each account has properties such as a name, valuta (amount), and a budget.
 class Konto {
-  String number = "-1";
-  String prefix = "";
-  String desc = "";
-  KontoPlan plan = KontoPlan();
-  String cur = "EUR"; //currency
-  int valuta = 0;
-  int budget = 0;
-  SplayTreeMap<String, Konto> children = SplayTreeMap<String, Konto>();
+  String number = "-1"; /// The account number.
+  String prefix = ""; /// The prefix for the account (used in hierarchical accounts).
+  String desc = ""; /// The description of the account.
+  KontoPlan plan = KontoPlan(); /// The associated account plan.
+  String cur = "EUR"; /// The currency for the account (e.g., EUR).
+  int valuta = 0; /// The current balance of the account.
+  int budget = 0; /// The budget allocated to the account.
+  SplayTreeMap<String, Konto> children = SplayTreeMap<String, Konto>(); /// The children accounts under this account (for tree-like structures).
 
-  String name = "no name";
-  late Journal extract;
+  String name = "no name"; /// The name of the account, usually the number in string format
+  late Journal extract; /// The account's extract (journal of transactions for this account).
 
   ///CTOR where you can specify
   ///   the number of the account,
@@ -332,7 +347,7 @@ class Konto {
     return (result);
   }
 
-  /// pretty print the account name, olb WB style fibu had 4 char wide account fields...  .
+  /// pretty print the account name, old WB style fibu had 4 char wide account fields...  .
   printname() {
     String fn = (name == "no name") ? "0" : name;
     return (sprintf("%#4s", [fn]));
@@ -357,9 +372,9 @@ class Konto {
   }
 
   /// add a journal line to our account extract, update the valuta .
-  Konto action(JrlLine line, {String mode = "add"}) {
-    //int oldval = valuta;
-    if (mode == "add")
+  Konto action(JrlLine line, {Mode mode = Mode.add}) {
+    //ggnint oldval = valuta;
+    if (mode == Mode.add)
       valuta += line.valuta;
     else
       valuta -= line.valuta;
@@ -379,7 +394,7 @@ class Konto {
     return this;
   }
 
-  /// pretty print a number as currency
+  /// Formats a number into a currency string.
   String numFormat(int toConvert) {
     var f = NumberFormat.currency(symbol: cur2sym(cur));
     double valAsd = toConvert / 100;
@@ -387,7 +402,7 @@ class Konto {
     return result;
   }
 
-  /// sum up the sub accounts below this one
+  /// Recursively sums up the valutas of the account and all its subaccounts.
   int sum() {
     int mysum = valuta;
     children.forEach((key, value) {
@@ -395,6 +410,8 @@ class Konto {
     });
     return mysum;
   }
+  
+  /// Returns a list of accounts in the given range, all by default
   List<Konto> getRange(String min,String max,{List<Konto>? passthrough} )
   {
     List<Konto> result = (passthrough!= null)?passthrough:[];
@@ -453,6 +470,7 @@ class Konto {
     return result;
   }
 
+  ///add an account to the children
   Konto put(String ktoName, Konto kto, {debug =false, String prefix =""}) {
 
     if(debug) print("KTO[${name}] PUT DEBUG FOR $ktoName and $kto");
@@ -481,13 +499,14 @@ class Konto {
 
 /// This class hold a list of lines, each caracterising an entry in an accounting journal.
 class Journal {
-  late KontoPlan kpl;
-  String caption = "Journal";
-  String endcaption = "Journal End";
+  late KontoPlan kpl;/// The associated account plan.
+  String caption = "Journal"; /// The caption for the journal.
+  String endcaption = "Journal End"; /// The ending caption for the journal.
+  List<JrlLine> journal = []; /// The list of journal entries.
 
-  /// CTOR.
-  Journal(KontoPlan kplan, {caption = "Journal", String end = "End"}) {
-    kpl = kplan;
+  /// Constructor for initializing a journal with an account plan.
+  Journal(this.kpl, {caption = "Journal", String end = "End"}) {
+    //kpl = kpl;
     //if(caption != null)
     //{
     this.caption = caption;
@@ -497,7 +516,6 @@ class Journal {
       endcaption = "$end";
     //}
   }
-  List<JrlLine> journal = [];
 
   /// empty the journal.
   void clear() {
@@ -551,35 +569,21 @@ class Journal {
   }
 }
 
-/// one line in an accounting journal.
+/// Represents one line in an accounting journal.
 class JrlLine {
-  /// the date of the transaction
-  late DateTime datum;
+  late DateTime datum; /// the date of the transaction
+  late Konto _kplus; /// the account to be taken from
+  late Konto _kminus; /// the account to be credited
+  late String desc; ///  description of the transaction
+  late String cur; /// the currency of the transaction
+  late int valuta; /// the value of the transaction
+  Map? limits; ///eventual constraints on the input to the journal
+  Map<String, dynamic> vars = {}; /// Stores additional variables for the transaction.
+  Expression? valexp ; /// An optional expression for evaluating the value.
+  String? valname; /// The tag for the expression (if any).
 
-  /// the account to be taken from
-  late Konto _kplus;
-
-  /// the account to be credited
-  late Konto _kminus;
-
-  ///  description of the transaction
-  late String desc;
-
-  /// the currency of the transaction
-  late String cur;
-
-  /// the value of the transaction
-  late int valuta;
-  ///eventual constraints on the input to the journal
-  Map? limits;
-
-  Map<String, dynamic> vars = {};
-
-  Expression? valexp ;
-
-  String? valname;
-
-  /// CTOR the fields are optional, if omitted they will be filled with defaults .
+  /// Constructor for initializing a journal line.
+  /// Optional fields will be filled with default values if omitted.
   JrlLine({datum, kmin, kplu, desc, cur, valuta}) {
     // print("jline incoming +$datum+ -$kmin- -$kplu- -$desc- ,=$cur=, #$valuta#\n");
     _kplus = (kplu != null) ? kplu : Konto();
@@ -615,19 +619,47 @@ class JrlLine {
   }
 
   /// pretty print this thing .
+ // @override
+ // String toString() {
+ //   final DateFormat formatter = DateFormat('dd-MM-yyyy');
+ //   final String formatted = formatter.format(datum);
+ //   var f = NumberFormat.currency(symbol: cur2sym(cur));
+ //   double valAsd = valuta / 100;
+ //
+ //   String result =
+ //       "$formatted ${_kminus.printname()} ${_kplus.printname()} ${sprintf("%-49s", [ desc ])} ${sprintf("%12s", [f.format(valAsd)])}";
+ //   return result;
+ // }
+  /// Returns a string representation of the journal line.
   @override
   String toString() {
     final DateFormat formatter = DateFormat('dd-MM-yyyy');
-    final String formatted = formatter.format(datum);
-    var f = NumberFormat.currency(symbol: cur2sym(cur));
-    double valAsd = valuta / 100;
-
-    String result =
-        "$formatted ${_kminus.printname()} ${_kplus.printname()} ${sprintf("%-49s", [ desc ])} ${sprintf("%12s", [f.format(valAsd)])}";
-    return result;
+    return _formattedDate(formatter) +
+        _formattedAccounts() +
+        _formattedDesc() +" " +
+        _formattedValuta();
   }
 
-  /// return a list abstraction model of this object .
+  String _formattedDate(DateFormat formatter) {
+    return formatter.format(datum) + ' ';
+  }
+
+  String _formattedAccounts() {
+    return '${_kminus.printname()} ${_kplus.printname()} ';
+  }
+
+  String _formattedDesc() {
+    return sprintf("%-49s", [desc]);
+  }
+
+  String _formattedValuta() {
+    var f = NumberFormat.currency(symbol: cur2sym(cur));
+    double valAsd = valuta / 100;
+    return sprintf("%12s", [f.format(valAsd)]);
+  }
+
+  /// Converts the journal line to a list format.
+  /// This is useful for exporting or processing the data.
   void asList(List<List> data,{bool formatted = false}) {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     final String date = formatter.format(datum);
@@ -638,12 +670,17 @@ class JrlLine {
         [date, _kminus.printname(), _kplus.printname(), "$desc", cur, valutaS]);
   }
 
+  /// Executes the transaction by updating the accounts (`kminus` and `kplus`).
+  ///
+  /// The `valuta` value is added to `kplus` and subtracted from `kminus`.
   /// ask the 2 accounts to add this line to their extracts.
+  /// Returns the `JrlLine` instance for chaining.
   JrlLine execute() {
-    _kminus.action(this, mode: "sub");
-    _kplus.action(this, mode: "add");
+    _kminus.action(this, mode: Mode.sub);
+    _kplus.action(this, mode: Mode.add);
     return this;
   }
+  /// Adds constraints to the transaction.
   void addConstraint(String key,{ List<String> boundaries = const [], String mode = ""})
   {
     if(limits == null) limits = {"kmin": {"min": "-1", "max": "1000000"},"kplu": {"min": "-1", "max": "1000000"}};
@@ -651,6 +688,7 @@ class JrlLine {
     if(key == "kmin"||key == "kplu") {
       if (boundaries.length == 0 || boundaries.length < 2) {
         print("boundaries($boundaries) needs to hold to vals, min, max");
+        //consider  throw ArgumentError("Boundaries should contain at least two values, min and max");
         return;
       }
 
@@ -667,39 +705,44 @@ class JrlLine {
     }
     else if(key == "mode") this.vars["mode"] = mode;
   }
-  /// getter for kminus and kplus
+  /// Gets the account to be debited (kminus).
   Konto get kminus  => _kminus;
+  /// Gets the account to be credited (kplus).
   Konto get kplus  => _kplus;
+  ///check if the konto is within the range
+  bool _isWithinRange(Konto konto, String key) {
+    //print("checking range: $limits vs ${konto.name}");
+  if (limits == null) return true;
+  int kontoValue = int.tryParse(konto.name) ?? 0;
+  int min = int.tryParse(limits![key]["min"]) ?? 0-kontoValue;
+  int max = int.tryParse(limits![key]["max"]) ?? kontoValue+100000;
+    //print("limits found... cparoing $kontoValue inside $min and $max = ${(min <= kontoValue && max >= kontoValue)?'true':'false'}");
+  return min <= kontoValue && max >= kontoValue;
+}
+  /// Sets the account to be debited (kminus) after validating constraints.
   /// we need to check if we have the right to change the account, otherwise leave it as is, in the framework you need to check if the value changed....
   set kminus (Konto other)
   {
-    if(limits== null ) _kminus = other;
-    else
+    if(_isWithinRange(other, 'kmin')) {
+      _kminus = other;
+    } else
     {
-      int otherint = (int.tryParse(other.name) != null)?int.tryParse(other.name)!:0;
-      int min = (limits!["kmin"].containsKey("min"))?int.tryParse(limits!["kmin"]["min"])!:0;
-      int max = (limits!["kmin"].containsKey("max"))?int.tryParse(limits!["kmin"]["max"])!:0;
-
-      if(min<= 0 && max >=1000000 ) _kminus = other;//{print("invalid ranges : changing value");}
-      else if(min<= otherint && max >=otherint ) _kminus = other;//{print("inside range, change!");}
-      else print("Error setting kminus :(${other.name}) invalid range ($min - $max)... unchanged ${_kminus.name}");
+      print("Error setting kminus :(${other.name}) invalid range ... unchanged ${_kminus.name}");
+      //throw Exception('kminus is out of range.');
     }
   }
+  /// Sets the account to be credited (kplus) after validating constraints.
   set kplus (Konto other)
   {
-    if(limits== null ) _kplus = other;
+    if(_isWithinRange(other, 'kplu')) _kplus = other;
     else
     {
-      int othername = (int.tryParse(other.name) != null)?int.tryParse(other.name)!:0;
-      int min = (limits!["kplu"].containsKey("min"))?int.tryParse(limits!["kplu"]["min"])!:0;
-      int max = (limits!["kplu"].containsKey("max"))?int.tryParse(limits!["kplu"]["max"])!:100000;
-
-      if(min== 0 && max ==1000000 ) _kplus = other;//{print("invalid ranges : changing value");}
-      else if(min<= othername && max >=othername ) _kplus = other;//{print("inside range, change!");}
-      else print("Error setting kplus :invalid range ($min - $max) vs $othername... unchanged ${_kplus.name}");
+      print("Error setting kplus :(${other.name}) invalid range ... unchanged ${_kplus.name}");
+      //throw Exception('kminus is out of range.');
     }
   }
 
+  /// Sets the `valuta` of the transaction by parsing a string input.
   void setValuta(String toParse, {bool debug = false})
   {
     toParse = toParse.trim().replaceAll('\.', '');
@@ -709,12 +752,12 @@ class JrlLine {
   }
 }
 
-/// one line in an extract journal.
+/// Represents one line in an extract journal.
 class ExtractLine extends JrlLine {
-  /// the value of the transaction
   int actSum = 0; //to store the intermediate sum of the account
 
-  /// CTOR the fields are optional, if omitted they will be filled with defaults .
+  /// Constructor for initializing an extract line.
+  /// The fields are optional, if omitted they will be filled with defaults.
   ExtractLine({JrlLine? line, int sumup = 0}) {
     if(line != null) {
       datum = line.datum;
@@ -728,7 +771,7 @@ class ExtractLine extends JrlLine {
     actSum =  sumup ;
   }
 
-  /// pretty print this thing .
+  /// Returns a string representation of the extract line.
   @override
   String toString() {
     var f = NumberFormat.currency(symbol: cur2sym(cur));
@@ -737,7 +780,8 @@ class ExtractLine extends JrlLine {
     ])}";
     return result;
   }
-  /// return a list abstraction model of this object .
+  /// Converts the extract line to a list format.
+  /// This is useful for exporting or processing the data.
   void asList(List<List> data,{bool formatted = false}) {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     final String date = formatter.format(datum);

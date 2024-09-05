@@ -417,7 +417,7 @@ test('Journal Entries and Clear', () {
       String result = 'Journal from 2021-09-01 to 2023-09-06\n' +
           '01-09-2021 1001 2002 test line 1                                            € 50.00\n' +
           '02-09-2021 2002 1001 test line 2                                           € 100.00\n' +
-          '05-09-2024    0    0 none                             uuu                       € 0.00\n' +
+          '05-09-2024    0    0 none                                                    € 0.00\n' +
                       'Journal End';
       expect(book.jrl.toString(), equals(result));
 

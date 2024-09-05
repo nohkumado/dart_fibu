@@ -48,8 +48,6 @@ void main() {
       //Konto sk =
       kto.get("10010");
       //print("kto sk = $sk");
-      String otarget = "1001                                                        € 999.12   € 10,000.99\n"+
-          ' 10010                                                          € 0.00        € 0.00\n';
       String target=  '''1001                                                        € 999.12   € 10,000.99
       1                                                          € 0.00        € 0.00
        0                                                          € 0.00        € 0.00
@@ -86,8 +84,8 @@ void main() {
       expect(parent.children['2']!.name, equals('1001'));
       expect(parent.children['2']!.number, equals('2'));
 
-      Konto? retrieved = parent.get('2');
-      expect(retrieved!.name, equals('1001'));
+      Konto retrieved = parent.get('2');
+      expect(retrieved.name, equals('1001'));
     });
     test('Sum of valuta with children', () {
       Konto parent = Konto(number: '1', name: '1000', valuta: 5000, plan: book.kpl);
@@ -105,10 +103,10 @@ void main() {
       JrlLine addLine = JrlLine(valuta: 5000, cur: 'EUR');
       JrlLine subLine = JrlLine(valuta: 2000, cur: 'EUR');
 
-      kto.action(addLine, mode: 'add');
+      kto.action(addLine, mode: Mode.add);
       expect(kto.valuta, equals(15000));
 
-      kto.action(subLine, mode: 'sub');
+      kto.action(subLine, mode: Mode.sub);
       expect(kto.valuta, equals(13000));
     });
     test('Handling edge cases in account names', () {
