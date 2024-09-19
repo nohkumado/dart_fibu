@@ -1,0 +1,47 @@
+KPL
+kto,dsc,cur,budget,valuta
+1,*** Comptes d'actif ***,EUR,0,0
+1001,Caisse,EUR,0,0
+1010,Banque (Compte-Courant),EUR,0,0
+1012,Effets à recevoir,EUR,0,0
+1020,Dépôts à terme,EUR,0,0
+1080,Crédits à court terme,EUR,0,0
+1100,Clients et autres débiteurs,EUR,0,0
+1200,Stocks et en-cours,EUR,0,0
+1300,Immobilisations corporelles,EUR,0,0
+1400,Immobilisations incorporelles,EUR,0,0
+1500,Immobilisations financières,EUR,0,0
+1800,Amortissements,EUR,0,0
+1999,Compte de régularisation (doit toujours être nul),EUR,0,0
+
+2,*** Comptes de passif ***,EUR,0,0
+2001,Capital social,EUR,0,0
+2010,Réserves,EUR,0,0
+2050,Emprunts obligataires,EUR,0,0
+2100,Fournisseurs et autres créditeurs,EUR,0,0
+2150,Dettes fiscales et sociales,EUR,0,0
+2180,Dettes à long terme,EUR,0,0
+2800,Résultat de l'exercice précédent,EUR,0,0
+
+3,*** Comptes de charges ***,EUR,0,0
+3001,Achat de marchandises,EUR,0,0
+3010,Loyers et charges locatives,EUR,0,0
+3030,Achats de matières premières,EUR,0,0
+3300,Entretien et réparations,EUR,0,0
+3400,Salaires et traitements,EUR,0,0
+3500,Charges sociales,EUR,0,0
+3600,Frais généraux,EUR,0,0
+3700,Indemnités,EUR,0,0
+
+4,*** Comptes de produits ***,EUR,0,0
+4001,Ventes de marchandises,EUR,0,0
+4010,Ventes de produits finis,EUR,0,0
+4100,Subventions d'exploitation,EUR,0,0
+4200,Intérêts perçus,EUR,0,0
+4300,Autres produits financiers,EUR,0,0
+4400,Produits exceptionnels,EUR,0,0
+4500,Résultat exceptionnel,EUR,0,0
+JRL
+date,ktominus,ktoplus,desc,cur,valuta
+OPS
+"tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"

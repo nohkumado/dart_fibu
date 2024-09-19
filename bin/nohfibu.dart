@@ -25,6 +25,7 @@ class Fibu {
 		else this.settings = FibuSettings();
 	}
 
+	///run the ledgers and fillem up from the book
   String execute() {
     print("asked to run!"+book.toString());
     book.execute(); //TODO we should report if there were errors....
@@ -36,6 +37,16 @@ class Fibu {
     result += book.kpl.analysis();
     return result;
   }
+	///run the ledgers and create the new period
+	bool nextPeriod() {
+		print("asked next Period!");
+		book.execute(); //TODO we should report if there were errors....
+		book.jrl.clear();
+		print("book is now: "+book.toString());
+
+
+		return true;//TODO error reporting as usual....
+	}
   ///Execute a prepared statement
   void opExe(String key)
 	{
@@ -267,14 +278,11 @@ main(List<String> arguments) //async
 async {
 	//print("incoming : $arguments");
   FibuSettings settings = FibuSettings();
-  settings..parser.addFlag('run',
-      abbr: 'r', defaultsTo: false, help: "run the accounting process")
-      ..parser.addFlag('list',
-	  defaultsTo: false, help: "list the available fast ops")
-		..parser.addFlag('autocur',
-				defaultsTo: true, help: "leaves currency at default without asking")
-		..parser.addOption('fastop',
-	  abbr: 'f',  help: "call fast operation <name>");
+  settings..parser.addFlag('run', abbr: 'r', defaultsTo: false, help: "run the accounting process")
+      ..parser.addFlag('list', defaultsTo: false, help: "list the available fast ops")
+		..parser.addFlag('close', abbr: 'c',defaultsTo: false, help: "closes the actual book and creates the next period")
+		..parser.addFlag('autocur', defaultsTo: true, help: "leaves currency at default without asking")
+		..parser.addOption('fastop', abbr: 'f',  help: "call fast operation <name>");
   settings.init(arguments);
   Fibu fibu = Fibu(settings: settings);
 
@@ -346,9 +354,18 @@ var handler = CsvHandler();
 			}
 
 			//var handler = CsvHandler();
-    } else
+    }
+		else if (settings["close"]) {
+			bool result = fibu.nextPeriod();
+			fname = (settings["output"].isNotEmpty)
+					? settings["output"]
+					: basename + ".lst";
+			print ("retrieved\n$result");
+			//File(fname).writeAsString(result).then((file) { print("write seems successful, please check $fname"); });
+		}	else
       print("empty run (-h for other options) book so far: \n${fibu.book}");
-  } else
+  }
+	else
     print("no file to load");
   print("end of processing");
 }

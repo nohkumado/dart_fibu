@@ -7,6 +7,7 @@ import 'package:nohfibu/ops_handler.dart';
 import 'package:expressions/expressions.dart';
 
 void main() {
+	// Initialize settings and load data from a CSV file.
 	FibuSettings regl = FibuSettings();
 	Book book = Book();
 	setUp(()
@@ -20,6 +21,7 @@ void main() {
 	group('Operations', ()
 	{
 		Map<String,Operation> ops = {};
+		// Example operation definitions to test batch loading.
 		List<List<String>> defs = [
 			["AUCHAN","","1000-1003", "1999",  "Courses Auchan", "","#payement", ""],
 			["AUCHAN","","1999",      "2011",  "Vêtements achetés chez Auchan", "", "", ""],

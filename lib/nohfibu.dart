@@ -88,6 +88,7 @@ class KontoPlan {
     else if (ktoName.length == 1) {
       if(debug)print("KPL: single digit name, adding to $ktoName $kto to ${konten.keys}");
       konten[ktoName] = kto;
+      if(kto.number == "-1") kto.number = ktoName;
     }
     else {
       String key = ktoName[0];
@@ -98,6 +99,7 @@ class KontoPlan {
         konten[key] = Konto(number: key, name: '$key', plan: this,prefix:"");
       }
       konten[key]!.put(rest,kto,debug:debug, prefix:"$key");
+      if(kto.number == "-1") kto.number = kto.name; //this is now a valid account!
       ////fetch the account, creating it on the way
       //if(debug)print("going into get $key, rest ");
       //var locK = konten[key]!.get(rest, orgName: ktoName, debug: debug,kto:kto);
@@ -495,6 +497,37 @@ class Konto {
     }
     return kto;
   }
+
+  bool valid({bool debug = false})
+  {
+    bool valid = true;
+    if (number == "-1") {
+      if(debug) print("Kto number not valid");
+      valid = false;
+    }
+    if (name == "no name" || name == "kein Name") {
+      if(debug) print("Kto name not valid");
+      valid = false;
+    }
+    if (valuta ==  JrlLine.maxValue) {
+      if(debug) print("Kto valuta not valid");
+      valid = false;
+    }
+    return valid;
+  }
+
+  bool isNotValid({bool debug = false}) => !valid(debug:debug);
+
+  bool equals(Konto other)
+  {
+    if(isNotValid()) return false; //invalidate all non-valid accounts
+    if (name != other.name) return false;
+    if (number != other.number) return false;
+    if (desc != other.desc) return false;
+    //if (valuta != other.valuta) return false;
+    return true;
+
+  }
 }
 
 /// This class hold a list of lines, each caracterising an entry in an accounting journal.
@@ -519,7 +552,7 @@ class Journal {
 
   /// empty the journal.
   void clear() {
-    journal = [];
+    journal.clear();
   }
 
   /// add a line.
@@ -571,6 +604,7 @@ class Journal {
 
 /// Represents one line in an accounting journal.
 class JrlLine {
+  static const int maxValue = -1 >>> 1;
   late DateTime datum; /// the date of the transaction
   late Konto _kplus; /// the account to be taken from
   late Konto _kminus; /// the account to be credited
@@ -592,7 +626,7 @@ class JrlLine {
     this.datum = (datum != null) ? datum : DateTime.now();
     this.cur = (cur != null) ? cur : "EUR";
 
-    if(valuta == null) this.valuta = 0;
+    if(valuta == null) this.valuta = maxValue;
     else
     switch(valuta.runtimeType)
     {
@@ -611,11 +645,49 @@ class JrlLine {
        } else {
          this.valuta = tmpVal.toInt();
        }
+       if(this.valuta == -1 ) this.valuta = maxValue;
          break;
       default: print("dont know how to handle valuta ${valuta.runtimeType}");
+      this.valuta = maxValue;
     }
     if(this.valuta == -1 && "${this.valuta}" != "$valuta") print("JrLine ERROR in parsing valuta!! $valuta unparsable");
     //this.valuta = (valuta != null) ? (valuta is double)? valuta.toInt():valuta : 0;
+  }
+  /// Gets the account to be debited (kminus).
+  Konto get kminus  => _kminus;
+  /// Gets the account to be credited (kplus).
+  Konto get kplus  => _kplus;
+  /// Sets the account to be debited (kminus) after validating constraints.
+  /// we need to check if we have the right to change the account, otherwise leave it as is, in the framework you need to check if the value changed....
+  set kminus (Konto other)
+  {
+    if(_isWithinRange(other, 'kmin')) {
+      _kminus = other;
+    } else
+    {
+      print("Error setting kminus :(${other.name}) invalid range ... unchanged ${_kminus.name}");
+      //throw Exception('kminus is out of range.');
+    }
+  }
+  /// Sets the account to be credited (kplus) after validating constraints.
+  set kplus (Konto other)
+  {
+    if(_isWithinRange(other, 'kplu')) _kplus = other;
+    else
+    {
+      print("Error setting kplus :(${other.name}) invalid range ... unchanged ${_kplus.name}");
+      //throw Exception('kminus is out of range.');
+    }
+  }
+
+  /// Sets the `valuta` of the transaction by parsing a string input.
+  void setValuta(String toParse, {bool debug = false})
+  {
+    toParse = toParse.trim().replaceAll('\.', '');
+    if(debug)print("aboutto number parse '$toParse' ser");
+
+    valuta = (toParse.isNotEmpty)?(NumberFormat.currency().tryParse(toParse)??0 * 100).toInt():maxValue;
+    if(valuta == maxValue) print("SetValuta parse error... shopuld thorw an exception here... :$toParse");
   }
 
   /// pretty print this thing .
@@ -676,6 +748,10 @@ class JrlLine {
   /// ask the 2 accounts to add this line to their extracts.
   /// Returns the `JrlLine` instance for chaining.
   JrlLine execute() {
+    if(isNotValid()) {
+      print("JrlLine exe Error: ${_kminus.printname()} ${_kplus.printname()} invalid:\n$_kminus\n$_kplus ${isNotValid(debug:true)}");
+      throw Exception('kminus or kplus is not valid');
+    }
     _kminus.action(this, mode: Mode.sub);
     _kplus.action(this, mode: Mode.add);
     return this;
@@ -705,10 +781,6 @@ class JrlLine {
     }
     else if(key == "mode") this.vars["mode"] = mode;
   }
-  /// Gets the account to be debited (kminus).
-  Konto get kminus  => _kminus;
-  /// Gets the account to be credited (kplus).
-  Konto get kplus  => _kplus;
   ///check if the konto is within the range
   bool _isWithinRange(Konto konto, String key) {
     //print("checking range: $limits vs ${konto.name}");
@@ -719,37 +791,19 @@ class JrlLine {
     //print("limits found... cparoing $kontoValue inside $min and $max = ${(min <= kontoValue && max >= kontoValue)?'true':'false'}");
   return min <= kontoValue && max >= kontoValue;
 }
-  /// Sets the account to be debited (kminus) after validating constraints.
-  /// we need to check if we have the right to change the account, otherwise leave it as is, in the framework you need to check if the value changed....
-  set kminus (Konto other)
-  {
-    if(_isWithinRange(other, 'kmin')) {
-      _kminus = other;
-    } else
-    {
-      print("Error setting kminus :(${other.name}) invalid range ... unchanged ${_kminus.name}");
-      //throw Exception('kminus is out of range.');
+
+  bool valid({bool debug=false}) {
+    if(_kminus.isNotValid() || _kplus.isNotValid() || valuta == maxValue ) {
+      if(debug) {
+        if (_kminus.isNotValid(debug: true)) print("kminus is faulty");
+        if (_kplus.isNotValid(debug: true)) print("kminus is faulty");
+      }
+      return false;
     }
-  }
-  /// Sets the account to be credited (kplus) after validating constraints.
-  set kplus (Konto other)
-  {
-    if(_isWithinRange(other, 'kplu')) _kplus = other;
-    else
-    {
-      print("Error setting kplus :(${other.name}) invalid range ... unchanged ${_kplus.name}");
-      //throw Exception('kminus is out of range.');
-    }
+    return true;
   }
 
-  /// Sets the `valuta` of the transaction by parsing a string input.
-  void setValuta(String toParse, {bool debug = false})
-  {
-    toParse = toParse.trim().replaceAll('\.', '');
-    if(debug)print("aboutto number parse '$toParse' ser");
-
-    valuta = (toParse.isNotEmpty)?(NumberFormat.currency().tryParse(toParse)??0 * 100).toInt():0;
-  }
+  bool isNotValid({bool debug = false}) => !valid(debug: debug);
 }
 
 /// Represents one line in an extract journal.

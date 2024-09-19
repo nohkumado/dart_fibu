@@ -74,8 +74,7 @@ class CsvHandler {
       //String rawTxt = srcFile.readAsStringSync();
       String eol = detectEOL(rawTxt);
 
-      List<List<dynamic>> rowsAsListOfValues =
-          CsvToListConverter(eol: eol).convert(rawTxt);
+      List<List<dynamic>> rowsAsListOfValues = CsvToListConverter(eol: eol).convert(rawTxt);
       //print("extracted  $rowsAsListOfValues");
       String mode = "none";
       List header = [];
@@ -88,11 +87,13 @@ class CsvHandler {
       kmin = 0,
       kplu = 0;
       for (int i = 0; i < rowsAsListOfValues.length; i++) {
-        var actLine = rowsAsListOfValues[i];
+        List actLine = rowsAsListOfValues[i];
+        for(var field = 0; field < actLine.length; field++)if(actLine[field] is String  && actLine[field].isNotEmpty ) actLine[field] = actLine[field].trim();
 
         if (actLine.length == 1) {
           String tag = actLine[0].trim();
-          //print("check start of section : '$tag'");
+          if(tag.isEmpty)continue;
+          print("check start of section : '$tag'");
           if (tag == "KPL")
             mode = "kpl";
           else if (tag == "JRL")
@@ -100,7 +101,7 @@ class CsvHandler {
           else if (tag == "OPS")
             mode = "ops";
           else {
-            print("Error, unknown type: '${tag}'");
+            print("Error, unknown type: '${tag}' in '$actLine'");
             mode = "none";
           }
           i++;
@@ -140,10 +141,10 @@ class CsvHandler {
                     budget: actLine[budget]),
                   debug: false);//("${actLine[name]}" =="4400")?true:false
                                 //print("added kplline [$res]");
-            Konto? check =book.kpl.get("${actLine[name]}");
-            if("${check?.name}" != "${actLine[name]}") {
-              print("ERROR CSVLOAD ${check?.name} does not match ${actLine[name]}");
-              check = book.kpl.get("${actLine[name]}", debug: true);
+            Konto check =book.kpl.get("${actLine[name]}")??Konto();
+            if(!check.equals(res) || check.isNotValid()) {
+              print("ERROR CSVLOAD '${check?.name}' does not match '${actLine[name]}' whilst parsing: ${res.number},${res.name}, ${res.desc}, ${res.valuta} vs $check");
+              check = book.kpl.get("${actLine[name]}", debug: true)??Konto();
               print("NO  ${actLine[name]} in ${book.kpl.toString(astree: true,recursive: true)}");
             }
 
@@ -152,14 +153,14 @@ class CsvHandler {
             DateTime point = DateTime.parse(actLine[datum]);
             Konto? minus = book.kpl.get("${actLine[kmin]}");
             Konto? plus = book.kpl.get("${actLine[kplu]}");
-            if("${minus?.name}" != "${actLine[kmin]}") {
-              print("csvhandler[jrl.minus] error ${minus?.name} does not match ${actLine[kmin]} check manually");
-              book.kpl.put("${actLine[kmin]}", Konto(name: "${actLine[kmin]}", desc: "unknown check manually "));
+            if("${minus?.name}" != "${actLine[kmin]}" ) {
+              print("csvhandler[jrl.minus] error ${minus?.name} does not match ${actLine[kmin]} check manually for $actLine");
+              book.kpl.put("${actLine[kmin]}", Konto(name: "${actLine[kmin]}", desc: "unknown check manually  for $actLine"));
               //minus = book.kpl.get("${actLine[kmin]}", debug: true);
             }
             if("${plus?.name}" != "${actLine[kplu]}") {
-              print("csvhandler[jrl.plus] error ${plus?.name} does not match ${actLine[kplu]} check manually");
-              book.kpl.put("{$actLine[kmin]}", Konto(name: "{$actLine[kmin]}", desc: "unknown check manually "));
+              print("csvhandler[jrl.plus] error ${plus?.name} does not match ${actLine[kplu]} check manually for $actLine");
+              book.kpl.put("{$actLine[kmin]}", Konto(name: "{$actLine[kmin]}", desc: "unknown check manually  for $actLine"));
               //plus = book.kpl.get("${actLine[kplu]}", debug: true);
             }
             //print("treating[$mode] ${actLine}\n search ${actLine[kmin]} and ${actLine[kplu]} ${minus?.name},${minus?.number} and ${plus?.name},${plus?.number}");
@@ -171,7 +172,7 @@ class CsvHandler {
             catch (e) {
               print("cvshandler: error!!!  ${actLine[valuta]} not a num in ${actLine} with $e");
             }
-            //JrlLine res =
+            JrlLine res =
             book.jrl.add(JrlLine(
                 datum: point,
                 kmin: minus,
@@ -180,6 +181,7 @@ class CsvHandler {
                 cur: actLine[cur],
                 valuta: vval));
             //print("added [$res]");
+            if(res.isNotValid()) print("CSVHANDLER: error invalid jrlLine: $actLine vs $res");
           } else if (mode == "ops") {
             DateTime point = (actLine[1]!= null && actLine[1].isNotEmpty)?DateTime.parse(actLine[1]):DateTime.now();
             //print("parsing  ops $actLine");
