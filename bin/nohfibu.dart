@@ -386,15 +386,37 @@ var handler = CsvHandler();
     }
 		else if (settings["close"]) {
 			Book result = fibu.nextPeriod();
+			/*
 			fname = (settings["output"].isNotEmpty)
 					? settings["output"]
-					: basename + ".lst";
-			print ("retrieved\n$result");
-			//File(fname).writeAsString(result).then((file) { print("write seems successful, please check $fname"); });
+					: basename;
+			fname = fname.replaceAll(" ","");
+			fname = incrementYearsInFileName(fname);
+			String dname = gitweg.dirname(fname);
+			fname = dname+"/"+gitweg.basenameWithoutExtension(fname)+".csv";
+			 */
+			fname =  settings["output"] ?? basename;
+			fname = fname.replaceAll(RegExp(r"\s+"),"").trim();
+			fname = incrementYearsInFileName(fname);
+			String dname = gitweg.dirname(fname);
+			fname = gitweg.join(dname,gitweg.basenameWithoutExtension(fname)+".csv");
+			print("saving new exercicse to ${fname}");
+			if(!File(fname).existsSync())
+			File(fname).writeAsString(result.toString()).then((file) { print("write seems successful, please check $fname"); });
+			else { print("file $fname already exists"); }
 		}	else
       print("empty run (-h for other options) book so far: \n${fibu.book}");
   }
 	else
     print("no file to load");
   print("end of processing");
+}
+// Function to increment years in a string
+String incrementYearsInFileName(String fileName) {
+	 // Use regular expressions to match 2-digit or 4-digit years
+  RegExp yearPattern = RegExp(r'(\d{2,4})');
+  return fileName.replaceAllMapped(yearPattern, (Match match) {
+    int year = int.parse(match.group(0)!);  // Extract the year
+    return (year + 1).toString();           // Increment it by 1
+  });
 }
