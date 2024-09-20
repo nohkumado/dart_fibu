@@ -31,7 +31,7 @@ void main() {
         expect(line.kminus.name, equals('no name')); // Assuming default Konto
         expect(line.desc, equals('none'));
         expect(line.cur, equals('EUR'));
-        expect(line.valuta, equals(0));
+        expect(line.valuta, equals(JrlLine.maxValue));
         expect(line.datum.isBefore(DateTime.now().add(Duration(seconds: 1))), isTrue);
       });
 
@@ -178,7 +178,7 @@ void main() {
         JrlLine line = JrlLine();
         line.setValuta('');
 
-        expect(line.valuta, equals(0));
+        expect(line.valuta, equals(JrlLine.maxValue));
       });
 
       test('setValuta() with invalid string', () {
@@ -217,7 +217,7 @@ void main() {
         expect(line.kplus, isNotNull);
         expect(line.desc, equals('none'));
         expect(line.cur, equals('EUR'));
-        expect(line.valuta, equals(0));
+        expect(line.valuta, equals(JrlLine.maxValue));
       });
 
       test('Formatting with custom date and currency', () {
@@ -410,7 +410,7 @@ test('Journal Entries and Clear', () {
 
       expect(emptyLine.kminus.name, equals('no name'));
       expect(emptyLine.kplus.name, equals('no name'));
-      expect(emptyLine.valuta, equals(0));
+      expect(emptyLine.valuta, equals(JrlLine.maxValue));
       expect(emptyLine.desc, equals('none'));
 
       // Test journal with this empty line

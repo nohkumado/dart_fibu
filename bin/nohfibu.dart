@@ -38,14 +38,43 @@ class Fibu {
     return result;
   }
 	///run the ledgers and create the new period
-	bool nextPeriod() {
-		print("asked next Period!");
+	Book nextPeriod() {
 		book.execute(); //TODO we should report if there were errors....
-		book.jrl.clear();
-		print("book is now: "+book.toString());
+		Book nextExercise = Book();
+		nextExercise.kpl = book.kpl.clone(resetValuta:true);// Clone the KPL with resetValuta
+		Konto patrimonio = nextExercise.kpl.get("2")?.getSmallest()??Konto();// Find the "patrimonio" account, validate it
+		if(patrimonio.isNotValid()) {
+			print("Error!! no patrimonio found???");
+			return nextExercise;  // Exit early if patrimonio is invalid
+		}
+		// Helper function to add journal entries
+		void addJournalEntries(List<List> accounts, String reportDesc) {
+			for (List actAcc in accounts) {
+				nextExercise.jrl.add(
+					JrlLine(
+							kplu: nextExercise.kpl.get("${actAcc[0]}"),  // Get the corresponding account
+							kmin: patrimonio,
+							desc: "$reportDesc ${actAcc[1]}",  // Dynamic description
+							cur: actAcc[2],                // Currency
+							valuta: actAcc[4]              // Valuta (balance/amount)
+					),
+				);
+			}
+		}
+		// Get usable aktiva accounts and add them to journal
+		List<List> aktivaAccounts = book.kpl.get("1")?.asList() .where((line) => line[4] != 0).toList() ?? [];
+		addJournalEntries(aktivaAccounts, "Report ");
+
+    // Get usable passiva accounts excluding patrimonio, and add them to journal
+		List<List> passivaAccounts = book.kpl.get("2")?.asList() .where((line) => line[4] != 0 && line[0] != patrimonio.name).toList() ?? [];
+		addJournalEntries(passivaAccounts, "Report ");
+
+		// Execute the next exercise
+		nextExercise.execute(); //TODO we should report if there were errors....
+		//identify patrimonium account, should be the first of the 2* accounts
 
 
-		return true;//TODO error reporting as usual....
+		return nextExercise;//TODO error reporting as usual....
 	}
   ///Execute a prepared statement
   void opExe(String key)
@@ -356,7 +385,7 @@ var handler = CsvHandler();
 			//var handler = CsvHandler();
     }
 		else if (settings["close"]) {
-			bool result = fibu.nextPeriod();
+			Book result = fibu.nextPeriod();
 			fname = (settings["output"].isNotEmpty)
 					? settings["output"]
 					: basename + ".lst";

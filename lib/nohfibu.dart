@@ -202,6 +202,16 @@ class KontoPlan {
     parent.getRange(min.substring(n),max.substring(n),passthrough:result);
     return result;
   }
+
+  KontoPlan clone({bool resetValuta = false})
+  {
+    KontoPlan result = KontoPlan();
+    konten.forEach((key, value) {
+      result.konten[key] = value.clone(plan:result, resetValuta: resetValuta);
+    });
+    return result;
+
+  }
 }
 
 /// one account .
@@ -357,7 +367,8 @@ class Konto {
 
   /// return this thins as a list, recurse through the tree
   ///preparation for e.g. csv conversion .
-  List<List> asList({List<List> asList = const [], bool all = false, formatted =false}) {
+  List<List> asList({List<List>? asList, bool all = false, formatted =false}) {
+    if(asList == null) asList = [];
     //print("$number $name $desc tries to add to list");
     var f = NumberFormat.currency(symbol: cur2sym(cur));
 
@@ -497,7 +508,7 @@ class Konto {
     }
     return kto;
   }
-
+/// Returns true if the accunt is valid
   bool valid({bool debug = false})
   {
     bool valid = true;
@@ -518,6 +529,7 @@ class Konto {
 
   bool isNotValid({bool debug = false}) => !valid(debug:debug);
 
+  ///Returns true if this Konto has the same name and description as the other one
   bool equals(Konto other)
   {
     if(isNotValid()) return false; //invalidate all non-valid accounts
@@ -527,6 +539,25 @@ class Konto {
     //if (valuta != other.valuta) return false;
     return true;
 
+  }
+/// Creates a deep copy of the current `Konto` object.
+///
+/// If a new `plan` is provided, the cloned `Konto` will use it; otherwise, it will use the existing plan.
+///
+/// The method also recursively clones all child `Konto` objects, if any.
+  Konto clone({KontoPlan? plan, bool resetValuta = false})
+  {
+    Konto clone = Konto(number: number, name: name, desc: desc, valuta: resetValuta?0:valuta, plan: (plan != null)?plan:this.plan);
+    // Using forEach for iterating over children
+    children.forEach((childName, child) {
+      clone.children[childName] = child.clone(plan: plan, resetValuta: resetValuta);
+    });
+    return  clone;
+  }
+  Konto getSmallest()
+  {
+    if(children.isEmpty) return this;
+    return children.entries.first.value.getSmallest();
   }
 }
 
@@ -618,7 +649,7 @@ class JrlLine {
 
   /// Constructor for initializing a journal line.
   /// Optional fields will be filled with default values if omitted.
-  JrlLine({datum, kmin, kplu, desc, cur, valuta}) {
+  JrlLine({DateTime? datum, Konto? kmin, Konto? kplu, String? desc, String? cur, valuta}) {
     // print("jline incoming +$datum+ -$kmin- -$kplu- -$desc- ,=$cur=, #$valuta#\n");
     _kplus = (kplu != null) ? kplu : Konto();
     _kminus = (kmin != null) ? kmin : Konto();

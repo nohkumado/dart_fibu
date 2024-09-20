@@ -93,7 +93,6 @@ class CsvHandler {
         if (actLine.length == 1) {
           String tag = actLine[0].trim();
           if(tag.isEmpty)continue;
-          print("check start of section : '$tag'");
           if (tag == "KPL")
             mode = "kpl";
           else if (tag == "JRL")
