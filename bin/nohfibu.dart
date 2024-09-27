@@ -386,15 +386,6 @@ var handler = CsvHandler();
     }
 		else if (settings["close"]) {
 			Book result = fibu.nextPeriod();
-			/*
-			fname = (settings["output"].isNotEmpty)
-					? settings["output"]
-					: basename;
-			fname = fname.replaceAll(" ","");
-			fname = incrementYearsInFileName(fname);
-			String dname = gitweg.dirname(fname);
-			fname = dname+"/"+gitweg.basenameWithoutExtension(fname)+".csv";
-			 */
 			fname =  settings["output"] ?? basename;
 			fname = fname.replaceAll(RegExp(r"\s+"),"").trim();
 			fname = incrementYearsInFileName(fname);
