@@ -98,8 +98,11 @@ void main() {
 
       test('execute() modifies Konto valutas', () {
         // Initialize accounts with initial valutas
-        Konto kminus = Konto(name: '2002', valuta: 10000, plan: KontoPlan());
-        Konto kplus = Konto(name: '1001', valuta: 5000, plan: KontoPlan());
+        KontoPlan plan = KontoPlan();
+        Konto kminus = Konto(name: '2002', desc: 'minus', valuta: 10000, plan: plan , debug: true);
+        Konto kplus = Konto(name: '1001',  desc: 'plus',valuta: 5000, plan: plan);
+        plan.check(kminus);
+        plan.check(kplus);
 
         // Create a JrlLine with a specific valuta to transfer
         JrlLine line = JrlLine(kmin: kminus, kplu: kplus, valuta: 1500);
@@ -200,9 +203,10 @@ void main() {
       });
 
       test('Execute with Valuta Update', () {
-        Konto kplus = Konto(name: 'kplus', valuta: 5000);
-        Konto kminus = Konto(name: 'kminus', valuta: 10000);
+        Konto kplus = Konto(name: 'kplus',desc: 'kplus', valuta: 5000);
+        Konto kminus = Konto(name: 'kminus',desc: 'kminus', valuta: 10000);
         JrlLine line = JrlLine(kmin: kminus, kplu: kplus, valuta: 1500);
+        print("valuta update: $kplus, ${kplus.valid()} $kminus, ${kminus.valid()}");
 
         line.execute();
 
@@ -239,8 +243,8 @@ void main() {
 
     group('Journal', ()
   {
-    var kto1 = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
-    var kto2 = Konto(number : "2",name: "2002", plan: book.kpl, valuta:8000099, cur:"EUR", budget:88812);
+    var kto1 = Konto(number : "1",name: "1001", desc: "test acc1", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
+    var kto2 = Konto(number : "2",name: "2002", desc: "test acc2",plan: book.kpl, valuta:8000099, cur:"EUR", budget:88812);
 
     test('Journal with Empty Entries', () {
       // Ensure the journal starts empty
@@ -294,9 +298,12 @@ void main() {
       book.kpl.put("1001", kto1);
       book.kpl.put("2002", kto2);
       var line = JrlLine(datum: DateTime.parse("2021-09-01"), kmin:kto1, kplu:kto2, desc: "test line", cur:"EUR", valuta: 8888800);
-      line.addConstraint("kmin",boundaries:["100","300"]);
+      expect(line.needsAccount(accountType: "minus"), equals(false));
+      line.addConstraint("kmin",boundaries:["1000","3000"]);
+      expect(line.needsAccount(accountType: "minus"), equals(true));
+      expect(line.needsAccount(accountType: "plus"), equals(false));
       line.kminus = book.kpl.get("2002")!;
-      expect(line.kminus.printname(), equals("1001"));
+      expect(line.kminus.printname(), equals("2002"));
       line.addConstraint("kmin",boundaries:["1000","3000"]);
       line.kminus = book.kpl.get("2002")!;
       expect(line.kminus.printname(), equals("2002"));
@@ -307,6 +314,11 @@ void main() {
       expect(line.kplus.printname(), equals("2002"));
       line.kplus = book.kpl.get("2001")!;
       expect(line.kplus.printname(), equals("2002"));
+      line.limits!["kplu"] = {
+        "min" : "1000",
+        "max": "4000"
+      };
+      expect(line.needsAccount(accountType: "plus"), equals(true));
     });
 test('Journal Entries and Clear', () {
       var line = JrlLine(datum: DateTime.parse("2021-09-02"), kmin: kto1, kplu: kto2, desc: "another test line", cur: "EUR", valuta: 8888800);
@@ -414,10 +426,10 @@ test('Journal Entries and Clear', () {
       expect(emptyLine.desc, equals('none'));
 
       // Test journal with this empty line
-      String result = 'Journal from 2021-09-01 to 2023-09-06\n' +
+      String result = 'Journal from 2021-09-01 to 2023-10-04\n' +
           '01-09-2021 1001 2002 test line 1                                            € 50.00\n' +
           '02-09-2021 2002 1001 test line 2                                           € 100.00\n' +
-          '05-09-2024    0    0 none                                                    € 0.00\n' +
+          '05-09-2024    0    0 none                                                    ${emptyLine.formattedValuta(value:JrlLine.maxValue)}\n' +
                       'Journal End';
       expect(book.jrl.toString(), equals(result));
 

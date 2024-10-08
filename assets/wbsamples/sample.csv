@@ -46,11 +46,11 @@ kto,dsc,cur,budget,valuta
 4999,Encaissements divers,EUR,0,0
 JRL
 date,ktominus,ktoplus,desc,cur,valuta
-2016-11-01,   0,1200,Report compte courant,EUR,301860
-2016-11-01,   0,1600,Report pertes exercice 2015/2016,EUR,18077
-2016-11-01,2300,   0,Report patrimoine au 31/10/2016,EUR,242437
-2016-11-01,2500,   0,Report dette vers          fact. bus,EUR,65000
-2016-11-01,2500,   0,Report dette vers OfficeTourisme,EUR,12500
+2016-11-01,   2300,1200,Report compte courant,EUR,301860
+2016-11-01,   2300,1600,Report pertes exercice 2015/2016,EUR,18077
+2016-11-01,2300,   2300,Report patrimoine au 31/10/2016,EUR,242437
+2016-11-01,2500,   2300,Report dette vers          fact. bus,EUR,65000
+2016-11-01,2500,   2300,Report dette vers OfficeTourisme,EUR,12500
 2016-11-01,1600,2300,Absorption pertes 2015/2016 par patrimoine,EUR,18077
 2016-11-15,1200,2500,chq373                   non enregistre,EUR,12500
 2016-11-28,2530,3050,frais postaux /envoie documents,EUR,593

@@ -22,6 +22,7 @@ void main() {
 
 		test('loading', () {
 			var handler = CsvHandler();
+			book.kpl.put("0",Konto(name: '0', desc: 'buggy', valuta: 0));
 			handler.load(book: book, conf: regl ) ;
 			expect(book.jrl.count(), equals(1152));
 			book.clear();

@@ -119,68 +119,89 @@ class Operation extends Object with IterableMixin<JrlLine>
         line.addConstraint("kmin",boundaries: splitted);
       }
       else if(cplus[i].isEmpty) {}//do nothing
-      else line.kminus=book.kpl.get(cminus[i])!;
-
-      if(cplus[i].contains("-"))
-      {
-        var splitted = cplus[i].split("-");
-        //print("+ range!! ${cplus[i]} $splitted");
-        line.addConstraint("kplu",boundaries: splitted);
-      }
-      else if(cplus[i].isEmpty) {}//do nothing
-      else line.kplus=book.kpl.get(cplus[i])!;
-      // Check and warn if the account is erroneous.
-      if(line.kminus.number != "-1" && line.kminus.desc.isEmpty)
-      {
-        print("Warning!! minus(${cminus[i]},${line.kminus.name},${line.kminus.number}) account probably erroneous");
-      }
-      if(line.kplus.number != "-1" &&line.kplus.desc.isEmpty) print("Warning!! plus(${cplus[i]},${line.kplus.name},${line.kminus.number}) account probably erroneous");
-      //print("set c+ to ${line.kplus} c- to ${line.kminus}");
-      if(desc[i].contains("#"))
-      {
-        //_extractVariablesFromDescription(line, desc[i]); //TODO check if really apllicable
-
-        //check if it can be evaluated with expressions: ^0.2.3:
-        //we need to extract the variables
-        RegExp rex = RegExp(r"#(\w+)");
-        final matches = rex.allMatches(desc[i]);
-        // Print all groups found
-        final extractedVariables = matches.map((match) => match.group(1)).toList();
-        // Update line.vars dictionary (optional)
-        line.vars["desc"] ??= {}; // Initialize if needed
-        for (final variable in extractedVariables)
+      else
         {
-          if (!vars.containsKey(variable)) {
-            vars[variable!] = variable;  // Add only if not already present
+          Konto? minus = book.kpl.get(cminus[i]);
+          if(minus != null) line.kminus=minus;
+          else
+          {
+            print("Prepare PROBLEM c- (${cminus[i]}) is null: ${book.kpl}");
+          }
+
+
+
+          print("Op trying to analyse cplus:  ${cplus[i]}");
+          if(cplus[i].contains("-"))
+          {
+            var splitted = cplus[i].split("-");
+            print("+ range!! ${cplus[i]} $splitted");
+            line.addConstraint("kplu",boundaries: splitted);
+          }
+          else if(cplus[i].isEmpty) {}//do nothing
+          else
+          {
+
+            Konto? plus = book.kpl.get(cplus[i]);
+            if(plus != null) line.kplus=plus;
+            else
+            {
+              print("Prepare PROBLEM c+ (${cplus[i]})is null: ${book.kpl}");
+            }
+
+            // Check and warn if the account is erroneous.
+            if(line.kminus.number != "-1" && line.kminus.desc.isEmpty)
+            {
+              print("Warning!! minus(${cminus[i]},${line.kminus.name},${line.kminus.number}) account probably erroneous");
+            }
+            if(line.kplus.number != "-1" &&line.kplus.desc.isEmpty) print("Warning!! plus(${cplus[i]},${line.kplus.name},${line.kminus.number}) account probably erroneous");
+            //print("set c+ to ${line.kplus} c- to ${line.kminus}");
+            if(desc[i].contains("#"))
+            {
+              //_extractVariablesFromDescription(line, desc[i]); //TODO check if really apllicable
+
+              //check if it can be evaluated with expressions: ^0.2.3:
+              //we need to extract the variables
+              RegExp rex = RegExp(r"#(\w+)");
+              final matches = rex.allMatches(desc[i]);
+              // Print all groups found
+              final extractedVariables = matches.map((match) => match.group(1)).toList();
+              // Update line.vars dictionary (optional)
+              line.vars["desc"] ??= {}; // Initialize if needed
+              for (final variable in extractedVariables)
+              {
+                if (!vars.containsKey(variable)) {
+                  vars[variable!] = variable;  // Add only if not already present
+                }
+              }
+            }
+
+            RegExp expPresent = RegExp(r'[()]+');
+            //print("checking for presence of $expPresent in ${desc[i]}");
+            if(desc[i].contains(expPresent)) parseExpression(line,desc[i], expPresent);
+            line.desc = desc[i];
+            //print("ops preparer valuta '${valuta[i]}'");
+            //valuta is either a variable name or an expression can't be both....
+            if(valuta[i].contains(expPresent)) parseExpression(line,valuta[i], expPresent);
+            else if(valuta[i].contains("#"))
+            {
+              //we need to extract the variables
+              RegExp rex = RegExp(r"#(\w+)");
+              //print("matching ${rex.allMatches(valuta[i]).length}");
+              rex.allMatches(valuta[i]).forEach((match)
+              {
+                vars[match.group(1)!] = match.group(1);
+                line.valname = match.group(1);
+              });
+              line.valuta =-1;//force invalid value
+              //_extractVariablesFromValuta(line, valuta[i]);
+            }
+            else  if(valuta[i].isNotEmpty) line.setValuta(valuta[i]);
+            if(mod[i].isNotEmpty) line.addConstraint("mode", mode:mod[i]);
+
+            //print("added $line");
+            preparedLines.add(line);
           }
         }
-      }
-
-      RegExp expPresent = RegExp(r'[()]+');
-      //print("checking for presence of $expPresent in ${desc[i]}");
-      if(desc[i].contains(expPresent)) parseExpression(line,desc[i], expPresent);
-      line.desc = desc[i];
-      //print("ops preparer valuta '${valuta[i]}'");
-      //valuta is either a variable name or an expression can't be both....
-      if(valuta[i].contains(expPresent)) parseExpression(line,valuta[i], expPresent);
-      else if(valuta[i].contains("#"))
-      {
-        //we need to extract the variables
-        RegExp rex = RegExp(r"#(\w+)");
-        //print("matching ${rex.allMatches(valuta[i]).length}");
-        rex.allMatches(valuta[i]).forEach((match)
-        {
-          vars[match.group(1)!] = match.group(1);
-          line.valname = match.group(1);
-        });
-        line.valuta =-1;//force invalid value
-        //_extractVariablesFromValuta(line, valuta[i]);
-      }
-      else  if(valuta[i].isNotEmpty) line.setValuta(valuta[i]);
-      if(mod[i].isNotEmpty) line.addConstraint("mode", mode:mod[i]);
-
-      //print("added $line");
-      preparedLines.add(line);
       //data.add( [name, date, cplus[i], cminus[i], "${desc[i]}", cur[i], valuta[i], mod[i]]);
     }
   }

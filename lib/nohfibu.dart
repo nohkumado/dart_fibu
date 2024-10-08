@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 import 'package:sprintf/sprintf.dart';
 import 'dart:collection';
+
+import 'fibusettings.dart';
+import 'ops_handler.dart';
 
 //Enum to set mode
 enum Mode {add,sub}
@@ -33,6 +38,318 @@ String cur2sym(String name) {
   return sym;
 }
 
+/// Abstract class to gather inputs (used for both CLI and GUI)
+abstract class InputProvider {
+  String? getInput(String prompt, {String? defaultValue});
+}
+
+/// CLI implementation of the InputProvider
+class CLIInputProvider extends InputProvider {
+  @override
+  String? getInput(String prompt, {String? defaultValue}) {
+    print(prompt + (defaultValue != null ? ' [$defaultValue]' : ''));
+    String? answer = stdin.readLineSync();
+    return answer?.isEmpty ?? true ? defaultValue : answer;
+  }
+}
+/// Launcher for the accounting analysis
+///
+/// -r launches the analysis
+/// -b <name> set the base name to work on
+///
+/// Issues a result file with the accounting analysis
+class Fibu {
+  bool strict = false;
+  Book book = Book();
+  late FibuSettings settings;
+
+  InputProvider inputProvider = new CLIInputProvider();
+
+  Fibu({strict = false, FibuSettings? settings}) {
+    if (strict) this.strict = true;
+    if (settings != null) this.settings = settings;
+    else this.settings = FibuSettings();
+  }
+
+  ///run the ledgers and fillem up from the book
+  String execute() {
+    print("asked to run!"+book.toString());
+    book.execute(); //TODO we should report if there were errors....
+
+    String result = book.toString() + "\n";
+    result += book.kpl.toString(extracts: true);
+    result += "=" * 20 + "    Analysis    " + "=" * 20 + "\n";
+    //result += "Aktiva    \n"+ (book.kpl.get("1")).toString(recursive: true)+"\n";
+    result += book.kpl.analysis();
+    return result;
+  }
+  ///run the ledgers and create the new period
+  Book nextPeriod() {
+    book.execute(); //TODO we should report if there were errors....
+    Book nextExercise = Book();
+    nextExercise.kpl = book.kpl.clone(resetValuta:true);// Clone the KPL with resetValuta
+    Konto patrimonio = nextExercise.kpl.get("2")?.getSmallest()??Konto();// Find the "patrimonio" account, validate it
+    if(patrimonio.isNotValid()) {
+      print("Error!! no patrimonio found???");
+      return nextExercise;  // Exit early if patrimonio is invalid
+    }
+    // Helper function to add journal entries
+    void addJournalEntries(List<List> accounts, String reportDesc) {
+      for (List actAcc in accounts) {
+        nextExercise.jrl.add(
+          JrlLine(
+              kplu: nextExercise.kpl.get("${actAcc[0]}"),  // Get the corresponding account
+              kmin: patrimonio,
+              desc: "$reportDesc ${actAcc[1]}",  // Dynamic description
+              cur: actAcc[2],                // Currency
+              valuta: actAcc[4]              // Valuta (balance/amount)
+          ),
+        );
+      }
+    }
+    // Get usable aktiva accounts and add them to journal
+    List<List> aktivaAccounts = book.kpl.get("1")?.asList() .where((line) => line[4] != 0).toList() ?? [];
+    addJournalEntries(aktivaAccounts, "Report ");
+
+    // Get usable passiva accounts excluding patrimonio, and add them to journal
+    List<List> passivaAccounts = book.kpl.get("2")?.asList() .where((line) => line[4] != 0 && line[0] != patrimonio.name).toList() ?? [];
+    addJournalEntries(passivaAccounts, "Report ");
+
+    // Execute the next exercise
+    nextExercise.execute(); //TODO we should report if there were errors....
+    //identify patrimonium account, should be the first of the 2* accounts
+
+
+    return nextExercise;//TODO error reporting as usual....
+  }
+  ///Execute a prepared statement
+  void opExe(String key)
+  {
+    //print("we need to call on fast op ${key}");
+    bool ok = true;
+    while(ok)
+    {
+      Operation? actOp = book.ops[key];
+      if(actOp == null) {print("Fast op '${key}' unknown, please check the name"); ok = false;}
+      else
+      {
+        //print("Found fast op '${actOp}' ");
+        actOp.prepare();
+        bool firstLine = true;
+        //actOp.preparedLines.forEach((line)
+        for(int i = 0; i < actOp.length; i++)
+        {
+          JrlLine line  = actOp[i];
+          print("to fill $line");
+          if(firstLine) { selectDate(line); firstLine = false;}
+          if(line.needsAccount(accountType : "minus")) {
+            print("proceeding to acc -");
+            selectAccount(line, minus: true);
+          }
+          print("proceeding to acc +");
+          selectAccount(line, minus:false);
+          print("proceeding to desc");
+          selectDescription(line, actOp);
+          if(!settings["autocur"]) {
+            print("proceeding to cur");
+            selectCurrency(line);
+          }
+          print("proceeding to val");
+          selectValuta(line,actOp);
+        }
+        //);
+        print("please check new jrl lines:");
+        actOp.result().forEach((line) { print("${line}" );});
+        String? answer = inputProvider.getInput("ok?");
+        answer ??= "";
+        if( answer.isEmpty || answer.toLowerCase() == "y")
+        {
+          ok = false;
+          actOp.result().forEach((line) { book.jrl.add(line);});
+          print("jrl now: ${book.jrl}");
+        }
+      }
+    }
+    //handler.save(book: book, conf: settings);
+  }
+  ///select a date, had to implement the different shortcuts that are usual
+  void selectDate(JrlLine line) {
+    final DateFormat formatter = DateFormat('dd-MM-yyyy');
+    final String formatted = formatter.format(line.datum);
+    bool invalid = true;
+    while(invalid)
+    {
+      print("Date[$formatted]");
+      //String? answer = stdin.readLineSync();
+      String? answer = inputProvider.getInput("Date [$formatted]", defaultValue: formatted);
+      answer ??= "";
+      if( answer.isNotEmpty)
+      {
+        print("answered: '$answer'");
+        try
+        {
+          //DateTime point = DateTime.parse(answer);
+          DateFormat format = DateFormat("dd-MM-yyyy");
+          //print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
+          var point = format.parse(answer);
+          line.datum = point;
+          invalid =false;
+        }
+        catch(e)
+        {
+          //print("couldn't*t understand the date....");
+          try
+          {
+            //DateTime point = DateTime.parse(answer);
+            DateFormat format = DateFormat("dd-MM-yy");
+            //print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
+            var point = format.parse(answer);
+            line.datum = point;
+            invalid =false;
+          }
+          catch(e) {
+            try
+            {
+              //DateTime point = DateTime.parse(answer);
+              DateFormat format = DateFormat("dd.MM.yyyy");
+              //print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
+              var point = format.parse(answer);
+              line.datum = point;
+              invalid =false;
+            }
+            catch(e) {
+              try
+              {
+                //DateTime point = DateTime.parse(answer);
+                DateFormat format = DateFormat("dd.MM.yy");
+                //print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
+                var point = format.parse(answer);
+                line.datum = point;
+                invalid =false;
+              }
+              catch(e) {print("couldn't understand the date....");}
+            }
+          }
+        }
+      }
+      else
+      {
+        invalid =false;
+        print("default answer....");
+      }
+    }
+    print("set Date to [${formatter.format(line.datum)}]");
+  }
+  ///select an account, per default the minus account with minus to false the plus account
+  void selectAccount(JrlLine line, {bool minus =true})
+  {
+    String defaultKtoName =(minus)?line.kminus.printname().trim():line.kplus.printname().trim();
+    String defaultKtoDesc =(minus)?line.kminus.desc.trim():line.kplus.desc.trim();
+    //print("selecting for $defaultKtoName, $defaultKtoDesc prefilled: ${line}");
+    late List<Konto> ktoList;
+    String setKey = (minus)? "kmin":"kplu";
+    //print("limits? ${line.limits}");
+    if(line.limits != null && line.limits!.containsKey(setKey)&& line.limits![setKey]["min"] != "-1")
+    {
+      var limits = line.limits![setKey];
+      //print("retrieved + [${limits}]");
+      ktoList = book.kpl.getRange(limits);
+      //defaultKtoName =limits["min"]; //lower limit? or
+      defaultKtoName =ktoList.first.name;//first valid account?
+      defaultKtoDesc =ktoList.first.desc.trim();
+      print("selecting from :\n $ktoList");
+    }
+
+    bool invalid = true;
+    while(invalid)
+    {
+      print("kto"+((minus)?"-":"+")+"[${defaultKtoName}, ${defaultKtoDesc} ]");
+      //String? answer = stdin.readLineSync();
+      String? answer = inputProvider.getInput( "Account ${(minus) ? '-' : '+'} [$defaultKtoName, $defaultKtoDesc]", defaultValue: defaultKtoName);
+      answer ??= defaultKtoName;
+      //print("answer is '$answer'");
+      if(answer.isEmpty) answer = defaultKtoName;
+      Konto ? selected =book.kpl.get(answer.trim());
+      //print("found Konto is '$selected");
+      if(selected != null)
+      {
+        if(minus) {
+          line.kminus = selected;
+          if (line.kminus.name == selected.name)
+            invalid = false;
+          else
+            print("Account not existent,try again");
+        }
+        else{
+          line.kplus = selected;
+          if (line.kplus.name == selected.name)
+            invalid = false;
+          else
+            print("Account not existent,try again");
+        }
+      }
+      else print("please select from : \n$ktoList\nkto-[${defaultKtoName}]");
+    }
+  }
+
+  ///input a description, if variables are in it store them and expand
+  void selectDescription(JrlLine line, Operation myOp)
+  {
+    print("desc [${line.desc}] ");
+    String tmpDesc =line.desc;
+    print("searching desc in local variables: ${line.vars}");
+    if(line.vars.containsKey("desc"))
+    {
+      var locVars = line.vars["desc"]!;
+      print("local variables: $locVars");
+      locVars.keys.forEach((key)
+      {
+        print("please provide data for $key:");
+        String? answer = inputProvider.getInput( "Please provide data for $key");
+
+        answer ??= "";
+        locVars[key] = answer;
+        tmpDesc = tmpDesc.replaceAll("#$key", answer);
+      });
+      line.desc = tmpDesc; //ask for confirmation?
+    }
+  }
+
+  void selectCurrency(JrlLine line)
+  {
+    print("currency [${line.cur}] ");
+    String? answer = inputProvider.getInput("Currency [${line.cur}]", defaultValue: 'EUR');
+    answer ??= "";
+    if(answer.isNotEmpty)line.cur = answer;
+  }
+
+  void selectValuta(JrlLine line, Operation myOp)
+  {
+    if(line.valname != null)
+    {
+      String? answer = inputProvider.getInput("valuta [${line.valuta}]");
+      answer ??= "0";
+      line.setValuta(answer);
+      myOp.vars[line.valname!] = line.valuta;
+      print("stored for ${line.valname} ${line.valuta}");
+    }
+    else
+    if(line.valexp != null)
+    {
+      print("need to fill with exp ");
+      line.valuta = myOp.eval(exp:line.valexp);
+      print("computed for ${line.valname} ${line.valuta}");
+    }
+    else
+    {
+      String? answer = inputProvider.getInput("valuta [${line.valuta}]");
+      answer ??= "";
+      if(answer.isNotEmpty) line.setValuta(answer);
+      print("inputted valuta ${line.valuta}");
+    }
+
+  }
+}
 /// Represents the account plan in the accounting system.
 /// It organizes accounts and allows for tree-like structures of accounts.
 class KontoPlan {
@@ -95,9 +412,10 @@ class KontoPlan {
       String rest = ktoName.substring(1, ktoName.length);
       if(debug)print("KPL:split name, to $key and $rest");
       if (!konten.containsKey(key)) {
-        if(debug)print("KPL: adding new intermediary Kto $key");
-        konten[key] = Konto(number: key, name: '$key', plan: this,prefix:"");
+        if(debug)print("KPL: adding new intermediary Kto $key ${konten[key]}");
+        konten[key] = Konto(number: key, name: '$key', plan: this,prefix:"", debug: debug);
       }
+      if(debug)print("KPL: deving into Kto $key ${rest} amd $kto");
       konten[key]!.put(rest,kto,debug:debug, prefix:"$key");
       if(kto.number == "-1") kto.number = kto.name; //this is now a valid account!
       ////fetch the account, creating it on the way
@@ -192,16 +510,38 @@ class KontoPlan {
     List<Konto> result = (passthrough != null)? passthrough:[];
     String min =(minmax.containsKey("min"))?minmax["min"]!.trim():"0";
     String max =(minmax.containsKey("max"))?minmax["max"]!.trim():"0";
-    //print("in getRange : $minmax, '$min'-'$max' from ${konten.keys}");
-    //select common part
-    int n =0;
-    while(min[n] == max[n]) n++;
-    String common = min.substring(0,n);
-    Konto parent = (get(common)==null)?Konto():get(common)!;
-    //print("common : $n=> '$common'; kto: ${parent.desc} ${parent.children.keys}");
-    parent.getRange(min.substring(n),max.substring(n),passthrough:result);
+    ///Attention if accounts are spanning blocks....!
+    bool span = false;
+    if(min[0] != max[0]) {
+      span = true;
+      bool start = true;
+      for(String root in konten.keys)
+        {
+          // Convert strings to integers for numerical comparison
+          int rootInt = int.parse(root);
+          int minInt = int.parse(min[0]);
+          int maxInt = int.parse(max[0]);
+
+          if(rootInt < minInt) continue;
+          start = false;
+          if(rootInt > maxInt) break;
+          Konto parent = konten[root]??Konto(plan: this);
+          parent.getRange(min.substring(1),max.substring(1),passthrough:result);
+        }
+
+    }
+    else{
+        //select common part
+        int n =0;
+        while(min[n] == max[n]) n++;
+        String common = min.substring(0,n);
+        if(common.isEmpty) common = min;
+        Konto parent = (get(common)==null)?Konto(plan: this):get(common)!;
+        print("common[sp:$span] : $n=> '$common'; kto: ${parent.desc} ${parent.children.keys}");
+        parent.getRange(min.substring(n),max.substring(n),passthrough:result);
+    }
     return result;
-  }
+      }
 
   KontoPlan clone({bool resetValuta = false})
   {
@@ -212,8 +552,20 @@ class KontoPlan {
     return result;
 
   }
+  //check the presence of an account, if not add it
+  void check(Konto konto, {bool debug = false} )
+  {
+    if(debug)print("Checking KPL ${toString()} adding '$konto' '${get(konto.name)}'");
+    if(konto.name =="no name") print("ERROR, can't check noname accounts!!!");
+    else if(get(konto.name) == null)
+      {
+        put(konto.name, konto, debug: debug);
+        if(debug)print("KPL after put ${toString()}'${konten}'");
+      }
+  }
 }
 
+enum AccountType { Actif, Passif, Charge, Produit }
 /// one account .
 /// Represents an account in the accounting system.
 /// Each account has properties such as a name, valuta (amount), and a budget.
@@ -229,16 +581,17 @@ class Konto {
 
   String name = "no name"; /// The name of the account, usually the number in string format
   late Journal extract; /// The account's extract (journal of transactions for this account).
-
+  AccountType accountType; // Nouveau champ pour le type de compte
   ///CTOR where you can specify
   ///   the number of the account,
   ///   its name (the number is recursively consumed)
   ///   to which account plan it relates
   ///   valute the actual value in the account
   ///   budget a theoretical value that lapsed should generate warnings .
-  Konto({number, name = "kein Name", desc, plan, valuta, cur, budget, String prefix =""}) {
+  Konto({number, name = "kein Name", desc, plan, valuta, cur, budget, String prefix ="",this.accountType = AccountType.Actif, bool debug = false})  {
     //set(number,name, plan, desc, valuta, cur, budget);
     if (number != null) this.number = number;
+    else if(name !=  "kein Name") this.number = name;
     if (prefix.isNotEmpty ) {
       //print("set prefix for $number/$name as $prefix");
       this.prefix = prefix;
@@ -248,7 +601,13 @@ class Konto {
     if (cur != null) this.cur = cur;
     if (valuta != null) this.valuta = (valuta is double)? valuta.toInt():valuta;
     if (budget != null) this.budget = (budget is double)? budget.toInt():budget;
-    if (this.number.isEmpty) this.number = name[name.length - 1];
+    if (this.number.isEmpty) {
+      if(name.length > 1) this.number = name[name.length - 1];
+      else this.number = name;
+    }
+    if(plan != null && plan is KontoPlan) this.plan = plan;
+    //this.plan.check(this, debug: debug);
+    //print("actual KPL: ${this.plan.toString(astree: true)}");
     extract = Journal(this.plan, caption: "Extract for ${this.name}");
   }
 
@@ -384,13 +743,31 @@ class Konto {
     return asList;
   }
 
+  // Méthode pour mettre à jour le solde en fonction du type de compte
+  void updateBalance(int amount, {bool isAddition = true}) {
+    if (isAddition) {
+      if (accountType == AccountType.Actif || accountType == AccountType.Charge) {
+        valuta += amount; // Débit pour Actifs et Charges
+      } else {
+        valuta -= amount; // Crédit pour Passifs et Produits
+      }
+    } else {
+      if (accountType == AccountType.Actif || accountType == AccountType.Charge) {
+        valuta -= amount; // Crédit pour Actifs et Charges
+      } else {
+        valuta += amount; // Débit pour Passifs et Produits
+      }
+    }
+  }
+
   /// add a journal line to our account extract, update the valuta .
   Konto action(JrlLine line, {Mode mode = Mode.add}) {
     //ggnint oldval = valuta;
-    if (mode == Mode.add)
-      valuta += line.valuta;
-    else
-      valuta -= line.valuta;
+    if (mode == Mode.add) {
+      updateBalance(line.valuta, isAddition: true);
+    } else {
+      updateBalance(line.valuta, isAddition: false);
+    }
     //print("Line s valuta : ${line.valuta} valuta went from $oldval to $valuta");
     //print("action for  $name ($mode) add line ${line.desc} and $valuta : $line");
     //ExtractLine sline = ExtractLine(line: line, sumup: valuta);
@@ -559,6 +936,7 @@ class Konto {
     if(children.isEmpty) return this;
     return children.entries.first.value.getSmallest();
   }
+
 }
 
 /// This class hold a list of lines, each caracterising an entry in an accounting journal.
@@ -740,7 +1118,7 @@ class JrlLine {
     return _formattedDate(formatter) +
         _formattedAccounts() +
         _formattedDesc() +" " +
-        _formattedValuta();
+        formattedValuta();
   }
 
   String _formattedDate(DateFormat formatter) {
@@ -755,9 +1133,10 @@ class JrlLine {
     return sprintf("%-49s", [desc]);
   }
 
-  String _formattedValuta() {
+  String formattedValuta( {int? value}) {
+    value = value ?? valuta;
     var f = NumberFormat.currency(symbol: cur2sym(cur));
-    double valAsd = valuta / 100;
+    double valAsd = value / 100;
     return sprintf("%12s", [f.format(valAsd)]);
   }
 
@@ -835,6 +1214,38 @@ class JrlLine {
   }
 
   bool isNotValid({bool debug = false}) => !valid(debug: debug);
+
+  /// Checks if the transaction's date is the current date.'
+  bool needsDate()
+  {
+    final now = DateTime.now();
+    return now.year == datum.year && now.month == datum.month && now.day == datum.day;
+    return false;
+  }
+
+  bool needsAccount({String accountType = "minus"})
+  {
+    assert(accountType == "minus" || accountType == "plus", "Invalid accountType specified");
+    String setKey = (accountType == "minus") ? "kmin" : "kplu";
+    // Check if there are account limits and if the account is pre-set
+    //print("checking if accounts[$accountType] need user input: \n   $kminus   $kplus");
+    if (limits != null && limits!.containsKey(setKey)) {
+      //print("found limits: ${this.limits![setKey]}");
+      var limits = this.limits![setKey]!;
+      if (limits["min"] != "-1") {
+        List<Konto> ktoList = kplus.plan.getRange(limits); ///either lto has access to the plan
+        // If the first account is already assigned, no need for user input
+        if (ktoList.length >1) return true;
+        return false;
+      }
+      else
+      print("min limit -1 what did that mean?");
+    }
+    //else print("no limits, but are the accounts valid?"); //TODO we need more range checks
+
+    // Return true if the account still needs user input
+    return false;
+  }
 }
 
 /// Represents one line in an extract journal.

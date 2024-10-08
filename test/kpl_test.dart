@@ -16,7 +16,7 @@ void main() {
     //print("in setup generated kpl : $book.kpl and book.jrl : $book.jrl");
   });
   group('Konto', () {
-    var kto = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
+    var kto = Konto(number : "1",name: "1001", desc: "test account", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
     test('Konto ', () {
       //kto.recursive = true;
       //print("kto : $kto");
@@ -43,7 +43,7 @@ void main() {
     });
     test('toString ', () {
       kto.set(name:"1001",valuta: 1000099);
-      expect(kto.toString(), equals("1001                                                        € 999.12   € 10,000.99\n"));
+      expect(kto.toString(), equals("1001  test account                                          € 999.12   € 10,000.99\n"));
       kto = Konto(number : "1",name: "1001", plan: book.kpl, valuta:1000099, cur:"EUR", budget:99912);
       //Konto sk =
       kto.get("10010");

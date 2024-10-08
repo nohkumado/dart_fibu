@@ -1,7 +1,7 @@
 # Dart Fi(nanz) Bu(chhaltung)
 
 Dart implementation for financial accounting, according to the principle of the double account processing 
-first described in 1445 by Luca Paciolo.
+first described by Luca Paciolo further [reading](doc/HISTORY.md)
 
 
 ## Getting Started

@@ -45,3 +45,15 @@ JRL
 date,ktominus,ktoplus,desc,cur,valuta
 OPS
 "tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"
+"AUCHAN","","1000-1003", "1999",  "Courses Auchan", "","#payement", ""
+"AUCHAN","","1999",      "2011",  "Vêtements achetés chez Auchan", "", "", ""
+"AUCHAN","","1999",      "3080",  "Couches bébé ", "", "#couches",""
+"AUCHAN","","1999",      "3080",  "Divers bébé (#objet)", "", "#divers",""
+"AUCHAN","","1999",      "3011",  "Bouffe achetée chez Auchan EUR (#payement - #montant - #couches - #divers)", "", "(#payement - #montant - #couches - #divers)",""
+"AUCHAN","","1999",      "3011",  "Test (#payement - #toto - #couches - #divers", "", "(#beuh - #argh )",""
+"VIR","","230-249","120","Virements reguliers Operation (#MONT * #somme)","EUR","",""
+"BANQUE","","180","140-150","Virements reguliers2","EUR","20","",""
+"VIR","","250","160","Operation de virement regulier3","EUR","03",""
+"BANQUE","","220-252","444","Virements reguliers4","EUR","40",""
+"VIR","","300","120-144","0Virements reguliers","EUR","",""
+"BANQUES","","250","140","Virements reguliers2","EUR","#pognon",""
