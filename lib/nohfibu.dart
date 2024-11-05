@@ -514,16 +514,13 @@ class KontoPlan {
     bool span = false;
     if(min[0] != max[0]) {
       span = true;
-      bool start = true;
-      for(String root in konten.keys)
-        {
+      for(String root in konten.keys) {
           // Convert strings to integers for numerical comparison
           int rootInt = int.parse(root);
           int minInt = int.parse(min[0]);
           int maxInt = int.parse(max[0]);
 
           if(rootInt < minInt) continue;
-          start = false;
           if(rootInt > maxInt) break;
           Konto parent = konten[root]??Konto(plan: this);
           parent.getRange(min.substring(1),max.substring(1),passthrough:result);
