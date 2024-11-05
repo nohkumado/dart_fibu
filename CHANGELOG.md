@@ -1,3 +1,7 @@
+# 0.0.4-alpha.
+
+  * added additional tests and updated all dependencies
+
 # 0.0.3-alpha.
 
   * addition of short operations to easy the input of new account operations by building a 

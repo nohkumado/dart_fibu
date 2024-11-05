@@ -27,7 +27,7 @@ dependencies:
   expressions: ^0.2.5+1
   posix: ^6.0.1
   git: ^2.3.0
+  path: ^1.9.1
 
-  path: any
 dev_dependencies:
    test: '>=1.15.0 <2.0.0'
