@@ -220,14 +220,14 @@ class Operation extends Object with IterableMixin<JrlLine>
   //}
 
   /// Helper method to extract variables from the `valuta` field.
-  void _extractVariablesFromValuta(JrlLine line, String valuta) {
-    RegExp rex = RegExp(r"#(\w+)");
-    rex.allMatches(valuta).forEach((match) {
-      vars[match.group(1)!] = match.group(1);
-      line.valname = match.group(1);
-    });
-    line.valuta = -1; // Force invalid value until evaluation
-  }
+  //void _extractVariablesFromValuta(JrlLine line, String valuta) {
+  //  RegExp rex = RegExp(r"#(\w+)");
+  //  rex.allMatches(valuta).forEach((match) {
+  //    vars[match.group(1)!] = match.group(1);
+  //    line.valname = match.group(1);
+  //  });
+  //  line.valuta = -1; // Force invalid value until evaluation
+  //}
   ///check if it can be evaluated with expressions: ^0.2.3:
   ///Parses expressions within the description or valuta fields.
   /// These expressions are stored in `expressions` and evaluated later.
