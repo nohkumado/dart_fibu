@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:nohfibu/nohfibu.dart';
 import 'package:test/test.dart';
 

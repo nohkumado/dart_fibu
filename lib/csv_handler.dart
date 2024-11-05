@@ -142,7 +142,7 @@ class CsvHandler {
                                 //print("added kplline [$res]");
             Konto check =book.kpl.get("${actLine[name]}")??Konto();
             if(!check.equals(res) || check.isNotValid()) {
-              print("ERROR CSVLOAD '${check?.name}' does not match '${actLine[name]}' whilst parsing: ${res.number},${res.name}, ${res.desc}, ${res.valuta} vs $check");
+              print("ERROR CSVLOAD '${check.name}' does not match '${actLine[name]}' whilst parsing: ${res.number},${res.name}, ${res.desc}, ${res.valuta} vs $check");
               check = book.kpl.get("${actLine[name]}", debug: true)??Konto();
               print("NO  ${actLine[name]} in ${book.kpl.toString(astree: true,recursive: true)}");
             }
