@@ -1217,7 +1217,6 @@ class JrlLine {
   {
     final now = DateTime.now();
     return now.year == datum.year && now.month == datum.month && now.day == datum.day;
-    return false;
   }
 
   bool needsAccount({String accountType = "minus"})
