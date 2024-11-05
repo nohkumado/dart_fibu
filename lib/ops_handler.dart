@@ -206,18 +206,18 @@ class Operation extends Object with IterableMixin<JrlLine>
     }
   }
   /// Helper method to extract variables from the description.
-  void _extractVariablesFromDescription(JrlLine line, String desc) {
-    RegExp rex = RegExp(r"#(\w+)");
-    final matches = rex.allMatches(desc);
-    final extractedVariables = matches.map((match) => match.group(1)).toList();
+  //void _extractVariablesFromDescription(JrlLine line, String desc) {
+  //  RegExp rex = RegExp(r"#(\w+)");
+  //  final matches = rex.allMatches(desc);
+  //  final extractedVariables = matches.map((match) => match.group(1)).toList();
 
-    // Store extracted variables in line.vars and the operation's `vars`.
-    for (final variable in extractedVariables) {
-      if (!vars.containsKey(variable)) {
-        vars[variable!] = variable;
-      }
-    }
-  }
+  //  // Store extracted variables in line.vars and the operation's `vars`.
+  //  for (final variable in extractedVariables) {
+  //    if (!vars.containsKey(variable)) {
+  //      vars[variable!] = variable;
+  //    }
+  //  }
+  //}
 
   /// Helper method to extract variables from the `valuta` field.
   void _extractVariablesFromValuta(JrlLine line, String valuta) {
