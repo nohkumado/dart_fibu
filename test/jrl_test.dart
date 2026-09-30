@@ -425,10 +425,12 @@ test('Journal Entries and Clear', () {
       expect(emptyLine.desc, equals('none'));
 
       // Test journal with this empty line
-      String result = 'Journal from 2021-09-01 to 2023-10-04\n' +
+      // the caption is the entries' range at the last execute(); the
+      // "no value" amount is wider than its column and pushes the line out
+      String result = 'Journal from 2021-09-01 to 2021-09-03\n' +
           '01-09-2021 1001 2002 test line 1                                            € 50.00\n' +
           '02-09-2021 2002 1001 test line 2                                           € 100.00\n' +
-          '05-09-2024    0    0 none                                                    ${emptyLine.formattedValuta(value:JrlLine.maxValue)}\n' +
+          '05-09-2024    0    0 none                                              ${emptyLine.formattedValuta(value:JrlLine.maxValue)}\n' +
                       'Journal End';
       expect(book.jrl.toString(), equals(result));
 

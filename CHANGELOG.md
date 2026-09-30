@@ -1,3 +1,13 @@
+# 0.1.0
+
+  * Dependencies at their latest majors: intl 0.20, csv 8 — `Csv().encode` /
+    `Csv(dynamicTyping: true).decode` replace the removed converters (line
+    ends found by csv itself, numbers parsed as before).
+  * Journal caption: the range of the entries themselves; the end date no
+    longer defaults to "a year ago" when every entry is older.
+  * `FibuSettings.copyWith`: a new settings object per change, so the app's
+    provider notices it.
+
 # 0.0.4-alpha.
 
   * added additional tests and updated all dependencies

@@ -994,16 +994,19 @@ class Journal {
   /// execute the accounting process, creating the subjournals, the account extracts for
   ///  each account update the valutas of each account.
   Journal execute() {
-    DateTime minTime = DateTime.now();
-    DateTime maxTime = DateTime.now().subtract(const Duration(days: 365));
+    // the range of the entries themselves (today when there are none)
+    DateTime? minTime;
+    DateTime? maxTime;
     journal.forEach((line) {
       //print("executing exe for $line");
-      if (line.datum.compareTo(minTime) < 0) minTime = line.datum;
-      if (line.datum.compareTo(maxTime) > 0) maxTime = line.datum;
+      if (minTime == null || line.datum.isBefore(minTime!)) minTime = line.datum;
+      if (maxTime == null || line.datum.isAfter(maxTime!)) maxTime = line.datum;
       line.execute();
     });
+    minTime ??= DateTime.now();
+    maxTime ??= minTime;
   final formatter = DateFormat('yyyy-MM-dd');
-    caption = "Journal from ${formatter.format(minTime)} to ${formatter.format(maxTime)}";
+    caption = "Journal from ${formatter.format(minTime!)} to ${formatter.format(maxTime!)}";
     return this;
   }
 }

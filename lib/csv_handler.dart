@@ -25,7 +25,7 @@ class CsvHandler {
     fibuAsList.add(["tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"]);
     book.ops.forEach((key,val)=>(val as Operation).asList(fibuAsList));
 
-    final res = const ListToCsvConverter().convert(fibuAsList);
+    final res = Csv(autoDetect: false).encode(fibuAsList);
 
     //print("retrieved list\n$fibuAsList\n");
     //print("retrieved csv\n$res\n");
@@ -72,9 +72,9 @@ class CsvHandler {
       //book.name = settings["base"].split("/").last;
       //print("file exists\n");
       //String rawTxt = srcFile.readAsStringSync();
-      String eol = detectEOL(rawTxt);
-
-      List<List<dynamic>> rowsAsListOfValues = CsvToListConverter(eol: eol).convert(rawTxt);
+      // csv 8 finds the line ends itself; numbers parsed as before
+      List<List<dynamic>> rowsAsListOfValues =
+          Csv(autoDetect: false, dynamicTyping: true).decode(rawTxt);
       //print("extracted  $rowsAsListOfValues");
       String mode = "none";
       List header = [];
