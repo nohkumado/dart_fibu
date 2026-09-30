@@ -11,7 +11,8 @@ class CsvHandler {
   bool loading = false;
 
   /// save a book.
-  void save({Book? book, KontoPlan? kpl, Journal? jrl, FibuSettings? conf}) {
+  /// Writes the book; the Future completes once it is on disk.
+  Future<File> save({Book? book, KontoPlan? kpl, Journal? jrl, FibuSettings? conf}) {
     if (book == null) book = Book();
     if (kpl != null) book.kpl = kpl;
     if (jrl != null) book.jrl = jrl;
@@ -36,8 +37,9 @@ class CsvHandler {
         ? settings["output"] + ".csv"
         : settings["base"] + ".csv";
     //print("created fname = $fname");
-    File(fname).writeAsString(res).then((file) {
+    return File(fname).writeAsString(res).then((file) {
       print("write seems successful, please check $fname");
+      return file;
     });
   }
 
@@ -133,11 +135,11 @@ class CsvHandler {
                   Konto(
                     name: ktoname,
                     prefix: (ktoname.length>1)?ktoname.substring(0,ktoname.length-2):"",
-                    desc: actLine[desc],
+                    desc: _text(actLine[desc]),
                     plan: book.kpl,
-                    valuta: actLine[valuta],
-                    cur: actLine[cur],
-                    budget: actLine[budget]),
+                    valuta: _number(actLine[valuta]),
+                    cur: _text(actLine[cur]),
+                    budget: _number(actLine[budget])),
                   debug: false);//("${actLine[name]}" =="4400")?true:false
                                 //print("added kplline [$res]");
             Konto check =book.kpl.get("${actLine[name]}")??Konto();
@@ -149,7 +151,7 @@ class CsvHandler {
 
           } else if (mode == "jrl") {
             //print("treating[$mode] ${actLine}");
-            DateTime point = DateTime.parse(actLine[datum]);
+            DateTime point = DateTime.parse(_text(actLine[datum]));
             Konto? minus = book.kpl.get("${actLine[kmin]}");
             Konto? plus = book.kpl.get("${actLine[kplu]}");
             if("${minus?.name}" != "${actLine[kmin]}" ) {
@@ -159,44 +161,36 @@ class CsvHandler {
             }
             if("${plus?.name}" != "${actLine[kplu]}") {
               print("csvhandler[jrl.plus] error ${plus?.name} does not match ${actLine[kplu]} check manually for $actLine");
-              book.kpl.put("{$actLine[kmin]}", Konto(name: "{$actLine[kmin]}", desc: "unknown check manually  for $actLine"));
+              book.kpl.put("${actLine[kplu]}", Konto(name: "${actLine[kplu]}", desc: "unknown check manually  for $actLine"));
               //plus = book.kpl.get("${actLine[kplu]}", debug: true);
             }
             //print("treating[$mode] ${actLine}\n search ${actLine[kmin]} and ${actLine[kplu]} ${minus?.name},${minus?.number} and ${plus?.name},${plus?.number}");
             //num vval = num.parse(actLine[valuta]);
-            num vval = 0;
-            try {
-              vval = actLine[valuta];
-            }
-            catch (e) {
-              print("cvshandler: error!!!  ${actLine[valuta]} not a num in ${actLine} with $e");
-            }
+            num vval = _number(actLine[valuta]);
             JrlLine res =
             book.jrl.add(JrlLine(
                 datum: point,
                 kmin: minus,
                 kplu: plus,
-                desc: actLine[desc],
-                cur: actLine[cur],
+                desc: _text(actLine[desc]),
+                cur: _text(actLine[cur]),
                 valuta: vval));
             //print("added [$res]");
             if(res.isNotValid()) print("CSVHANDLER: error invalid jrlLine: $actLine vs $res");
           } else if (mode == "ops") {
-            DateTime point = (actLine[1]!= null && actLine[1].isNotEmpty)?DateTime.parse(actLine[1]):DateTime.now();
-            //print("parsing  ops $actLine");
-            //try
+            // tag, date, minus account, plus account, description, currency,
+            // amount, mode — the order Operation.asList writes
+            final String tag = Operation.clean(actLine[0]);
+            final String date = Operation.clean(actLine.length > 1 ? actLine[1] : "");
+            String col(int i) => actLine.length > i ? Operation.clean(actLine[i]) : "";
             {
-              //"tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"
-              if(book.ops[actLine[0]] == null )
+              if(book.ops[tag] == null )
               {
-                //print("adding op ${actLine[0]}  to ${book.name} with $actLine");
-                book.ops[actLine[0]] = Operation(book,name: actLine[0].trim(), date: point,cplus: actLine[3],cminus: actLine[2],desc: actLine[4].trim(),cur: actLine[5].trim(), valuta:  actLine[6], mod:actLine[7].trim());
-                //print("created  op  ${actLine[0]} in book ${book.ops[actLine[0]].book.name}");
+                book.ops[tag] = Operation(book, name: tag);
               }
-              else
               {
-                Operation anOp = book.ops[actLine[0]] as Operation;
-                anOp.add(date: point,cplus: actLine[2],cminus: actLine[3],desc: actLine[4],cur: actLine[5], valuta:  actLine[6], mod:actLine[7]);
+                Operation anOp = book.ops[tag] as Operation;
+                anOp.add(date: date, cminus: col(2), cplus: col(3), desc: col(4), cur: col(5), valuta: col(6), mod: col(7));
                 //print("modified   ${book.ops[actLine[0]]}");
               }
             }
@@ -230,4 +224,14 @@ class CsvHandler {
   }
 
 
+
+  /// A text field (csv parses numbers even when quoted).
+  static String _text(dynamic value) => Operation.clean(value);
+
+  /// A numeric field: numbers as they are, text parsed (0 when empty).
+  static num _number(dynamic value) {
+    if (value is num) return value;
+    final text = Operation.clean(value);
+    return num.tryParse(text) ?? 0;
+  }
 }

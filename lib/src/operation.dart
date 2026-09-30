@@ -1,358 +1,329 @@
 import 'dart:collection';
+
 import 'package:expressions/expressions.dart';
 import 'package:intl/intl.dart';
 
 import '../nohfibu.dart';
 
-////// An Operation class that stores predefined or commonly used account movements.
+/// A stored operation ("fast op"): named template lines for a movement that
+/// comes back often, e.g. a shopping trip split over several accounts.
 ///
-/// The class provides a batch operation interface to create multiple journal entries
-/// (represented as `JrlLine` objects) that can later be executed in bulk.
+/// Each template line has a minus and a plus account — an account number, a
+/// range (`2100-2200`: chosen when booking) or empty —, a description that
+/// may hold `#variables`, and an amount that is a number, a `#variable` or an
+/// expression over variables (`(#payement - #montant)`).
+///
+/// Booking one: [questions] says what is still needed (date, accounts to
+/// choose, amounts, texts), [fill] turns the answers into journal lines. The
+/// older [prepare] / `op[i]` / [eval] interface stays for existing callers.
 class Operation extends Object with IterableMixin<JrlLine> {
+  /// The book whose account plan the accounts come from.
   late Book book;
 
-  /// The book to which the operation is tied.
-  List<DateTime> datum = [];
-
-  /// List of dates associated with the operation entries.
+  /// Name (tag) of the operation, e.g. FUJI.
   String name = "tag";
 
-  /// Name of the operation (e.g., a tag to identify the operation).
-  List<String> cplus = [],
-      cminus = [],
-      desc = [],
-      cur = [],
-      mod = [],
-      valuta = []; // Lists that store different attributes of the operation.
+  /// The template lines, column by column (as in the book's OPS section).
+  /// Template dates; null when the template has none (today when booked).
+  List<DateTime?> datum = [];
+  List<String> cplus = [], cminus = [], desc = [], cur = [], mod = [], valuta = [];
+
+  /// Journal lines built by [prepare], one per template line.
   List<JrlLine> preparedLines = [];
 
-  /// List of prepared journal lines that can be executed.
+  /// Variables of the templates (name → value; the name until given one).
   Map<String, dynamic> vars = {};
 
-  /// Map of variables used in the operation for templating and expressions.
+  /// Expressions of the templates (source → parsed expression).
   Map<String, dynamic> expressions = {};
 
-  /// Map of expressions tied to the operation for dynamic evaluation.
-  List<JrlLine> _backupLines = []; //for the undo function
-  /// Constructor to initialize the operation.
-  ///
-  /// Takes a `Book` and optional parameters like name, date, and other attributes.
+  /// What [prepare] could not resolve (unknown accounts, bad expressions).
+  List<String> problems = [];
+
+  List<JrlLine> _backupLines = [];
+
+  static final _variable = RegExp(r"#(\w+)");
+  static final _range = RegExp(r"^(\d+)\s*-\s*(\d+)$");
+
+  /// An operation of [book]; with [cplus] given, its first template line.
   Operation(book, {name, date, cplus, cminus, desc, cur, valuta, mod}) {
-    this.name = (name != null && name.isNotEmpty) ? name : "unknowntag";
+    this.name = (name != null && "$name".trim().isNotEmpty) ? clean(name) : "unknowntag";
     this.book = (book != null) ? book : Book();
-    //assume we got a oneliner!
-    if ((cplus != null))
-      add(
-          date: date,
-          cplus: cplus,
-          cminus: cminus,
-          desc: desc,
-          cur: cur,
-          valuta: valuta,
-          mod: mod);
+    if (cplus != null) {
+      add(date: date, cplus: cplus, cminus: cminus, desc: desc, cur: cur, valuta: valuta, mod: mod);
+    }
   }
 
-  ///letting opshandler look like an array,Returns the length of prepared journal lines.
-  get length => preparedLines.length;
+  /// A field as the book file gave it: trimmed, without surrounding quotes
+  /// (a space after the comma leaves them in: `"1999",  "3500"`).
+  static String clean(dynamic value) {
+    var s = (value == null) ? "" : "$value".trim();
+    while (s.length >= 2 && s.startsWith('"') && s.endsWith('"')) {
+      s = s.substring(1, s.length - 1).trim();
+    }
+    return s;
+  }
 
-  /// Getter to access individual `JrlLine` entries in `preparedLines` by index.
-  /// Replaces template variables in descriptions and evaluates expressions if any.
-  operator [](int i) {
-    JrlLine line = preparedLines[i]; // get
-    //print("######     in line getter $line with ${line.valexp}");
-    vars.forEach((key, value) {
-      print("replacing : #$key with $value");
-      line.desc = line.desc.replaceAll("#$key", "$value");
-    });
-    var evaled = eval(exp: line.valexp);
-    if (evaled is int && evaled >= 0) line.valuta = evaled;
+  /// Number of template lines prepared.
+  @override
+  int get length => preparedLines.length;
+
+  /// Prepared line [i], its description and amount filled from [vars].
+  JrlLine operator [](int i) {
+    final line = preparedLines[i];
+    line.desc = _substitute(desc[i]);
+    if (line.valexp != null) {
+      final evaled = eval(exp: line.valexp);
+      if (evaled is num && evaled >= 0) line.valuta = evaled.toInt();
+    }
     return line;
   }
 
-  /// Setter to access individual `JrlLine` entries in `preparedLines` by index.
-  operator []=(int i, JrlLine value) => preparedLines[i] = value; // set
-  /// creates an iterable object so we can do a forEach on it
+  operator []=(int i, JrlLine value) => preparedLines[i] = value;
+
   @override
   Iterator<JrlLine> get iterator => preparedLines.iterator;
 
-  /// batch setterr
-  /// Adds a batch of attributes to the operation (e.g., date, account, description, etc.).
-  ///
-  /// This allows adding multiple journal lines in one go.
+  /// Adds a template line.
   Operation add({date, cplus, cminus, desc, cur, valuta, mod}) {
-    if (date != null) {
-      if (date is String)
-        this.datum.add(DateTime.parse(date));
-      else if (date is DateTime)
-        this.datum.add(date);
-      else
-        this.datum.add(DateTime.now());
-    }
-    this.cplus.add((cplus != null) ? "$cplus".trim() : "none");
-    this.cminus.add((cminus != null) ? "$cminus".trim() : "none");
-    this.desc.add((desc != null) ? desc.trim() : "none");
-    this.cur.add((cur != null) ? cur : "EUR");
-    this.valuta.add((valuta != null) ? valuta : "");
-    this.mod.add((mod != null) ? mod : "");
-    //print("incoming : $date,$cplus,$cminus,$desc,$cur,$valuta. $mod gives "+toString());
+    datum.add(date is DateTime ? date : FibuDate.parse(clean(date)));
+    final plus = clean(cplus), minus = clean(cminus);
+    this.cplus.add(plus.isEmpty && cplus == null ? "none" : plus);
+    this.cminus.add(minus.isEmpty && cminus == null ? "none" : minus);
+    final d = clean(desc);
+    this.desc.add(d.isEmpty && desc == null ? "none" : d);
+    final c = clean(cur);
+    this.cur.add(c.isEmpty ? (cur == null ? "EUR" : "") : c);
+    this.valuta.add(clean(valuta));
+    this.mod.add(clean(mod));
     return this;
   }
 
-  /// Returns a string representation of the operation.
-  /// Formats the entries in a human-readable format, listing each attribute.
+  /// One line per template line: name,date,+:plus,-:minus,desc,cur,amount, mode
   @override
   String toString() {
-    String result = "";
-    final DateFormat formatter = DateFormat('dd-MM-yyyy');
+    final formatter = DateFormat('dd-MM-yyyy');
+    final result = StringBuffer();
     for (int i = 0; i < cplus.length; i++) {
-      final String formatted = formatter.format(datum[i]);
-      //var f = NumberFormat.currency(symbol: cur2sym(cur[i]));
-      // "$formatted ${kminus.printname()} ${kplus.printname()} ${sprintf("%-49s", [ desc ])} ${sprintf("%12s", [f.format(valAsd)])}";
-      result +=
-          "${name},${formatted},+:${cplus[i]},-:${cminus[i]},${desc[i]},${cur[i]},${valuta[i]}, ${mod[i]}\n";
+      final d = datum[i];
+      result.write("$name,${d == null ? '' : formatter.format(d)},+:${cplus[i]},-:${cminus[i]},"
+          "${desc[i]},${cur[i]},${valuta[i]}, ${mod[i]}\n");
     }
+    return result.toString();
+  }
+
+  /// The template lines as rows of the book's OPS section:
+  /// tag, date, minus, plus, description, currency, amount, mode — the
+  /// order [CsvHandler] reads them in.
+  void asList(List<List> data) {
+    final formatter = DateFormat('yyyy-MM-dd');
+    for (int i = 0; i < cplus.length; i++) {
+      final d = datum[i];
+      data.add([name, d == null ? "" : formatter.format(d), cminus[i], cplus[i], desc[i], cur[i], valuta[i], mod[i]]);
+    }
+  }
+
+  /// Builds one journal line per template line: accounts looked up (ranges
+  /// become constraints), variables and expressions collected. Nothing is
+  /// dropped: what cannot be resolved lands in [problems] and is asked.
+  void prepare() {
+    _backupLines = List.from(preparedLines);
+    preparedLines = [];
+    vars = {};
+    expressions = {};
+    problems = [];
+    for (int i = 0; i < cplus.length; i++) {
+      final line = JrlLine(datum: datum[i] ?? DateTime.now(), cur: cur[i].isEmpty ? "EUR" : cur[i]);
+      _side(line, cminus[i], minus: true);
+      _side(line, cplus[i], minus: false);
+      for (final v in _variablesIn(desc[i])) {
+        vars.putIfAbsent(v, () => v);
+      }
+      line.desc = desc[i];
+      final amount = valuta[i];
+      if (amount.contains("(")) {
+        _parseExpression(line, amount);
+        line.valuta = -1;
+      } else if (amount.contains("#")) {
+        final names = _variablesIn(amount);
+        for (final v in names) {
+          vars.putIfAbsent(v, () => v);
+        }
+        line.valname = names.isEmpty ? null : names.first;
+        line.valuta = -1;
+      } else {
+        line.valuta = Amount.parseCents(amount) ?? -1;
+      }
+      if (mod[i].isNotEmpty) line.addConstraint("mode", mode: mod[i]);
+      preparedLines.add(line);
+    }
+  }
+
+  /// What is needed to book this operation; call [prepare] first.
+  List<OpQuestion> questions() {
+    final out = <OpQuestion>[
+      OpQuestion("date", OpQuestionKind.date, "Date", defaultValue: FibuDate.show(DateTime.now())),
+    ];
+    final amountVars = <String>{};
+    for (int i = 0; i < preparedLines.length; i++) {
+      final line = preparedLines[i];
+      for (final minus in [true, false]) {
+        final spec = minus ? cminus[i] : cplus[i];
+        final konto = minus ? line.kminus : line.kplus;
+        if (spec.isEmpty || spec == "none" || konto.valid()) continue;
+        final choices = _choices(spec);
+        out.add(OpQuestion("line$i.${minus ? 'minus' : 'plus'}", OpQuestionKind.account,
+            "${desc[i]}: account ${minus ? '-' : '+'} ($spec)",
+            defaultValue: choices.isEmpty ? "" : choices.first.name, choices: choices));
+      }
+      if (line.valname != null) amountVars.add(line.valname!);
+      if (line.valexp != null) amountVars.addAll(_variablesIn(valuta[i]));
+    }
+    // variables in the order they appear; amounts first where they are used
+    for (final v in vars.keys) {
+      out.add(amountVars.contains(v)
+          ? OpQuestion(v, OpQuestionKind.amount, v, defaultValue: "0")
+          : OpQuestion(v, OpQuestionKind.text, v));
+    }
+    for (int i = 0; i < preparedLines.length; i++) {
+      final line = preparedLines[i];
+      if (line.valname == null && line.valexp == null && line.valuta < 0) {
+        out.add(OpQuestion("line$i.amount", OpQuestionKind.amount, "${desc[i]}: amount", defaultValue: "0"));
+      }
+    }
+    return out;
+  }
+
+  /// The journal lines booked with [answers] (keys of [questions]); lines
+  /// whose amount comes out as zero are left out. Throws [FormatException]
+  /// naming every answer that is missing or wrong.
+  List<JrlLine> fill(Map<String, String> answers) {
+    final errors = <String>[];
+    final date = FibuDate.parse(answers["date"] ?? "") ?? DateTime.now();
+    final values = <String, dynamic>{};
+    final questionsByKey = {for (final q in questions()) q.key: q};
+    for (final q in questionsByKey.values) {
+      if (q.kind == OpQuestionKind.amount && !q.key.startsWith("line")) {
+        final cents = Amount.parseCents(answers[q.key] ?? q.defaultValue);
+        if (cents == null) errors.add("${q.key}: '${answers[q.key]}' is no amount");
+        values[q.key] = cents ?? 0;
+      } else if (q.kind == OpQuestionKind.text) {
+        values[q.key] = answers[q.key] ?? "";
+      }
+    }
+    final result = <JrlLine>[];
+    for (int i = 0; i < preparedLines.length; i++) {
+      final template = preparedLines[i];
+      final line = JrlLine(datum: date, cur: template.cur, kmin: template.kminus, kplu: template.kplus);
+      for (final minus in [true, false]) {
+        final key = "line$i.${minus ? 'minus' : 'plus'}";
+        if (!questionsByKey.containsKey(key)) continue;
+        final chosen = book.kpl.get(clean(answers[key] ?? questionsByKey[key]!.defaultValue));
+        final allowed = questionsByKey[key]!.choices;
+        if (chosen == null || (allowed.isNotEmpty && !allowed.any((k) => k.name == chosen.name))) {
+          errors.add("$key: '${answers[key]}' is not one of ${allowed.map((k) => k.name).join(', ')}");
+        } else if (minus) {
+          line.kminus = chosen;
+        } else {
+          line.kplus = chosen;
+        }
+      }
+      line.desc = desc[i].replaceAllMapped(_variable, (m) {
+        final v = values[m.group(1)];
+        if (v is int) return NumberFormat("#,##0.00", "fr").format(v / 100);
+        return (v == null || "$v".isEmpty) ? m.group(0)! : "$v";
+      });
+      if (template.valexp != null) {
+        try {
+          final r = const ExpressionEvaluator().eval(template.valexp!, values);
+          line.valuta = (r as num).toInt();
+        } catch (e) {
+          errors.add("${desc[i]}: ${valuta[i]} cannot be computed ($e)");
+          line.valuta = 0;
+        }
+      } else if (template.valname != null) {
+        line.valuta = values[template.valname] as int? ?? 0;
+      } else if (template.valuta >= 0) {
+        line.valuta = template.valuta;
+      } else {
+        final cents = Amount.parseCents(answers["line$i.amount"] ?? "0");
+        if (cents == null) errors.add("line$i.amount: '${answers["line$i.amount"]}' is no amount");
+        line.valuta = cents ?? 0;
+      }
+      if (line.valuta != 0) result.add(line);
+    }
+    if (errors.isNotEmpty) throw FormatException(errors.join("\n"));
     return result;
   }
 
-  /// return a list abstraction model of this object .
-  /// Converts the operation into a list format, suitable for CSV or other structured outputs.
-  void asList(List<List> data) {
-    final DateFormat formatter = DateFormat('yyyy-MM-dd');
-    for (int i = 0; i < cplus.length; i++) {
-      final String date = formatter.format(datum[i]);
-      data.add([
-        name,
-        date,
-        cplus[i],
-        cminus[i],
-        "${desc[i]}",
-        cur[i],
-        valuta[i],
-        mod[i]
-      ]);
-    }
-  }
-
-  ///Prepares the operation by converting attributes into `JrlLine` objects.
-  /// This method sets up constraints, evaluates expressions, and fills in variables where necessary.
-  void prepare() {
-    _backupLines = List.from(preparedLines); // Store the current state
-    vars = {}; //reset the variables
-    //print("preparing $name, +:$cplus, -:$cminus, dsc: $desc, cur: $cur, val: $valuta");
-    expressions = {};
-    //the data is stored in the different array, they should all have the same length so we take anyones length to iterate over all the jrl lines
-    for (int i = 0; i < cplus.length; i++) {
-      JrlLine line = JrlLine(datum: datum[i]);
-      if (cminus[i].contains("-")) {
-        var splitted = cminus[i].split("-");
-        //print("- range!! ${cminus[i]} $splitted");
-        line.addConstraint("kmin", boundaries: splitted);
-      } else if (cplus[i].isEmpty) {
-      } //do nothing
-      else {
-        Konto? minus = book.kpl.get(cminus[i]);
-        if (minus != null)
-          line.kminus = minus;
-        else {
-          print("Prepare PROBLEM c- (${cminus[i]}) is null: ${book.kpl}");
-        }
-
-        print("Op trying to analyse cplus:  ${cplus[i]}");
-        if (cplus[i].contains("-")) {
-          var splitted = cplus[i].split("-");
-          print("+ range!! ${cplus[i]} $splitted");
-          line.addConstraint("kplu", boundaries: splitted);
-        } else if (cplus[i].isEmpty) {
-        } //do nothing
-        else {
-          Konto? plus = book.kpl.get(cplus[i]);
-          if (plus != null)
-            line.kplus = plus;
-          else {
-            print("Prepare PROBLEM c+ (${cplus[i]})is null: ${book.kpl}");
-          }
-
-          // Check and warn if the account is erroneous.
-          if (line.kminus.number != "-1" && line.kminus.desc.isEmpty) {
-            print(
-                "Warning!! minus(${cminus[i]},${line.kminus.name},${line.kminus.number}) account probably erroneous");
-          }
-          if (line.kplus.number != "-1" && line.kplus.desc.isEmpty)
-            print(
-                "Warning!! plus(${cplus[i]},${line.kplus.name},${line.kminus.number}) account probably erroneous");
-          //print("set c+ to ${line.kplus} c- to ${line.kminus}");
-          if (desc[i].contains("#")) {
-            //_extractVariablesFromDescription(line, desc[i]); //TODO check if really apllicable
-
-            //check if it can be evaluated with expressions: ^0.2.3:
-            //we need to extract the variables
-            RegExp rex = RegExp(r"#(\w+)");
-            final matches = rex.allMatches(desc[i]);
-            // Print all groups found
-            final extractedVariables =
-                matches.map((match) => match.group(1)).toList();
-            // Update line.vars dictionary (optional)
-            line.vars["desc"] ??= {}; // Initialize if needed
-            for (final variable in extractedVariables) {
-              if (!vars.containsKey(variable)) {
-                vars[variable!] = variable; // Add only if not already present
-              }
-            }
-          }
-
-          RegExp expPresent = RegExp(r'[()]+');
-          //print("checking for presence of $expPresent in ${desc[i]}");
-          if (desc[i].contains(expPresent))
-            parseExpression(line, desc[i], expPresent);
-          line.desc = desc[i];
-          //print("ops preparer valuta '${valuta[i]}'");
-          //valuta is either a variable name or an expression can't be both....
-          if (valuta[i].contains(expPresent))
-            parseExpression(line, valuta[i], expPresent);
-          else if (valuta[i].contains("#")) {
-            //we need to extract the variables
-            RegExp rex = RegExp(r"#(\w+)");
-            //print("matching ${rex.allMatches(valuta[i]).length}");
-            rex.allMatches(valuta[i]).forEach((match) {
-              vars[match.group(1)!] = match.group(1);
-              line.valname = match.group(1);
-            });
-            line.valuta = -1; //force invalid value
-            //_extractVariablesFromValuta(line, valuta[i]);
-          } else if (valuta[i].isNotEmpty) line.setValuta(valuta[i]);
-          if (mod[i].isNotEmpty) line.addConstraint("mode", mode: mod[i]);
-
-          //print("added $line");
-          preparedLines.add(line);
-        }
-      }
-      //data.add( [name, date, cplus[i], cminus[i], "${desc[i]}", cur[i], valuta[i], mod[i]]);
-    }
-  }
-
-  /// Helper method to extract variables from the description.
-  //void _extractVariablesFromDescription(JrlLine line, String desc) {
-  //  RegExp rex = RegExp(r"#(\w+)");
-  //  final matches = rex.allMatches(desc);
-  //  final extractedVariables = matches.map((match) => match.group(1)).toList();
-
-  //  // Store extracted variables in line.vars and the operation's `vars`.
-  //  for (final variable in extractedVariables) {
-  //    if (!vars.containsKey(variable)) {
-  //      vars[variable!] = variable;
-  //    }
-  //  }
-  //}
-
-  /// Helper method to extract variables from the `valuta` field.
-  //void _extractVariablesFromValuta(JrlLine line, String valuta) {
-  //  RegExp rex = RegExp(r"#(\w+)");
-  //  rex.allMatches(valuta).forEach((match) {
-  //    vars[match.group(1)!] = match.group(1);
-  //    line.valname = match.group(1);
-  //  });
-  //  line.valuta = -1; // Force invalid value until evaluation
-  //}
-  ///check if it can be evaluated with expressions: ^0.2.3:
-  ///Parses expressions within the description or valuta fields.
-  /// These expressions are stored in `expressions` and evaluated later.
-  void parseExpression(JrlLine line, String source, RegExp expPresent) {
-    //we need to extract the variables
-    RegExp rex = RegExp(r"(\(.*\))");
-    rex.allMatches(source).forEach((match) {
-      String testExp = match.group(1).toString();
-      testExp = testExp.replaceAll("#", "");
-      try {
-        Expression expression = Expression.parse(testExp);
-        expressions[match.group(1)!] = expression;
-        //print("adding expression ${match.group(1)} with $expression");
-        //line.valexp =expression ?? new Expression();//force invalid value
-        line.valexp = expression; //force invalid value
-      } catch (e) {
-        print("error parsing expression '$testExp'");
-      }
-    });
-  }
-
-  /// Evaluates an expression using the current variables.
-  /// If `exp` is provided, it evaluates that specific expression, otherwise it uses the `key` to look up an expression.d to extract variables from the `valuta` field.
+  /// Evaluates [exp], or the expression stored under [key], with [vars];
+  /// -1 when there is none or it cannot be computed.
   dynamic eval({String key = "", Expression? exp}) {
-    late Expression torun;
-    if (exp != null) {
-      torun = exp;
-    } else if (expressions.containsKey(key)) {
-      torun = expressions[key];
-    } else {
-      //print("neither $key nor $exp bailing");
-      return (-1);
+    final Expression? torun = exp ?? (expressions[key] is Expression ? expressions[key] : null);
+    if (torun == null) return -1;
+    try {
+      return const ExpressionEvaluator().eval(torun, vars);
+    } catch (_) {
+      return -1;
     }
-
-    final evaluator = const ExpressionEvaluator();
-    var r = evaluator.eval(torun, vars);
-    print("evaled result = '$r'");
-    return (r);
   }
 
-  /// Returns the list of `JrlLine` entries that have a valid `valuta` value.
-  List<JrlLine> result() {
-    List<JrlLine> res = [];
-    preparedLines.forEach((line) {
-      if (line.valuta > 0) res.add(line);
-    });
-    return res;
-  }
+  /// The prepared lines with an amount.
+  List<JrlLine> result() => preparedLines.where((line) => line.valuta > 0).toList();
 
-  bool validate() {
-    bool isValid = true;
+  /// True when every prepared line has both accounts and an amount.
+  bool validate() => preparedLines.every((l) => l.kminus.valid() && l.kplus.valid() && l.valuta >= 0);
 
-    for (JrlLine entry in preparedLines) {
-      if (!entry.kminus.valid() || !entry.kplus.valid()) {
-        print("Error: Account information missing for operation ${entry.desc}");
-        isValid = false;
-      }
-      if (entry.valuta < 0) {
-        print("Error: Valuta information missing for operation ${entry.desc}");
-        isValid = false;
-      }
-    }
-
-    return isValid;
-  }
-
+  /// Back to the lines before the last [prepare].
   void undo() {
-    preparedLines = List.from(_backupLines); // Restore the previous state
+    preparedLines = List.from(_backupLines);
   }
 
-  void parseExpression2(JrlLine line, String source) {
-    RegExp varExp = RegExp(r"#(\w+)"); // Matches variables
-    RegExp expressionExp =
-        RegExp(r"\(([^)]+)\)"); // Matches expressions inside parentheses
-    Map<String, dynamic> locvars = {};
+  /// Sets one side of [line] from [spec]: a range becomes a constraint, an
+  /// account number the account; an unknown one is noted in [problems].
+  void _side(JrlLine line, String spec, {required bool minus}) {
+    if (spec.isEmpty || spec == "none") return;
+    final range = _range.firstMatch(spec);
+    if (range != null) {
+      line.addConstraint(minus ? "kmin" : "kplu", boundaries: [range.group(1)!, range.group(2)!]);
+      return;
+    }
+    final konto = book.kpl.get(spec);
+    if (konto == null || !konto.valid()) {
+      problems.add("$name: account $spec unknown");
+    } else if (minus) {
+      line.kminus = konto;
+    } else {
+      line.kplus = konto;
+    }
+  }
 
-    /// Map of variables used in the operation for templating and expressions.
-    Map<String, dynamic> locexpressions = {};
+  /// The accounts a side may take: those of a range, or all of the plan.
+  List<Konto> _choices(String spec) {
+    final range = _range.firstMatch(spec);
+    if (range == null) return book.kpl.getRange({"min": spec, "max": spec});
+    return book.kpl.getRange({"min": range.group(1)!, "max": range.group(2)!});
+  }
 
-    /// Map of expressions tied to the operation for dynamic evaluation.
-
-    // Parse variables first
-    varExp.allMatches(source).forEach((match) {
-      String variable = match.group(1)!;
-      if (!locvars.containsKey(variable)) {
-        locvars[variable] = variable;
+  void _parseExpression(JrlLine line, String source) {
+    for (final match in RegExp(r"(\(.*\))").allMatches(source)) {
+      final text = match.group(1)!;
+      for (final v in _variablesIn(text)) {
+        vars.putIfAbsent(v, () => v);
       }
-    });
-
-    // Parse expressions
-    expressionExp.allMatches(source).forEach((match) {
-      String expressionStr = match.group(1)!;
       try {
-        Expression expression = Expression.parse(expressionStr);
-        locexpressions[match.group(1)!] = expression;
-        //line.valexp = expression;//TODO activat ewhen validated
+        final expression = Expression.parse(text.replaceAll("#", ""));
+        expressions[text] = expression;
+        line.valexp = expression;
       } catch (e) {
-        print("Error parsing expression: $expressionStr");
+        problems.add("$name: expression '$text' cannot be read");
       }
-    });
-    print("ilocal variables $locvars and expressions $locexpressions");
+    }
   }
+
+  String _substitute(String template) =>
+      template.replaceAllMapped(_variable, (m) => "${vars[m.group(1)] ?? m.group(0)}");
+
+  static List<String> _variablesIn(String text) =>
+      [for (final m in _variable.allMatches(text)) m.group(1)!];
 }

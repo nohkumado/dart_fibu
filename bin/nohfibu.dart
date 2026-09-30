@@ -75,17 +75,17 @@ var handler = CsvHandler();
       print("End of List");
     }
     else if (settings["fastop"] != null && settings["fastop"].isNotEmpty) {
-      fibu.opExe(settings["fastop"]);
-      //settings["output"] = "assets/wbsamples/testres.csv";
-			print("saving ${settings["output"]}");
-			print("save (y/n)?");
-			String? answer = stdin.readLineSync();
-			answer ??= "";
-			if(answer.toLowerCase() == "y")
-			{
-			  handler.save(book: fibu.book, conf: settings);
-			}
-
+      if (fibu.opExe(settings["fastop"])) {
+        // back into the book itself; the previous version stays as .bak
+        final book = File(fname);
+        print("save to $fname (the old one kept as $fname.bak)? (y/n)");
+        final answer = (stdin.readLineSync() ?? "").trim().toLowerCase();
+        if (answer == "y") {
+          if (book.existsSync()) book.copySync("$fname.bak");
+          settings["output"] = basename;
+          await handler.save(book: fibu.book, conf: settings);
+        }
+      }
 			//var handler = CsvHandler();
     }
 		else if (settings["close"]) {

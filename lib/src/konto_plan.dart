@@ -200,8 +200,6 @@ class KontoPlan {
       String common = min.substring(0, n);
       if (common.isEmpty) common = min;
       Konto parent = (get(common) == null) ? Konto(plan: this) : get(common)!;
-      print(
-          "common[sp:$span] : $n=> '$common'; kto: ${parent.desc} ${parent.children.keys}");
       parent.getRange(min.substring(n), max.substring(n), passthrough: result);
     }
     return result;

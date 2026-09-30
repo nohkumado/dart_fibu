@@ -5,17 +5,21 @@
 library;
 
 export 'src/account_type.dart';
+export 'src/amount.dart';
 export 'src/book.dart';
 export 'src/cli_input_provider.dart';
 export 'src/cli_interaction.dart';
 export 'src/currency.dart';
 export 'src/extract_line.dart';
 export 'src/fibu.dart';
+export 'src/fibu_date.dart';
 export 'src/input_provider.dart';
 export 'src/journal.dart';
 export 'src/jrl_line.dart';
 export 'src/konto.dart';
 export 'src/konto_plan.dart';
 export 'src/mode.dart';
+export 'src/op_question.dart';
+export 'src/op_question_kind.dart';
 export 'src/operation.dart';
 export 'src/user_interaction.dart';

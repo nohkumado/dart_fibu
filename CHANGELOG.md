@@ -1,5 +1,29 @@
 # Unreleased
 
+  * Stored operations (fast ops) work: `Operation.questions()` says what a
+    booking needs (date, accounts of a range, amounts, texts),
+    `Operation.fill(answers)` makes the journal lines (expressions computed,
+    zero lines left out, every wrong answer named). `nohfibu -f OP` asks
+    them one by one, checks each answer, shows the lines, books them and
+    saves into the book (previous version kept as .bak).
+  * Fixed on the way: OPS fields kept their quotes when the file has spaces
+    after the commas (`"1999",  "3500"`) — no account was found; the first
+    line of an op was read minus/plus, the others plus/minus, and saving
+    wrote plus/minus: one order now, minus then plus, like the journal;
+    lines with a range on the minus side or an unknown account were
+    dropped; reading a line replaced its variables for good; template dates
+    became today's on saving.
+  * csv 8 parses quoted numbers too: the loader converts every field
+    explicitly (text or number) — ops failed to load since the upgrade.
+  * A journal line with an unknown plus account created an account named
+    `{[…][kmin]}` (string interpolation typo).
+  * `JrlLine.setValuta("12")` is 12 € (was 12 cents): `Amount.parseCents`
+    reads "12", "12,50", "1.234,56 €", "1,234.56".
+  * `FibuDate.parse` for the usual date forms (was four nested try/catch).
+  * `CsvHandler.save` returns its Future (callers can wait for the file).
+  * test/operation.dart and test/book.dart never ran (no _test suffix):
+    renamed, they pass. New: stored_ops_test (FUJI of compta2018 end to
+    end, save and reload).
   * One class per file: nohfibu.dart (1340 lines, 11 declarations) and
     ops_handler.dart split into lib/src/ (book, konto, konto_plan, journal,
     jrl_line, extract_line, fibu, operation, …); nohfibu.dart exports them

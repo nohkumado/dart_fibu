@@ -118,16 +118,16 @@ class JrlLine {
   }
 
   /// Sets the `valuta` of the transaction by parsing a string input.
+  /// Sets the amount from text as a person types it ("12", "12,50",
+  /// "1.234,56 €"; see [Amount.parseCents]); empty leaves it unset
+  /// ([maxValue]), text that is no amount gives 0.
   void setValuta(String toParse, {bool debug = false}) {
-    toParse = toParse.trim().replaceAll('\.', '');
-    if (debug) print("aboutto number parse '$toParse' ser");
-
-    valuta = (toParse.isNotEmpty)
-        ? (NumberFormat.currency().tryParse(toParse) ?? 0 * 100).toInt()
-        : maxValue;
-    if (valuta == maxValue)
-      print(
-          "SetValuta parse error... shopuld thorw an exception here... :$toParse");
+    if (toParse.trim().isEmpty) {
+      valuta = maxValue;
+      return;
+    }
+    valuta = Amount.parseCents(toParse) ?? 0;
+    if (debug) print("setValuta '$toParse' → $valuta");
   }
 
   /// pretty print this thing .

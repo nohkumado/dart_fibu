@@ -176,6 +176,16 @@ void main() {
         expect(line.valuta, equals(12345));
       });
 
+      test('setValuta() takes whole euros and both decimal marks', () {
+        JrlLine line = JrlLine();
+        line.setValuta('12');
+        expect(line.valuta, equals(1200));
+        line.setValuta('1.234,56 €');
+        expect(line.valuta, equals(123456));
+        line.setValuta('12,5');
+        expect(line.valuta, equals(1250));
+      });
+
       test('setValuta() with empty string', () {
         JrlLine line = JrlLine();
         line.setValuta('');

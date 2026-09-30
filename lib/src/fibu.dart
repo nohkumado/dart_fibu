@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 
 import '../fibusettings.dart';
 import '../nohfibu.dart';
@@ -87,220 +86,68 @@ class Fibu {
     return nextExercise; //TODO error reporting as usual....
   }
 
-  ///Execute a prepared statement
-  void opExe(String key) {
-    //print("we need to call on fast op ${key}");
-    bool ok = true;
-    while (ok) {
-      Operation? actOp = book.ops[key];
-      if (actOp == null) {
-        print("Fast op '${key}' unknown, please check the name");
-        ok = false;
-      } else {
-        //print("Found fast op '${actOp}' ");
-        actOp.prepare();
-        bool firstLine = true;
-        //actOp.preparedLines.forEach((line)
-        for (int i = 0; i < actOp.length; i++) {
-          JrlLine line = actOp[i];
-          print("to fill $line");
-          if (firstLine) {
-            selectDate(line);
-            firstLine = false;
-          }
-          if (line.needsAccount(accountType: "minus")) {
-            print("proceeding to acc -");
-            selectAccount(line, minus: true);
-          }
-          print("proceeding to acc +");
-          selectAccount(line, minus: false);
-          print("proceeding to desc");
-          selectDescription(line, actOp);
-          if (!settings["autocur"]) {
-            print("proceeding to cur");
-            selectCurrency(line);
-          }
-          print("proceeding to val");
-          selectValuta(line, actOp);
+  /// Books the stored operation [key]: asks each of its questions through
+  /// [inputProvider] (checked at once), shows the resulting journal lines
+  /// and adds them to the journal once confirmed. True when booked.
+  bool opExe(String key) {
+    final op = book.ops[key];
+    if (op is! Operation) {
+      print("Fast op '$key' unknown; known: ${book.ops.keys.join(', ')}");
+      return false;
+    }
+    op.prepare();
+    for (final problem in op.problems) {
+      print("! $problem");
+    }
+    while (true) {
+      final answers = <String, String>{};
+      for (final q in op.questions()) {
+        answers[q.key] = _ask(q);
+      }
+      final List<JrlLine> lines;
+      try {
+        lines = op.fill(answers);
+      } on FormatException catch (e) {
+        print(e.message);
+        continue;
+      }
+      print("please check the new journal lines:");
+      for (final line in lines) {
+        print("  $line");
+      }
+      final answer = (inputProvider.getInput("ok? (y = book, n = again, q = cancel)", defaultValue: "y") ?? "y").trim().toLowerCase();
+      if (answer == "q") return false;
+      if (answer.isEmpty || answer == "y") {
+        for (final line in lines) {
+          book.jrl.add(line);
         }
-        //);
-        print("please check new jrl lines:");
-        actOp.result().forEach((line) {
-          print("${line}");
-        });
-        String? answer = inputProvider.getInput("ok?");
-        answer ??= "";
-        if (answer.isEmpty || answer.toLowerCase() == "y") {
-          ok = false;
-          actOp.result().forEach((line) {
-            book.jrl.add(line);
-          });
-          print("jrl now: ${book.jrl}");
-        }
+        return true;
       }
     }
-    //handler.save(book: book, conf: settings);
   }
 
-  ///select a date, had to implement the different shortcuts that are usual
-  void selectDate(JrlLine line) {
-    final DateFormat formatter = DateFormat('dd-MM-yyyy');
-    final String formatted = formatter.format(line.datum);
-    bool invalid = true;
-    while (invalid) {
-      print("Date[$formatted]");
-      //String? answer = stdin.readLineSync();
-      String? answer =
-          inputProvider.getInput("Date [$formatted]", defaultValue: formatted);
-      answer ??= "";
-      if (answer.isNotEmpty) {
-        print("answered: '$answer'");
-        try {
-          //DateTime point = DateTime.parse(answer);
-          DateFormat format = DateFormat("dd-MM-yyyy");
-          //print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
-          var point = format.parse(answer);
-          line.datum = point;
-          invalid = false;
-        } catch (e) {
-          //print("couldn't*t understand the date....");
-          try {
-            //DateTime point = DateTime.parse(answer);
-            DateFormat format = DateFormat("dd-MM-yy");
-            //print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
-            var point = format.parse(answer);
-            line.datum = point;
-            invalid = false;
-          } catch (e) {
-            try {
-              //DateTime point = DateTime.parse(answer);
-              DateFormat format = DateFormat("dd.MM.yyyy");
-              //print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
-              var point = format.parse(answer);
-              line.datum = point;
-              invalid = false;
-            } catch (e) {
-              try {
-                //DateTime point = DateTime.parse(answer);
-                DateFormat format = DateFormat("dd.MM.yy");
-                //print("extracted so far +$datum+ -$kminus- -$kplus- -$desc- ,=$w=, #$valuta#");
-                var point = format.parse(answer);
-                line.datum = point;
-                invalid = false;
-              } catch (e) {
-                print("couldn't understand the date....");
-              }
-            }
-          }
-        }
-      } else {
-        invalid = false;
-        print("default answer....");
+  /// Asks [q] until the answer fits its kind.
+  String _ask(OpQuestion q) {
+    if (q.kind == OpQuestionKind.account && q.choices.isNotEmpty) {
+      for (final k in q.choices) {
+        print("  ${k.name.padLeft(6)} ${k.desc.trim()}");
       }
     }
-    print("set Date to [${formatter.format(line.datum)}]");
-  }
-
-  ///select an account, per default the minus account with minus to false the plus account
-  void selectAccount(JrlLine line, {bool minus = true}) {
-    String defaultKtoName = (minus)
-        ? line.kminus.printname().trim()
-        : line.kplus.printname().trim();
-    String defaultKtoDesc =
-        (minus) ? line.kminus.desc.trim() : line.kplus.desc.trim();
-    //print("selecting for $defaultKtoName, $defaultKtoDesc prefilled: ${line}");
-    late List<Konto> ktoList;
-    String setKey = (minus) ? "kmin" : "kplu";
-    //print("limits? ${line.limits}");
-    if (line.limits != null &&
-        line.limits!.containsKey(setKey) &&
-        line.limits![setKey]["min"] != "-1") {
-      var limits = line.limits![setKey];
-      //print("retrieved + [${limits}]");
-      ktoList = book.kpl.getRange(limits);
-      //defaultKtoName =limits["min"]; //lower limit? or
-      defaultKtoName = ktoList.first.name; //first valid account?
-      defaultKtoDesc = ktoList.first.desc.trim();
-      print("selecting from :\n $ktoList");
-    }
-
-    bool invalid = true;
-    while (invalid) {
-      print("kto" +
-          ((minus) ? "-" : "+") +
-          "[${defaultKtoName}, ${defaultKtoDesc} ]");
-      //String? answer = stdin.readLineSync();
-      String? answer = inputProvider.getInput(
-          "Account ${(minus) ? '-' : '+'} [$defaultKtoName, $defaultKtoDesc]",
-          defaultValue: defaultKtoName);
-      answer ??= defaultKtoName;
-      //print("answer is '$answer'");
-      if (answer.isEmpty) answer = defaultKtoName;
-      Konto? selected = book.kpl.get(answer.trim());
-      //print("found Konto is '$selected");
-      if (selected != null) {
-        if (minus) {
-          line.kminus = selected;
-          if (line.kminus.name == selected.name)
-            invalid = false;
-          else
-            print("Account not existent,try again");
-        } else {
-          line.kplus = selected;
-          if (line.kplus.name == selected.name)
-            invalid = false;
-          else
-            print("Account not existent,try again");
-        }
-      } else
-        print("please select from : \n$ktoList\nkto-[${defaultKtoName}]");
-    }
-  }
-
-  ///input a description, if variables are in it store them and expand
-  void selectDescription(JrlLine line, Operation myOp) {
-    print("desc [${line.desc}] ");
-    String tmpDesc = line.desc;
-    print("searching desc in local variables: ${line.vars}");
-    if (line.vars.containsKey("desc")) {
-      var locVars = line.vars["desc"]!;
-      print("local variables: $locVars");
-      locVars.keys.forEach((key) {
-        print("please provide data for $key:");
-        String? answer = inputProvider.getInput("Please provide data for $key");
-
-        answer ??= "";
-        locVars[key] = answer;
-        tmpDesc = tmpDesc.replaceAll("#$key", answer);
-      });
-      line.desc = tmpDesc; //ask for confirmation?
-    }
-  }
-
-  void selectCurrency(JrlLine line) {
-    print("currency [${line.cur}] ");
-    String? answer =
-        inputProvider.getInput("Currency [${line.cur}]", defaultValue: 'EUR');
-    answer ??= "";
-    if (answer.isNotEmpty) line.cur = answer;
-  }
-
-  void selectValuta(JrlLine line, Operation myOp) {
-    if (line.valname != null) {
-      String? answer = inputProvider.getInput("valuta [${line.valuta}]");
-      answer ??= "0";
-      line.setValuta(answer);
-      myOp.vars[line.valname!] = line.valuta;
-      print("stored for ${line.valname} ${line.valuta}");
-    } else if (line.valexp != null) {
-      print("need to fill with exp ");
-      line.valuta = myOp.eval(exp: line.valexp);
-      print("computed for ${line.valname} ${line.valuta}");
-    } else {
-      String? answer = inputProvider.getInput("valuta [${line.valuta}]");
-      answer ??= "";
-      if (answer.isNotEmpty) line.setValuta(answer);
-      print("inputted valuta ${line.valuta}");
+    while (true) {
+      final answer = (inputProvider.getInput(q.label, defaultValue: q.defaultValue) ?? q.defaultValue).trim();
+      switch (q.kind) {
+        case OpQuestionKind.date:
+          if (FibuDate.parse(answer) != null) return answer;
+          print("not a date (dd-mm-yyyy, dd.mm.yy, yyyy-mm-dd)");
+        case OpQuestionKind.amount:
+          if (Amount.parseCents(answer) != null) return answer;
+          print("not an amount (12, 12,50, 1.234,56)");
+        case OpQuestionKind.account:
+          if (q.choices.isEmpty || q.choices.any((k) => k.name == answer)) return answer;
+          print("choose one of: ${q.choices.map((k) => k.name).join(', ')}");
+        case OpQuestionKind.text:
+          return answer;
+      }
     }
   }
 }
