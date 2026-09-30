@@ -1,5 +1,12 @@
 # Unreleased
 
+  * Invoices (the PHP facture of 2005, merged): `InvoiceArchive` reads and
+    writes its CSV layout, `Letterhead` from YAML (address, legal ids, VAT
+    note, bank, footer, logo, font), `InvoiceNumbering` YYYY-NNNN,
+    `InvoicePdf` (A4, fr/de/en, net/VAT/gross, bank box; € with an embedded
+    TrueType font), `InvoiceBooking` — configurable per letterhead (a
+    `book:` block with the accounts): revenue and VAT → receivable. CLI
+    `facture` (--list, --pdf, --new, --book). Examples in assets/invoice/.
   * Stored operations (fast ops) work: `Operation.questions()` says what a
     booking needs (date, accounts of a range, amounts, texts),
     `Operation.fill(answers)` makes the journal lines (expressions computed,

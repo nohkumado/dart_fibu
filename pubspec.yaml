@@ -13,6 +13,7 @@ repository: https://github.com/nohkumado/dart_fibu
 executables:
   wbconvert:
   nohfibu:
+  facture:
 
 
 environment:
@@ -28,6 +29,8 @@ dependencies:
   posix: ^6.0.1
   git: ^2.3.0
   path: ^1.9.1
+  pdf: ^3.13.1
+  yaml: ^3.1.4
 
 dev_dependencies:
    test: '>=1.15.0 <2.0.0'

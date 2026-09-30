@@ -1,0 +1,27 @@
+# A letterhead for nohfibu's invoices (facture). Copy it to
+# ~/.config/nohfibu/letterheads/<id>.yaml — the file name is its id, the
+# archive's "config" column names it — and fill in your details.
+# Keep your own letterheads out of git: they hold your bank details.
+name: Jean Exemple
+address:
+  - 12 rue de l'Exemple
+  - 67000 Strasbourg
+phone: "+33 3 00 00 00 00"
+email: jean@example.org
+siret: "000 000 000 00000"
+vat_id: ""                      # your VAT id, when you charge VAT
+vat_note: "TVA non applicable, art. 293 B du CGI"   # printed when an invoice has no VAT
+bank:
+  name: Banque Exemple
+  iban: FR76 0000 0000 0000 0000 0000 000
+  bic: EXEMFRPP
+footer: "Dispensé d'immatriculation au RCS et au répertoire des métiers"
+logo: ""                        # a PNG or JPEG next to this file, e.g. logo.png
+font: ""                        # a .ttf with the € sign; empty: DejaVu/Liberation/Noto Sans
+
+# Optional: issuing an invoice also books it in the book given with --book.
+# Remove this block to only make invoices.
+book:
+  receivable: "1100"   # the customer owes the amount (asset)
+  revenue: "4410"      # the net amount earned (income)
+  vat: "2200"          # the VAT collected (liability), when there is VAT

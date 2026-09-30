@@ -46,6 +46,38 @@ $ nohfibu  -b assets/wbsamples/sample -f MERCH# will try to fill in new journal 
 at the moment the data-source is only in a (local) csv file, but will be extended in a future versions.
 
 
+#### Stored operations (fast ops)
+
+A book's OPS section holds named templates for movements that come back
+often: accounts (or ranges to choose from), descriptions with `#variables`,
+amounts as numbers, variables or expressions (`(#payement - #montant)`).
+
+    dart run nohfibu -b compta2018.csv --list      # the ops of the book
+    dart run nohfibu -b compta2018.csv -f FUJI     # book one: asks date,
+                                                   # accounts, amounts, texts
+
+The answers are checked as they come, the journal lines shown before
+booking, the book saved back (previous version as `.bak`). In code:
+`Operation.questions()` and `Operation.fill(answers)`; flutter_fibu shows
+them as a form.
+
+#### Invoices (facture)
+
+The PHP facture of 2005 lives on here: an archive in its CSV layout,
+letterheads as YAML, PDFs made in Dart (no LaTeX needed).
+
+    dart run nohfibu:facture -a factures.csv --list
+    dart run nohfibu:facture -a factures.csv --pdf 2026-0001
+    dart run nohfibu:facture -a factures.csv --new [--book compta2026.csv]
+
+Letterheads live in `~/.config/nohfibu/letterheads/<id>.yaml` (outside git:
+they hold your bank details); start from
+`assets/invoice/letterhead.example.yaml`. The archive's `config` column
+names the letterhead. Numbers are `YYYY-NNNN`, continuous within the year
+(the last one kept in `<archive>.number`). A letterhead with a `book:` block
+(receivable, revenue, VAT accounts) also books issued invoices into the book
+given with `--book`; without it, invoices are only made.
+
 ## Documentation
 
 - concerning the fast operations, read the [docu](doc/FASTOPS.md)

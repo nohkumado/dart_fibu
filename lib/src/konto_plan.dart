@@ -178,9 +178,7 @@ class KontoPlan {
     String max = (minmax.containsKey("max")) ? minmax["max"]!.trim() : "0";
 
     ///Attention if accounts are spanning blocks....!
-    bool span = false;
     if (min[0] != max[0]) {
-      span = true;
       for (String root in konten.keys) {
         // Convert strings to integers for numerical comparison
         int rootInt = int.parse(root);

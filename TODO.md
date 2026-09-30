@@ -21,3 +21,12 @@
   when present, the block rule as fallback — old books keep working, modern
   charts (e.g. the French PCG: 6 charges, 7 produits) become possible.
 
+## Invoices
+
+- [ ] Reminders (rappel, pénalité, arrêt) as in facture's LaTeX template:
+  texts per level, late-payment penalty (ECB rate + 7 points)
+- [ ] Invoices in flutter_fibu (list, new, PDF preview/share)
+- [ ] Estimates: "valid until" instead of the due date; turn an estimate
+  into an invoice
+- [ ] Paying an invoice: a stored op receivable → bank, found by number
+
