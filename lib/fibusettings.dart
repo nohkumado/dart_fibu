@@ -29,6 +29,20 @@ class FibuSettings {
     ..addFlag('version',
     abbr: 'v', defaultsTo: false, help: "Version info");
   }
+  /*
+      ..addOption('lang', abbr: 'l', defaultsTo: 'de', help: "Language setting")
+      ..addOption('base',
+          abbr: 'b',
+          help:
+              "Basename of the dataset, to set the type add the suffix, eg acc.kpl")
+      ..addOption('output', abbr: 'o', help: "output name")
+      ..addFlag('help',
+          abbr: 'h', defaultsTo: false, help: "Help about the options")
+      ..addFlag('strict',
+          abbr: 's', defaultsTo: false, help: "enforce old WB-Style parsing")
+    ..addFlag('version',
+    abbr: 'v', defaultsTo: false, help: "Version info");
+   */
 
   /// launch the process here feeding typically the command line arguments
   FibuSettings init(List<String> arguments) {
@@ -114,4 +128,12 @@ class FibuSettings {
     return 'FibuSettings{data: $data}';
   }
   bool empty() => data.isEmpty;
+  FibuSettings copyWith({String key="error", dynamic value = -1})
+  {
+    FibuSettings copy = FibuSettings();
+    copy.data = {...this.data};
+    copy.data[key]=value;
+    return copy;
+  }
+
 }
