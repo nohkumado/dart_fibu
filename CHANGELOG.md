@@ -1,3 +1,12 @@
+# Unreleased
+
+  * One class per file: nohfibu.dart (1340 lines, 11 declarations) and
+    ops_handler.dart split into lib/src/ (book, konto, konto_plan, journal,
+    jrl_line, extract_line, fibu, operation, …); nohfibu.dart exports them
+    all, ops_handler.dart stays for existing imports. No behaviour change.
+  * ExtractLine uses JrlLine's public kminus/kplus (it read the private
+    fields, possible only in the same file).
+
 # 0.1.0
 
   * Dependencies at their latest majors: intl 0.20, csv 8 — `Csv().encode` /
