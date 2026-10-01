@@ -14,7 +14,7 @@ import 'package:nohfibu/nohfibu.dart';
 Future<void> main(List<String> arguments) async {
   final home = Platform.environment['HOME'] ?? '.';
   final parser = ArgParser()
-    ..addOption('archive', abbr: 'a', help: 'the invoice archive (CSV)', mandatory: true)
+    ..addOption('archive', abbr: 'a', help: 'the invoice archive (CSV)')
     ..addOption('letterheads', abbr: 'l', defaultsTo: '$home/.config/nohfibu/letterheads', help: 'directory of the letterheads (*.yaml)')
     ..addOption('out', abbr: 'o', help: 'directory for the PDFs (default: next to the archive)')
     ..addFlag('list', help: 'list the archive')
@@ -31,7 +31,12 @@ Future<void> main(List<String> arguments) async {
     return;
   }
   if (args['help'] as bool) {
-    print(parser.usage);
+    print('facture — offers and invoices\n\n${parser.usage}');
+    return;
+  }
+  if (args['archive'] == null) {
+    stderr.writeln('facture: which archive? give it with -a / --archive (a CSV; created by --new)\n\n${parser.usage}');
+    exitCode = 64;
     return;
   }
   final archiveFile = File(args['archive'] as String);
