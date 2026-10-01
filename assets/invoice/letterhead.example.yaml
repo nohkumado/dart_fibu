@@ -1,16 +1,19 @@
-# A letterhead for nohfibu's invoices (facture). Copy it to
-# ~/.config/nohfibu/letterheads/<id>.yaml — the file name is its id, the
-# archive's "config" column names it — and fill in your details.
-# Keep your own letterheads out of git: they hold your bank details.
+# A letterhead for nohfibu's offers and invoices (facture). Copy it to
+# ~/.config/nohfibu/letterheads/<id>.yaml — the file name is its id — one
+# per business you issue under (micro-entreprise, entreprise individuelle,
+# association…), and fill in your details. Keep your own letterheads out of
+# git: they hold your bank details.
 name: Jean Exemple
 address:
   - 12 rue de l'Exemple
   - 67000 Strasbourg
+country: FR                     # ISO country of the issuer
 phone: "+33 3 00 00 00 00"
 email: jean@example.org
 siret: "000 000 000 00000"
-vat_id: ""                      # your VAT id, when you charge VAT
-vat_note: "TVA non applicable, art. 293 B du CGI"   # printed when an invoice has no VAT
+vat_id: ""                      # your VAT id, when you have one
+tax_number: ""                  # German Steuernummer, when issuing from Germany
+vat_note: ""                    # replaces the standard "TVA non applicable, art. 293 B du CGI"
 bank:
   name: Banque Exemple
   iban: FR76 0000 0000 0000 0000 0000 000
@@ -19,9 +22,26 @@ footer: "Dispensé d'immatriculation au RCS et au répertoire des métiers"
 logo: ""                        # a PNG or JPEG next to this file, e.g. logo.png
 font: ""                        # a .ttf with the € sign; empty: DejaVu/Liberation/Noto Sans
 
-# Optional: issuing an invoice also books it in the book given with --book.
-# Remove this block to only make invoices.
+# The tax regime: what decides VAT, together with the customer (business or
+# private, country, VAT id) and the document's category.
+tax:
+  regime: franchise             # franchise (no VAT, art. 293 B) or vat
+  rate: 0.20                    # standard rate (regime vat)
+  rates: {}                     # other rates by category, e.g. {cours: 0.10}
+  reverse_charge: []            # categories under reverse charge for EU
+                                # businesses with a VAT id, e.g. [3dprint]
+
+# Reminders: days after the due date for level 1, 2, 3; from level 2 the
+# late-payment interest (yearly rate: FR ECB rate + 10 points, DE base rate
+# + 9 points for businesses) and, for businesses, the recovery fee.
+reminder_days: [15, 30, 45]
+penalty_rate: 0.1215
+recovery_fee: "40"
+
+# Optional: issuing an invoice also books it, and so does a payment, in the
+# book given with --book. Remove this block to only make documents.
 book:
   receivable: "1100"   # the customer owes the amount (asset)
   revenue: "4410"      # the net amount earned (income)
   vat: "2200"          # the VAT collected (liability), when there is VAT
+  bank: "1010"         # where payments arrive (asset)

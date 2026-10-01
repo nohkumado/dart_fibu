@@ -61,22 +61,37 @@ booking, the book saved back (previous version as `.bak`). In code:
 `Operation.questions()` and `Operation.fill(answers)`; flutter_fibu shows
 them as a form.
 
-#### Invoices (facture)
+#### Offers and invoices (facture)
 
-The PHP facture of 2005 lives on here: an archive in its CSV layout,
-letterheads as YAML, PDFs made in Dart (no LaTeX needed).
+The PHP facture of 2005 lives on, grown into the whole workflow: offer →
+accepted (or refused) → invoice → reminders → payment, booked into the
+accounts when you want. One archive (JSON) per issuer holds the customers
+and the documents with their history.
 
-    dart run nohfibu:facture -a factures.csv --list
-    dart run nohfibu:facture -a factures.csv --pdf 2026-0001
-    dart run nohfibu:facture -a factures.csv --new [--book compta2026.csv]
+    F="dart run nohfibu:facture -s factures.json"
+    $F customer add                  # business or private, country, VAT id, language
+    $F offer                         # asks, issues D2026-0001, writes the PDF
+    $F accept D2026-0001
+    $F invoice-offer D2026-0001 --book compta2026.csv   # 2026-0001, booked
+    $F status                        # open offers, overdue invoices, reminders due
+    $F reminders --send              # writes the reminder letters (levels 1-3)
+    $F pay 2026-0001 240 --book compta2026.csv          # booked receivable → bank
+    $F import ~/www/facture/base.csv # the old CSV archive
 
-Letterheads live in `~/.config/nohfibu/letterheads/<id>.yaml` (outside git:
-they hold your bank details); start from
-`assets/invoice/letterhead.example.yaml`. The archive's `config` column
-names the letterhead. Numbers are `YYYY-NNNN`, continuous within the year
-(the last one kept in `<archive>.number`). A letterhead with a `book:` block
-(receivable, revenue, VAT accounts) also books issued invoices into the book
-given with `--book`; without it, invoices are only made.
+Letterheads — one per business you issue under (micro-entreprise,
+entreprise individuelle, association…) — live in
+`~/.config/nohfibu/letterheads/<id>.yaml` (outside git: they hold your bank
+details); start from `assets/invoice/letterhead.example.yaml`. Each carries
+its tax regime: franchise or VAT, rates by category, the categories under
+reverse charge. The tax of a document follows from the letterhead, the
+customer (business or private, country, VAT id) and the document's category
+(e.g. `3dprint` under reverse charge for a German business: "Steuerschuld-
+nerschaft des Leistungsempfängers"; `cours` at French or German VAT).
+
+The letters are in the customer's language: German and English in DIN 5008
+Form B (window left), French with the window on the right; fold marks and
+the hole mark on the edge. `dart run tool/sample_letters.dart /tmp/letters`
+writes samples.
 
 ## Documentation
 

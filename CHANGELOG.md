@@ -1,5 +1,11 @@
 # Unreleased
 
+  * facture CLI on the workflow: `-s factures.json` and the commands status,
+    customer add/list, offer, invoice, accept, refuse, invoice-offer,
+    reminders [--send], pay, pdf, import (the old CSV archive); `--book`
+    books issued invoices and payments (book saved with .bak), `--date`
+    for the date of the action. The example letterhead shows the tax regime,
+    reminder settings and the bank account for bookings.
   * Invoices, stage C — the letters. `LetterFrame`: German and English
     letters in DIN 5008 Form B (return line and address field from 45 mm,
     window left, information block at 125 mm, subject at 98.5 mm, fold
