@@ -1,5 +1,19 @@
 # Unreleased
 
+  * Invoices, stage A — the model for the offer → invoice workflow:
+    `Customer` (business or private, country, VAT id, language, envelope
+    window: by the letter's language, fr right, else left), documents with
+    a history (`DocumentEvent`: issued, accepted, refused, invoiced,
+    reminded, paid, cancelled) and a status from it (`InvoiceStatus`, with
+    overdue and partial payments), a category per document, the service
+    date. Tax by issuer, customer and category: `TaxProfile` in the
+    letterhead (franchise or VAT, rates by category, reverse charge by
+    category), `TaxTreatment` (franchise with art. 293 B, reverse charge —
+    autoliquidation / Steuerschuldnerschaft des Leistungsempfängers —, or
+    the rate), notes in fr/de/en. Letterheads also carry reminder delays,
+    late-payment rate and recovery fee. `InvoiceStore`: one versioned JSON
+    file (customers + documents); facture's old CSV archive is read as
+    format 1 (documents issued, and paid unless told otherwise).
   * Balances shown in each account's normal direction (`Konto.balance`):
     assets and expenses as debit balance, liabilities and income as credit
     balance — positive as usual, negative only when something is unusual.

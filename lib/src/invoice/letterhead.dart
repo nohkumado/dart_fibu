@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:yaml/yaml.dart';
 
+import '../../nohfibu.dart';
+
 /// Who issues an invoice: address, contact, legal ids, bank, footer, logo —
 /// and, when [bookAccounts] is set, the accounts an issued invoice is
 /// booked on. Read from a YAML file (see assets/invoice/letterhead.example.yaml);
@@ -24,8 +26,24 @@ class Letterhead {
   /// it); empty: a system sans font (DejaVu, Liberation, Noto).
   final String font;
 
-  /// receivable / revenue / vat account numbers; empty: invoices are not booked.
+  /// receivable / revenue / vat / bank account numbers; empty: invoices
+  /// are not booked.
   final Map<String, String> bookAccounts;
+
+  /// The issuer's tax regime (country, franchise or VAT, rates, reverse
+  /// charge by category).
+  final TaxProfile tax;
+
+  /// Days after the due date before each reminder level (1, 2, 3).
+  final List<int> reminderDays;
+
+  /// Yearly late-payment interest rate for reminders of level 2 and up
+  /// (e.g. 0.1215: in France the ECB rate + 10 points, in Germany the base
+  /// rate + 9 points for businesses, + 5 for private persons).
+  final double penaltyRate;
+
+  /// Fixed recovery indemnity for businesses, in cents (40 € in FR and DE).
+  final int recoveryFeeCents;
 
   const Letterhead({
     required this.id,
@@ -43,6 +61,10 @@ class Letterhead {
     this.logo = '',
     this.font = '',
     this.bookAccounts = const {},
+    this.tax = const TaxProfile(),
+    this.reminderDays = const [15, 30, 45],
+    this.penaltyRate = 0,
+    this.recoveryFeeCents = 4000,
   });
 
   /// Whether issuing an invoice also books it.
@@ -72,6 +94,10 @@ class Letterhead {
       logo: logo.isEmpty || logo.startsWith('/') ? logo : '${file.parent.path}/$logo',
       font: font.isEmpty || font.startsWith('/') ? font : '${file.parent.path}/$font',
       bookAccounts: {for (final e in book.entries) '${e.key}': '${e.value}'},
+      tax: TaxProfile.fromMap(y['tax'] as Map?, country: s('country').isEmpty ? 'FR' : s('country')),
+      reminderDays: [for (final d in (y['reminder_days'] as List?) ?? const [15, 30, 45]) int.parse('$d')],
+      penaltyRate: double.tryParse(s('penalty_rate').replaceAll(',', '.')) ?? 0,
+      recoveryFeeCents: Amount.parseCents(s('recovery_fee').isEmpty ? '40' : s('recovery_fee')) ?? 4000,
     );
   }
 
