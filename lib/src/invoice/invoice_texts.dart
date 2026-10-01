@@ -1,7 +1,14 @@
-/// The words on an invoice, per language (fr, de, en; English otherwise).
+/// The words on offers, invoices and reminders, per language (fr, de, en;
+/// English otherwise). `{…}` marks are filled in by the PDF.
 class InvoiceTexts {
-  final String invoice, estimate, number, date, dateOfIssue, dueDate, designation,
-      quantity, unitPrice, total, totalNet, vat, totalGross, transfer, account;
+  final String invoice, estimate, number, date, dateOfIssue, dueDate, validUntil, serviceDate,
+      designation, quantity, unitPrice, total, totalNet, vat, totalGross, transfer, account,
+      ourVatId, customerVatId, customerNumber, page,
+      paymentTerms, latePaymentB2B, offerAcceptance;
+
+  /// Reminder subjects and texts by level (index 0 = level 1).
+  final List<String> reminderSubject, reminderText;
+  final String reminderTable, openAmount, interest, recoveryFee, amountDue, greeting, closing;
 
   const InvoiceTexts({
     required this.invoice,
@@ -10,6 +17,8 @@ class InvoiceTexts {
     required this.date,
     required this.dateOfIssue,
     required this.dueDate,
+    required this.validUntil,
+    required this.serviceDate,
     required this.designation,
     required this.quantity,
     required this.unitPrice,
@@ -19,6 +28,22 @@ class InvoiceTexts {
     required this.totalGross,
     required this.transfer,
     required this.account,
+    required this.ourVatId,
+    required this.customerVatId,
+    required this.customerNumber,
+    required this.page,
+    required this.paymentTerms,
+    required this.latePaymentB2B,
+    required this.offerAcceptance,
+    required this.reminderSubject,
+    required this.reminderText,
+    required this.reminderTable,
+    required this.openAmount,
+    required this.interest,
+    required this.recoveryFee,
+    required this.amountDue,
+    required this.greeting,
+    required this.closing,
   });
 
   static const _all = {
@@ -29,6 +54,8 @@ class InvoiceTexts {
       date: 'Date',
       dateOfIssue: "Date d'émission",
       dueDate: 'Échéance',
+      validUntil: "Valable jusqu'au",
+      serviceDate: 'Date de la prestation',
       designation: 'Désignation',
       quantity: 'Quantité',
       unitPrice: 'PU HT',
@@ -38,31 +65,84 @@ class InvoiceTexts {
       totalGross: 'Total net à payer',
       transfer: 'Le montant de {amount} est à virer sur le compte bancaire suivant :',
       account: 'Compte',
+      ourVatId: 'N° TVA intracom.',
+      customerVatId: 'N° TVA client',
+      customerNumber: 'Client',
+      page: 'Page',
+      paymentTerms: 'Paiement à réception, au plus tard le {due}, par virement.',
+      latePaymentB2B: "En cas de retard de paiement, pénalités au taux annuel de {rate} % et indemnité forfaitaire "
+          "pour frais de recouvrement de {fee} (art. L441-10 du Code de commerce). Pas d'escompte pour paiement anticipé.",
+      offerAcceptance: 'Devis valable jusqu\'au {valid}. Bon pour accord : date, signature et mention « lu et approuvé ».',
+      reminderSubject: ['Rappel de facture', 'Deuxième rappel — mise en demeure', 'Dernier rappel avant recouvrement'],
+      reminderText: [
+        "Sauf erreur de notre part, la facture ci-dessous, arrivée à échéance le {due}, n'a pas encore été réglée. "
+            "Il s'agit sans doute d'un oubli ; nous vous remercions de bien vouloir procéder au paiement.",
+        "Malgré notre premier rappel, la facture ci-dessous reste impayée. Conformément à nos conditions, "
+            "les pénalités de retard et l'indemnité forfaitaire sont désormais dues. Nous vous prions de régler "
+            "le montant total sous huit jours.",
+        "Nos rappels sont restés sans réponse. Sans paiement du montant total sous huit jours, nous transmettrons "
+            "le dossier au recouvrement, sans autre avis.",
+      ],
+      reminderTable: 'Facture concernée',
+      openAmount: 'Montant restant dû',
+      interest: 'Pénalités de retard',
+      recoveryFee: 'Indemnité forfaitaire de recouvrement',
+      amountDue: 'Total à régler',
+      greeting: 'Madame, Monsieur,',
+      closing: "Nous vous prions d'agréer, Madame, Monsieur, nos salutations distinguées.",
     ),
     'de': InvoiceTexts(
       invoice: 'RECHNUNG',
-      estimate: 'KOSTENVORANSCHLAG',
+      estimate: 'ANGEBOT',
       number: 'Nr.',
       date: 'Datum',
       dateOfIssue: 'Rechnungsdatum',
       dueDate: 'Zahlbar bis',
+      validUntil: 'Gültig bis',
+      serviceDate: 'Leistungsdatum',
       designation: 'Bezeichnung',
       quantity: 'Menge',
       unitPrice: 'Einzelpreis netto',
       total: 'Gesamt netto',
       totalNet: 'Summe netto',
-      vat: 'MwSt.',
+      vat: 'USt.',
       totalGross: 'Zu zahlender Betrag',
       transfer: 'Bitte überweisen Sie {amount} auf folgendes Konto:',
       account: 'Konto',
+      ourVatId: 'USt-IdNr.',
+      customerVatId: 'USt-IdNr. des Kunden',
+      customerNumber: 'Kunde',
+      page: 'Seite',
+      paymentTerms: 'Zahlbar ohne Abzug bis zum {due} per Überweisung.',
+      latePaymentB2B: 'Bei Zahlungsverzug berechnen wir Verzugszinsen von {rate} % p. a. und eine Pauschale von {fee} (§ 288 BGB).',
+      offerAcceptance: 'Dieses Angebot gilt bis zum {valid}. Zur Auftragserteilung bitten wir um Ihre schriftliche Bestätigung.',
+      reminderSubject: ['Zahlungserinnerung', '1. Mahnung', 'Letzte Mahnung'],
+      reminderText: [
+        'sicher ist es Ihrer Aufmerksamkeit entgangen: Die unten genannte Rechnung war am {due} fällig und ist '
+            'noch nicht beglichen. Wir bitten Sie, den Betrag in den nächsten Tagen zu überweisen.',
+        'leider haben wir auf unsere Zahlungserinnerung keinen Zahlungseingang feststellen können. Sie befinden '
+            'sich in Verzug; wir berechnen daher Verzugszinsen und die gesetzliche Pauschale. Bitte überweisen Sie '
+            'den Gesamtbetrag innerhalb von acht Tagen.',
+        'trotz unserer Mahnungen ist die Rechnung weiterhin offen. Geht der Gesamtbetrag nicht innerhalb von acht '
+            'Tagen ein, übergeben wir die Forderung ohne weitere Ankündigung dem Inkasso.',
+      ],
+      reminderTable: 'Betroffene Rechnung',
+      openAmount: 'Offener Betrag',
+      interest: 'Verzugszinsen',
+      recoveryFee: 'Verzugspauschale',
+      amountDue: 'Gesamtbetrag',
+      greeting: 'Sehr geehrte Damen und Herren,',
+      closing: 'Mit freundlichen Grüßen',
     ),
     'en': InvoiceTexts(
       invoice: 'INVOICE',
-      estimate: 'ESTIMATE',
+      estimate: 'QUOTATION',
       number: 'no.',
       date: 'Date',
       dateOfIssue: 'Date of issue',
       dueDate: 'Due date',
+      validUntil: 'Valid until',
+      serviceDate: 'Date of service',
       designation: 'Description',
       quantity: 'Quantity',
       unitPrice: 'Unit price (net)',
@@ -72,6 +152,29 @@ class InvoiceTexts {
       totalGross: 'Amount due',
       transfer: 'Please transfer {amount} to the following account:',
       account: 'Account',
+      ourVatId: 'VAT ID',
+      customerVatId: 'Customer VAT ID',
+      customerNumber: 'Customer',
+      page: 'Page',
+      paymentTerms: 'Payable by bank transfer by {due}.',
+      latePaymentB2B: 'Late payment: interest of {rate} % per year and a fixed recovery fee of {fee}.',
+      offerAcceptance: 'This quotation is valid until {valid}. Please confirm your order in writing.',
+      reminderSubject: ['Payment reminder', 'Second reminder', 'Final notice'],
+      reminderText: [
+        'our records show that the invoice below, due on {due}, has not been paid yet. Please transfer the amount '
+            'at your earliest convenience.',
+        'despite our first reminder the invoice below is still unpaid. Late-payment interest and the recovery fee '
+            'are now due; please pay the total within eight days.',
+        'our reminders have remained unanswered. Unless the total is paid within eight days, we will hand the claim '
+            'over to collection without further notice.',
+      ],
+      reminderTable: 'Invoice concerned',
+      openAmount: 'Amount outstanding',
+      interest: 'Late-payment interest',
+      recoveryFee: 'Recovery fee',
+      amountDue: 'Total due',
+      greeting: 'Dear Sir or Madam,',
+      closing: 'Yours faithfully,',
     ),
   };
 

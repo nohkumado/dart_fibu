@@ -1,5 +1,17 @@
 # Unreleased
 
+  * Invoices, stage C — the letters. `LetterFrame`: German and English
+    letters in DIN 5008 Form B (return line and address field from 45 mm,
+    window left, information block at 125 mm, subject at 98.5 mm, fold
+    marks at 105/210 mm, hole mark at 148.5 mm); French letters with the
+    window on the right and fold marks at 99/198 mm (DL); the issuer's legal
+    details in the footer of every page. `InvoicePdf` on it: information
+    block (dates, service date — Leistungsdatum —, customer, both VAT ids,
+    the offer), items, totals, the tax note, payment or acceptance terms,
+    the late-payment mentions for businesses (FR art. L441-10, DE § 288
+    BGB), the bank box. `ReminderPdf`: levels 1–3 in the customer's
+    language with interest and fee. German offers are "Angebot". Letterheads
+    may carry a German tax number. tool/sample_letters.dart writes samples.
   * Invoices, stage B — the workflow (`InvoiceDesk`): drafts of offers and
     invoices (tax from issuer, customer and category, language from the
     customer); issuing gives the number — offers D2026-0001, invoices

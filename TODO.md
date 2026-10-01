@@ -14,8 +14,14 @@
 
 - [ ] Reminders (rappel, pénalité, arrêt) as in facture's LaTeX template:
   texts per level, late-payment penalty (ECB rate + 7 points)
-- [ ] Invoices in flutter_fibu (list, new, PDF preview/share)
+- [ ] Invoices in flutter_fibu: list with status (offers open, invoices
+  overdue), new offer/invoice, answer, invoice from offer, reminders due,
+  payment, PDF preview/share
+- [ ] Settings editors in flutter_fibu (Android has no YAML editing): the
+  letterheads (issuer, legal ids, tax regime, rates and reverse-charge
+  categories, bank, booking accounts, reminder delays, penalty rate, logo)
+  and the customer register (business/private, country, VAT id, language,
+  window)
 - [ ] Estimates: "valid until" instead of the due date; turn an estimate
   into an invoice
 - [ ] Paying an invoice: a stored op receivable → bank, found by number
-

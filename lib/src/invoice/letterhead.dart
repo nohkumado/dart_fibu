@@ -14,6 +14,9 @@ class Letterhead {
   final List<String> address;
   final String phone, email, vatId, siret;
 
+  /// German tax number (Steuernummer), when there is no VAT id.
+  final String taxNumber;
+
   /// Printed when an invoice has no VAT, e.g. "TVA non applicable, art. 293 B du CGI".
   final String vatNote;
   final String bankName, iban, bic;
@@ -53,6 +56,7 @@ class Letterhead {
     this.email = '',
     this.vatId = '',
     this.siret = '',
+    this.taxNumber = '',
     this.vatNote = '',
     this.bankName = '',
     this.iban = '',
@@ -86,6 +90,7 @@ class Letterhead {
       email: s('email'),
       vatId: s('vat_id'),
       siret: s('siret'),
+      taxNumber: s('tax_number'),
       vatNote: s('vat_note'),
       bankName: (bank['name'] ?? '').toString(),
       iban: (bank['iban'] ?? '').toString(),
