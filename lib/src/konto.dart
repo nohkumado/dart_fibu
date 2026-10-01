@@ -166,7 +166,8 @@ class Konto {
       }
     } else {
       var f = NumberFormat.currency(symbol: cur2sym(cur));
-      double valAsd = valuta / 100;
+      // in the account's normal direction: no minus on liabilities/income
+      double valAsd = balance / 100;
       double budAsd = budget / 100;
       String pname = (name == "no name") ? "$number" : name;
       result = (debug)
@@ -198,6 +199,14 @@ class Konto {
     //print("extracted +$ktoName+  -$desc- ,=$w=,  '$budget' #$valuta#\n");
     return (result);
   }
+
+  /// The balance in the account's normal direction, as a person reads it:
+  /// assets and expenses as debit balance, liabilities and income as credit
+  /// balance — both positive when things are as usual; negative means the
+  /// unusual side (an overdrawn bank account, a refund larger than the
+  /// income). [valuta] keeps the booked sign (plus side gains), where all
+  /// accounts together make exactly 0.
+  int get balance => accountType.debitSide ? valuta : -valuta;
 
   /// The KPL's role column: the role, or `heading`.
   String get roleKey => heading ? "heading" : accountType.key;

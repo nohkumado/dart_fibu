@@ -142,33 +142,33 @@ class KontoPlan {
   List<Konto> withRole(AccountType role) =>
       accounts().where((k) => k.accountType == role).toList();
 
-  /// Assets, liabilities, expenses and income by the accounts' roles, with
-  /// their sums and the check that both results agree (must be 0). Works
-  /// for any chart: the roles, not the blocks, decide.
+  /// Assets, liabilities, expenses and income by the accounts' roles, each
+  /// balance in its normal direction (see [Konto.balance]): the balance
+  /// sheet's surplus (assets − liabilities) and the income statement's
+  /// (income − expenses) must agree — the check line must read 0. Works for
+  /// any chart: the roles, not the blocks, decide.
   String analysis() {
-    String result = "=" * 30 + "    Analysis    " + "=" * 30 + "\n";
     final format = Konto();
+    String amount(int cents) => format.numFormat(cents).trimRight();
+    String result = "=" * 30 + "    Analysis    " + "=" * 30 + "\n";
     int section(String title, AccountType role, String total) {
       final list = withRole(role);
       result += "$title\n";
       for (final k in list) {
-        result += "${k.toString(recursive: false)}\n";
+        result += k.toString(recursive: false);
       }
-      final sum = list.fold(0, (s, k) => s + k.valuta);
-      result += " " * 60 + "$total ${format.numFormat(sum)}\n";
+      final sum = list.fold(0, (s, k) => s + k.balance);
+      result += " " * 60 + "$total ${amount(sum)}\n\n";
       return sum;
     }
 
-    // one sign rule for every account (the plus side gains): liabilities
-    // and income stand negative, all balances together make 0
-    final sumActiva = section("Aktiva", AccountType.Actif, "Aktiva insgesamt");
-    final sumPassiva = section("Passiva", AccountType.Passif, "Passiva insgesamt");
-    result += " " * 60 + "Ueberschuss ${format.numFormat(sumActiva + sumPassiva)}\n";
-    final sumKosten = section("Kosten", AccountType.Charge, "Kosten insgesamt");
-    final sumEinnahmen = section("Einnahmen", AccountType.Produit, "Einnahmen insgesamt");
-    result += " " * 60 + "Ueberschuss ${format.numFormat(-(sumEinnahmen + sumKosten))}\n";
-    result += " " * 50 +
-        "Gueltigkeit (muss 0 sein) ${format.numFormat(sumActiva + sumPassiva + sumKosten + sumEinnahmen)}\n";
+    final aktiva = section("Aktiva", AccountType.Actif, "Aktiva insgesamt");
+    final passiva = section("Passiva", AccountType.Passif, "Passiva insgesamt");
+    result += " " * 60 + "Ueberschuss ${amount(aktiva - passiva)}\n\n";
+    final kosten = section("Kosten", AccountType.Charge, "Kosten insgesamt");
+    final einnahmen = section("Einnahmen", AccountType.Produit, "Einnahmen insgesamt");
+    result += " " * 60 + "Ueberschuss ${amount(einnahmen - kosten)}\n";
+    result += " " * 50 + "Gueltigkeit (muss 0 sein) ${amount((aktiva - passiva) - (einnahmen - kosten))}\n";
     return result;
   }
 

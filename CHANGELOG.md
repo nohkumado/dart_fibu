@@ -1,3 +1,18 @@
+# Unreleased
+
+  * Balances shown in each account's normal direction (`Konto.balance`):
+    assets and expenses as debit balance, liabilities and income as credit
+    balance — positive as usual, negative only when something is unusual.
+    The analysis reads assets − liabilities = income − expenses; the check
+    line must read 0. The booked values (`valuta`) keep one sign rule (the
+    plus side gains), all accounts together exactly 0.
+  * me2000 sample corrected and turned into a format-2 book: its journal
+    was written "put into, taken from" — swapped to the book's convention
+    "date, taken from, put into, description, amount"; the planets (230–249)
+    are assets (role actif), not liabilities as their block said. It now
+    balances: assets 6 011 339,11 = income − expenses, liabilities 0.
+  * The analysis banner was printed twice.
+
 # 0.2.0
 
   * Book format 2: the file starts with `FORMAT,nohfibu,<format>,<software>`

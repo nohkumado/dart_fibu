@@ -71,8 +71,8 @@ date,ktominus,ktoplus,desc,cur,valuta
     expect(analysis, contains("Prestations"));
     // income 300 - expenses 50 = 250; assets 1250 - liabilities -1000 → the two agree
     expect(book.kpl.get("512")!.valuta, 125000);
-    final zero = Konto().numFormat(0);
-    final surplus = Konto().numFormat(25000);
+    final zero = Konto().numFormat(0).trimRight();
+    final surplus = Konto().numFormat(25000).trimRight();
     expect(RegExp("Ueberschuss +${RegExp.escape(surplus)}").allMatches(analysis), hasLength(2),
         reason: "balance sheet and income statement agree: 250");
     expect(analysis, matches(RegExp("Gueltigkeit \\(muss 0 sein\\) +${RegExp.escape(zero)}")));
@@ -83,4 +83,19 @@ date,ktominus,ktoplus,desc,cur,valuta
     final pubspec = File('pubspec.yaml').readAsStringSync();
     expect(RegExp(r'^version: (\S+)', multiLine: true).firstMatch(pubspec)!.group(1), BookFormat.software);
   });
+
+  test('me2000 (corrected: your convention, planets as assets) balances', () {
+    final book = load('assets/wbsamples/me2000.csv');
+    expect(book.formatVersion, 2);
+    expect(book.kpl.get("231")!.accountType, AccountType.Actif, reason: "a planet is a possession");
+    book.execute();
+    int total(AccountType role) => book.kpl.withRole(role).fold(0, (s, k) => s + k.balance);
+    expect(total(AccountType.Actif), 601133911);
+    expect(total(AccountType.Passif), 0);
+    expect(total(AccountType.Produit) - total(AccountType.Charge),
+        total(AccountType.Actif) - total(AccountType.Passif));
+    // every booking +x on one account, -x on the other
+    expect(book.kpl.accounts().fold(0, (s, k) => s + k.valuta), 0);
+  });
 }
+

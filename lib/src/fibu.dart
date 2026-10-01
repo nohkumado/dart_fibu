@@ -30,7 +30,6 @@ class Fibu {
 
     String result = book.toString() + "\n";
     result += book.kpl.toString(extracts: true);
-    result += "=" * 20 + "    Analysis    " + "=" * 20 + "\n";
     //result += "Aktiva    \n"+ (book.kpl.get("1")).toString(recursive: true)+"\n";
     result += book.kpl.analysis();
     return result;
