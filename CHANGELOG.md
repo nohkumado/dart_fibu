@@ -1,5 +1,15 @@
 # Unreleased
 
+  * Invoices, stage B — the workflow (`InvoiceDesk`): drafts of offers and
+    invoices (tax from issuer, customer and category, language from the
+    customer); issuing gives the number — offers D2026-0001, invoices
+    2026-0001, continuous in the order of issue —; an offer's answer
+    (accepted / refused); an accepted offer becomes its invoice (linked
+    both ways); `remindersDue` lists the overdue invoices with the level
+    now due (letterhead delays, one level at a time), `Reminder` adds late
+    interest (letterhead rate, from level 2) and the recovery fee for
+    businesses; payments (partial too). For booking letterheads: issuing
+    books revenue and VAT → receivable, a payment receivable → bank.
   * Invoices, stage A — the model for the offer → invoice workflow:
     `Customer` (business or private, country, VAT id, language, envelope
     window: by the letter's language, fr right, else left), documents with

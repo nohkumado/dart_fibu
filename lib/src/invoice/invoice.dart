@@ -75,6 +75,29 @@ class Invoice {
     List<DocumentEvent>? events,
   }) : events = events ?? [];
 
+  /// The same document with a number (given when it is issued) and, when
+  /// given, other events.
+  Invoice withNumber(String number, {String? name}) => Invoice(
+        kind: kind,
+        lang: lang,
+        letterhead: letterhead,
+        name: name ?? this.name,
+        title: title,
+        date: date,
+        payDate: payDate,
+        serviceDate: serviceDate,
+        number: number,
+        address: address,
+        customerId: customerId,
+        category: category,
+        vatRate: vatRate,
+        taxKind: taxKind,
+        taxNote: taxNote,
+        items: items,
+        source: source,
+        events: events,
+      );
+
   /// Sum of the items before VAT, in cents.
   int get netCents => items.fold(0, (sum, i) => sum + i.totalCents);
 
