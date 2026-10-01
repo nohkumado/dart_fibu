@@ -226,8 +226,9 @@ class Konto {
 
     var budgetS =
         (formatted) ? "${sprintf("%12s", [f.format(budget / 100)])}" : budget;
+    // formatted (for people): the normal direction; raw (the file): booked
     var valutaS =
-        (formatted) ? "${sprintf("%12s", [f.format(valuta / 100)])}" : valuta;
+        (formatted) ? "${sprintf("%12s", [f.format(balance / 100)])}" : valuta;
     if (name == "no name" && desc.length > 0)
       asList.add([number, desc, cur, budgetS, valutaS, roleKey]);
     else if (desc.length > 0) asList.add([name, desc, cur, budgetS, valutaS, roleKey]);
