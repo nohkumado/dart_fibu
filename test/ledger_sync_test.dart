@@ -121,4 +121,35 @@ void main() {
       expect(l.store.documents.single.status(), InvoiceStatus.accepted);
     });
   });
+
+  test('LedgerDiff: exactly what an action changed', () {
+    final book = load('assets/wbsamples/compta2018.csv');
+    final store = InvoiceStore(customers: {'assoc': const Customer(id: 'assoc', name: 'A', address: ['1'])});
+    final draft = Invoice(letterhead: 'm', name: '', number: '', date: DateTime(2026), payDate: DateTime(2026, 2),
+        customerId: 'assoc', items: const [], uid: 'd1');
+    store.documents.add(draft);
+    final before = LedgerDiff.capture(book: book, store: store);
+
+    // an action: one journal line, a customer moved, the draft dropped, an
+    // issued invoice with its event
+    book.jrl.add(JrlLine(datum: DateTime(2026, 3, 1), kmin: book.kpl.get('4410'), kplu: book.kpl.get('1001'), desc: 'Cotisation', valuta: 3000));
+    store.customers['assoc'] = const Customer(id: 'assoc', name: 'A', address: ['2']);
+    store.documents.remove(draft);
+    final inv = Invoice(letterhead: 'm', name: 'x', number: '2026-0001', date: DateTime(2026), payDate: DateTime(2026, 2),
+        customerId: 'assoc', items: const [], uid: 'i1', events: [DocumentEvent(DateTime(2026), DocumentEventKind.issued)]);
+    store.documents.add(inv);
+
+    final ops = LedgerDiff.since(before, book: book, store: store);
+    expect(ops.map((o) => '${o.type} ${o.entity ?? o.data['desc'] ?? o.data['uid']}'), unorderedEquals([
+      'journal.add Cotisation',
+      'customer.put customer:assoc',
+      'document.put document:i1',
+      'document.event i1',
+      'document.put document:d1',
+    ]));
+    expect(ops.firstWhere((o) => o.entity == 'document:d1').data['deleted'], isTrue);
+    expect(LedgerDiff.since(LedgerDiff.capture(book: book, store: store), book: book, store: store), isEmpty,
+        reason: 'nothing changed: nothing to record');
+  });
 }
+

@@ -44,8 +44,8 @@ class ExtractLine extends JrlLine {
         (formatted) ? "${sprintf("%12s", [f.format(actSum / 100)])}" : actSum;
     data.add([
       date,
-      kminus.printname(),
-      kplus.printname(),
+      formatted ? kminus.printname() : '${kminus.printname()}'.trim(),
+      formatted ? kplus.printname() : '${kplus.printname()}'.trim(),
       "$desc",
       cur,
       valutaS,

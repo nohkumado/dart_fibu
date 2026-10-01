@@ -182,7 +182,9 @@ class JrlLine {
     var valutaS =
         (formatted) ? "${sprintf("%12s", [f.format(valuta / 100)])}" : valuta;
     data.add(
-        [date, _kminus.printname(), _kplus.printname(), "$desc", cur, valutaS]);
+        // the file gets the plain account names, the listing the padded ones
+        [date, formatted ? _kminus.printname() : '${_kminus.printname()}'.trim(),
+          formatted ? _kplus.printname() : '${_kplus.printname()}'.trim(), "$desc", cur, valutaS]);
   }
 
   /// Executes the transaction by updating the accounts (`kminus` and `kplus`).

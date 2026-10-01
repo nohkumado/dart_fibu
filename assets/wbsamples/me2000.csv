@@ -36,8 +36,8 @@ kto,dsc,cur,budget,valuta,role
 210,Debts to pay,EUR,0,0,passif
 221,non classable gains,EUR,0,0,passif
 230,Planet Trigamil 2069 Islandir,EUR,0,0,actif
-232,Planet Monticule 2154 Lasade,EUR,0,0,actif
 231,Planet Eden 2225 Mu,EUR,0,0,actif
+232,Planet Monticule 2154 Lasade,EUR,0,0,actif
 233,Planet Great-A'Thuin 2054 Jyhem,EUR,0,0,actif
 234,Planet Riga 3105 Gimlon,EUR,0,0,actif
 235,Planet Taii'gard 4188 Tiran,EUR,0,0,actif
@@ -79,1180 +79,1180 @@ kto,dsc,cur,budget,valuta,role
 437,Contribution of TheCleaner,EUR,0,0,produit
 438,Contribution of zHA,EUR,0,0,produit
 439,Contribution of woodydrn,EUR,0,0,produit
-443,Contribution of Rizzo,EUR,0,0,produit
 440,Contribution of Amorpha,EUR,0,0,produit
 441,Contribution of Tropan,EUR,0,0,produit
 442,Contribution of mosquito,EUR,0,0,produit
+443,Contribution of Rizzo,EUR,0,0,produit
 444,Contribution of Flashblade,EUR,0,0,produit
 JRL
-date,ktominus,ktoplus,desc,cur,valuta
-2000-08-11, 428, 101,SG on 3065,EUR,35000
-2000-08-11, 428, 103,contribution Pade,EUR,800000
-2000-08-11, 103, 128,retreat of Pade,EUR,3850000
-2000-08-11, 136, 231,30 CD for 2225,EUR,300000
-2000-08-11, 428, 231,SG for Eden 2225,EUR,35000
-2000-08-11, 428, 234,Hangar for Riga 3105,EUR,50000
-2000-08-11, 428, 238,SG for Phille 3065,EUR,35000
-2000-08-11, 436, 243,Turret for Lodestone 2084,EUR,500000
-2000-09-11, 436, 101,contribution by Mayhem,EUR,1000000
-2000-09-11, 436, 231,"30 CD, 100 Shields for Eden 2225",EUR,335000
-2000-09-11, 436, 231,SG for 2225,EUR,35000
-2000-09-11, 436, 243,Turret for Lodestone 2084,EUR,500000
-2000-09-26, 420, 102,first contribution of Lasade,EUR,210000
-2000-09-26, 423, 102,contribution angel'o'sphere,EUR,600000
-2000-09-26, 425, 102,Repayment of Gimlon,EUR,210000
-2000-09-26, 102, 125,Gimlon needed holds and shields,EUR,210000
-2000-09-27, 420, 102,contribution Lasade,EUR,2000000
-2000-09-27, 425, 102,contribution Gimlon,EUR,550000
-2000-09-27, 102, 231,Turret,EUR,500000
-2000-09-28, 428, 101,contribution Pade,EUR,261000
-2000-09-28, 429, 101,contribution Tiran,EUR,100000
-2000-09-28, 420, 102,contribution Lasade,EUR,1000000
-2000-09-28, 102, 125,Ship Knight for Gimlon,EUR,2866800
-2000-09-29, 421, 101,contribution Islandir,EUR,3500000
-2000-09-29, 423, 101,contribution angel'o'sphere,EUR,380000
-2000-09-29, 428, 101,contribution Pade,EUR,300000
-2000-09-29, 423, 102,contribution angel'o'sphere,EUR,1700000
-2000-09-29, 423, 102,contribution angel'o'sphere,EUR,550000
-2000-09-29, 423, 102,contribution angel'o'sphere,EUR,80000
-2000-09-29, 425, 102,contribution Gimlon,EUR,700000
-2000-09-29, 101, 123,Ship -Freighter for angel'o'sphere,EUR,2000000
-2000-09-29, 102, 123,Movement angel'o'sphere,EUR,1700000
-2000-09-29, 102, 123,Movement angel'o'sphere,EUR,1700000
-2000-09-29, 101, 128,Ship $Knight for Pade,EUR,2100000
-2000-09-30, 423, 231,Turret Eden,EUR,500000
-2000-10-02, 420, 101,contribution Lasade,EUR,1000000
-2000-10-02, 420, 101,contribution Lasade,EUR,1000000
-2000-10-02, 420, 101,contribution Lasade,EUR,2000000
-2000-10-02, 420, 101,contribution Lasade,EUR,700000
-2000-10-02, 422, 101,contribution Joanla,EUR,900000
-2000-10-02, 424, 101,contribution Destro,EUR,100000
-2000-10-02, 426, 101,contribution Jyhem,EUR,300000
-2000-10-02, 426, 101,contribution Jyhem,EUR,600000
-2000-10-02, 426, 101,contribution Jyhem,EUR,600000
-2000-10-02, 426, 101,contribution Jyhem,EUR,700000
-2000-10-02, 427, 101,contribution BreakMan,EUR,100000
-2000-10-02, 427, 101,contribution BreakMan,EUR,250000
-2000-10-02, 427, 101,contribution BreakMan,EUR,50000
-2000-10-02, 429, 101,contribution Tiran,EUR,100000
-2000-10-02, 101, 122,Ship $Vantage for Joanla,EUR,1900000
-2000-10-02, 101, 124,Ship Freighter for Destro,EUR,2100000
-2000-10-02, 101, 127,Ship $Freighter for BreakMan,EUR,2100000
-2000-10-02, 101, 129,retreat Tiran,EUR,350000
-2000-10-02, 101, 130,retreat Mu,EUR,35000
-2000-10-02, 421, 230,Various constructions for Trigamil,EUR,1225000
-2000-10-02, 423, 231,Various constructions for Eden,EUR,210000
-2000-10-02, 420, 232,Various constructions for Monticule,EUR,3245000
-2000-10-02, 426, 233,Various constructions for A'Thuin,EUR,170000
-2000-10-02, 425, 234,Various constructions for Riga,EUR,1440000
-2000-10-02, 101, 235,Turret for Taii'gard,EUR,350000
-2000-10-02, 429, 235,Various constructions for Taii'gard,EUR,760000
-2000-10-02, 431, 236,Various constructions for Oc Ra,EUR,85000
-2000-10-02, 430, 237,SG for Badlands,EUR,35000
-2000-10-02, 430, 237,Various constructions for The Badlands,EUR,35000
-2000-10-02, 428, 238,Various constructions for Phille,EUR,70000
-2000-10-03, 421, 101,contribution Islandir,EUR,7000000
-2000-10-03, 422, 101,contribution Joanla,EUR,800000
-2000-10-03, 426, 101,contribution Jyhem,EUR,700000
-2000-10-03, 428, 101,contribution Pade,EUR,200000
-2000-10-03, 432, 101,contribution Sukyako,EUR,250000
-2000-10-03, 423, 102,contribution angel'o'sphere,EUR,450000
-2000-10-03, 101, 120,Ship PSF for Lasade,EUR,8767500
-2000-10-03, 101, 121,Ship PSF for Islandir,EUR,7800000
-2000-10-03, 101, 128,retreat Pade,EUR,100000
-2000-10-06, 420, 101,contribution Lasade,EUR,2000000
-2000-10-06, 424, 101,contribution Destro,EUR,1000000
-2000-10-06, 425, 102,contribution Gimlon,EUR,2300000
-2000-10-06, 420, 232,Turret for Monticule,EUR,500000
-2000-10-07, 421, 101,contribution Islandir,EUR,2000000
-2000-10-07, 422, 101,contribution Joanla,EUR,500000
-2000-10-07, 426, 101,contribution Jyhem,EUR,300000
-2000-10-07, 428, 101,contribution Pade,EUR,350000
-2000-10-07, 423, 102,contribution angel'o'sphere,EUR,350000
-2000-10-07, 101, 128,retreat Pade,EUR,500000
-2000-10-07, 101, 129,Retreat Tiran,EUR,100000
-2000-10-07, 101, 129,Retreat Tiran,EUR,425000
-2000-10-09, 426, 101,contribution Jyhem,EUR,500000
-2000-10-09, 420, 232,Turret for Monticule,EUR,500000
-2000-10-10, 420, 101,contribution Lasade,EUR,1000000
-2000-10-10, 422, 101,contribution Joanla,EUR,600000
-2000-10-10, 427, 101,contribution BreakMan,EUR,450000
-2000-10-10, 428, 101,contribution Pade,EUR,1000000
-2000-10-10, 433, 101,contribution Xeon,EUR,200000
-2000-10-10, 423, 102,contribution angel'o'sphere,EUR,135000
-2000-10-10, 436, 231,20 CD/100 Shields for 2225,EUR,235000
-2000-10-10, 436, 231,Hangar for 2225 Eden,EUR,50000
-2000-10-10, 420, 232,Turret for Monticule,EUR,500000
-2000-10-10, 101, 235,Turret for Taii'gard,EUR,500000
-2000-10-10, 436, 243,SG for 2084 Lodestone,EUR,35000
-2000-10-10, 436, 243,Turret for 2084 Lodestone,EUR,500000
-2000-10-11, 420, 101,contribution Lasade,EUR,1000000
-2000-10-11, 436, 101,contribution by Mayhem,EUR,750000
-2000-10-11, 420, 232,Turret for Monticule,EUR,500000
-2000-10-11, 430, 233,Various constructions for A'Thuin,EUR,190000
-2000-10-11, 428, 234,SG for Riga 3105,EUR,35000
-2000-10-11, 428, 234,Turret for Riga,EUR,500000
-2000-10-11, 426, 235,Turret for Taii'gard,EUR,500000
-2000-10-11, 428, 244,SG for Wandz 4244 Really 4122,EUR,35000
-2000-10-12, 420, 101,contribution Lasade,EUR,1000000
-2000-10-12, 422, 101,contribution Joanla,EUR,600000
-2000-10-12, 424, 101,contribution Destro,EUR,1100000
-2000-10-12, 426, 101,contribution Jyhem,EUR,2000000
-2000-10-12, 434, 101,contribution Vampire,EUR,401400
-2000-10-12, 434, 101,contribution Vampire,EUR,432100
-2000-10-12, 101, 125,Ship PSF for Gimlon,EUR,8200000
-2000-10-13, 421, 101,contribution Islandir,EUR,2500000
-2000-10-13, 426, 101,contribution Jyhem,EUR,2000000
-2000-10-13, 426, 101,contribution Jyhem,EUR,300000
-2000-10-13, 427, 101,contribution BreakMan,EUR,50000
-2000-10-13, 428, 101,contribution Pade,EUR,120000
-2000-10-13, 428, 101,contribution Pade,EUR,400000
-2000-10-13, 430, 101,contribution Mu,EUR,100000
-2000-10-13, 423, 102,contribution angel'o'sphere,EUR,550000
-2000-10-13, 425, 102,contribution Gimlon,EUR,2000000
-2000-10-13, 425, 102,contribution Gimlon,EUR,3000000
-2000-10-13, 101, 123,Ship Negotiator for angel'o'sphere,EUR,150000
-2000-10-13, 101, 126,Ship -PSF for Jyhem,EUR,9100000
-2000-10-13, 420, 232,Hangar for Monticule,EUR,50000
-2000-10-13, 420, 232,SG for Monticule,EUR,35000
-2000-10-13, 420, 232,SG for Monticule,EUR,35000
-2000-10-13, 430, 232,SG for Monticule,EUR,35000
-2000-10-13, 101, 235,Hangar for Taii'gard,EUR,50000
-2000-10-13, 101, 235,Turret for Taii'gard,EUR,350000
-2000-10-13, 101, 235,Turret for Taii'gard,EUR,500000
-2000-10-13, 101, 235,Turret for Taii'gard,EUR,500000
-2000-10-14, 424, 101,contribution Destro,EUR,300000
-2000-10-14, 424, 101,contribution Destro,EUR,4700
-2000-10-14, 428, 101,contribution Pade,EUR,450000
-2000-10-14, 429, 101,contribution Tiran,EUR,125000
-2000-10-14, 429, 101,contribution Tiran,EUR,35000
-2000-10-14, 430, 101,contribution Mu,EUR,200000
-2000-10-14, 434, 101,contribution Vampire,EUR,110200
-2000-10-14, 434, 101,contribution Vampire,EUR,36000
-2000-10-14, 425, 102,contribution Gimlon,EUR,2000000
-2000-10-14, 101, 134,retreat Vampire,EUR,125000
-2000-10-14, 421, 230,CD for Trigamil,EUR,150000
-2000-10-14, 430, 232,Hangar for Monticule,EUR,50000
-2000-10-14, 430, 232,SG for Monticule,EUR,35000
-2000-10-14, 430, 232,SG for Monticule,EUR,35000
-2000-10-14, 430, 232,SG for Monticule,EUR,35000
-2000-10-14, 430, 232,SG for Monticule,EUR,35000
-2000-10-14, 421, 237,CD for Badlands,EUR,200000
-2000-10-14, 430, 237,SG for Badlands,EUR,35000
-2000-10-17, 420, 101,contribution Lasade,EUR,300000
-2000-10-17, 420, 101,contribution Lasade,EUR,4000000
-2000-10-17, 424, 101,contribution Destro,EUR,1000000
-2000-10-17, 427, 101,contribution BreakMan,EUR,500000
-2000-10-17, 425, 102,contribution Gimlon,EUR,5000000
-2000-10-17, 101, 124,Ship PSF for Destro,EUR,9100000
-2000-10-17, 101, 128,Ship PSF for Pade,EUR,9300000
-2000-10-17, 420, 232,SG for Monticule,EUR,35000
-2000-10-17, 420, 232,SG for Monticule,EUR,35000
-2000-10-17, 420, 232,SG for Monticule,EUR,35000
-2000-10-17, 420, 232,SG for Monticule,EUR,35000
-2000-10-17, 430, 232,SG for Monticule,EUR,35000
-2000-10-17, 101, 235,Turret for Taii'gard,EUR,480000
-2000-10-17, 101, 310,Shields taken by Tiran,EUR,125000
-2000-10-18, 426, 101,contribution Jyhem,EUR,1000000
-2000-10-18, 430, 101,contribution Mu,EUR,300000
-2000-10-18, 420, 232,SG for Monticule,EUR,35000
-2000-10-18, 420, 232,SG for Monticule,EUR,35000
-2000-10-18, 420, 232,SG for Monticule,EUR,35000
-2000-10-18, 420, 232,SG for Monticule,EUR,35000
-2000-10-18, 101, 235,Stuff for Taii'gard,EUR,270000
-2000-10-19, 420, 101,contribution Lasade,EUR,1650000
-2000-10-19, 422, 101,contribution Joanla,EUR,1100000
-2000-10-19, 426, 101,contribution Jyhem,EUR,5000000
-2000-10-19, 429, 101,contribution Tiran,EUR,50000
-2000-10-19, 434, 101,contribution Vampire,EUR,41800
-2000-10-19, 425, 102,contribution Gimlon,EUR,2000000
-2000-10-19, 420, 232,SG for Monticule,EUR,35000
-2000-10-19, 420, 232,SG for Monticule,EUR,35000
-2000-10-19, 101, 235,Turret for Taii'gard,EUR,500000
-2000-10-20, 421, 101,contribution Islandir,EUR,2000000
-2000-10-20, 422, 101,contribution Joanla,EUR,700000
-2000-10-20, 424, 101,contribution Destro,EUR,1200000
-2000-10-20, 428, 101,contribution Pade,EUR,1547200
-2000-10-20, 429, 101,contribution Tiran,EUR,50000
-2000-10-20, 435, 101,contribution Jerico,EUR,9500
-2000-10-20, 436, 101,contribution Mayhem,EUR,300000
-2000-10-20, 425, 102,contribution Gimlon,EUR,2000000
-2000-10-20, 101, 123,Ship PSF for angel'o'sphere,EUR,10100000
-2000-10-20, 101, 134,Ship Blockaderunner for Vampire,EUR,6000000
-2000-10-20, 420, 232,SG for Monticule,EUR,35000
-2000-10-20, 101, 242,Turret for Dark Sun,EUR,500000
-2000-10-20, 101, 242,Turret for Taii'gard,EUR,500000
-2000-10-21, 420, 101,contribution Lasade,EUR,3000000
-2000-10-21, 424, 101,contribution Destro,EUR,1000000
-2000-10-21, 429, 101,contribution Tiran,EUR,60000
-2000-10-21, 437, 101,contribution TheCleaner,EUR,400000
-2000-10-21, 101, 129,Ship -Blockaderunner for Tiran,EUR,6000000
-2000-10-21, 101, 231,Turret for Eden,EUR,100000
-2000-10-22, 420, 101,contribution Lasade,EUR,4000000
-2000-10-22, 424, 101,contribution Destro,EUR,1000000
-2000-10-22, 428, 101,contribution Pade,EUR,100000
-2000-10-22, 429, 101,contribution Tiran,EUR,60000
-2000-10-22, 425, 102,contribution Gimlon,EUR,500000
-2000-10-22, 101, 120,Ship Seeker for Lasade,EUR,4000000
-2000-10-22, 436, 231,SG for Eden,EUR,35000
-2000-10-22, 436, 231,SG for Eden,EUR,35000
-2000-10-22, 436, 231,SG for Eden,EUR,35000
-2000-10-22, 436, 231,SG for Eden,EUR,35000
-2000-10-22, 420, 232,SG for Monticule,EUR,35000
-2000-10-22, 420, 232,SG for Monticule,EUR,35000
-2000-10-22, 420, 232,SG for Monticule,EUR,35000
-2000-10-22, 420, 232,SG for Monticule,EUR,35000
-2000-10-22, 436, 232,SG for Monticule,EUR,35000
-2000-10-22, 436, 232,SG for Monticule,EUR,35000
-2000-10-22, 101, 240,Turret for Eden,EUR,500000
-2000-10-22, 101, 242,Turret for Dark Sun,EUR,500000
-2000-10-23, 420, 232,SG for Monticule,EUR,35000
-2000-10-24, 436, 231,contribution Mayhem,EUR,850000
-2000-10-24, 420, 232,SG for Monticule,EUR,35000
-2000-10-24, 430, 232,Hangar for Monticule,EUR,50000
-2000-10-24, 101, 240,Turret for Planet of the apes,EUR,500000
-2000-10-25, 420, 101,contribution Lasade,EUR,4500000
-2000-10-25, 422, 101,contribution Joanla,EUR,1200000
-2000-10-25, 424, 101,contribution Destro,EUR,800000
-2000-10-25, 427, 101,contribution BreakMan,EUR,700000
-2000-10-25, 428, 101,contribution Pade,EUR,1000000
-2000-10-25, 429, 101,contribution Tiran,EUR,100000
-2000-10-25, 425, 102,contribution Gimlon,EUR,1500000
-2000-10-25, 425, 102,contribution Gimlon,EUR,3500000
-2000-10-25, 101, 120,Ship Punisher for Lasade,EUR,4500000
-2000-10-25, 101, 122,Ship PSF for Joanla,EUR,9500000
-2000-10-25, 101, 129,Retreat Tiran,EUR,250000
-2000-10-25, 425, 238,Turret for Phille,EUR,500000
-2000-10-25, 429, 241,SG for unkown Planet,EUR,35000
-2000-10-25, 429, 241,SG for unkown Planet,EUR,35000
-2000-10-25, 425, 310,mines and CD Gimlon,EUR,2500000
-2000-10-26, 421, 101,contribution Islandir,EUR,4000000
-2000-10-26, 422, 101,contribution Joanla,EUR,1000000
-2000-10-26, 424, 101,contribution Destro,EUR,1000000
-2000-10-26, 428, 101,contribution Pade,EUR,1000000
-2000-10-26, 429, 101,contribution Tiran,EUR,100000
-2000-10-26, 429, 101,contribution Tiran,EUR,224000
-2000-10-26, 429, 101,contribution Tiran,EUR,50000
-2000-10-26, 430, 101,contribution Mu,EUR,300000
-2000-10-26, 437, 101,contribution TheCleaner,EUR,4800000
-2000-10-26, 423, 102,contribution angel'o'sphere,EUR,2000000
-2000-10-26, 101, 134,shields for Vampire,EUR,1250000
-2000-10-26, 101, 137,Ship PSF for TheCleaner,EUR,9400000
-2000-10-26, 436, 231,various contributions for Eden,EUR,745000
-2000-10-26, 420, 232,Hangar for Monticule,EUR,50000
-2000-10-26, 420, 232,Hangar for Monticule,EUR,50000
-2000-10-26, 420, 232,SG for Monticule,EUR,35000
-2000-10-26, 430, 232,Hangar for Monticule,EUR,50000
-2000-10-26, 101, 235,SG for Taii'gard,EUR,35000
-2000-10-26, 421, 238,Turret for Trigamil,EUR,500000
-2000-10-26, 429, 241,SG for unkown Planet,EUR,35000
-2000-10-27, 420, 101,contribution Lasade,EUR,5500000
-2000-10-27, 424, 101,contribution Destro,EUR,1000000
-2000-10-27, 428, 101,contribution Pade,EUR,1250000
-2000-10-27, 428, 101,contribution Pade,EUR,4000000
-2000-10-27, 429, 101,contribution Tiran,EUR,225000
-2000-10-27, 430, 101,contribution Mu,EUR,125000
-2000-10-27, 430, 101,contribution Mu,EUR,125000
-2000-10-27, 430, 101,contribution Mu,EUR,650000
-2000-10-27, 434, 101,contribution Vampire,EUR,167500
-2000-10-27, 435, 101,contribution Jerico,EUR,90000
-2000-10-27, 437, 101,contribution TheCleaner,EUR,2200000
-2000-10-27, 101, 120,Ship 2Punisher for Lasade,EUR,5500000
-2000-10-27, 101, 128,Ship Seeker for Pade,EUR,4000000
-2000-10-27, 101, 129,Retreat Tiran,EUR,35000
-2000-10-27, 101, 130,Ship PSF for Mu,EUR,9400000
-2000-10-27, 420, 232,Hangar for Monticule,EUR,50000
-2000-10-27, 420, 232,Hangar for Monticule,EUR,50000
-2000-10-27, 429, 235,SG for Taii'gard,EUR,35000
-2000-10-27, 429, 235,SG for Taii'gard,EUR,35000
-2000-10-27, 429, 235,SG for Taii'gard,EUR,35000
-2000-10-27, 429, 235,SG for Taii'gard,EUR,35000
-2000-10-27, 421, 238,Turret for Trigamil,EUR,500000
-2000-10-27, 428, 238,Various constructions for Phille,EUR,500000
-2000-10-27, 101, 240,Turret for planet of the Apes,EUR,500000
-2000-10-28, 424, 101,contribution Destro,EUR,500000
-2000-10-28, 435, 101,contribution Jerico,EUR,100000
-2000-10-28, 101, 134,retreat Vampire,EUR,312000
-2000-10-28, 420, 232,Hangar for Monticule,EUR,50000
-2000-10-28, 420, 232,Hangar for Monticule,EUR,50000
-2000-10-28, 430, 232,Hangar for Monticule,EUR,50000
-2000-10-28, 429, 235,SG for Taii'gard,EUR,35000
-2000-10-28, 101, 240,Turret for planet of the Apes,EUR,500000
-2000-10-29, 428, 101,contribution Pade,EUR,3500000
-2000-10-29, 429, 101,contribution Tiran,EUR,100000
-2000-10-29, 430, 101,contribution Mu,EUR,1200000
-2000-10-29, 434, 101,contribution Vampire,EUR,949700
-2000-10-29, 435, 101,contribution Jerico,EUR,100000
-2000-10-29, 423, 102,contribution angel'o'sphere,EUR,740000
-2000-10-29, 101, 125,retreat of Gimlon,EUR,740000
-2000-10-29, 101, 128,Ship AdvancedCarrier for Pade,EUR,3500000
-2000-10-29, 436, 231,various contributions for Eden,EUR,1210000
-2000-10-29, 420, 232,Hangar for Monticule,EUR,50000
-2000-10-29, 420, 232,Hangar for Monticule,EUR,50000
-2000-10-29, 420, 232,Hangar for Monticule,EUR,50000
-2000-10-29, 429, 235,SG for Taii'gard,EUR,35000
-2000-10-29, 429, 310,contribution Tiran,EUR,50000
-2000-10-30, 420, 101,contribution Lasade,EUR,1000000
-2000-10-30, 421, 101,contribution Islandir,EUR,3000000
-2000-10-30, 422, 101,contribution Joanla,EUR,1700000
-2000-10-30, 425, 101,contribution Gimlon,EUR,4500000
-2000-10-30, 429, 101,contribution Tiran,EUR,125000
-2000-10-30, 429, 101,contribution Tiran,EUR,500000
-2000-10-30, 435, 101,contribution Jerico,EUR,150000
-2000-10-30, 437, 101,contribution TheCleaner,EUR,2200000
-2000-10-30, 437, 101,contribution TheCleaner,EUR,600000
-2000-10-30, 423, 102,contribution angel'o'sphere,EUR,770000
-2000-10-30, 101, 125,Ship Punisher for Gimlon,EUR,4500000
-2000-10-30, 101, 134,Ship PSF for Vampire,EUR,9400000
-2000-10-30, 101, 137,retreat of TheCleaner,EUR,300000
-2000-10-30, 420, 232,Hangar for Monticule,EUR,50000
-2000-10-30, 420, 232,Hangar for Monticule,EUR,50000
-2000-10-30, 430, 232,SG for Monticule,EUR,35000
-2000-10-30, 429, 235,SG for Taii'gard,EUR,35000
-2000-10-30, 429, 235,SG for Taii'gard,EUR,35000
-2000-10-31, 421, 230,Turret for Trigamil,EUR,500000
-2000-10-31, 420, 232,Hangar for Monticule,EUR,50000
-2000-10-31, 429, 235,SG for Taii'gard,EUR,35000
-2000-10-31, 429, 235,SG for Taii'gard,EUR,35000
-2000-10-31, 437, 238,SG for Phille,EUR,35000
-2000-10-31, 437, 238,Turret for Phille,EUR,500000
-2000-10-31, 437, 238,Turret for Phille,EUR,500000
-2000-11-01, 422, 101,contribution Joanla,EUR,1700000
-2000-11-01, 424, 101,contribution Destro,EUR,1600000
-2000-11-01, 424, 101,contribution Destro,EUR,500000
-2000-11-01, 427, 101,contribution BreakMan,EUR,1000000
-2000-11-01, 428, 101,contribution Pade,EUR,2000000
-2000-11-01, 429, 101,contribution Tiran,EUR,200000
-2000-11-01, 430, 101,contribution Mu,EUR,1100000
-2000-11-01, 434, 101,contribution Vampire,EUR,3443600
-2000-11-01, 435, 101,contribution Jerico,EUR,100000
-2000-11-01, 101, 103,trader submission to scouts,EUR,500000
-2000-11-01, 101, 129,retreat of Tiran,EUR,500000
-2000-11-01, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-01, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-01, 430, 233,Turret for Great-A'Thuin 2054,EUR,500000
-2000-11-01, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-01, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-01, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-01, 437, 238,Turret for Phille 3065,EUR,500000
-2000-11-01, 435, 242,Turret for Dark-Sun 3183,EUR,500000
-2000-11-02, 420, 101,contribution Lasade,EUR,500000
-2000-11-02, 422, 101,contribution Joanla,EUR,1200000
-2000-11-02, 422, 101,contribution Joanla,EUR,1200000
-2000-11-02, 423, 101,contribution angel'o'sphere,EUR,1150000
-2000-11-02, 424, 101,contribution Destro,EUR,9000000
-2000-11-02, 425, 101,contribution Gimlon,EUR,5750000
-2000-11-02, 428, 101,contribution Pade,EUR,1000000
-2000-11-02, 429, 101,contribution Tiran,EUR,100000
-2000-11-02, 429, 101,contribution Tiran,EUR,500000
-2000-11-02, 434, 101,contribution Vampire,EUR,1389800
-2000-11-02, 101, 103,Tradecaste subvention to Scouts,EUR,500000
-2000-11-02, 101, 121,Ship $Punisher for Islandir,EUR,5000000
-2000-11-02, 101, 123,Ship DarkAvenger for angel'o'sphere,EUR,16500000
-2000-11-02, 101, 136,Ship PSF for Mayhem,EUR,9400000
-2000-11-02, 436, 231,Hangar for Eden 2225,EUR,50000
-2000-11-02, 436, 231,Hangar for Eden 2225,EUR,50000
-2000-11-02, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-02, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-02, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-02, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-02, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-02, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-02, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-02, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-02, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-02, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-02, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-02, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-02, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-02, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-02, 436, 243,Hangar for Lodestone 2084,EUR,50000
-2000-11-02, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-02, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-02, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-02, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-03, 102, 101,correction,EUR,29418200
-2000-11-03, 434, 101,contribution Vampire,EUR,637700
-2000-11-03, 101, 103,trader - scout subvention,EUR,250000
-2000-11-03, 428, 103,contribution Pade,EUR,1750000
-2000-11-03, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-03, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-03, 430, 233,Turret for Great-A'Thuin 2054,EUR,500000
-2000-11-03, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-03, 103, 301,mning??,EUR,1500000
-2000-11-04, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-04, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-04, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-06, 420, 101,contribution Lasade,EUR,250000
-2000-11-06, 422, 101,contribution Joanla,EUR,2000000
-2000-11-06, 424, 101,contribution Destro,EUR,1000000
-2000-11-06, 424, 101,contribution Destro,EUR,2500000
-2000-11-06, 434, 101,contribution Vampire,EUR,1500000
-2000-11-06, 435, 101,contribution Jerico,EUR,50000
-2000-11-06, 437, 101,contribution TheCleaner,EUR,1600000
-2000-11-06, 438, 101,contribution zHA,EUR,4000000
-2000-11-06, 101, 129,retreat of Tiran,EUR,200000
-2000-11-06, 101, 129,Ship -DarkAvenger for Tiran,EUR,16500000
-2000-11-06, 101, 135,retreat of Jerico,EUR,500000
-2000-11-06, 436, 231,Hangar for Eden 2225,EUR,50000
-2000-11-06, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-06, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-06, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-06, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-06, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-06, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-06, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-06, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-06, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-06, 430, 233,Turret for Great-A'Thuin 2054,EUR,500000
-2000-11-06, 430, 233,Turret for Great-A'Thuin 2054,EUR,500000
-2000-11-06, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-06, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-06, 437, 238,Hangar for Phille 3065,EUR,50000
-2000-11-06, 437, 238,Hangar for Phille 3065,EUR,50000
-2000-11-06, 437, 238,Turret for Phille 3065,EUR,500000
-2000-11-06, 435, 242,Turret for Dark-Sun 3183,EUR,500000
-2000-11-06, 438, 242,SG for Wandz,EUR,35000
-2000-11-06, 436, 243,Turret for Lodestone 2084,EUR,500000
-2000-11-06, 429, 310,plasma boosters on 4188,EUR,200000
-2000-11-07, 121, 101,got back punisher money...,EUR,5000000
-2000-11-07, 424, 101,contribution Destro,EUR,1500000
-2000-11-07, 436, 101,contribution Mayhem,EUR,1000000
-2000-11-07, 428, 103,contribution Pade,EUR,3500000
-2000-11-07, 436, 231,Hangar for Eden 2225,EUR,50000
-2000-11-07, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-07, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-07, 436, 231,Turret for Eden 2225,EUR,500000
-2000-11-07, 436, 231,Turret for Eden 2225,EUR,500000
-2000-11-07, 436, 231,Turret for Eden 2225,EUR,500000
-2000-11-07, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-07, 438, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-07, 438, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-07, 438, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-07, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-07, 436, 243,Turret for Lodestone 2084,EUR,500000
-2000-11-07, 438, 244,SG for Wandz 4244,EUR,35000
-2000-11-07, 438, 244,SG for Wandz 4244,EUR,35000
-2000-11-07, 438, 244,Turret for Wandz 4244,EUR,500000
-2000-11-07, 438, 244,Turret for Wandz 4244,EUR,500000
-2000-11-07, 103, 301,drones for Monticule,EUR,3000000
-2000-11-07, 420, 310,shields and armor,EUR,1000000
-2000-11-08, 422, 101,contribution Joanla,EUR,1200000
-2000-11-08, 422, 101,contribution Joanla,EUR,1200000
-2000-11-08, 424, 101,contribution Destro,EUR,1000000
-2000-11-08, 428, 101,contribution Pade,EUR,1150000
-2000-11-08, 434, 101,contribution Vampire,EUR,2000000
-2000-11-08, 436, 101,contribution Mayhem,EUR,2000000
-2000-11-08, 437, 101,contribution TheCleaner,EUR,2000000
-2000-11-08, 101, 103,trader to scout subvention,EUR,500000
-2000-11-08, 428, 103,contribution Pade,EUR,800000
-2000-11-08, 101, 122,Ship Punisher for Joanla,EUR,5000000
-2000-11-08, 436, 231,Hangar for Eden 2225,EUR,50000
-2000-11-08, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-08, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-08, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-08, 423, 235,shield for taigard (ca. 5700),EUR,2000000
-2000-11-08, 438, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-08, 437, 238,Turret for Phille 3065,EUR,500000
-2000-11-08, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-08, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-08, 101, 310,mines for 2152/3,EUR,1000000
-2000-11-08, 101, 310,mining of 2192/2152,EUR,1000000
-2000-11-08, 420, 310,mining of 2192,EUR,750000
-2000-11-09, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-09, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-09, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-09, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-10, 424, 101,contribution Destro,EUR,1000000
-2000-11-10, 424, 101,contribution Destro,EUR,2000000
-2000-11-10, 430, 101,contribution Mu,EUR,1500000
-2000-11-10, 434, 101,contribution Vampire,EUR,1302300
-2000-11-10, 438, 101,contribution zHA,EUR,450000
-2000-11-10, 101, 124,Lynx for Destro,EUR,4500000
-2000-11-10, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-10, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-10, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-10, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-10, 420, 232,SG for Monticule 2154,EUR,35000
-2000-11-10, 425, 234,2 Hangar for Riga 3105,EUR,100000
-2000-11-10, 438, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-10, 101, 310,Tracking Device and mines for a'o's,EUR,450000
-2000-11-11, 420, 101,contribution Lasade,EUR,250000
-2000-11-11, 428, 101,contribution Pade,EUR,3000000
-2000-11-11, 429, 101,contribution Tiran,EUR,150000
-2000-11-11, 429, 101,contribution Tiran,EUR,300000
-2000-11-11, 430, 101,contribution Mu,EUR,120000
-2000-11-11, 430, 101,contribution Mu,EUR,500000
-2000-11-11, 430, 101,contribution Mu,EUR,850000
-2000-11-11, 437, 101,contribution TheCleaner,EUR,2500000
-2000-11-11, 439, 101,contribution woodydrn,EUR,2500000
-2000-11-11, 425, 102,contribution Gimlon for a'o's` Seeker,EUR,4500000
-2000-11-11, 101, 123,retreat of angel'o'sphere,EUR,1135000
-2000-11-11, 101, 123,retreat of angel'o'sphere,EUR,1135000
-2000-11-11, 101, 123,retreat of angel'o'sphere of Mu for shields,EUR,120000
-2000-11-11, 102, 123,Ship Seeker for angel'o'sphere,EUR,4500000
-2000-11-11, 101, 124,Ship DarkAvenger for Destro,EUR,14000000
-2000-11-11, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-11, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-11, 425, 234,3 SG for Riga 3105,EUR,105000
-2000-11-11, 425, 234,Hangar for Riga 3105,EUR,50000
-2000-11-11, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-11, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-11, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-11, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-11, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-11, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-11, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-11, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-11, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-11, 428, 245,SG for Alpha-Prime 3069,EUR,35000
-2000-11-12, 428, 101,contribution Pade,EUR,2000000
-2000-11-12, 436, 101,contribution Mayhem,EUR,2000000
-2000-11-12, 437, 101,contribution TheCleaner,EUR,3300000
-2000-11-12, 420, 230,Hangar for Trigamil 2069,EUR,50000
-2000-11-12, 428, 231,Hangar for Eden 2225,EUR,50000
-2000-11-12, 436, 231,Hangar for Eden 2225,EUR,50000
-2000-11-12, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-12, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-12, 428, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-12, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-12, 428, 238,Hangar for Macross 3065,EUR,50000
-2000-11-12, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-12, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-12, 428, 240,Hangar for New-Cair-Paravel 5131,EUR,50000
-2000-11-12, 428, 243,Hangar for Lodestone 2084,EUR,50000
-2000-11-12, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-12, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-12, 436, 243,Turret for Lodestone 2084,EUR,500000
-2000-11-12, 428, 245,Hangar for Alpha-Prime 3069,EUR,50000
-2000-11-13, 430, 101,contribution Mu,EUR,500000
-2000-11-13, 430, 101,contribution Mu,EUR,850000
-2000-11-13, 434, 101,contribution Vampire,EUR,4889400
-2000-11-13, 438, 101,contribution zHA,EUR,3500000
-2000-11-13, 439, 101,contribution woodydrn,EUR,1500000
-2000-11-13, 442, 101,contribution mosquito,EUR,1000000
-2000-11-13, 101, 126,Ship PSF for Jyhem,EUR,9400000
-2000-11-13, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-13, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-13, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-13, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-13, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-13, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-13, 438, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-13, 438, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-13, 438, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-13, 438, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-13, 439, 235,Various contructions for for Taii'gard 4188,EUR,1135000
-2000-11-13, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-13, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-13, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-13, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-13, 429, 247,2 SG + 200 Shields,EUR,140000
-2000-11-13, 429, 247,SG for wANDz! 4056,EUR,35000
-2000-11-13, 438, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-13, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-11-13, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-11-13, 429, 248,SG for Shondyke 4112,EUR,35000
-2000-11-13, 438, 248,Hangar for Shondyke 4112,EUR,50000
-2000-11-13, 438, 248,SG for Shondyke 4112,EUR,35000
-2000-11-14, 422, 101,contribution Joanla,EUR,1200000
-2000-11-14, 430, 101,contribution Mu,EUR,1000000
-2000-11-14, 430, 101,contribution Mu,EUR,500000
-2000-11-14, 438, 101,contribution zHA,EUR,3500000
-2000-11-14, 439, 101,contribution woodydrn,EUR,3500000
-2000-11-14, 101, 103,traders contribution,EUR,600000
-2000-11-14, 428, 103,contribution Pade,EUR,3000000
-2000-11-14, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-14, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-14, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-14, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-14, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-14, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-14, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-14, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-14, 420, 234,Hangar for Riga 3105,EUR,50000
-2000-11-14, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-14, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-14, 420, 243,SG for Lodestone 2084,EUR,35000
-2000-11-14, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-14, 436, 243,Turret for Lodestone 2084,EUR,500000
-2000-11-14, 438, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-14, 429, 248,Hangar for Shondyke 4112,EUR,50000
-2000-11-14, 439, 248,Turret for Shondyke 4112,EUR,500000
-2000-11-14, 243, 436,40CD 100 Shields 2084 Lodestone,EUR,435000
-2000-11-15, 424, 101,contribution Destro,EUR,1000000
-2000-11-15, 430, 101,contribution Mu,EUR,750000
-2000-11-15, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-15, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-15, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-15, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-15, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-15, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-15, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-15, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-15, 424, 240,Turret for New-Cair-Paravel 5131,EUR,500000
-2000-11-15, 424, 246,Turret for New-Narnia 5153,EUR,500000
-2000-11-15, 438, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-15, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-11-15, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-11-15, 429, 248,Hangar for Shondyke 4112,EUR,50000
-2000-11-16, 420, 101,contribution Lasade,EUR,2750000
-2000-11-16, 422, 101,contribution Joanla,EUR,1200000
-2000-11-16, 422, 101,contribution Joanla,EUR,1200000
-2000-11-16, 424, 101,contribution Destro,EUR,500000
-2000-11-16, 429, 101,contribution Tiran,EUR,250000
-2000-11-16, 430, 101,contribution Mu,EUR,500000
-2000-11-16, 430, 101,contribution Mu,EUR,900000
-2000-11-16, 435, 101,contribution Jerico,EUR,250000
-2000-11-16, 436, 101,contribution Mayhem,EUR,2000000
-2000-11-16, 438, 101,contribution zHA,EUR,15000000
-2000-11-16, 438, 101,contribution zHA,EUR,9400000
-2000-11-16, 439, 101,contribution woodydrn,EUR,15000000
-2000-11-16, 101, 126,reequip PSF for Jyhem,EUR,1000000
-2000-11-16, 101, 128,Ship Mothership for Pade,EUR,10000000
-2000-11-16, 101, 137,Ship AdvancedCarrier for TheCleaner,EUR,7000000
-2000-11-16, 101, 137,Ship Lynx for TheCleaner,EUR,3000000
-2000-11-16, 101, 138,Ship PSF for zHA,EUR,9400000
-2000-11-16, 101, 138,Ship Warbear for zHA,EUR,15000000
-2000-11-16, 101, 139,Ship PSF for woodydrn,EUR,6800000
-2000-11-16, 101, 139,Ship Warbear for woodydrn,EUR,15000000
-2000-11-16, 436, 230,300 Shields for 2069 Trigamil,EUR,105000
-2000-11-16, 436, 230,Hangar for Trigamil 2069,EUR,50000
-2000-11-16, 436, 230,Hangar for Trigamil 2069,EUR,50000
-2000-11-16, 436, 230,SG for Trigamil 2069,EUR,35000
-2000-11-16, 436, 231,Hangar for Eden 2225,EUR,50000
-2000-11-16, 436, 231,Hangar for Eden 2225,EUR,50000
-2000-11-16, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-16, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-16, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-16, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-16, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-16, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-16, 429, 235,20 Cd's for Planet,EUR,200000
-2000-11-16, 436, 237,SG for The-Badlands 2168,EUR,35000
-2000-11-16, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-16, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-16, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-16, 436, 243,400 Shields,EUR,140000
-2000-11-16, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-16, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-16, 436, 243,Turret for Lodestone 2084,EUR,500000
-2000-11-16, 436, 243,Turret for Lodestone 2084,EUR,500000
-2000-11-16, 438, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-16, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-11-16, 438, 248,Turret for Shondyke 4112,EUR,500000
-2000-11-16, 426, 310,Shields and mines for flattening TI,EUR,1000000
-2000-11-17, 424, 101,contribution Destro,EUR,1000000
-2000-11-17, 425, 101,contribution Gimlon,EUR,2000000
-2000-11-17, 425, 101,contribution Gimlon,EUR,4000000
-2000-11-17, 425, 101,contribution Gimlon,EUR,5000000
-2000-11-17, 427, 101,contribution BreakMan,EUR,2000000
-2000-11-17, 429, 101,contribution Tiran,EUR,300000
-2000-11-17, 435, 101,contribution Jerico,EUR,3000000
-2000-11-17, 438, 101,contribution zHA,EUR,2000000
-2000-11-17, 438, 101,contribution zHA,EUR,2400000
-2000-11-17, 439, 101,contribution woodydrn,EUR,2000000
-2000-11-17, 101, 103,trader submission,EUR,500000
-2000-11-17, 428, 103,contribution Pade,EUR,1500000
-2000-11-17, 101, 125,Ship 2Punisher for Gimlon,EUR,5000000
-2000-11-17, 101, 125,Ship Lynx for Gimlon,EUR,4000000
-2000-11-17, 101, 127,Ship Ambassador for BreakMan,EUR,2000000
-2000-11-17, 101, 129,Ship PSF for Tiran,EUR,9400000
-2000-11-17, 101, 135,Ship StarBlazer for Jerico,EUR,3000000
-2000-11-17, 101, 138,Ship Ambassador for zHA,EUR,2000000
-2000-11-17, 101, 139,Ship Ambassador for woodydrn,EUR,2000000
-2000-11-17, 428, 231,SG for Eden 2225,EUR,35000
-2000-11-17, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-17, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-17, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-17, 428, 234,Hangar for Riga 3105,EUR,50000
-2000-11-17, 428, 234,Hangar for Riga 3105,EUR,50000
-2000-11-17, 428, 234,SG for Riga 3105,EUR,35000
-2000-11-17, 437, 234,Hangar for Riga 3105,EUR,50000
-2000-11-17, 428, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-17, 438, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-17, 438, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-17, 428, 238,Hangar for Macross 3065,EUR,50000
-2000-11-17, 428, 238,SG for Macross 3065,EUR,35000
-2000-11-17, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-17, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-17, 424, 240,Turret for New-Cair-Paravel 5131,EUR,500000
-2000-11-17, 428, 245,SG for Alpha-Prime 3069,EUR,35000
-2000-11-17, 428, 245,Turret for Alpha-Prime 3069,EUR,500000
-2000-11-17, 424, 246,Turret for New-Narnia 5153,EUR,500000
-2000-11-17, 438, 247,50 CD for wANDz! 4056,EUR,500000
-2000-11-17, 438, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-17, 438, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-17, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-11-17, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-11-17, 438, 249,Hangar for wANDz-imperial 4059,EUR,50000
-2000-11-17, 438, 249,SG for wANDz-imperial 4059,EUR,35000
-2000-11-17, 103, 310,mining 4018,EUR,3000000
-2000-11-18, 424, 101,contribution Destro,EUR,1500000
-2000-11-18, 429, 101,contribution Tiran,EUR,350000
-2000-11-18, 429, 101,contribution Tiran,EUR,350000
-2000-11-18, 435, 101,contribution Jerico,EUR,350000
-2000-11-18, 437, 101,contribution TheCleaner,EUR,2000000
-2000-11-18, 103, 128,retreat of Pade,EUR,70000
-2000-11-18, 428, 230,SG for Trigamil 2069,EUR,35000
-2000-11-18, 428, 231,SG for Eden 2225,EUR,35000
-2000-11-18, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-18, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-18, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-18, 428, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-18, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-18, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-18, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-18, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-18, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-18, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-18, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-18, 428, 238,SG for Macross 3065,EUR,35000
-2000-11-18, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-18, 428, 242,SG for Dark-Sun 3183,EUR,35000
-2000-11-18, 438, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-18, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-11-18, 439, 247,50 cd for wANDz! 4056,EUR,500000
-2000-11-18, 439, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-18, 428, 248,SG for Shondyke 4112,EUR,35000
-2000-11-18, 439, 248,Turret for Shondyke 4112,EUR,500000
-2000-11-18, 439, 249,5 SG for wANDz-imperial 4059,EUR,175000
-2000-11-18, 439, 249,Hangar for wANDz-imperial 4059,EUR,50000
-2000-11-18, 439, 249,Turret for wANDz-imperial 4059,EUR,500000
-2000-11-18, 439, 249,Turret for wANDz-imperial 4059,EUR,500000
-2000-11-18, 439, 249,Turret for wANDz-imperial 4059,EUR,500000
-2000-11-19, 429, 101,contribution Tiran,EUR,500000
-2000-11-19, 429, 101,contribution Tiran,EUR,850000
-2000-11-19, 434, 101,contribution Vampire,EUR,2000000
-2000-11-19, 437, 101,contribution TheCleaner,EUR,2000000
-2000-11-19, 428, 103,contribution Pade,EUR,3000000
-2000-11-19, 436, 230,100 Shields 2069 Trigamil,EUR,35000
-2000-11-19, 436, 230,Hangar for Trigamil 2069,EUR,50000
-2000-11-19, 436, 230,Hangar for Trigamil 2069,EUR,50000
-2000-11-19, 436, 230,Hangar for Trigamil 2069,EUR,50000
-2000-11-19, 436, 230,Hangar for Trigamil 2069,EUR,50000
-2000-11-19, 436, 230,Hangar for Trigamil 2069,EUR,50000
-2000-11-19, 436, 231,Hangar for Eden 2225,EUR,50000
-2000-11-19, 436, 231,Hangar for Eden 2225,EUR,50000
-2000-11-19, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-19, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-19, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-19, 428, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-19, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-19, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-19, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-19, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-19, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-19, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-19, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-19, 436, 237,SG for The-Badlands 2168,EUR,35000
-2000-11-19, 436, 237,SG for The-Badlands 2168,EUR,35000
-2000-11-19, 436, 237,SG for The-Badlands 2168,EUR,35000
-2000-11-19, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-19, 436, 243,100 Shields 2084 Lodestone,EUR,35000
-2000-11-19, 436, 243,Hangar for Lodestone 2084,EUR,50000
-2000-11-19, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-19, 436, 243,Turret for Lodestone 2084,EUR,500000
-2000-11-19, 436, 243,Turret for Lodestone 2084,EUR,500000
-2000-11-19, 428, 245,Hangar for Alpha-Prime 3069,EUR,50000
-2000-11-19, 429, 248,Hangar for Shondyke 4112,EUR,50000
-2000-11-19, 429, 248,SG for Shondyke 4112,EUR,35000
-2000-11-20, 420, 101,contribution Lasade,EUR,1500000
-2000-11-20, 429, 101,contribution Tiran,EUR,500000
-2000-11-20, 434, 101,contribution Vampire,EUR,2530000
-2000-11-20, 437, 101,contribution TheCleaner,EUR,2000000
-2000-11-20, 101, 103,trader submission,EUR,500000
-2000-11-20, 101, 135,Ship PSF for Jerico,EUR,9400000
-2000-11-20, 430, 233,Turret for Great-A'Thuin 2054,EUR,500000
-2000-11-20, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-20, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-20, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-20, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-20, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-20, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-20, 438, 247,40 CD for wANDz! 4056,EUR,400000
-2000-11-20, 438, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-20, 438, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-20, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-11-20, 429, 248,SG for Shondyke 4112,EUR,35000
-2000-11-20, 438, 249,50 mines for wANDz-imperial 4059,EUR,500000
-2000-11-20, 438, 249,Turret for wANDz-imperial 4059,EUR,500000
-2000-11-21, 422, 101,contribution Joanla,EUR,1100000
-2000-11-21, 422, 101,contribution Joanla,EUR,1600000
-2000-11-21, 424, 101,contribution Destro,EUR,3000000
-2000-11-21, 429, 101,contribution Tiran,EUR,700000
-2000-11-21, 430, 101,contribution Mu,EUR,2000000
-2000-11-21, 434, 101,contribution Vampire,EUR,2000000
-2000-11-21, 438, 101,contribution zHA,EUR,6000000
-2000-11-21, 439, 101,contribution woodydrn,EUR,6000000
-2000-11-21, 101, 103,trader contribution,EUR,500000
-2000-11-21, 101, 134,Ship Lynx for Vampire,EUR,2530000
-2000-11-21, 101, 138,Ship Hydra for zHA,EUR,6000000
-2000-11-21, 101, 139,Ship Hydra for woodydrn,EUR,6000000
-2000-11-21, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-21, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-21, 430, 232,for Shields for Monti by Mu,EUR,147000
-2000-11-21, 430, 233,for Shields on Great A'Thuin by Mu,EUR,175000
-2000-11-21, 422, 237,Turret for The-Badlands 2168,EUR,500000
-2000-11-21, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-21, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-21, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-21, 424, 240,for Planetary Defense by Destro,EUR,400000
-2000-11-21, 424, 240,for Planetary Defense by Destro,EUR,400000
-2000-11-21, 424, 246,Turret for New-Narnia 5153,EUR,500000
-2000-11-21, 429, 248,100 Shields for 4112,EUR,35000
-2000-11-21, 429, 248,SG for Shondyke 4112,EUR,35000
-2000-11-21, 101, 310,Shields for BreakMan after human scouting,EUR,136500
-2000-11-22, 420, 101,contribution Lasade,EUR,1000000
-2000-11-22, 422, 101,contribution Joanla,EUR,1200000
-2000-11-22, 424, 101,contribution Destro,EUR,3000000
-2000-11-22, 427, 101,contribution BreakMan,EUR,1500000
-2000-11-22, 429, 101,contribution Tiran,EUR,500000
-2000-11-22, 429, 101,contribution Tiran,EUR,700000
-2000-11-22, 436, 101,contribution Mayhem,EUR,2000000
-2000-11-22, 436, 101,contribution Mayhem,EUR,5000000
-2000-11-22, 437, 101,contribution TheCleaner,EUR,1500000
-2000-11-22, 101, 103,Trader submission,EUR,500000
-2000-11-22, 101, 124,Ship Lynx for Destro,EUR,3000000
-2000-11-22, 101, 127,Ship PSF for BreakMan,EUR,9400000
-2000-11-22, 101, 136,Ship Punisher for Mayhem,EUR,5000000
-2000-11-22, 101, 136,Ship Seeker for Mayhem,EUR,3000000
-2000-11-22, 422, 230,SG for Trigamil 2069,EUR,35000
-2000-11-22, 422, 230,SG for Trigamil 2069,EUR,35000
-2000-11-22, 436, 230,400 Shields 2069 Trigamil,EUR,140000
-2000-11-22, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-22, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-22, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-22, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-22, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-22, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-22, 422, 237,SG for Aurora 2168,EUR,35000
-2000-11-22, 422, 237,SG for Aurora 2168,EUR,35000
-2000-11-22, 436, 237,100 Shields 2168,EUR,35000
-2000-11-22, 436, 237,3 Turrets 2168,EUR,1500000
-2000-11-22, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-22, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-22, 436, 243,4 SG for 2084 Lodestone,EUR,140000
-2000-11-22, 436, 243,500 Shields for 2084 Lodestone,EUR,175000
-2000-11-22, 436, 243,Hangar for Lodestone 2084,EUR,50000
-2000-11-22, 436, 243,Hangar for Lodestone 2084,EUR,50000
-2000-11-22, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-22, 429, 247,for Planetary Defense by Tiran,EUR,35000
-2000-11-22, 429, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-22, 429, 249,for Planetary Defense by Tiran,EUR,335000
-2000-11-22, 439, 249,SG for wANDz-imperial 4059,EUR,35000
-2000-11-23, 424, 101,contribution Destro,EUR,3000000
-2000-11-23, 426, 101,contribution Jyhem,EUR,7500000
-2000-11-23, 429, 101,contribution Tiran,EUR,600000
-2000-11-23, 429, 101,contribution Tiran,EUR,700000
-2000-11-23, 435, 101,contribution Jerico,EUR,1000000
-2000-11-23, 437, 101,contribution TheCleaner,EUR,1500000
-2000-11-23, 101, 103,traders submissions,EUR,500000
-2000-11-23, 101, 122,Ship Seeker for Joanla,EUR,3000000
-2000-11-23, 101, 126,Ship DeepSpacer for Jyhem,EUR,7500000
-2000-11-23, 101, 130,Ship DeepSpacer for Mu,EUR,7500000
-2000-11-23, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-23, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-23, 422, 232,SG for Monticule 2154,EUR,35000
-2000-11-23, 429, 235,for Planetary Defense by Tiran,EUR,70000
-2000-11-23, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-23, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-23, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-23, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-23, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-23, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-23, 422, 237,SG for Aurora 2168,EUR,35000
-2000-11-23, 437, 238,195CD,EUR,1950000
-2000-11-23, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-23, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-23, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-23, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-23, 429, 248,for Planetary Defense by Tiran,EUR,70000
-2000-11-23, 429, 248,SG for Shondyke 4112,EUR,35000
-2000-11-23, 439, 249,SG for wANDz-imperial 4059,EUR,35000
-2000-11-23, 439, 249,Turret for wANDz-imperial 4059,EUR,500000
-2000-11-23, 439, 249,Turret for wANDz-imperial 4059,EUR,500000
-2000-11-24, 420, 101,contribution Lasade,EUR,1000000
-2000-11-24, 429, 101,contribution Tiran,EUR,300000
-2000-11-24, 101, 103,Trader soubmission,EUR,510000
-2000-11-24, 101, 104,Trader soubmission,EUR,510000
-2000-11-24, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-24, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-24, 430, 232,SG for Monticule 2154,EUR,35000
-2000-11-24, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-24, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-24, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-24, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-24, 437, 238,Warp Inhibitor,EUR,400000
-2000-11-25, 429, 101,contribution Tiran,EUR,5000000
-2000-11-25, 101, 129,Ship Punisher for Tiran,EUR,5000000
-2000-11-25, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-25, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-25, 429, 235,Hangar for Taii'gard 4188,EUR,50000
-2000-11-25, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-25, 437, 238,20CD,EUR,200000
-2000-11-25, 437, 238,20CD,EUR,200000
-2000-11-25, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-25, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-25, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-25, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-26, 436, 230,Hangar for Trigamil 2069,EUR,50000
-2000-11-26, 436, 230,Hangar for Trigamil 2069,EUR,50000
-2000-11-26, 436, 231,4 DH for 2225 Eden,EUR,200000
-2000-11-26, 436, 231,SG for Eden 2225,EUR,35000
-2000-11-26, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-26, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-26, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-26, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-26, 430, 233,Shields for A'Thuin by Mu,EUR,175000
-2000-11-26, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-26, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-26, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-26, 429, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-26, 436, 237,100 Shields,EUR,35000
-2000-11-26, 436, 237,Hangar for Aurora 2168,EUR,50000
-2000-11-26, 436, 237,SG for Aurora 2168,EUR,35000
-2000-11-26, 436, 237,SG for Aurora 2168,EUR,35000
-2000-11-26, 436, 237,Turret for Aurora 2168,EUR,500000
-2000-11-26, 437, 238,20CD on 3065,EUR,200000
-2000-11-26, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-26, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-26, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-26, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-26, 436, 243,SG for Lodestone 2084,EUR,35000
-2000-11-28, 420, 101,contribution Lasade,EUR,1000000
-2000-11-28, 422, 101,contribution Joanla,EUR,2000000
-2000-11-28, 430, 101,contribution Mu,EUR,3000000
-2000-11-28, 438, 101,contribution zHA,EUR,6000000
-2000-11-28, 101, 103,Trader contrbution,EUR,2000000
-2000-11-28, 101, 103,Trader submission,EUR,1901300
-2000-11-28, 101, 104,trader contribution,EUR,2000000
-2000-11-28, 101, 104,Trader submission,EUR,1901300
-2000-11-28, 423, 104,Contribution a'o's,EUR,2072000
-2000-11-28, 423, 104,"two jump drives, Jerico and Vampire",EUR,600000
-2000-11-28, 104, 123,Ship Rogue for angel'o'sphere,EUR,2322000
-2000-11-28, 103, 128,retreat of Pade,EUR,3500000
-2000-11-28, 103, 128,retreat of Pade,EUR,4000000
-2000-11-28, 104, 134,jump drive,EUR,300000
-2000-11-28, 104, 135,jump drive,EUR,300000
-2000-11-28, 428, 231,SG for Eden 2225,EUR,35000
-2000-11-28, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-28, 422, 232,400 SH for Planetary Defense by Joanla,EUR,140000
-2000-11-28, 422, 232,SG for Monticule 2154,EUR,35000
-2000-11-28, 428, 232,"for Planetary Def, Pade 550 CD, 100 ms, 40 SD",EUR,6528000
-2000-11-28, 430, 233,Shields for A'Thuin by Mu,EUR,175000
-2000-11-28, 430, 233,Turret for Great-A'Thuin 2054,EUR,500000
-2000-11-28, 423, 234,10 Hangar for Riga 3105,EUR,500000
-2000-11-28, 423, 235,10 SG for Planetary Defense by angel'o'sphere,EUR,350000
-2000-11-28, 423, 235,for 4550 units of shield by angel'o'sphere,EUR,1592500
-2000-11-28, 422, 237,SG for Aurora 2168,EUR,35000
-2000-11-28, 428, 238,SG for Macross 3065,EUR,35000
-2000-11-28, 437, 238,Hangar for Macross 3065,EUR,50000
-2000-11-28, 437, 238,SG for Macross 3065,EUR,35000
-2000-11-28, 428, 240,Hangar for New-Cair-Paravel 5131,EUR,50000
-2000-11-28, 428, 245,Turret for Alpha-Prime 3069,EUR,500000
-2000-11-28, 438, 247,1000 shield for wANDz! 4056,EUR,350000
-2000-11-28, 438, 247,40 CD for wANDz! 4056,EUR,400000
-2000-11-28, 438, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-28, 438, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-28, 438, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-28, 438, 247,Hangar for wANDz! 4056,EUR,50000
-2000-11-28, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-11-28, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-11-28, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-11-28, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-11-28, 438, 247,Warpinhi. for wANDz! 4056,EUR,400000
-2000-11-28, 439, 247,SG for wANDz! 4056,EUR,35000
-2000-11-28, 438, 249,Turret for wANDz-imperial 4059,EUR,500000
-2000-11-28, 438, 249,Turret for wANDz-imperial 4059,EUR,500000
-2000-11-28, 439, 249,SG for wANDz-imperial 4059,EUR,35000
-2000-11-28, 439, 249,SG for wANDz-imperial 4059,EUR,35000
-2000-11-29, 427, 101,contribution BreakMan,EUR,500000
-2000-11-29, 434, 101,contribution Vampire,EUR,2000000
-2000-11-29, 435, 101,contribution Jerico,EUR,1000000
-2000-11-29, 436, 101,contribution Mayhem,EUR,2000000
-2000-11-29, 437, 101,contribution TheCleaner,EUR,1500000
-2000-11-29, 439, 101,contribution woodydrn,EUR,6000000
-2000-11-29, 101, 103,trader submission,EUR,3300000
-2000-11-29, 101, 104,trader submission,EUR,1050000
-2000-11-29, 104, 124,Ship Rogue for Destro,EUR,2500000
-2000-11-29, 103, 128,retreat of Pade,EUR,400000
-2000-11-29, 428, 230,SG for Trigamil 2069,EUR,35000
-2000-11-29, 434, 230,SG for Trigamil 2069,EUR,35000
-2000-11-29, 420, 232,Hangar for Monticule 2154,EUR,50000
-2000-11-29, 430, 232,TFP for Monticule 2154,EUR,700000
-2000-11-29, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-29, 430, 233,SG for Great-A'Thuin 2054,EUR,35000
-2000-11-29, 428, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-29, 434, 235,SG for Taii'gard 4188,EUR,35000
-2000-11-29, 422, 237,200 SH for Planetary Defense by  Joanla        ,EUR,70000
-2000-11-29, 422, 237,SG for  Aurora 2168,EUR,35000
-2000-11-29, 422, 237,Turret for  Aurora 2168,EUR,500000
-2000-11-29, 437, 238,20CD on Macross,EUR,200000
-2000-11-29, 437, 238,Hangar for  Macross 3065,EUR,50000
-2000-11-29, 437, 238,SG for  Macross 3065,EUR,35000
-2000-11-29, 428, 240,Hangar for  New-Cair-Paravel 5131,EUR,50000
-2000-11-29, 438, 247,Hangar for  wANDz! 4056,EUR,50000
-2000-11-29, 438, 247,SG for  wANDz! 4056,EUR,35000
-2000-11-29, 434, 248,Hangar for  Shondyke 4112,EUR,50000
-2000-11-29, 428, 249,Turret for  wANDz-imperial 4059,EUR,500000
-2000-11-30, 420, 101,contribution  Lasade,EUR,1000000
-2000-11-30, 424, 101,contribution  Destro,EUR,8000000
-2000-11-30, 440, 101,contribution  Amorpha,EUR,850000
-2000-11-30, 101, 103,Tradder submission,EUR,2400000
-2000-11-30, 101, 103,Trader submission,EUR,1160775
-2000-11-30, 101, 104,Trader submission,EUR,1160775
-2000-11-30, 101, 104,Trader submission,EUR,2400000
-2000-11-30, 436, 231,100 Shields 2225 Eden,EUR,35000
-2000-11-30, 436, 231,Hangar for  Eden 2225,EUR,50000
-2000-11-30, 436, 231,Hangar for  Eden 2225,EUR,50000
-2000-11-30, 436, 231,Hangar for  Eden 2225,EUR,50000
-2000-11-30, 436, 231,Hangar for  Eden 2225,EUR,50000
-2000-11-30, 436, 231,SG for  Eden 2225,EUR,35000
-2000-11-30, 420, 232,Hangar for  Monticule 2154,EUR,50000
-2000-11-30, 430, 232,SG for  Monticule 2154,EUR,35000
-2000-11-30, 430, 233,SG for  Great-A'Thuin 2054,EUR,35000
-2000-11-30, 429, 235,Hangar for  Taii'gard 4188,EUR,50000
-2000-11-30, 429, 235,SG for  Taii'gard 4188,EUR,35000
-2000-11-30, 422, 237,200 SH for Planetary Defense by  Joanla,EUR,70000
-2000-11-30, 422, 237,30 CD's for Planetary Defense by  Joanla,EUR,300000
-2000-11-30, 422, 237,SG for  Aurora 2168,EUR,35000
-2000-11-30, 422, 237,SG for  Aurora 2168,EUR,35000
-2000-11-30, 422, 237,Turret for  Aurora 2168,EUR,500000
-2000-11-30, 436, 237,300 Shields 2168,EUR,105000
-2000-11-30, 436, 237,Hangar for  Aurora 2168,EUR,50000
-2000-11-30, 436, 237,Hangar for  Aurora 2168,EUR,50000
-2000-11-30, 436, 237,SG for  Aurora 2168,EUR,35000
-2000-11-30, 437, 238,Hangar for  Macross 3065,EUR,50000
-2000-11-30, 436, 243,200 Shields 90,EUR, 2084
-2000-11-30, 436, 243,Hangar for  Lodestone 2084,EUR,50000
-2000-11-30, 436, 243,SG for  Lodestone 2084,EUR,35000
-2000-11-30, 436, 243,SG for  Lodestone 2084,EUR,35000
-2000-11-30, 436, 243,SG for  Lodestone 2084,EUR,35000
-2000-11-30, 438, 247,Hangar for  wANDz! 4056,EUR,50000
-2000-11-30, 438, 247,SG for  wANDz! 4056,EUR,35000
-2000-12-01, 422, 101,contribution  Joanla,EUR,2000000
-2000-12-01, 427, 101,contribution  BreakMan,EUR,2000000
-2000-12-01, 430, 101,contribution  Mu,EUR,4750000
-2000-12-01, 434, 101,contribution  Vampire,EUR,2000000
-2000-12-01, 435, 101,contribution  Jerico,EUR,2000000
-2000-12-01, 440, 101,contribution  Amorpha,EUR,650000
-2000-12-01, 101, 103,Trader submission,EUR,1875000
-2000-12-01, 101, 103,Trader submission,EUR,42375
-2000-12-01, 101, 104,Trader submission,EUR,1875000
-2000-12-01, 101, 104,Trader submission,EUR,42375
-2000-12-01, 101, 129,retreat of  Tiran,EUR,1100000
-2000-12-01, 422, 230,SG for  Trigamil 2069,EUR,35000
-2000-12-01, 420, 232,Hangar for  Monticule 2154,EUR,50000
-2000-12-01, 420, 232,Hangar for  Monticule 2154,EUR,50000
-2000-12-01, 422, 232,300 SH for Planetary Defense by  Joanla,EUR,105000
-2000-12-01, 430, 232,SG for  Monticule 2154,EUR,35000
-2000-12-01, 430, 233,500 shield for Planetary Defense by  Mu,EUR,175000
-2000-12-01, 430, 233,SG for  Great-A'Thuin 2054,EUR,35000
-2000-12-01, 430, 233,SG for  Great-A'Thuin 2054,EUR,35000
-2000-12-01, 422, 235,SG for  Taii'gard 4188,EUR,35000
-2000-12-01, 422, 237,SG for  Aurora 2168,EUR,35000
-2000-12-01, 437, 238,60CD on 3065,EUR,600000
-2000-12-01, 437, 238,800 Shields on 3065,EUR,280000
-2000-12-01, 437, 238,Hangar for  Macross 3065,EUR,50000
-2000-12-01, 437, 238,SG for  Macross 3065,EUR,35000
-2000-12-01, 437, 238,SG for  Macross 3065,EUR,35000
-2000-12-01, 440, 238,Hangar for  Macross 3065,EUR,50000
-2000-12-01, 438, 247,Hangar for  wANDz! 4056,EUR,50000
-2000-12-01, 438, 247,SG for  wANDz! 4056,EUR,35000
-2000-12-01, 438, 249,Hangar for  wANDz-imperial 4059,EUR,50000
-2000-12-02, 424, 101,contribution  Destro,EUR,2000000
-2000-12-02, 424, 246,Turret for  New-Narnia 5153,EUR,500000
-2000-12-03, 430, 232,Hangar for  Monticule 2154,EUR,50000
-2000-12-03, 430, 232,SG for  Monticule 2154,EUR,35000
-2000-12-03, 430, 233,SG for  Great-A'Thuin 2054,EUR,35000
-2000-12-03, 430, 233,SG for  Great-A'Thuin 2054,EUR,35000
-2000-12-03, 429, 235,Hangar for  Taii'gard 4188,EUR,50000
-2000-12-03, 429, 235,Hangar for  Taii'gard 4188,EUR,50000
-2000-12-03, 429, 235,Hangar for  Taii'gard 4188,EUR,50000
-2000-12-03, 429, 235,Hangar for  Taii'gard 4188,EUR,50000
-2000-12-03, 429, 235,SG for  Taii'gard 4188,EUR,35000
-2000-12-03, 429, 235,SG for  Taii'gard 4188,EUR,35000
-2000-12-03, 437, 238,Hangar for  Macross 3065,EUR,50000
-2000-12-03, 437, 238,Hangar for  Macross 3065,EUR,50000
-2000-12-03, 437, 238,SG for  Macross 3065,EUR,35000
-2000-12-03, 437, 238,SG for  Macross 3065,EUR,35000
-2000-12-03, 437, 238,SG for  Macross 3065,EUR,35000
-2000-12-03, 437, 238,SG for  Macross 3065,EUR,35000
-2000-12-03, 437, 238,SG for  Macross 3065,EUR,35000
-2000-12-03, 437, 238,SG for  Macross 3065,EUR,35000
-2000-12-03, 429, 248,for Planetary Defense by  Tiran,EUR,35000
-2000-12-04, 420, 101,contribution  Lasade,EUR,1000000
-2000-12-04, 420, 101,contribution  Lasade,EUR,1000000
-2000-12-04, 423, 101,contribution  angel'o'sphere,EUR,7500000
-2000-12-04, 427, 101,contribution  BreakMan,EUR,1000000
-2000-12-04, 434, 101,contribution  Vampire,EUR,2000000
-2000-12-04, 435, 101,contribution  Jerico,EUR,1000000
-2000-12-04, 440, 101,contribution  Amorpha,EUR,2000000
-2000-12-04, 444, 101,contribution  Flashblade,EUR,905927
-2000-12-04, 101, 103,Trader submission,EUR,2610484
-2000-12-04, 101, 103,Trader submission,EUR,3801975
-2000-12-04, 101, 103,Trader submission,EUR,450000
-2000-12-04, 101, 103,Trader submission,EUR,600000
-2000-12-04, 101, 104,Trader submission,EUR,1100000
-2000-12-04, 101, 104,Trader submission,EUR,2610484
-2000-12-04, 101, 104,Trader submission,EUR,3801975
-2000-12-04, 101, 104,Trader submission,EUR,600000
-2000-12-04, 101, 140,Ship PSF for  Amorpha,EUR,9400000
-2000-12-04, 101, 144,Ship PSF for  Flashblade,EUR,9400000
-2000-12-04, 420, 232,Hangar for  Monticule 2154,EUR,50000
-2000-12-04, 420, 232,Hangar for  Monticule 2154,EUR,50000
-2000-12-04, 420, 232,Hangar for  Monticule 2154,EUR,50000
-2000-12-04, 420, 232,Hangar for  Monticule 2154,EUR,50000
-2000-12-04, 420, 232,Hangar for  Monticule 2154,EUR,50000
-2000-12-04, 422, 232,300 SH for Planetary Defense by  Joanla,EUR,105000
-2000-12-04, 422, 232,400 SH for Planetary Defense by  Joanla,EUR,140000
-2000-12-04, 422, 232,SG for  Monticule 2154,EUR,35000
-2000-12-04, 429, 235,for Planetary Defense by  Tiran,EUR,35000
-2000-12-04, 429, 235,Hangar for  Taii'gard 4188,EUR,50000
-2000-12-04, 429, 235,Hangar for  Taii'gard 4188,EUR,50000
-2000-12-04, 422, 237,200 SH for Planetary Defense by  Joanla,EUR,70000
-2000-12-04, 422, 237,30 CD's for Planetary Defense by  Joanla,EUR,300000
-2000-12-04, 422, 237,30 CD's for Planetary Defense by  Joanla,EUR,300000
-2000-12-04, 422, 237,Turret for  Aurora 2168,EUR,500000
-2000-12-04, 437, 238,Hangar for  Macross 3065,EUR,50000
-2000-12-04, 437, 238,Scanner for Macross 3065,EUR,650000
-2000-12-04, 420, 247,Hangar for  wANDz! 4056,EUR,50000
-2000-12-04, 438, 247,500 shield for  wANDz! 4056,EUR,175000
-2000-12-04, 438, 247,Hangar for  wANDz! 4056,EUR,50000
-2000-12-04, 438, 247,Hangar for  wANDz! 4056,EUR,50000
-2000-12-04, 438, 247,Hangar for  wANDz! 4056,EUR,50000
-2000-12-04, 438, 247,Hangar for  wANDz! 4056,EUR,50000
-2000-12-04, 438, 247,SG for  wANDz! 4056,EUR,35000
-2000-12-04, 438, 247,SG for  wANDz! 4056,EUR,35000
-2000-12-04, 438, 247,SG for  wANDz! 4056,EUR,35000
-2000-12-04, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-12-04, 438, 247,SG for wANDz! 4056,EUR,35000
-2000-12-04, 439, 247,300 CD for  wANDz! 4056,EUR,3000000
-2000-12-04, 439, 247,82 mines for  wANDz! 4056,EUR,820000
-2000-12-04, 439, 247,Hangar for  wANDz! 4056,EUR,50000
-2000-12-04, 438, 249,SG for  wANDz-imperial 4059,EUR,35000
-2000-12-04, 439, 249,500 shield for  wANDz-imperial 4059,EUR,175000
-2000-12-04, 439, 249,62 CD for  wANDz-imperial 4059,EUR,620000
-2000-12-04, 439, 249,Hangar for  wANDz-imperial 4059,EUR,50000
-2000-12-04, 439, 249,SG for  wANDz-imperial 4059,EUR,35000
-2000-12-04, 439, 249,SG for  wANDz-imperial 4059,EUR,35000
-2000-12-04, 439, 249,SG for  wANDz-imperial 4059,EUR,35000
+date,ktominus,ktoplus,desc,cur,valuta,actSum
+2000-08-11,428,101,SG on 3065,EUR,35000
+2000-08-11,428,103,contribution Pade,EUR,800000
+2000-08-11,103,128,retreat of Pade,EUR,3850000
+2000-08-11,136,231,30 CD for 2225,EUR,300000
+2000-08-11,428,231,SG for Eden 2225,EUR,35000
+2000-08-11,428,234,Hangar for Riga 3105,EUR,50000
+2000-08-11,428,238,SG for Phille 3065,EUR,35000
+2000-08-11,436,243,Turret for Lodestone 2084,EUR,500000
+2000-09-11,436,101,contribution by Mayhem,EUR,1000000
+2000-09-11,436,231,"30 CD, 100 Shields for Eden 2225",EUR,335000
+2000-09-11,436,231,SG for 2225,EUR,35000
+2000-09-11,436,243,Turret for Lodestone 2084,EUR,500000
+2000-09-26,420,102,first contribution of Lasade,EUR,210000
+2000-09-26,423,102,contribution angel'o'sphere,EUR,600000
+2000-09-26,425,102,Repayment of Gimlon,EUR,210000
+2000-09-26,102,125,Gimlon needed holds and shields,EUR,210000
+2000-09-27,420,102,contribution Lasade,EUR,2000000
+2000-09-27,425,102,contribution Gimlon,EUR,550000
+2000-09-27,102,231,Turret,EUR,500000
+2000-09-28,428,101,contribution Pade,EUR,261000
+2000-09-28,429,101,contribution Tiran,EUR,100000
+2000-09-28,420,102,contribution Lasade,EUR,1000000
+2000-09-28,102,125,Ship Knight for Gimlon,EUR,2866800
+2000-09-29,421,101,contribution Islandir,EUR,3500000
+2000-09-29,423,101,contribution angel'o'sphere,EUR,380000
+2000-09-29,428,101,contribution Pade,EUR,300000
+2000-09-29,423,102,contribution angel'o'sphere,EUR,1700000
+2000-09-29,423,102,contribution angel'o'sphere,EUR,550000
+2000-09-29,423,102,contribution angel'o'sphere,EUR,80000
+2000-09-29,425,102,contribution Gimlon,EUR,700000
+2000-09-29,101,123,Ship -Freighter for angel'o'sphere,EUR,2000000
+2000-09-29,102,123,Movement angel'o'sphere,EUR,1700000
+2000-09-29,102,123,Movement angel'o'sphere,EUR,1700000
+2000-09-29,101,128,Ship $Knight for Pade,EUR,2100000
+2000-09-30,423,231,Turret Eden,EUR,500000
+2000-10-02,420,101,contribution Lasade,EUR,1000000
+2000-10-02,420,101,contribution Lasade,EUR,1000000
+2000-10-02,420,101,contribution Lasade,EUR,2000000
+2000-10-02,420,101,contribution Lasade,EUR,700000
+2000-10-02,422,101,contribution Joanla,EUR,900000
+2000-10-02,424,101,contribution Destro,EUR,100000
+2000-10-02,426,101,contribution Jyhem,EUR,300000
+2000-10-02,426,101,contribution Jyhem,EUR,600000
+2000-10-02,426,101,contribution Jyhem,EUR,600000
+2000-10-02,426,101,contribution Jyhem,EUR,700000
+2000-10-02,427,101,contribution BreakMan,EUR,100000
+2000-10-02,427,101,contribution BreakMan,EUR,250000
+2000-10-02,427,101,contribution BreakMan,EUR,50000
+2000-10-02,429,101,contribution Tiran,EUR,100000
+2000-10-02,101,122,Ship $Vantage for Joanla,EUR,1900000
+2000-10-02,101,124,Ship Freighter for Destro,EUR,2100000
+2000-10-02,101,127,Ship $Freighter for BreakMan,EUR,2100000
+2000-10-02,101,129,retreat Tiran,EUR,350000
+2000-10-02,101,130,retreat Mu,EUR,35000
+2000-10-02,421,230,Various constructions for Trigamil,EUR,1225000
+2000-10-02,423,231,Various constructions for Eden,EUR,210000
+2000-10-02,420,232,Various constructions for Monticule,EUR,3245000
+2000-10-02,426,233,Various constructions for A'Thuin,EUR,170000
+2000-10-02,425,234,Various constructions for Riga,EUR,1440000
+2000-10-02,101,235,Turret for Taii'gard,EUR,350000
+2000-10-02,429,235,Various constructions for Taii'gard,EUR,760000
+2000-10-02,431,236,Various constructions for Oc Ra,EUR,85000
+2000-10-02,430,237,SG for Badlands,EUR,35000
+2000-10-02,430,237,Various constructions for The Badlands,EUR,35000
+2000-10-02,428,238,Various constructions for Phille,EUR,70000
+2000-10-03,421,101,contribution Islandir,EUR,7000000
+2000-10-03,422,101,contribution Joanla,EUR,800000
+2000-10-03,426,101,contribution Jyhem,EUR,700000
+2000-10-03,428,101,contribution Pade,EUR,200000
+2000-10-03,432,101,contribution Sukyako,EUR,250000
+2000-10-03,423,102,contribution angel'o'sphere,EUR,450000
+2000-10-03,101,120,Ship PSF for Lasade,EUR,8767500
+2000-10-03,101,121,Ship PSF for Islandir,EUR,7800000
+2000-10-03,101,128,retreat Pade,EUR,100000
+2000-10-06,420,101,contribution Lasade,EUR,2000000
+2000-10-06,424,101,contribution Destro,EUR,1000000
+2000-10-06,425,102,contribution Gimlon,EUR,2300000
+2000-10-06,420,232,Turret for Monticule,EUR,500000
+2000-10-07,421,101,contribution Islandir,EUR,2000000
+2000-10-07,422,101,contribution Joanla,EUR,500000
+2000-10-07,426,101,contribution Jyhem,EUR,300000
+2000-10-07,428,101,contribution Pade,EUR,350000
+2000-10-07,423,102,contribution angel'o'sphere,EUR,350000
+2000-10-07,101,128,retreat Pade,EUR,500000
+2000-10-07,101,129,Retreat Tiran,EUR,100000
+2000-10-07,101,129,Retreat Tiran,EUR,425000
+2000-10-09,426,101,contribution Jyhem,EUR,500000
+2000-10-09,420,232,Turret for Monticule,EUR,500000
+2000-10-10,420,101,contribution Lasade,EUR,1000000
+2000-10-10,422,101,contribution Joanla,EUR,600000
+2000-10-10,427,101,contribution BreakMan,EUR,450000
+2000-10-10,428,101,contribution Pade,EUR,1000000
+2000-10-10,433,101,contribution Xeon,EUR,200000
+2000-10-10,423,102,contribution angel'o'sphere,EUR,135000
+2000-10-10,436,231,20 CD/100 Shields for 2225,EUR,235000
+2000-10-10,436,231,Hangar for 2225 Eden,EUR,50000
+2000-10-10,420,232,Turret for Monticule,EUR,500000
+2000-10-10,101,235,Turret for Taii'gard,EUR,500000
+2000-10-10,436,243,SG for 2084 Lodestone,EUR,35000
+2000-10-10,436,243,Turret for 2084 Lodestone,EUR,500000
+2000-10-11,420,101,contribution Lasade,EUR,1000000
+2000-10-11,436,101,contribution by Mayhem,EUR,750000
+2000-10-11,420,232,Turret for Monticule,EUR,500000
+2000-10-11,430,233,Various constructions for A'Thuin,EUR,190000
+2000-10-11,428,234,SG for Riga 3105,EUR,35000
+2000-10-11,428,234,Turret for Riga,EUR,500000
+2000-10-11,426,235,Turret for Taii'gard,EUR,500000
+2000-10-11,428,244,SG for Wandz 4244 Really 4122,EUR,35000
+2000-10-12,420,101,contribution Lasade,EUR,1000000
+2000-10-12,422,101,contribution Joanla,EUR,600000
+2000-10-12,424,101,contribution Destro,EUR,1100000
+2000-10-12,426,101,contribution Jyhem,EUR,2000000
+2000-10-12,434,101,contribution Vampire,EUR,401400
+2000-10-12,434,101,contribution Vampire,EUR,432100
+2000-10-12,101,125,Ship PSF for Gimlon,EUR,8200000
+2000-10-13,421,101,contribution Islandir,EUR,2500000
+2000-10-13,426,101,contribution Jyhem,EUR,2000000
+2000-10-13,426,101,contribution Jyhem,EUR,300000
+2000-10-13,427,101,contribution BreakMan,EUR,50000
+2000-10-13,428,101,contribution Pade,EUR,120000
+2000-10-13,428,101,contribution Pade,EUR,400000
+2000-10-13,430,101,contribution Mu,EUR,100000
+2000-10-13,423,102,contribution angel'o'sphere,EUR,550000
+2000-10-13,425,102,contribution Gimlon,EUR,2000000
+2000-10-13,425,102,contribution Gimlon,EUR,3000000
+2000-10-13,101,123,Ship Negotiator for angel'o'sphere,EUR,150000
+2000-10-13,101,126,Ship -PSF for Jyhem,EUR,9100000
+2000-10-13,420,232,Hangar for Monticule,EUR,50000
+2000-10-13,420,232,SG for Monticule,EUR,35000
+2000-10-13,420,232,SG for Monticule,EUR,35000
+2000-10-13,430,232,SG for Monticule,EUR,35000
+2000-10-13,101,235,Hangar for Taii'gard,EUR,50000
+2000-10-13,101,235,Turret for Taii'gard,EUR,350000
+2000-10-13,101,235,Turret for Taii'gard,EUR,500000
+2000-10-13,101,235,Turret for Taii'gard,EUR,500000
+2000-10-14,424,101,contribution Destro,EUR,300000
+2000-10-14,424,101,contribution Destro,EUR,4700
+2000-10-14,428,101,contribution Pade,EUR,450000
+2000-10-14,429,101,contribution Tiran,EUR,125000
+2000-10-14,429,101,contribution Tiran,EUR,35000
+2000-10-14,430,101,contribution Mu,EUR,200000
+2000-10-14,434,101,contribution Vampire,EUR,110200
+2000-10-14,434,101,contribution Vampire,EUR,36000
+2000-10-14,425,102,contribution Gimlon,EUR,2000000
+2000-10-14,101,134,retreat Vampire,EUR,125000
+2000-10-14,421,230,CD for Trigamil,EUR,150000
+2000-10-14,430,232,Hangar for Monticule,EUR,50000
+2000-10-14,430,232,SG for Monticule,EUR,35000
+2000-10-14,430,232,SG for Monticule,EUR,35000
+2000-10-14,430,232,SG for Monticule,EUR,35000
+2000-10-14,430,232,SG for Monticule,EUR,35000
+2000-10-14,421,237,CD for Badlands,EUR,200000
+2000-10-14,430,237,SG for Badlands,EUR,35000
+2000-10-17,420,101,contribution Lasade,EUR,300000
+2000-10-17,420,101,contribution Lasade,EUR,4000000
+2000-10-17,424,101,contribution Destro,EUR,1000000
+2000-10-17,427,101,contribution BreakMan,EUR,500000
+2000-10-17,425,102,contribution Gimlon,EUR,5000000
+2000-10-17,101,124,Ship PSF for Destro,EUR,9100000
+2000-10-17,101,128,Ship PSF for Pade,EUR,9300000
+2000-10-17,420,232,SG for Monticule,EUR,35000
+2000-10-17,420,232,SG for Monticule,EUR,35000
+2000-10-17,420,232,SG for Monticule,EUR,35000
+2000-10-17,420,232,SG for Monticule,EUR,35000
+2000-10-17,430,232,SG for Monticule,EUR,35000
+2000-10-17,101,235,Turret for Taii'gard,EUR,480000
+2000-10-17,101,310,Shields taken by Tiran,EUR,125000
+2000-10-18,426,101,contribution Jyhem,EUR,1000000
+2000-10-18,430,101,contribution Mu,EUR,300000
+2000-10-18,420,232,SG for Monticule,EUR,35000
+2000-10-18,420,232,SG for Monticule,EUR,35000
+2000-10-18,420,232,SG for Monticule,EUR,35000
+2000-10-18,420,232,SG for Monticule,EUR,35000
+2000-10-18,101,235,Stuff for Taii'gard,EUR,270000
+2000-10-19,420,101,contribution Lasade,EUR,1650000
+2000-10-19,422,101,contribution Joanla,EUR,1100000
+2000-10-19,426,101,contribution Jyhem,EUR,5000000
+2000-10-19,429,101,contribution Tiran,EUR,50000
+2000-10-19,434,101,contribution Vampire,EUR,41800
+2000-10-19,425,102,contribution Gimlon,EUR,2000000
+2000-10-19,420,232,SG for Monticule,EUR,35000
+2000-10-19,420,232,SG for Monticule,EUR,35000
+2000-10-19,101,235,Turret for Taii'gard,EUR,500000
+2000-10-20,421,101,contribution Islandir,EUR,2000000
+2000-10-20,422,101,contribution Joanla,EUR,700000
+2000-10-20,424,101,contribution Destro,EUR,1200000
+2000-10-20,428,101,contribution Pade,EUR,1547200
+2000-10-20,429,101,contribution Tiran,EUR,50000
+2000-10-20,435,101,contribution Jerico,EUR,9500
+2000-10-20,436,101,contribution Mayhem,EUR,300000
+2000-10-20,425,102,contribution Gimlon,EUR,2000000
+2000-10-20,101,123,Ship PSF for angel'o'sphere,EUR,10100000
+2000-10-20,101,134,Ship Blockaderunner for Vampire,EUR,6000000
+2000-10-20,420,232,SG for Monticule,EUR,35000
+2000-10-20,101,242,Turret for Dark Sun,EUR,500000
+2000-10-20,101,242,Turret for Taii'gard,EUR,500000
+2000-10-21,420,101,contribution Lasade,EUR,3000000
+2000-10-21,424,101,contribution Destro,EUR,1000000
+2000-10-21,429,101,contribution Tiran,EUR,60000
+2000-10-21,437,101,contribution TheCleaner,EUR,400000
+2000-10-21,101,129,Ship -Blockaderunner for Tiran,EUR,6000000
+2000-10-21,101,231,Turret for Eden,EUR,100000
+2000-10-22,420,101,contribution Lasade,EUR,4000000
+2000-10-22,424,101,contribution Destro,EUR,1000000
+2000-10-22,428,101,contribution Pade,EUR,100000
+2000-10-22,429,101,contribution Tiran,EUR,60000
+2000-10-22,425,102,contribution Gimlon,EUR,500000
+2000-10-22,101,120,Ship Seeker for Lasade,EUR,4000000
+2000-10-22,436,231,SG for Eden,EUR,35000
+2000-10-22,436,231,SG for Eden,EUR,35000
+2000-10-22,436,231,SG for Eden,EUR,35000
+2000-10-22,436,231,SG for Eden,EUR,35000
+2000-10-22,420,232,SG for Monticule,EUR,35000
+2000-10-22,420,232,SG for Monticule,EUR,35000
+2000-10-22,420,232,SG for Monticule,EUR,35000
+2000-10-22,420,232,SG for Monticule,EUR,35000
+2000-10-22,436,232,SG for Monticule,EUR,35000
+2000-10-22,436,232,SG for Monticule,EUR,35000
+2000-10-22,101,240,Turret for Eden,EUR,500000
+2000-10-22,101,242,Turret for Dark Sun,EUR,500000
+2000-10-23,420,232,SG for Monticule,EUR,35000
+2000-10-24,436,231,contribution Mayhem,EUR,850000
+2000-10-24,420,232,SG for Monticule,EUR,35000
+2000-10-24,430,232,Hangar for Monticule,EUR,50000
+2000-10-24,101,240,Turret for Planet of the apes,EUR,500000
+2000-10-25,420,101,contribution Lasade,EUR,4500000
+2000-10-25,422,101,contribution Joanla,EUR,1200000
+2000-10-25,424,101,contribution Destro,EUR,800000
+2000-10-25,427,101,contribution BreakMan,EUR,700000
+2000-10-25,428,101,contribution Pade,EUR,1000000
+2000-10-25,429,101,contribution Tiran,EUR,100000
+2000-10-25,425,102,contribution Gimlon,EUR,1500000
+2000-10-25,425,102,contribution Gimlon,EUR,3500000
+2000-10-25,101,120,Ship Punisher for Lasade,EUR,4500000
+2000-10-25,101,122,Ship PSF for Joanla,EUR,9500000
+2000-10-25,101,129,Retreat Tiran,EUR,250000
+2000-10-25,425,238,Turret for Phille,EUR,500000
+2000-10-25,429,241,SG for unkown Planet,EUR,35000
+2000-10-25,429,241,SG for unkown Planet,EUR,35000
+2000-10-25,425,310,mines and CD Gimlon,EUR,2500000
+2000-10-26,421,101,contribution Islandir,EUR,4000000
+2000-10-26,422,101,contribution Joanla,EUR,1000000
+2000-10-26,424,101,contribution Destro,EUR,1000000
+2000-10-26,428,101,contribution Pade,EUR,1000000
+2000-10-26,429,101,contribution Tiran,EUR,100000
+2000-10-26,429,101,contribution Tiran,EUR,224000
+2000-10-26,429,101,contribution Tiran,EUR,50000
+2000-10-26,430,101,contribution Mu,EUR,300000
+2000-10-26,437,101,contribution TheCleaner,EUR,4800000
+2000-10-26,423,102,contribution angel'o'sphere,EUR,2000000
+2000-10-26,101,134,shields for Vampire,EUR,1250000
+2000-10-26,101,137,Ship PSF for TheCleaner,EUR,9400000
+2000-10-26,436,231,various contributions for Eden,EUR,745000
+2000-10-26,420,232,Hangar for Monticule,EUR,50000
+2000-10-26,420,232,Hangar for Monticule,EUR,50000
+2000-10-26,420,232,SG for Monticule,EUR,35000
+2000-10-26,430,232,Hangar for Monticule,EUR,50000
+2000-10-26,101,235,SG for Taii'gard,EUR,35000
+2000-10-26,421,238,Turret for Trigamil,EUR,500000
+2000-10-26,429,241,SG for unkown Planet,EUR,35000
+2000-10-27,420,101,contribution Lasade,EUR,5500000
+2000-10-27,424,101,contribution Destro,EUR,1000000
+2000-10-27,428,101,contribution Pade,EUR,1250000
+2000-10-27,428,101,contribution Pade,EUR,4000000
+2000-10-27,429,101,contribution Tiran,EUR,225000
+2000-10-27,430,101,contribution Mu,EUR,125000
+2000-10-27,430,101,contribution Mu,EUR,125000
+2000-10-27,430,101,contribution Mu,EUR,650000
+2000-10-27,434,101,contribution Vampire,EUR,167500
+2000-10-27,435,101,contribution Jerico,EUR,90000
+2000-10-27,437,101,contribution TheCleaner,EUR,2200000
+2000-10-27,101,120,Ship 2Punisher for Lasade,EUR,5500000
+2000-10-27,101,128,Ship Seeker for Pade,EUR,4000000
+2000-10-27,101,129,Retreat Tiran,EUR,35000
+2000-10-27,101,130,Ship PSF for Mu,EUR,9400000
+2000-10-27,420,232,Hangar for Monticule,EUR,50000
+2000-10-27,420,232,Hangar for Monticule,EUR,50000
+2000-10-27,429,235,SG for Taii'gard,EUR,35000
+2000-10-27,429,235,SG for Taii'gard,EUR,35000
+2000-10-27,429,235,SG for Taii'gard,EUR,35000
+2000-10-27,429,235,SG for Taii'gard,EUR,35000
+2000-10-27,421,238,Turret for Trigamil,EUR,500000
+2000-10-27,428,238,Various constructions for Phille,EUR,500000
+2000-10-27,101,240,Turret for planet of the Apes,EUR,500000
+2000-10-28,424,101,contribution Destro,EUR,500000
+2000-10-28,435,101,contribution Jerico,EUR,100000
+2000-10-28,101,134,retreat Vampire,EUR,312000
+2000-10-28,420,232,Hangar for Monticule,EUR,50000
+2000-10-28,420,232,Hangar for Monticule,EUR,50000
+2000-10-28,430,232,Hangar for Monticule,EUR,50000
+2000-10-28,429,235,SG for Taii'gard,EUR,35000
+2000-10-28,101,240,Turret for planet of the Apes,EUR,500000
+2000-10-29,428,101,contribution Pade,EUR,3500000
+2000-10-29,429,101,contribution Tiran,EUR,100000
+2000-10-29,430,101,contribution Mu,EUR,1200000
+2000-10-29,434,101,contribution Vampire,EUR,949700
+2000-10-29,435,101,contribution Jerico,EUR,100000
+2000-10-29,423,102,contribution angel'o'sphere,EUR,740000
+2000-10-29,101,125,retreat of Gimlon,EUR,740000
+2000-10-29,101,128,Ship AdvancedCarrier for Pade,EUR,3500000
+2000-10-29,436,231,various contributions for Eden,EUR,1210000
+2000-10-29,420,232,Hangar for Monticule,EUR,50000
+2000-10-29,420,232,Hangar for Monticule,EUR,50000
+2000-10-29,420,232,Hangar for Monticule,EUR,50000
+2000-10-29,429,235,SG for Taii'gard,EUR,35000
+2000-10-29,429,310,contribution Tiran,EUR,50000
+2000-10-30,420,101,contribution Lasade,EUR,1000000
+2000-10-30,421,101,contribution Islandir,EUR,3000000
+2000-10-30,422,101,contribution Joanla,EUR,1700000
+2000-10-30,425,101,contribution Gimlon,EUR,4500000
+2000-10-30,429,101,contribution Tiran,EUR,125000
+2000-10-30,429,101,contribution Tiran,EUR,500000
+2000-10-30,435,101,contribution Jerico,EUR,150000
+2000-10-30,437,101,contribution TheCleaner,EUR,2200000
+2000-10-30,437,101,contribution TheCleaner,EUR,600000
+2000-10-30,423,102,contribution angel'o'sphere,EUR,770000
+2000-10-30,101,125,Ship Punisher for Gimlon,EUR,4500000
+2000-10-30,101,134,Ship PSF for Vampire,EUR,9400000
+2000-10-30,101,137,retreat of TheCleaner,EUR,300000
+2000-10-30,420,232,Hangar for Monticule,EUR,50000
+2000-10-30,420,232,Hangar for Monticule,EUR,50000
+2000-10-30,430,232,SG for Monticule,EUR,35000
+2000-10-30,429,235,SG for Taii'gard,EUR,35000
+2000-10-30,429,235,SG for Taii'gard,EUR,35000
+2000-10-31,421,230,Turret for Trigamil,EUR,500000
+2000-10-31,420,232,Hangar for Monticule,EUR,50000
+2000-10-31,429,235,SG for Taii'gard,EUR,35000
+2000-10-31,429,235,SG for Taii'gard,EUR,35000
+2000-10-31,437,238,SG for Phille,EUR,35000
+2000-10-31,437,238,Turret for Phille,EUR,500000
+2000-10-31,437,238,Turret for Phille,EUR,500000
+2000-11-01,422,101,contribution Joanla,EUR,1700000
+2000-11-01,424,101,contribution Destro,EUR,1600000
+2000-11-01,424,101,contribution Destro,EUR,500000
+2000-11-01,427,101,contribution BreakMan,EUR,1000000
+2000-11-01,428,101,contribution Pade,EUR,2000000
+2000-11-01,429,101,contribution Tiran,EUR,200000
+2000-11-01,430,101,contribution Mu,EUR,1100000
+2000-11-01,434,101,contribution Vampire,EUR,3443600
+2000-11-01,435,101,contribution Jerico,EUR,100000
+2000-11-01,101,103,trader submission to scouts,EUR,500000
+2000-11-01,101,129,retreat of Tiran,EUR,500000
+2000-11-01,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-01,430,232,SG for Monticule 2154,EUR,35000
+2000-11-01,430,233,Turret for Great-A'Thuin 2054,EUR,500000
+2000-11-01,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-01,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-01,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-01,437,238,Turret for Phille 3065,EUR,500000
+2000-11-01,435,242,Turret for Dark-Sun 3183,EUR,500000
+2000-11-02,420,101,contribution Lasade,EUR,500000
+2000-11-02,422,101,contribution Joanla,EUR,1200000
+2000-11-02,422,101,contribution Joanla,EUR,1200000
+2000-11-02,423,101,contribution angel'o'sphere,EUR,1150000
+2000-11-02,424,101,contribution Destro,EUR,9000000
+2000-11-02,425,101,contribution Gimlon,EUR,5750000
+2000-11-02,428,101,contribution Pade,EUR,1000000
+2000-11-02,429,101,contribution Tiran,EUR,100000
+2000-11-02,429,101,contribution Tiran,EUR,500000
+2000-11-02,434,101,contribution Vampire,EUR,1389800
+2000-11-02,101,103,Tradecaste subvention to Scouts,EUR,500000
+2000-11-02,101,121,Ship $Punisher for Islandir,EUR,5000000
+2000-11-02,101,123,Ship DarkAvenger for angel'o'sphere,EUR,16500000
+2000-11-02,101,136,Ship PSF for Mayhem,EUR,9400000
+2000-11-02,436,231,Hangar for Eden 2225,EUR,50000
+2000-11-02,436,231,Hangar for Eden 2225,EUR,50000
+2000-11-02,436,231,SG for Eden 2225,EUR,35000
+2000-11-02,436,231,SG for Eden 2225,EUR,35000
+2000-11-02,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-02,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-02,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-02,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-02,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-02,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-02,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-02,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-02,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-02,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-02,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-02,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-02,436,243,Hangar for Lodestone 2084,EUR,50000
+2000-11-02,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-02,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-02,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-02,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-03,102,101,correction,EUR,29418200
+2000-11-03,434,101,contribution Vampire,EUR,637700
+2000-11-03,101,103,trader - scout subvention,EUR,250000
+2000-11-03,428,103,contribution Pade,EUR,1750000
+2000-11-03,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-03,430,232,SG for Monticule 2154,EUR,35000
+2000-11-03,430,233,Turret for Great-A'Thuin 2054,EUR,500000
+2000-11-03,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-03,103,301,mning??,EUR,1500000
+2000-11-04,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-04,430,232,SG for Monticule 2154,EUR,35000
+2000-11-04,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-06,420,101,contribution Lasade,EUR,250000
+2000-11-06,422,101,contribution Joanla,EUR,2000000
+2000-11-06,424,101,contribution Destro,EUR,1000000
+2000-11-06,424,101,contribution Destro,EUR,2500000
+2000-11-06,434,101,contribution Vampire,EUR,1500000
+2000-11-06,435,101,contribution Jerico,EUR,50000
+2000-11-06,437,101,contribution TheCleaner,EUR,1600000
+2000-11-06,438,101,contribution zHA,EUR,4000000
+2000-11-06,101,129,retreat of Tiran,EUR,200000
+2000-11-06,101,129,Ship -DarkAvenger for Tiran,EUR,16500000
+2000-11-06,101,135,retreat of Jerico,EUR,500000
+2000-11-06,436,231,Hangar for Eden 2225,EUR,50000
+2000-11-06,436,231,SG for Eden 2225,EUR,35000
+2000-11-06,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-06,430,232,SG for Monticule 2154,EUR,35000
+2000-11-06,430,232,SG for Monticule 2154,EUR,35000
+2000-11-06,430,232,SG for Monticule 2154,EUR,35000
+2000-11-06,430,232,SG for Monticule 2154,EUR,35000
+2000-11-06,430,232,SG for Monticule 2154,EUR,35000
+2000-11-06,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-06,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-06,430,233,Turret for Great-A'Thuin 2054,EUR,500000
+2000-11-06,430,233,Turret for Great-A'Thuin 2054,EUR,500000
+2000-11-06,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-06,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-06,437,238,Hangar for Phille 3065,EUR,50000
+2000-11-06,437,238,Hangar for Phille 3065,EUR,50000
+2000-11-06,437,238,Turret for Phille 3065,EUR,500000
+2000-11-06,435,242,Turret for Dark-Sun 3183,EUR,500000
+2000-11-06,438,242,SG for Wandz,EUR,35000
+2000-11-06,436,243,Turret for Lodestone 2084,EUR,500000
+2000-11-06,429,310,plasma boosters on 4188,EUR,200000
+2000-11-07,121,101,got back punisher money...,EUR,5000000
+2000-11-07,424,101,contribution Destro,EUR,1500000
+2000-11-07,436,101,contribution Mayhem,EUR,1000000
+2000-11-07,428,103,contribution Pade,EUR,3500000
+2000-11-07,436,231,Hangar for Eden 2225,EUR,50000
+2000-11-07,436,231,SG for Eden 2225,EUR,35000
+2000-11-07,436,231,SG for Eden 2225,EUR,35000
+2000-11-07,436,231,Turret for Eden 2225,EUR,500000
+2000-11-07,436,231,Turret for Eden 2225,EUR,500000
+2000-11-07,436,231,Turret for Eden 2225,EUR,500000
+2000-11-07,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-07,438,235,SG for Taii'gard 4188,EUR,35000
+2000-11-07,438,235,SG for Taii'gard 4188,EUR,35000
+2000-11-07,438,235,SG for Taii'gard 4188,EUR,35000
+2000-11-07,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-07,436,243,Turret for Lodestone 2084,EUR,500000
+2000-11-07,438,244,SG for Wandz 4244,EUR,35000
+2000-11-07,438,244,SG for Wandz 4244,EUR,35000
+2000-11-07,438,244,Turret for Wandz 4244,EUR,500000
+2000-11-07,438,244,Turret for Wandz 4244,EUR,500000
+2000-11-07,103,301,drones for Monticule,EUR,3000000
+2000-11-07,420,310,shields and armor,EUR,1000000
+2000-11-08,422,101,contribution Joanla,EUR,1200000
+2000-11-08,422,101,contribution Joanla,EUR,1200000
+2000-11-08,424,101,contribution Destro,EUR,1000000
+2000-11-08,428,101,contribution Pade,EUR,1150000
+2000-11-08,434,101,contribution Vampire,EUR,2000000
+2000-11-08,436,101,contribution Mayhem,EUR,2000000
+2000-11-08,437,101,contribution TheCleaner,EUR,2000000
+2000-11-08,101,103,trader to scout subvention,EUR,500000
+2000-11-08,428,103,contribution Pade,EUR,800000
+2000-11-08,101,122,Ship Punisher for Joanla,EUR,5000000
+2000-11-08,436,231,Hangar for Eden 2225,EUR,50000
+2000-11-08,436,231,SG for Eden 2225,EUR,35000
+2000-11-08,436,231,SG for Eden 2225,EUR,35000
+2000-11-08,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-08,423,235,shield for taigard (ca. 5700),EUR,2000000
+2000-11-08,438,235,SG for Taii'gard 4188,EUR,35000
+2000-11-08,437,238,Turret for Phille 3065,EUR,500000
+2000-11-08,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-08,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-08,101,310,mines for 2152/3,EUR,1000000
+2000-11-08,101,310,mining of 2192/2152,EUR,1000000
+2000-11-08,420,310,mining of 2192,EUR,750000
+2000-11-09,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-09,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-09,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-09,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-10,424,101,contribution Destro,EUR,1000000
+2000-11-10,424,101,contribution Destro,EUR,2000000
+2000-11-10,430,101,contribution Mu,EUR,1500000
+2000-11-10,434,101,contribution Vampire,EUR,1302300
+2000-11-10,438,101,contribution zHA,EUR,450000
+2000-11-10,101,124,Lynx for Destro,EUR,4500000
+2000-11-10,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-10,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-10,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-10,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-10,420,232,SG for Monticule 2154,EUR,35000
+2000-11-10,425,234,2 Hangar for Riga 3105,EUR,100000
+2000-11-10,438,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-10,101,310,Tracking Device and mines for a'o's,EUR,450000
+2000-11-11,420,101,contribution Lasade,EUR,250000
+2000-11-11,428,101,contribution Pade,EUR,3000000
+2000-11-11,429,101,contribution Tiran,EUR,150000
+2000-11-11,429,101,contribution Tiran,EUR,300000
+2000-11-11,430,101,contribution Mu,EUR,120000
+2000-11-11,430,101,contribution Mu,EUR,500000
+2000-11-11,430,101,contribution Mu,EUR,850000
+2000-11-11,437,101,contribution TheCleaner,EUR,2500000
+2000-11-11,439,101,contribution woodydrn,EUR,2500000
+2000-11-11,425,102,contribution Gimlon for a'o's` Seeker,EUR,4500000
+2000-11-11,101,123,retreat of angel'o'sphere,EUR,1135000
+2000-11-11,101,123,retreat of angel'o'sphere,EUR,1135000
+2000-11-11,101,123,retreat of angel'o'sphere of Mu for shields,EUR,120000
+2000-11-11,102,123,Ship Seeker for angel'o'sphere,EUR,4500000
+2000-11-11,101,124,Ship DarkAvenger for Destro,EUR,14000000
+2000-11-11,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-11,430,232,SG for Monticule 2154,EUR,35000
+2000-11-11,425,234,3 SG for Riga 3105,EUR,105000
+2000-11-11,425,234,Hangar for Riga 3105,EUR,50000
+2000-11-11,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-11,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-11,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-11,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-11,437,238,SG for Macross 3065,EUR,35000
+2000-11-11,437,238,SG for Macross 3065,EUR,35000
+2000-11-11,437,238,SG for Macross 3065,EUR,35000
+2000-11-11,437,238,SG for Macross 3065,EUR,35000
+2000-11-11,437,238,SG for Macross 3065,EUR,35000
+2000-11-11,428,245,SG for Alpha-Prime 3069,EUR,35000
+2000-11-12,428,101,contribution Pade,EUR,2000000
+2000-11-12,436,101,contribution Mayhem,EUR,2000000
+2000-11-12,437,101,contribution TheCleaner,EUR,3300000
+2000-11-12,420,230,Hangar for Trigamil 2069,EUR,50000
+2000-11-12,428,231,Hangar for Eden 2225,EUR,50000
+2000-11-12,436,231,Hangar for Eden 2225,EUR,50000
+2000-11-12,436,231,SG for Eden 2225,EUR,35000
+2000-11-12,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-12,428,232,Hangar for Monticule 2154,EUR,50000
+2000-11-12,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-12,428,238,Hangar for Macross 3065,EUR,50000
+2000-11-12,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-12,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-12,428,240,Hangar for New-Cair-Paravel 5131,EUR,50000
+2000-11-12,428,243,Hangar for Lodestone 2084,EUR,50000
+2000-11-12,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-12,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-12,436,243,Turret for Lodestone 2084,EUR,500000
+2000-11-12,428,245,Hangar for Alpha-Prime 3069,EUR,50000
+2000-11-13,430,101,contribution Mu,EUR,500000
+2000-11-13,430,101,contribution Mu,EUR,850000
+2000-11-13,434,101,contribution Vampire,EUR,4889400
+2000-11-13,438,101,contribution zHA,EUR,3500000
+2000-11-13,439,101,contribution woodydrn,EUR,1500000
+2000-11-13,442,101,contribution mosquito,EUR,1000000
+2000-11-13,101,126,Ship PSF for Jyhem,EUR,9400000
+2000-11-13,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-13,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-13,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-13,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-13,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-13,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-13,438,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-13,438,235,SG for Taii'gard 4188,EUR,35000
+2000-11-13,438,235,SG for Taii'gard 4188,EUR,35000
+2000-11-13,438,235,SG for Taii'gard 4188,EUR,35000
+2000-11-13,439,235,Various contructions for for Taii'gard 4188,EUR,1135000
+2000-11-13,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-13,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-13,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-13,437,238,SG for Macross 3065,EUR,35000
+2000-11-13,429,247,2 SG + 200 Shields,EUR,140000
+2000-11-13,429,247,SG for wANDz! 4056,EUR,35000
+2000-11-13,438,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-13,438,247,SG for wANDz! 4056,EUR,35000
+2000-11-13,438,247,SG for wANDz! 4056,EUR,35000
+2000-11-13,429,248,SG for Shondyke 4112,EUR,35000
+2000-11-13,438,248,Hangar for Shondyke 4112,EUR,50000
+2000-11-13,438,248,SG for Shondyke 4112,EUR,35000
+2000-11-14,422,101,contribution Joanla,EUR,1200000
+2000-11-14,430,101,contribution Mu,EUR,1000000
+2000-11-14,430,101,contribution Mu,EUR,500000
+2000-11-14,438,101,contribution zHA,EUR,3500000
+2000-11-14,439,101,contribution woodydrn,EUR,3500000
+2000-11-14,101,103,traders contribution,EUR,600000
+2000-11-14,428,103,contribution Pade,EUR,3000000
+2000-11-14,436,231,SG for Eden 2225,EUR,35000
+2000-11-14,436,231,SG for Eden 2225,EUR,35000
+2000-11-14,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-14,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-14,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-14,430,232,SG for Monticule 2154,EUR,35000
+2000-11-14,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-14,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-14,420,234,Hangar for Riga 3105,EUR,50000
+2000-11-14,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-14,437,238,SG for Macross 3065,EUR,35000
+2000-11-14,420,243,SG for Lodestone 2084,EUR,35000
+2000-11-14,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-14,436,243,Turret for Lodestone 2084,EUR,500000
+2000-11-14,438,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-14,429,248,Hangar for Shondyke 4112,EUR,50000
+2000-11-14,439,248,Turret for Shondyke 4112,EUR,500000
+2000-11-14,243,436,40CD 100 Shields 2084 Lodestone,EUR,435000
+2000-11-15,424,101,contribution Destro,EUR,1000000
+2000-11-15,430,101,contribution Mu,EUR,750000
+2000-11-15,430,232,SG for Monticule 2154,EUR,35000
+2000-11-15,430,232,SG for Monticule 2154,EUR,35000
+2000-11-15,430,232,SG for Monticule 2154,EUR,35000
+2000-11-15,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-15,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-15,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-15,437,238,SG for Macross 3065,EUR,35000
+2000-11-15,437,238,SG for Macross 3065,EUR,35000
+2000-11-15,424,240,Turret for New-Cair-Paravel 5131,EUR,500000
+2000-11-15,424,246,Turret for New-Narnia 5153,EUR,500000
+2000-11-15,438,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-15,438,247,SG for wANDz! 4056,EUR,35000
+2000-11-15,438,247,SG for wANDz! 4056,EUR,35000
+2000-11-15,429,248,Hangar for Shondyke 4112,EUR,50000
+2000-11-16,420,101,contribution Lasade,EUR,2750000
+2000-11-16,422,101,contribution Joanla,EUR,1200000
+2000-11-16,422,101,contribution Joanla,EUR,1200000
+2000-11-16,424,101,contribution Destro,EUR,500000
+2000-11-16,429,101,contribution Tiran,EUR,250000
+2000-11-16,430,101,contribution Mu,EUR,500000
+2000-11-16,430,101,contribution Mu,EUR,900000
+2000-11-16,435,101,contribution Jerico,EUR,250000
+2000-11-16,436,101,contribution Mayhem,EUR,2000000
+2000-11-16,438,101,contribution zHA,EUR,15000000
+2000-11-16,438,101,contribution zHA,EUR,9400000
+2000-11-16,439,101,contribution woodydrn,EUR,15000000
+2000-11-16,101,126,reequip PSF for Jyhem,EUR,1000000
+2000-11-16,101,128,Ship Mothership for Pade,EUR,10000000
+2000-11-16,101,137,Ship AdvancedCarrier for TheCleaner,EUR,7000000
+2000-11-16,101,137,Ship Lynx for TheCleaner,EUR,3000000
+2000-11-16,101,138,Ship PSF for zHA,EUR,9400000
+2000-11-16,101,138,Ship Warbear for zHA,EUR,15000000
+2000-11-16,101,139,Ship PSF for woodydrn,EUR,6800000
+2000-11-16,101,139,Ship Warbear for woodydrn,EUR,15000000
+2000-11-16,436,230,300 Shields for 2069 Trigamil,EUR,105000
+2000-11-16,436,230,Hangar for Trigamil 2069,EUR,50000
+2000-11-16,436,230,Hangar for Trigamil 2069,EUR,50000
+2000-11-16,436,230,SG for Trigamil 2069,EUR,35000
+2000-11-16,436,231,Hangar for Eden 2225,EUR,50000
+2000-11-16,436,231,Hangar for Eden 2225,EUR,50000
+2000-11-16,436,231,SG for Eden 2225,EUR,35000
+2000-11-16,436,231,SG for Eden 2225,EUR,35000
+2000-11-16,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-16,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-16,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-16,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-16,429,235,20 Cd's for Planet,EUR,200000
+2000-11-16,436,237,SG for The-Badlands 2168,EUR,35000
+2000-11-16,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-16,437,238,SG for Macross 3065,EUR,35000
+2000-11-16,437,238,SG for Macross 3065,EUR,35000
+2000-11-16,436,243,400 Shields,EUR,140000
+2000-11-16,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-16,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-16,436,243,Turret for Lodestone 2084,EUR,500000
+2000-11-16,436,243,Turret for Lodestone 2084,EUR,500000
+2000-11-16,438,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-16,438,247,SG for wANDz! 4056,EUR,35000
+2000-11-16,438,248,Turret for Shondyke 4112,EUR,500000
+2000-11-16,426,310,Shields and mines for flattening TI,EUR,1000000
+2000-11-17,424,101,contribution Destro,EUR,1000000
+2000-11-17,425,101,contribution Gimlon,EUR,2000000
+2000-11-17,425,101,contribution Gimlon,EUR,4000000
+2000-11-17,425,101,contribution Gimlon,EUR,5000000
+2000-11-17,427,101,contribution BreakMan,EUR,2000000
+2000-11-17,429,101,contribution Tiran,EUR,300000
+2000-11-17,435,101,contribution Jerico,EUR,3000000
+2000-11-17,438,101,contribution zHA,EUR,2000000
+2000-11-17,438,101,contribution zHA,EUR,2400000
+2000-11-17,439,101,contribution woodydrn,EUR,2000000
+2000-11-17,101,103,trader submission,EUR,500000
+2000-11-17,428,103,contribution Pade,EUR,1500000
+2000-11-17,101,125,Ship 2Punisher for Gimlon,EUR,5000000
+2000-11-17,101,125,Ship Lynx for Gimlon,EUR,4000000
+2000-11-17,101,127,Ship Ambassador for BreakMan,EUR,2000000
+2000-11-17,101,129,Ship PSF for Tiran,EUR,9400000
+2000-11-17,101,135,Ship StarBlazer for Jerico,EUR,3000000
+2000-11-17,101,138,Ship Ambassador for zHA,EUR,2000000
+2000-11-17,101,139,Ship Ambassador for woodydrn,EUR,2000000
+2000-11-17,428,231,SG for Eden 2225,EUR,35000
+2000-11-17,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-17,430,232,SG for Monticule 2154,EUR,35000
+2000-11-17,430,232,SG for Monticule 2154,EUR,35000
+2000-11-17,428,234,Hangar for Riga 3105,EUR,50000
+2000-11-17,428,234,Hangar for Riga 3105,EUR,50000
+2000-11-17,428,234,SG for Riga 3105,EUR,35000
+2000-11-17,437,234,Hangar for Riga 3105,EUR,50000
+2000-11-17,428,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-17,438,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-17,438,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-17,428,238,Hangar for Macross 3065,EUR,50000
+2000-11-17,428,238,SG for Macross 3065,EUR,35000
+2000-11-17,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-17,437,238,SG for Macross 3065,EUR,35000
+2000-11-17,424,240,Turret for New-Cair-Paravel 5131,EUR,500000
+2000-11-17,428,245,SG for Alpha-Prime 3069,EUR,35000
+2000-11-17,428,245,Turret for Alpha-Prime 3069,EUR,500000
+2000-11-17,424,246,Turret for New-Narnia 5153,EUR,500000
+2000-11-17,438,247,50 CD for wANDz! 4056,EUR,500000
+2000-11-17,438,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-17,438,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-17,438,247,SG for wANDz! 4056,EUR,35000
+2000-11-17,438,247,SG for wANDz! 4056,EUR,35000
+2000-11-17,438,249,Hangar for wANDz-imperial 4059,EUR,50000
+2000-11-17,438,249,SG for wANDz-imperial 4059,EUR,35000
+2000-11-17,103,310,mining 4018,EUR,3000000
+2000-11-18,424,101,contribution Destro,EUR,1500000
+2000-11-18,429,101,contribution Tiran,EUR,350000
+2000-11-18,429,101,contribution Tiran,EUR,350000
+2000-11-18,435,101,contribution Jerico,EUR,350000
+2000-11-18,437,101,contribution TheCleaner,EUR,2000000
+2000-11-18,103,128,retreat of Pade,EUR,70000
+2000-11-18,428,230,SG for Trigamil 2069,EUR,35000
+2000-11-18,428,231,SG for Eden 2225,EUR,35000
+2000-11-18,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-18,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-18,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-18,428,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-18,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-18,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-18,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-18,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-18,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-18,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-18,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-18,428,238,SG for Macross 3065,EUR,35000
+2000-11-18,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-18,428,242,SG for Dark-Sun 3183,EUR,35000
+2000-11-18,438,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-18,438,247,SG for wANDz! 4056,EUR,35000
+2000-11-18,439,247,50 cd for wANDz! 4056,EUR,500000
+2000-11-18,439,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-18,428,248,SG for Shondyke 4112,EUR,35000
+2000-11-18,439,248,Turret for Shondyke 4112,EUR,500000
+2000-11-18,439,249,5 SG for wANDz-imperial 4059,EUR,175000
+2000-11-18,439,249,Hangar for wANDz-imperial 4059,EUR,50000
+2000-11-18,439,249,Turret for wANDz-imperial 4059,EUR,500000
+2000-11-18,439,249,Turret for wANDz-imperial 4059,EUR,500000
+2000-11-18,439,249,Turret for wANDz-imperial 4059,EUR,500000
+2000-11-19,429,101,contribution Tiran,EUR,500000
+2000-11-19,429,101,contribution Tiran,EUR,850000
+2000-11-19,434,101,contribution Vampire,EUR,2000000
+2000-11-19,437,101,contribution TheCleaner,EUR,2000000
+2000-11-19,428,103,contribution Pade,EUR,3000000
+2000-11-19,436,230,100 Shields 2069 Trigamil,EUR,35000
+2000-11-19,436,230,Hangar for Trigamil 2069,EUR,50000
+2000-11-19,436,230,Hangar for Trigamil 2069,EUR,50000
+2000-11-19,436,230,Hangar for Trigamil 2069,EUR,50000
+2000-11-19,436,230,Hangar for Trigamil 2069,EUR,50000
+2000-11-19,436,230,Hangar for Trigamil 2069,EUR,50000
+2000-11-19,436,231,Hangar for Eden 2225,EUR,50000
+2000-11-19,436,231,Hangar for Eden 2225,EUR,50000
+2000-11-19,436,231,SG for Eden 2225,EUR,35000
+2000-11-19,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-19,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-19,428,232,Hangar for Monticule 2154,EUR,50000
+2000-11-19,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-19,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-19,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-19,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-19,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-19,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-19,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-19,436,237,SG for The-Badlands 2168,EUR,35000
+2000-11-19,436,237,SG for The-Badlands 2168,EUR,35000
+2000-11-19,436,237,SG for The-Badlands 2168,EUR,35000
+2000-11-19,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-19,436,243,100 Shields 2084 Lodestone,EUR,35000
+2000-11-19,436,243,Hangar for Lodestone 2084,EUR,50000
+2000-11-19,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-19,436,243,Turret for Lodestone 2084,EUR,500000
+2000-11-19,436,243,Turret for Lodestone 2084,EUR,500000
+2000-11-19,428,245,Hangar for Alpha-Prime 3069,EUR,50000
+2000-11-19,429,248,Hangar for Shondyke 4112,EUR,50000
+2000-11-19,429,248,SG for Shondyke 4112,EUR,35000
+2000-11-20,420,101,contribution Lasade,EUR,1500000
+2000-11-20,429,101,contribution Tiran,EUR,500000
+2000-11-20,434,101,contribution Vampire,EUR,2530000
+2000-11-20,437,101,contribution TheCleaner,EUR,2000000
+2000-11-20,101,103,trader submission,EUR,500000
+2000-11-20,101,135,Ship PSF for Jerico,EUR,9400000
+2000-11-20,430,233,Turret for Great-A'Thuin 2054,EUR,500000
+2000-11-20,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-20,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-20,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-20,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-20,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-20,437,238,SG for Macross 3065,EUR,35000
+2000-11-20,438,247,40 CD for wANDz! 4056,EUR,400000
+2000-11-20,438,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-20,438,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-20,438,247,SG for wANDz! 4056,EUR,35000
+2000-11-20,429,248,SG for Shondyke 4112,EUR,35000
+2000-11-20,438,249,50 mines for wANDz-imperial 4059,EUR,500000
+2000-11-20,438,249,Turret for wANDz-imperial 4059,EUR,500000
+2000-11-21,422,101,contribution Joanla,EUR,1100000
+2000-11-21,422,101,contribution Joanla,EUR,1600000
+2000-11-21,424,101,contribution Destro,EUR,3000000
+2000-11-21,429,101,contribution Tiran,EUR,700000
+2000-11-21,430,101,contribution Mu,EUR,2000000
+2000-11-21,434,101,contribution Vampire,EUR,2000000
+2000-11-21,438,101,contribution zHA,EUR,6000000
+2000-11-21,439,101,contribution woodydrn,EUR,6000000
+2000-11-21,101,103,trader contribution,EUR,500000
+2000-11-21,101,134,Ship Lynx for Vampire,EUR,2530000
+2000-11-21,101,138,Ship Hydra for zHA,EUR,6000000
+2000-11-21,101,139,Ship Hydra for woodydrn,EUR,6000000
+2000-11-21,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-21,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-21,430,232,for Shields for Monti by Mu,EUR,147000
+2000-11-21,430,233,for Shields on Great A'Thuin by Mu,EUR,175000
+2000-11-21,422,237,Turret for The-Badlands 2168,EUR,500000
+2000-11-21,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-21,437,238,SG for Macross 3065,EUR,35000
+2000-11-21,437,238,SG for Macross 3065,EUR,35000
+2000-11-21,424,240,for Planetary Defense by Destro,EUR,400000
+2000-11-21,424,240,for Planetary Defense by Destro,EUR,400000
+2000-11-21,424,246,Turret for New-Narnia 5153,EUR,500000
+2000-11-21,429,248,100 Shields for 4112,EUR,35000
+2000-11-21,429,248,SG for Shondyke 4112,EUR,35000
+2000-11-21,101,310,Shields for BreakMan after human scouting,EUR,136500
+2000-11-22,420,101,contribution Lasade,EUR,1000000
+2000-11-22,422,101,contribution Joanla,EUR,1200000
+2000-11-22,424,101,contribution Destro,EUR,3000000
+2000-11-22,427,101,contribution BreakMan,EUR,1500000
+2000-11-22,429,101,contribution Tiran,EUR,500000
+2000-11-22,429,101,contribution Tiran,EUR,700000
+2000-11-22,436,101,contribution Mayhem,EUR,2000000
+2000-11-22,436,101,contribution Mayhem,EUR,5000000
+2000-11-22,437,101,contribution TheCleaner,EUR,1500000
+2000-11-22,101,103,Trader submission,EUR,500000
+2000-11-22,101,124,Ship Lynx for Destro,EUR,3000000
+2000-11-22,101,127,Ship PSF for BreakMan,EUR,9400000
+2000-11-22,101,136,Ship Punisher for Mayhem,EUR,5000000
+2000-11-22,101,136,Ship Seeker for Mayhem,EUR,3000000
+2000-11-22,422,230,SG for Trigamil 2069,EUR,35000
+2000-11-22,422,230,SG for Trigamil 2069,EUR,35000
+2000-11-22,436,230,400 Shields 2069 Trigamil,EUR,140000
+2000-11-22,436,231,SG for Eden 2225,EUR,35000
+2000-11-22,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-22,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-22,430,232,SG for Monticule 2154,EUR,35000
+2000-11-22,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-22,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-22,422,237,SG for Aurora 2168,EUR,35000
+2000-11-22,422,237,SG for Aurora 2168,EUR,35000
+2000-11-22,436,237,100 Shields 2168,EUR,35000
+2000-11-22,436,237,3 Turrets 2168,EUR,1500000
+2000-11-22,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-22,437,238,SG for Macross 3065,EUR,35000
+2000-11-22,436,243,4 SG for 2084 Lodestone,EUR,140000
+2000-11-22,436,243,500 Shields for 2084 Lodestone,EUR,175000
+2000-11-22,436,243,Hangar for Lodestone 2084,EUR,50000
+2000-11-22,436,243,Hangar for Lodestone 2084,EUR,50000
+2000-11-22,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-22,429,247,for Planetary Defense by Tiran,EUR,35000
+2000-11-22,429,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-22,429,249,for Planetary Defense by Tiran,EUR,335000
+2000-11-22,439,249,SG for wANDz-imperial 4059,EUR,35000
+2000-11-23,424,101,contribution Destro,EUR,3000000
+2000-11-23,426,101,contribution Jyhem,EUR,7500000
+2000-11-23,429,101,contribution Tiran,EUR,600000
+2000-11-23,429,101,contribution Tiran,EUR,700000
+2000-11-23,435,101,contribution Jerico,EUR,1000000
+2000-11-23,437,101,contribution TheCleaner,EUR,1500000
+2000-11-23,101,103,traders submissions,EUR,500000
+2000-11-23,101,122,Ship Seeker for Joanla,EUR,3000000
+2000-11-23,101,126,Ship DeepSpacer for Jyhem,EUR,7500000
+2000-11-23,101,130,Ship DeepSpacer for Mu,EUR,7500000
+2000-11-23,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-23,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-23,422,232,SG for Monticule 2154,EUR,35000
+2000-11-23,429,235,for Planetary Defense by Tiran,EUR,70000
+2000-11-23,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-23,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-23,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-23,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-23,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-23,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-23,422,237,SG for Aurora 2168,EUR,35000
+2000-11-23,437,238,195CD,EUR,1950000
+2000-11-23,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-23,437,238,SG for Macross 3065,EUR,35000
+2000-11-23,437,238,SG for Macross 3065,EUR,35000
+2000-11-23,437,238,SG for Macross 3065,EUR,35000
+2000-11-23,429,248,for Planetary Defense by Tiran,EUR,70000
+2000-11-23,429,248,SG for Shondyke 4112,EUR,35000
+2000-11-23,439,249,SG for wANDz-imperial 4059,EUR,35000
+2000-11-23,439,249,Turret for wANDz-imperial 4059,EUR,500000
+2000-11-23,439,249,Turret for wANDz-imperial 4059,EUR,500000
+2000-11-24,420,101,contribution Lasade,EUR,1000000
+2000-11-24,429,101,contribution Tiran,EUR,300000
+2000-11-24,101,103,Trader soubmission,EUR,510000
+2000-11-24,101,104,Trader soubmission,EUR,510000
+2000-11-24,430,232,SG for Monticule 2154,EUR,35000
+2000-11-24,430,232,SG for Monticule 2154,EUR,35000
+2000-11-24,430,232,SG for Monticule 2154,EUR,35000
+2000-11-24,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-24,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-24,437,238,SG for Macross 3065,EUR,35000
+2000-11-24,437,238,SG for Macross 3065,EUR,35000
+2000-11-24,437,238,Warp Inhibitor,EUR,400000
+2000-11-25,429,101,contribution Tiran,EUR,5000000
+2000-11-25,101,129,Ship Punisher for Tiran,EUR,5000000
+2000-11-25,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-25,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-25,429,235,Hangar for Taii'gard 4188,EUR,50000
+2000-11-25,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-25,437,238,20CD,EUR,200000
+2000-11-25,437,238,20CD,EUR,200000
+2000-11-25,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-25,437,238,SG for Macross 3065,EUR,35000
+2000-11-25,437,238,SG for Macross 3065,EUR,35000
+2000-11-25,437,238,SG for Macross 3065,EUR,35000
+2000-11-26,436,230,Hangar for Trigamil 2069,EUR,50000
+2000-11-26,436,230,Hangar for Trigamil 2069,EUR,50000
+2000-11-26,436,231,4 DH for 2225 Eden,EUR,200000
+2000-11-26,436,231,SG for Eden 2225,EUR,35000
+2000-11-26,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-26,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-26,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-26,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-26,430,233,Shields for A'Thuin by Mu,EUR,175000
+2000-11-26,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-26,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-26,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-26,429,235,SG for Taii'gard 4188,EUR,35000
+2000-11-26,436,237,100 Shields,EUR,35000
+2000-11-26,436,237,Hangar for Aurora 2168,EUR,50000
+2000-11-26,436,237,SG for Aurora 2168,EUR,35000
+2000-11-26,436,237,SG for Aurora 2168,EUR,35000
+2000-11-26,436,237,Turret for Aurora 2168,EUR,500000
+2000-11-26,437,238,20CD on 3065,EUR,200000
+2000-11-26,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-26,437,238,SG for Macross 3065,EUR,35000
+2000-11-26,437,238,SG for Macross 3065,EUR,35000
+2000-11-26,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-26,436,243,SG for Lodestone 2084,EUR,35000
+2000-11-28,420,101,contribution Lasade,EUR,1000000
+2000-11-28,422,101,contribution Joanla,EUR,2000000
+2000-11-28,430,101,contribution Mu,EUR,3000000
+2000-11-28,438,101,contribution zHA,EUR,6000000
+2000-11-28,101,103,Trader contrbution,EUR,2000000
+2000-11-28,101,103,Trader submission,EUR,1901300
+2000-11-28,101,104,trader contribution,EUR,2000000
+2000-11-28,101,104,Trader submission,EUR,1901300
+2000-11-28,423,104,Contribution a'o's,EUR,2072000
+2000-11-28,423,104,"two jump drives, Jerico and Vampire",EUR,600000
+2000-11-28,104,123,Ship Rogue for angel'o'sphere,EUR,2322000
+2000-11-28,103,128,retreat of Pade,EUR,3500000
+2000-11-28,103,128,retreat of Pade,EUR,4000000
+2000-11-28,104,134,jump drive,EUR,300000
+2000-11-28,104,135,jump drive,EUR,300000
+2000-11-28,428,231,SG for Eden 2225,EUR,35000
+2000-11-28,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-28,422,232,400 SH for Planetary Defense by Joanla,EUR,140000
+2000-11-28,422,232,SG for Monticule 2154,EUR,35000
+2000-11-28,428,232,"for Planetary Def, Pade 550 CD, 100 ms, 40 SD",EUR,6528000
+2000-11-28,430,233,Shields for A'Thuin by Mu,EUR,175000
+2000-11-28,430,233,Turret for Great-A'Thuin 2054,EUR,500000
+2000-11-28,423,234,10 Hangar for Riga 3105,EUR,500000
+2000-11-28,423,235,10 SG for Planetary Defense by angel'o'sphere,EUR,350000
+2000-11-28,423,235,for 4550 units of shield by angel'o'sphere,EUR,1592500
+2000-11-28,422,237,SG for Aurora 2168,EUR,35000
+2000-11-28,428,238,SG for Macross 3065,EUR,35000
+2000-11-28,437,238,Hangar for Macross 3065,EUR,50000
+2000-11-28,437,238,SG for Macross 3065,EUR,35000
+2000-11-28,428,240,Hangar for New-Cair-Paravel 5131,EUR,50000
+2000-11-28,428,245,Turret for Alpha-Prime 3069,EUR,500000
+2000-11-28,438,247,1000 shield for wANDz! 4056,EUR,350000
+2000-11-28,438,247,40 CD for wANDz! 4056,EUR,400000
+2000-11-28,438,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-28,438,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-28,438,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-28,438,247,Hangar for wANDz! 4056,EUR,50000
+2000-11-28,438,247,SG for wANDz! 4056,EUR,35000
+2000-11-28,438,247,SG for wANDz! 4056,EUR,35000
+2000-11-28,438,247,SG for wANDz! 4056,EUR,35000
+2000-11-28,438,247,SG for wANDz! 4056,EUR,35000
+2000-11-28,438,247,Warpinhi. for wANDz! 4056,EUR,400000
+2000-11-28,439,247,SG for wANDz! 4056,EUR,35000
+2000-11-28,438,249,Turret for wANDz-imperial 4059,EUR,500000
+2000-11-28,438,249,Turret for wANDz-imperial 4059,EUR,500000
+2000-11-28,439,249,SG for wANDz-imperial 4059,EUR,35000
+2000-11-28,439,249,SG for wANDz-imperial 4059,EUR,35000
+2000-11-29,427,101,contribution BreakMan,EUR,500000
+2000-11-29,434,101,contribution Vampire,EUR,2000000
+2000-11-29,435,101,contribution Jerico,EUR,1000000
+2000-11-29,436,101,contribution Mayhem,EUR,2000000
+2000-11-29,437,101,contribution TheCleaner,EUR,1500000
+2000-11-29,439,101,contribution woodydrn,EUR,6000000
+2000-11-29,101,103,trader submission,EUR,3300000
+2000-11-29,101,104,trader submission,EUR,1050000
+2000-11-29,104,124,Ship Rogue for Destro,EUR,2500000
+2000-11-29,103,128,retreat of Pade,EUR,400000
+2000-11-29,428,230,SG for Trigamil 2069,EUR,35000
+2000-11-29,434,230,SG for Trigamil 2069,EUR,35000
+2000-11-29,420,232,Hangar for Monticule 2154,EUR,50000
+2000-11-29,430,232,TFP for Monticule 2154,EUR,700000
+2000-11-29,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-29,430,233,SG for Great-A'Thuin 2054,EUR,35000
+2000-11-29,428,235,SG for Taii'gard 4188,EUR,35000
+2000-11-29,434,235,SG for Taii'gard 4188,EUR,35000
+2000-11-29,422,237,200 SH for Planetary Defense by  Joanla,EUR,70000
+2000-11-29,422,237,SG for  Aurora 2168,EUR,35000
+2000-11-29,422,237,Turret for  Aurora 2168,EUR,500000
+2000-11-29,437,238,20CD on Macross,EUR,200000
+2000-11-29,437,238,Hangar for  Macross 3065,EUR,50000
+2000-11-29,437,238,SG for  Macross 3065,EUR,35000
+2000-11-29,428,240,Hangar for  New-Cair-Paravel 5131,EUR,50000
+2000-11-29,438,247,Hangar for  wANDz! 4056,EUR,50000
+2000-11-29,438,247,SG for  wANDz! 4056,EUR,35000
+2000-11-29,434,248,Hangar for  Shondyke 4112,EUR,50000
+2000-11-29,428,249,Turret for  wANDz-imperial 4059,EUR,500000
+2000-11-30,420,101,contribution  Lasade,EUR,1000000
+2000-11-30,424,101,contribution  Destro,EUR,8000000
+2000-11-30,440,101,contribution  Amorpha,EUR,850000
+2000-11-30,101,103,Tradder submission,EUR,2400000
+2000-11-30,101,103,Trader submission,EUR,1160775
+2000-11-30,101,104,Trader submission,EUR,1160775
+2000-11-30,101,104,Trader submission,EUR,2400000
+2000-11-30,436,231,100 Shields 2225 Eden,EUR,35000
+2000-11-30,436,231,Hangar for  Eden 2225,EUR,50000
+2000-11-30,436,231,Hangar for  Eden 2225,EUR,50000
+2000-11-30,436,231,Hangar for  Eden 2225,EUR,50000
+2000-11-30,436,231,Hangar for  Eden 2225,EUR,50000
+2000-11-30,436,231,SG for  Eden 2225,EUR,35000
+2000-11-30,420,232,Hangar for  Monticule 2154,EUR,50000
+2000-11-30,430,232,SG for  Monticule 2154,EUR,35000
+2000-11-30,430,233,SG for  Great-A'Thuin 2054,EUR,35000
+2000-11-30,429,235,Hangar for  Taii'gard 4188,EUR,50000
+2000-11-30,429,235,SG for  Taii'gard 4188,EUR,35000
+2000-11-30,422,237,200 SH for Planetary Defense by  Joanla,EUR,70000
+2000-11-30,422,237,30 CD's for Planetary Defense by  Joanla,EUR,300000
+2000-11-30,422,237,SG for  Aurora 2168,EUR,35000
+2000-11-30,422,237,SG for  Aurora 2168,EUR,35000
+2000-11-30,422,237,Turret for  Aurora 2168,EUR,500000
+2000-11-30,436,237,300 Shields 2168,EUR,105000
+2000-11-30,436,237,Hangar for  Aurora 2168,EUR,50000
+2000-11-30,436,237,Hangar for  Aurora 2168,EUR,50000
+2000-11-30,436,237,SG for  Aurora 2168,EUR,35000
+2000-11-30,437,238,Hangar for  Macross 3065,EUR,50000
+2000-11-30,436,243,200 Shields 90,EUR,2084
+2000-11-30,436,243,Hangar for  Lodestone 2084,EUR,50000
+2000-11-30,436,243,SG for  Lodestone 2084,EUR,35000
+2000-11-30,436,243,SG for  Lodestone 2084,EUR,35000
+2000-11-30,436,243,SG for  Lodestone 2084,EUR,35000
+2000-11-30,438,247,Hangar for  wANDz! 4056,EUR,50000
+2000-11-30,438,247,SG for  wANDz! 4056,EUR,35000
+2000-12-01,422,101,contribution  Joanla,EUR,2000000
+2000-12-01,427,101,contribution  BreakMan,EUR,2000000
+2000-12-01,430,101,contribution  Mu,EUR,4750000
+2000-12-01,434,101,contribution  Vampire,EUR,2000000
+2000-12-01,435,101,contribution  Jerico,EUR,2000000
+2000-12-01,440,101,contribution  Amorpha,EUR,650000
+2000-12-01,101,103,Trader submission,EUR,1875000
+2000-12-01,101,103,Trader submission,EUR,42375
+2000-12-01,101,104,Trader submission,EUR,1875000
+2000-12-01,101,104,Trader submission,EUR,42375
+2000-12-01,101,129,retreat of  Tiran,EUR,1100000
+2000-12-01,422,230,SG for  Trigamil 2069,EUR,35000
+2000-12-01,420,232,Hangar for  Monticule 2154,EUR,50000
+2000-12-01,420,232,Hangar for  Monticule 2154,EUR,50000
+2000-12-01,422,232,300 SH for Planetary Defense by  Joanla,EUR,105000
+2000-12-01,430,232,SG for  Monticule 2154,EUR,35000
+2000-12-01,430,233,500 shield for Planetary Defense by  Mu,EUR,175000
+2000-12-01,430,233,SG for  Great-A'Thuin 2054,EUR,35000
+2000-12-01,430,233,SG for  Great-A'Thuin 2054,EUR,35000
+2000-12-01,422,235,SG for  Taii'gard 4188,EUR,35000
+2000-12-01,422,237,SG for  Aurora 2168,EUR,35000
+2000-12-01,437,238,60CD on 3065,EUR,600000
+2000-12-01,437,238,800 Shields on 3065,EUR,280000
+2000-12-01,437,238,Hangar for  Macross 3065,EUR,50000
+2000-12-01,437,238,SG for  Macross 3065,EUR,35000
+2000-12-01,437,238,SG for  Macross 3065,EUR,35000
+2000-12-01,440,238,Hangar for  Macross 3065,EUR,50000
+2000-12-01,438,247,Hangar for  wANDz! 4056,EUR,50000
+2000-12-01,438,247,SG for  wANDz! 4056,EUR,35000
+2000-12-01,438,249,Hangar for  wANDz-imperial 4059,EUR,50000
+2000-12-02,424,101,contribution  Destro,EUR,2000000
+2000-12-02,424,246,Turret for  New-Narnia 5153,EUR,500000
+2000-12-03,430,232,Hangar for  Monticule 2154,EUR,50000
+2000-12-03,430,232,SG for  Monticule 2154,EUR,35000
+2000-12-03,430,233,SG for  Great-A'Thuin 2054,EUR,35000
+2000-12-03,430,233,SG for  Great-A'Thuin 2054,EUR,35000
+2000-12-03,429,235,Hangar for  Taii'gard 4188,EUR,50000
+2000-12-03,429,235,Hangar for  Taii'gard 4188,EUR,50000
+2000-12-03,429,235,Hangar for  Taii'gard 4188,EUR,50000
+2000-12-03,429,235,Hangar for  Taii'gard 4188,EUR,50000
+2000-12-03,429,235,SG for  Taii'gard 4188,EUR,35000
+2000-12-03,429,235,SG for  Taii'gard 4188,EUR,35000
+2000-12-03,437,238,Hangar for  Macross 3065,EUR,50000
+2000-12-03,437,238,Hangar for  Macross 3065,EUR,50000
+2000-12-03,437,238,SG for  Macross 3065,EUR,35000
+2000-12-03,437,238,SG for  Macross 3065,EUR,35000
+2000-12-03,437,238,SG for  Macross 3065,EUR,35000
+2000-12-03,437,238,SG for  Macross 3065,EUR,35000
+2000-12-03,437,238,SG for  Macross 3065,EUR,35000
+2000-12-03,437,238,SG for  Macross 3065,EUR,35000
+2000-12-03,429,248,for Planetary Defense by  Tiran,EUR,35000
+2000-12-04,420,101,contribution  Lasade,EUR,1000000
+2000-12-04,420,101,contribution  Lasade,EUR,1000000
+2000-12-04,423,101,contribution  angel'o'sphere,EUR,7500000
+2000-12-04,427,101,contribution  BreakMan,EUR,1000000
+2000-12-04,434,101,contribution  Vampire,EUR,2000000
+2000-12-04,435,101,contribution  Jerico,EUR,1000000
+2000-12-04,440,101,contribution  Amorpha,EUR,2000000
+2000-12-04,444,101,contribution  Flashblade,EUR,905927
+2000-12-04,101,103,Trader submission,EUR,2610484
+2000-12-04,101,103,Trader submission,EUR,3801975
+2000-12-04,101,103,Trader submission,EUR,450000
+2000-12-04,101,103,Trader submission,EUR,600000
+2000-12-04,101,104,Trader submission,EUR,1100000
+2000-12-04,101,104,Trader submission,EUR,2610484
+2000-12-04,101,104,Trader submission,EUR,3801975
+2000-12-04,101,104,Trader submission,EUR,600000
+2000-12-04,101,140,Ship PSF for  Amorpha,EUR,9400000
+2000-12-04,101,144,Ship PSF for  Flashblade,EUR,9400000
+2000-12-04,420,232,Hangar for  Monticule 2154,EUR,50000
+2000-12-04,420,232,Hangar for  Monticule 2154,EUR,50000
+2000-12-04,420,232,Hangar for  Monticule 2154,EUR,50000
+2000-12-04,420,232,Hangar for  Monticule 2154,EUR,50000
+2000-12-04,420,232,Hangar for  Monticule 2154,EUR,50000
+2000-12-04,422,232,300 SH for Planetary Defense by  Joanla,EUR,105000
+2000-12-04,422,232,400 SH for Planetary Defense by  Joanla,EUR,140000
+2000-12-04,422,232,SG for  Monticule 2154,EUR,35000
+2000-12-04,429,235,for Planetary Defense by  Tiran,EUR,35000
+2000-12-04,429,235,Hangar for  Taii'gard 4188,EUR,50000
+2000-12-04,429,235,Hangar for  Taii'gard 4188,EUR,50000
+2000-12-04,422,237,200 SH for Planetary Defense by  Joanla,EUR,70000
+2000-12-04,422,237,30 CD's for Planetary Defense by  Joanla,EUR,300000
+2000-12-04,422,237,30 CD's for Planetary Defense by  Joanla,EUR,300000
+2000-12-04,422,237,Turret for  Aurora 2168,EUR,500000
+2000-12-04,437,238,Hangar for  Macross 3065,EUR,50000
+2000-12-04,437,238,Scanner for Macross 3065,EUR,650000
+2000-12-04,420,247,Hangar for  wANDz! 4056,EUR,50000
+2000-12-04,438,247,500 shield for  wANDz! 4056,EUR,175000
+2000-12-04,438,247,Hangar for  wANDz! 4056,EUR,50000
+2000-12-04,438,247,Hangar for  wANDz! 4056,EUR,50000
+2000-12-04,438,247,Hangar for  wANDz! 4056,EUR,50000
+2000-12-04,438,247,Hangar for  wANDz! 4056,EUR,50000
+2000-12-04,438,247,SG for  wANDz! 4056,EUR,35000
+2000-12-04,438,247,SG for  wANDz! 4056,EUR,35000
+2000-12-04,438,247,SG for  wANDz! 4056,EUR,35000
+2000-12-04,438,247,SG for wANDz! 4056,EUR,35000
+2000-12-04,438,247,SG for wANDz! 4056,EUR,35000
+2000-12-04,439,247,300 CD for  wANDz! 4056,EUR,3000000
+2000-12-04,439,247,82 mines for  wANDz! 4056,EUR,820000
+2000-12-04,439,247,Hangar for  wANDz! 4056,EUR,50000
+2000-12-04,438,249,SG for  wANDz-imperial 4059,EUR,35000
+2000-12-04,439,249,500 shield for  wANDz-imperial 4059,EUR,175000
+2000-12-04,439,249,62 CD for  wANDz-imperial 4059,EUR,620000
+2000-12-04,439,249,Hangar for  wANDz-imperial 4059,EUR,50000
+2000-12-04,439,249,SG for  wANDz-imperial 4059,EUR,35000
+2000-12-04,439,249,SG for  wANDz-imperial 4059,EUR,35000
+2000-12-04,439,249,SG for  wANDz-imperial 4059,EUR,35000
 OPS
-"tag","date","compte_accredite","compte_retrait","description","monnaie","montant","modif"
-"AUCHAN","","1000-1003", "1999",  "Courses Auchan", "","#payement", ""
-"AUCHAN","","1999",      "2011",  "Vêtements achetés chez Auchan", "", "", ""
-"AUCHAN","","1999",      "3080",  "Couches bébé ", "", "#couches",""
-"AUCHAN","","1999",      "3080",  "Divers bébé (#objet)", "", "#divers",""
-"AUCHAN","","1999",      "3011",  "Bouffe achetée chez Auchan EUR (#payement - #montant - #couches - #divers)", "", "(#payement - #montant - #couches - #divers)",""
-"AUCHAN","","1999",      "3011",  "Test (#payement - #toto - #couches - #divers", "", "(#beuh - #argh )",""
-"VIR","","230-249","120","Virements reguliers Operation (#MONT * #somme)","EUR","",""
-"BANQUE","","180","140-150","Virements reguliers2","EUR","20","",""
-"VIR","","250","160","Operation de virement regulier3","EUR","03",""
-"BANQUE","","220-252","444","Virements reguliers4","EUR","40",""
-"VIR","","300","120-144","0Virements reguliers","EUR","",""
-"BANQUES","","250","140","Virements reguliers2","EUR","#pognon",""
-"POTDEVIN","","250","160","Operation de virement regulier3","EUR","03",""
-"ALCOOL","","200-252","0-444","Operation de virement regulier4 (#total - #somme )","EUR","#somme",""
-"MERCH","", "400-499","100-104",  "Contribution #merchant", "", "#payement",""
-"MERCH","", "100-103","400-499",  "#construction for #planet", "", "","multi",""
+tag,date,compte_accredite,compte_retrait,description,monnaie,montant,modif
+AUCHAN,,1000-1003,1999,Courses Auchan,,#payement,
+AUCHAN,,1999,2011,Vêtements achetés chez Auchan,,,
+AUCHAN,,1999,3080,Couches bébé,,#couches,
+AUCHAN,,1999,3080,Divers bébé (#objet),,#divers,
+AUCHAN,,1999,3011,Bouffe achetée chez Auchan EUR (#payement - #montant - #couches - #divers),,(#payement - #montant - #couches - #divers),
+AUCHAN,,1999,3011,Test (#payement - #toto - #couches - #divers,,(#beuh - #argh ),
+VIR,,230-249,120,Virements reguliers Operation (#MONT * #somme),EUR,,
+VIR,,250,160,Operation de virement regulier3,EUR,3,
+VIR,,300,120-144,0Virements reguliers,EUR,,
+BANQUE,,180,140-150,Virements reguliers2,EUR,20,
+BANQUE,,220-252,444,Virements reguliers4,EUR,40,
+BANQUES,,250,140,Virements reguliers2,EUR,#pognon,
+POTDEVIN,,250,160,Operation de virement regulier3,EUR,3,
+ALCOOL,,200-252,0-444,Operation de virement regulier4 (#total - #somme ),EUR,#somme,
+MERCH,,400-499,100-104,Contribution #merchant,,#payement,
+MERCH,,100-103,400-499,#construction for #planet,,,multi

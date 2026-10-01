@@ -1,5 +1,18 @@
 # Unreleased
 
+  * `LedgerRepo`: one book as encrypted history on this device
+    (<base>/books/<book>/, the key in <base>/keys/<book>.key, the device's
+    name in <base>/device). `LedgerDiff`: what an action changed (journal
+    lines, accounts, ops, customers, documents and their events, deletions)
+    as ops to record — commands and screens keep working on book and archive.
+  * CLI `ledger -B <book>`: init (import a CSV book, an invoice archive,
+    letterheads), status, conflicts, export (CSV / JSON / YAML views),
+    serve (the hub; the pairing QR code in the terminal), sync <invitation>
+    (pairs on first use), backup / restore (passphrase). Tried with two
+    devices over the real network: paired, synced, exported the same book.
+  * The CSV writes account names unpadded (`436`, was `" 436"` — the old
+    4-character width belongs to the listing). me2000 sample saved through
+    the writer.
   * Sync on the local network, the desktop as hub: `SyncInvitation` (what
     the hub's QR code carries — address, book, a pairing token and the
     book's key: pairing hands the key over screen to camera), `SyncServer`
