@@ -98,4 +98,27 @@ void main() {
       expect(store.customerOf(first).name, 'Association Exemple');
     });
   });
+
+  test('a letterhead written as YAML reads back the same', () {
+    final lh = Letterhead.load(File('assets/invoice/letterhead.example.yaml'));
+    const changed = Letterhead(
+      id: 'ei',
+      name: 'Atelier "3D"',
+      address: ['1 rue X', '67000 Strasbourg'],
+      tax: TaxProfile(country: 'FR', regime: 'vat', rate: 0.2, rates: {'cours': 0.1}, reverseCharge: ['3dprint']),
+      reminderDays: [10, 20, 40],
+      penaltyRate: 0.1215,
+      bookAccounts: {'receivable': '411', 'bank': '512'},
+    );
+    for (final original in [lh, changed]) {
+      final again = Letterhead.parse(original.toYaml(), id: original.id);
+      expect(again.toYaml(), original.toYaml());
+    }
+    final again = Letterhead.parse(changed.toYaml(), id: 'ei');
+    expect(again.name, 'Atelier "3D"');
+    expect(again.tax.rates['cours'], 0.1);
+    expect(again.tax.reverseChargeFor('3dprint'), isTrue);
+    expect(again.books, isFalse, reason: 'no revenue account');
+  });
 }
+

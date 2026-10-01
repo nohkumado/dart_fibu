@@ -75,15 +75,21 @@ class Letterhead {
   bool get books => bookAccounts.containsKey('receivable') && bookAccounts.containsKey('revenue');
 
   /// Reads [file]; the id is the file name without extension.
-  factory Letterhead.load(File file) {
-    final y = loadYaml(file.readAsStringSync()) as YamlMap;
+  /// Reads [file]; the id is the file name without extension.
+  factory Letterhead.load(File file) => Letterhead.parse(file.readAsStringSync(),
+      id: file.uri.pathSegments.last.replaceAll(RegExp(r'\.ya?ml$'), ''), baseDir: file.parent.path);
+
+  /// Reads the YAML [text] of the letterhead [id]; relative logo and font
+  /// paths are taken from [baseDir].
+  factory Letterhead.parse(String text, {required String id, String baseDir = '.'}) {
+    final y = (loadYaml(text) as YamlMap?) ?? YamlMap();
     String s(String k) => (y[k] ?? '').toString();
     final bank = (y['bank'] as YamlMap?) ?? YamlMap();
     final book = (y['book'] as YamlMap?) ?? YamlMap();
     final logo = s('logo');
     final font = s('font');
     return Letterhead(
-      id: file.uri.pathSegments.last.replaceAll(RegExp(r'\.ya?ml$'), ''),
+      id: id,
       name: s('name'),
       address: [for (final l in (y['address'] as YamlList?) ?? const []) '$l'],
       phone: s('phone'),
@@ -96,14 +102,60 @@ class Letterhead {
       iban: (bank['iban'] ?? '').toString(),
       bic: (bank['bic'] ?? '').toString(),
       footer: s('footer'),
-      logo: logo.isEmpty || logo.startsWith('/') ? logo : '${file.parent.path}/$logo',
-      font: font.isEmpty || font.startsWith('/') ? font : '${file.parent.path}/$font',
+      logo: logo.isEmpty || logo.startsWith('/') ? logo : '$baseDir/$logo',
+      font: font.isEmpty || font.startsWith('/') ? font : '$baseDir/$font',
       bookAccounts: {for (final e in book.entries) '${e.key}': '${e.value}'},
       tax: TaxProfile.fromMap(y['tax'] as Map?, country: s('country').isEmpty ? 'FR' : s('country')),
       reminderDays: [for (final d in (y['reminder_days'] as List?) ?? const [15, 30, 45]) int.parse('$d')],
       penaltyRate: double.tryParse(s('penalty_rate').replaceAll(',', '.')) ?? 0,
       recoveryFeeCents: Amount.parseCents(s('recovery_fee').isEmpty ? '40' : s('recovery_fee')) ?? 4000,
     );
+  }
+
+  /// The letterhead as YAML, the way [parse] reads it — readable and
+  /// editable by hand (the app's editor writes it).
+  String toYaml() {
+    String q(String v) => '"${v.replaceAll(r'\', r'\\').replaceAll('"', r'\"')}"';
+    String rate(double v) => v.toString();
+    final b = StringBuffer()
+      ..writeln('name: ${q(name)}')
+      ..writeln('address:')
+      ..writeAll([for (final l in address) '  - ${q(l)}\n'])
+      ..writeln('country: ${q(tax.country)}')
+      ..writeln('phone: ${q(phone)}')
+      ..writeln('email: ${q(email)}')
+      ..writeln('siret: ${q(siret)}')
+      ..writeln('vat_id: ${q(vatId)}')
+      ..writeln('tax_number: ${q(taxNumber)}')
+      ..writeln('vat_note: ${q(vatNote)}')
+      ..writeln('bank:')
+      ..writeln('  name: ${q(bankName)}')
+      ..writeln('  iban: ${q(iban)}')
+      ..writeln('  bic: ${q(bic)}')
+      ..writeln('footer: ${q(footer)}')
+      ..writeln('logo: ${q(logo)}')
+      ..writeln('font: ${q(font)}')
+      ..writeln('tax:')
+      ..writeln('  regime: ${tax.regime}')
+      ..writeln('  rate: ${rate(tax.rate)}')
+      ..writeln('  rates: {${tax.rates.entries.map((e) => '${q(e.key)}: ${rate(e.value)}').join(', ')}}')
+      ..writeln('  reverse_charge: [${tax.reverseCharge.map(q).join(', ')}]')
+      ..writeln('reminder_days: [${reminderDays.join(', ')}]')
+      ..writeln('penalty_rate: ${rate(penaltyRate)}')
+      ..writeln('recovery_fee: ${q((recoveryFeeCents / 100).toStringAsFixed(2))}');
+    if (bookAccounts.isNotEmpty) {
+      b.writeln('book:');
+      for (final e in bookAccounts.entries) {
+        b.writeln('  ${e.key}: ${q(e.value)}');
+      }
+    }
+    return b.toString();
+  }
+
+  /// Writes it as `<dir>/<id>.yaml`.
+  void save(Directory dir) {
+    dir.createSync(recursive: true);
+    File('${dir.path}/$id.yaml').writeAsStringSync(toYaml());
   }
 
   /// Every letterhead of [dir] (*.yaml), by id.

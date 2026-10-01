@@ -1,5 +1,7 @@
 # Unreleased
 
+  * `Letterhead.parse` (from text), `toYaml` and `save`: letterheads can be
+    written back (the app's settings editor), readable by hand.
   * facture CLI on the workflow: `-s factures.json` and the commands status,
     customer add/list, offer, invoice, accept, refuse, invoice-offer,
     reminders [--send], pay, pdf, import (the old CSV archive); `--book`
