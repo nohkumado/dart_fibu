@@ -1,5 +1,13 @@
 # Unreleased
 
+  * Sync on the local network, the desktop as hub: `SyncInvitation` (what
+    the hub's QR code carries — address, book, a pairing token and the
+    book's key: pairing hands the key over screen to camera), `SyncServer`
+    (WebSocket; a device without token and key is hung up on) and
+    `SyncClient` — like git fetch + push: say what you have, take what you
+    lack, send what the hub lacks; every message sealed with the book's
+    key. Tested: phone, co-worker and hub working offline at the same time
+    end up on the same history.
   * The history encrypted at rest: `LedgerKey` (32 random bytes per book;
     on the desktop a key file readable by its owner only, mode 600; the app
     keeps it in the phone's secure storage), `LedgerCipher` (AES-256-GCM per
