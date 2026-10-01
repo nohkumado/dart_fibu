@@ -1,5 +1,17 @@
 # Unreleased
 
+  * History as changesets, the base for syncing devices and co-workers
+    (lib/src/sync): `Change` — what a device recorded, on top of the
+    changes it knew (parents), its id the hash of its content (an altered
+    change is refused); `ChangeGraph` — the history as a graph like git's:
+    record, merge (union, changes waiting for missing parents), ancestry,
+    one replay order for all devices; `Ledger` — book, offers/invoices and
+    letterheads rebuilt from it, with `conflicts` where two changes set the
+    same thing without knowing each other (the later counts, the other is
+    kept for a person to confirm); additions (journal lines, document
+    events) never conflict. `Ledger.snapshot` imports a CSV book and the
+    invoice archive as a first change (lossless: tested on compta2018 and
+    me2000). Documents carry a stable `uid` (drafts have no number yet).
   * `Letterhead.parse` (from text), `toYaml` and `save`: letterheads can be
     written back (the app's settings editor), readable by hand.
   * facture CLI on the workflow: `-s factures.json` and the commands status,

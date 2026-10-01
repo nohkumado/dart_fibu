@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import '../../nohfibu.dart';
 
@@ -25,6 +26,11 @@ class InvoiceDesk {
         offerNumbers: InvoiceNumbering(File('${file.path}.offers'), prefix: 'D'),
         invoiceNumbers: InvoiceNumbering(File('${file.path}.invoices')),
       );
+
+  static final _random = Random.secure();
+
+  /// A random identity for a new document (stable across devices).
+  static String _uid() => List.generate(16, (_) => _random.nextInt(256).toRadixString(16).padLeft(2, '0')).join();
 
   Letterhead _letterhead(String id) =>
       letterheads[id] ?? (throw StateError('no letterhead "$id" (known: ${letterheads.keys.join(', ')})'));
@@ -70,6 +76,7 @@ class InvoiceDesk {
       items: items,
       source: source,
       events: [DocumentEvent(d, DocumentEventKind.created)],
+      uid: _uid(),
     );
     store.documents.add(doc);
     return doc;

@@ -54,6 +54,10 @@ class Invoice {
   /// What happened to it, in order.
   final List<DocumentEvent> events;
 
+  /// Stable identity across devices and before it has a number (drafts):
+  /// given when drafted; older documents: kind and number.
+  final String uid;
+
   Invoice({
     this.kind = InvoiceKind.invoice,
     this.lang = 'fr',
@@ -73,7 +77,9 @@ class Invoice {
     required this.items,
     this.source = '',
     List<DocumentEvent>? events,
-  }) : events = events ?? [];
+    String uid = '',
+  })  : events = events ?? [],
+        uid = uid.isNotEmpty ? uid : '${kind.name}:$number';
 
   /// The same document with a number (given when it is issued) and, when
   /// given, other events.
@@ -96,6 +102,7 @@ class Invoice {
         items: items,
         source: source,
         events: events,
+        uid: uid,
       );
 
   /// Sum of the items before VAT, in cents.
@@ -145,6 +152,7 @@ class Invoice {
   Map<String, dynamic> toJson() {
     String day(DateTime d) => d.toIso8601String().substring(0, 10);
     return {
+      'uid': uid,
       'kind': kind.name,
       'number': number,
       'lang': lang,
@@ -190,5 +198,6 @@ class Invoice {
         ],
         source: '${j['source'] ?? ''}',
         events: [for (final e in (j['events'] as List?) ?? const []) DocumentEvent.fromJson(Map<String, dynamic>.from(e as Map))],
+        uid: '${j['uid'] ?? ''}',
       );
 }
