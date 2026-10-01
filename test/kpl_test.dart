@@ -67,7 +67,7 @@ void main() {
       List<List<dynamic>>  res = [];
       kto.asList(asList: res);
       //print("asList returned $res");
-      expect(res, equals([["1001", "top account", "EUR", 99912, 1000099], ["10010", "bottom  account", "EUR", 00, 00]]));
+      expect(res, equals([["1001", "top account", "EUR", 99912, 1000099, "actif"], ["10010", "bottom  account", "EUR", 00, 00, "actif"]]));
     });
     test('Initialization with default values', () {
       Konto defaultKonto = Konto();

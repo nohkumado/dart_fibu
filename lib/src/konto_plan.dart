@@ -113,7 +113,7 @@ class KontoPlan {
         ? []
         : [
             ["KPL"],
-            ["kto", "dsc", "cur", "budget", "valuta"]
+            ["kto", "dsc", "cur", "budget", "valuta", "role"]
           ];
     konten.forEach((key, value) {
       value.asList(asList: asList, all: all, formatted: formatted);
@@ -121,52 +121,54 @@ class KontoPlan {
     return asList;
   }
 
-  /// Analyzes the account plan, comparing different account groups.
-  /// Ensures that the data is consistent across activas, passivas, incomes, and costs.
-  String analysis() {
-    if (get("1") == null ||
-        get("2") == null ||
-        get("3") == null ||
-        get("4") == null)
-      throw Exception("Invalid account plan, no analysis possible");
+  /// Every real account of the plan (the tree's nodes with a description,
+  /// headings left out), in account order.
+  List<Konto> accounts() {
+    final out = <Konto>[];
+    void walk(Konto k) {
+      if (k.desc.trim().isNotEmpty && !k.heading) out.add(k);
+      for (final child in k.children.values) {
+        walk(child);
+      }
+    }
 
+    for (final k in konten.values) {
+      walk(k);
+    }
+    return out;
+  }
+
+  /// The accounts with [role].
+  List<Konto> withRole(AccountType role) =>
+      accounts().where((k) => k.accountType == role).toList();
+
+  /// Assets, liabilities, expenses and income by the accounts' roles, with
+  /// their sums and the check that both results agree (must be 0). Works
+  /// for any chart: the roles, not the blocks, decide.
+  String analysis() {
     String result = "=" * 30 + "    Analysis    " + "=" * 30 + "\n";
-    Konto activa = get("1")!;
-    Konto passiva = get("2")!;
-    Konto costs = get("3")!;
-    Konto incomes = get("4")!;
-    result += "Aktiva    \n" + activa.toString(recursive: true) + "\n";
-    int sumActiva = activa.sum();
-    result +=
-        " " * 60 + "Aktiva insgesamt " + activa.numFormat(sumActiva) + "\n";
-    result += "Passiva    \n" + passiva.toString(recursive: true) + "\n";
-    int sumPassiva = activa.sum();
-    result +=
-        " " * 60 + "Passiva insgesamt " + passiva.numFormat(sumPassiva) + "\n";
-    result += " " * 60 +
-        "Ueberschuss " +
-        passiva.numFormat(sumActiva - sumPassiva) +
-        "\n";
-    result += "Kosten    \n" + costs.toString(recursive: true) + "\n";
-    int sumKosten = costs.sum();
-    result +=
-        " " * 60 + "Kosten insgesamt " + activa.numFormat(sumKosten) + "\n";
-    result += "Einnahmen    \n" + incomes.toString(recursive: true) + "\n";
-    int sumEinnahmen = incomes.sum();
-    result += " " * 60 +
-        "Einnahmen insgesamt " +
-        passiva.numFormat(sumEinnahmen) +
-        "\n";
-    result += " " * 60 +
-        "Ueberschuss " +
-        passiva.numFormat(sumEinnahmen - sumKosten) +
-        "\n";
+    final format = Konto();
+    int section(String title, AccountType role, String total) {
+      final list = withRole(role);
+      result += "$title\n";
+      for (final k in list) {
+        result += "${k.toString(recursive: false)}\n";
+      }
+      final sum = list.fold(0, (s, k) => s + k.valuta);
+      result += " " * 60 + "$total ${format.numFormat(sum)}\n";
+      return sum;
+    }
+
+    // one sign rule for every account (the plus side gains): liabilities
+    // and income stand negative, all balances together make 0
+    final sumActiva = section("Aktiva", AccountType.Actif, "Aktiva insgesamt");
+    final sumPassiva = section("Passiva", AccountType.Passif, "Passiva insgesamt");
+    result += " " * 60 + "Ueberschuss ${format.numFormat(sumActiva + sumPassiva)}\n";
+    final sumKosten = section("Kosten", AccountType.Charge, "Kosten insgesamt");
+    final sumEinnahmen = section("Einnahmen", AccountType.Produit, "Einnahmen insgesamt");
+    result += " " * 60 + "Ueberschuss ${format.numFormat(-(sumEinnahmen + sumKosten))}\n";
     result += " " * 50 +
-        "Gueltigkeit (muss 0 sein) " +
-        passiva
-            .numFormat((sumEinnahmen - sumKosten) + (sumActiva - sumPassiva)) +
-        "\n";
-    //print("retrieved : ${activa.toString(recursive: true)}");
+        "Gueltigkeit (muss 0 sein) ${format.numFormat(sumActiva + sumPassiva + sumKosten + sumEinnahmen)}\n";
     return result;
   }
 

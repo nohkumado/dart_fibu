@@ -42,8 +42,9 @@ class Fibu {
     Book nextExercise = Book();
     nextExercise.kpl =
         book.kpl.clone(resetValuta: true); // Clone the KPL with resetValuta
-    Konto patrimonio = nextExercise.kpl.get("2")?.getSmallest() ??
-        Konto(); // Find the "patrimonio" account, validate it
+    // the equity ("patrimonio"): the first liability account of the plan
+    final liabilities = nextExercise.kpl.withRole(AccountType.Passif);
+    Konto patrimonio = liabilities.isEmpty ? Konto() : liabilities.first;
     if (patrimonio.isNotValid()) {
       print("Error!! no patrimonio found???");
       return nextExercise; // Exit early if patrimonio is invalid
@@ -65,18 +66,16 @@ class Fibu {
     }
 
     // Get usable aktiva accounts and add them to journal
-    List<List> aktivaAccounts =
-        book.kpl.get("1")?.asList().where((line) => line[4] != 0).toList() ??
-            [];
+    List<List> rowsOf(AccountType role) => [
+          for (final k in book.kpl.withRole(role))
+            if (k.valuta != 0) [k.name, k.desc, k.cur, k.budget, k.valuta]
+        ];
+    List<List> aktivaAccounts = rowsOf(AccountType.Actif);
     addJournalEntries(aktivaAccounts, "Report ");
 
     // Get usable passiva accounts excluding patrimonio, and add them to journal
-    List<List> passivaAccounts = book.kpl
-            .get("2")
-            ?.asList()
-            .where((line) => line[4] != 0 && line[0] != patrimonio.name)
-            .toList() ??
-        [];
+    List<List> passivaAccounts =
+        rowsOf(AccountType.Passif).where((line) => line[0] != patrimonio.name).toList();
     addJournalEntries(passivaAccounts, "Report ");
 
     // Execute the next exercise

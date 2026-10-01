@@ -39,7 +39,12 @@ class Konto {
   late Journal extract;
 
   /// The account's extract (journal of transactions for this account).
-  AccountType accountType; // Nouveau champ pour le type de compte
+  /// The account's role (asset, liability, expense, income).
+  late AccountType accountType;
+
+  /// A heading of the plan (the old format's block lines like
+  /// "1,*** fine degli conti attivi ***"): shown, never booked, not summed.
+  bool heading = false;
   ///CTOR where you can specify
   ///   the number of the account,
   ///   its name (the number is recursively consumed)
@@ -55,7 +60,7 @@ class Konto {
       cur,
       budget,
       String prefix = "",
-      this.accountType = AccountType.Actif,
+      AccountType? accountType,
       bool debug = false}) {
     //set(number,name, plan, desc, valuta, cur, budget);
     if (number != null)
@@ -78,6 +83,8 @@ class Konto {
       else
         this.number = name;
     }
+    // not given: the old block rule (first digit)
+    this.accountType = accountType ?? AccountType.fromBlock(this.name == "no name" ? this.number : this.name);
     if (plan != null && plan is KontoPlan) this.plan = plan;
     //this.plan.check(this, debug: debug);
     //print("actual KPL: ${this.plan.toString(astree: true)}");
@@ -192,6 +199,9 @@ class Konto {
     return (result);
   }
 
+  /// The KPL's role column: the role, or `heading`.
+  String get roleKey => heading ? "heading" : accountType.key;
+
   /// pretty print the account name, old WB style fibu had 4 char wide account fields...  .
   printname() {
     String fn = (name == "no name") ? "0" : name;
@@ -210,32 +220,21 @@ class Konto {
     var valutaS =
         (formatted) ? "${sprintf("%12s", [f.format(valuta / 100)])}" : valuta;
     if (name == "no name" && desc.length > 0)
-      asList.add([number, desc, cur, budgetS, valutaS]);
-    else if (desc.length > 0) asList.add([name, desc, cur, budgetS, valutaS]);
-    if (all) asList.add([name, desc, cur, budgetS, valutaS]);
+      asList.add([number, desc, cur, budgetS, valutaS, roleKey]);
+    else if (desc.length > 0) asList.add([name, desc, cur, budgetS, valutaS, roleKey]);
+    if (all) asList.add([name, desc, cur, budgetS, valutaS, roleKey]);
     children.forEach((key, value) {
       value.asList(asList: asList, formatted: formatted);
     });
     return asList;
   }
 
-  // Méthode pour mettre à jour le solde en fonction du type de compte
+  /// Books [amount] on this account with the book's one sign rule: the
+  /// plus side gains, the minus side loses — whatever the account's role.
+  /// The role ([accountType]) only says how reports read the balance;
+  /// changing the arithmetic by role would change every existing book.
   void updateBalance(int amount, {bool isAddition = true}) {
-    if (isAddition) {
-      if (accountType == AccountType.Actif ||
-          accountType == AccountType.Charge) {
-        valuta += amount; // Débit pour Actifs et Charges
-      } else {
-        valuta -= amount; // Crédit pour Passifs et Produits
-      }
-    } else {
-      if (accountType == AccountType.Actif ||
-          accountType == AccountType.Charge) {
-        valuta -= amount; // Crédit pour Actifs et Charges
-      } else {
-        valuta += amount; // Débit pour Passifs et Produits
-      }
-    }
+    valuta += isAddition ? amount : -amount;
   }
 
   /// add a journal line to our account extract, update the valuta .

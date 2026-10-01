@@ -1,4 +1,21 @@
-# Unreleased
+# 0.2.0
+
+  * Book format 2: the file starts with `FORMAT,nohfibu,<format>,<software>`
+    (BookFormat) — a later nohfibu reads every file the way it was written.
+    A file without it is format 1 and still read as before; saving always
+    writes the current format, so old books are upgraded on their next save.
+  * Account roles explicit: the KPL has a `role` column (actif, passif,
+    charge, produit — German and English words accepted); format 1 keeps
+    the block rule (first digit). The old block lines ("1,*** fine degli
+    conti attivi ***") are headings (role `heading`): shown, never booked,
+    not summed. The analysis and the year closing select accounts by role,
+    so charts like the French PCG (6 charges, 7 produits) work. The role
+    does not change the booking arithmetic (one sign rule for all accounts,
+    as before).
+  * Analysis fixed: it summed the assets twice (`sumPassiva =
+    activa.sum()`) and its check could not reach 0 with the book's sign rule;
+    now both results agree and the check is the sum of all balances.
+  * facture: no archive given → a message and the usage, no stack trace.
 
   * Invoices (the PHP facture of 2005, merged): `InvoiceArchive` reads and
     writes its CSV layout, `Letterhead` from YAML (address, legal ids, VAT

@@ -9,6 +9,13 @@ class Book {
   late Journal jrl;
   Map<String, dynamic> ops = {};
 
+  /// The format the book was read in ([BookFormat]); saving writes the
+  /// current one, so an old book is upgraded on its next save.
+  int formatVersion = BookFormat.current;
+
+  /// The software that wrote the file ("" when the file does not say).
+  String writtenBy = "";
+
   String name = "a Book";
 
   ///CTOR if no accountplan is given initializes with aen empty one

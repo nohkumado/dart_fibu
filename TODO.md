@@ -9,17 +9,6 @@
 
 #Wish list
 
-## Book file format
-
-- [ ] Format version in the saved file (e.g. a first row
-  `FORMAT;nohfibu;2`): the loader reads by version, a file without one is
-  version 1 (today's layout); every format change bumps it and keeps a
-  reader for the older ones.
-- [ ] Account role explicit instead of by the account plan's block (first
-  digit 1 asset, 2 liability, 3 expense, 4 income): an optional role column
-  in the KPL section (AccountType: Actif, Passif, Charge, Produit), used
-  when present, the block rule as fallback — old books keep working, modern
-  charts (e.g. the French PCG: 6 charges, 7 produits) become possible.
 
 ## Invoices
 

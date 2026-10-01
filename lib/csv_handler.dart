@@ -18,7 +18,8 @@ class CsvHandler {
     if (conf != null) settings = conf;
 
     ///Save the operations
-    List<List<dynamic>> fibuAsList = book.kpl.asList();
+    // the version row first: a later nohfibu knows how to read this file
+    List<List<dynamic>> fibuAsList = [BookFormat.row, ...book.kpl.asList()];
     fibuAsList = book.jrl.asList(fibuAsList);
 
     fibuAsList.add(["OPS"]);
@@ -79,6 +80,10 @@ class CsvHandler {
       //print("extracted  $rowsAsListOfValues");
       String mode = "none";
       List header = [];
+      // no version row: format 1
+      book.formatVersion = 1;
+      book.writtenBy = "";
+      int role = -1;
       int name = 0,
       desc = 0,
       valuta = 0,
@@ -91,6 +96,12 @@ class CsvHandler {
         List actLine = rowsAsListOfValues[i];
         for(var field = 0; field < actLine.length; field++)if(actLine[field] is String  && actLine[field].isNotEmpty ) actLine[field] = actLine[field].trim();
 
+        final version = BookFormat.versionOf(actLine);
+        if (version != null) {
+          book.formatVersion = version;
+          book.writtenBy = actLine.length > 3 ? "${actLine[1]} ${actLine[3]}" : "${actLine[1]}";
+          continue;
+        }
         if (actLine.length == 1) {
           String tag = actLine[0].trim();
           if(tag.isEmpty)continue;
@@ -115,6 +126,7 @@ class CsvHandler {
           if (mode == "kpl") {
             name = header.indexOf("kto");
             budget = header.indexOf("budget");
+            role = header.indexOf("role");
           } else if (mode == "jrl")
           {
             //print("KPL so far ${book.kpl}");
@@ -138,7 +150,9 @@ class CsvHandler {
                     plan: book.kpl,
                     valuta: _number(actLine[valuta]),
                     cur: _text(actLine[cur]),
-                    budget: _number(actLine[budget])),
+                    budget: _number(actLine[budget]),
+                    accountType: _role(actLine, role, ktoname, book.formatVersion))
+                  ..heading = _heading(actLine, role, ktoname, book.formatVersion),
                   debug: false);//("${actLine[name]}" =="4400")?true:false
                                 //print("added kplline [$res]");
             Konto check =book.kpl.get("${actLine[name]}")??Konto();
@@ -232,5 +246,27 @@ class CsvHandler {
     if (value is num) return value;
     final text = Operation.clean(value);
     return num.tryParse(text) ?? 0;
+  }
+
+  /// The role of an account: format 1 by its block (first digit), from
+  /// format 2 the `role` column (the block when it is empty or unknown).
+  static AccountType _role(List row, int column, String account, int version) {
+    if (version >= 2 && column >= 0 && column < row.length) {
+      final text = _text(row[column]);
+      final role = AccountType.parse(text);
+      if (role != null) return role;
+      if (text == "heading") return AccountType.fromBlock(account);
+      print("account $account: role '${row[column]}' unknown, taken from its block");
+    }
+    return AccountType.fromBlock(account);
+  }
+
+  /// Whether a KPL row is a heading: format 2 says so in the role column;
+  /// in format 1 the block lines (one digit, e.g. "1,*** fine … ***") are.
+  static bool _heading(List row, int column, String account, int version) {
+    if (version >= 2 && column >= 0 && column < row.length) {
+      return _text(row[column]) == "heading";
+    }
+    return account.length == 1;
   }
 }

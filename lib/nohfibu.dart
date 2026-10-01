@@ -7,6 +7,7 @@ library;
 export 'src/account_type.dart';
 export 'src/amount.dart';
 export 'src/book.dart';
+export 'src/book_format.dart';
 export 'src/cli_input_provider.dart';
 export 'src/cli_interaction.dart';
 export 'src/currency.dart';
