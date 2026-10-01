@@ -1,5 +1,14 @@
 # Unreleased
 
+  * The history encrypted at rest: `LedgerKey` (32 random bytes per book;
+    on the desktop a key file readable by its owner only, mode 600; the app
+    keeps it in the phone's secure storage), `LedgerCipher` (AES-256-GCM per
+    line, the device's name bound in), `ChangeFiles` (one encrypted file per
+    device, written whole and renamed into place; lines that do not open are
+    named, never silently dropped; a line moved into another device's file
+    is refused). `LedgerBackup`: the whole history in one file under a
+    passphrase (PBKDF2-SHA256, 600 000 rounds — about 2 s on the desktop),
+    independent of the device keys, so it restores on a new device.
   * History as changesets, the base for syncing devices and co-workers
     (lib/src/sync): `Change` — what a device recorded, on top of the
     changes it knew (parents), its id the hash of its content (an altered
