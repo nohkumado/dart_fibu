@@ -19,6 +19,16 @@ class InvoiceDesk {
 
   InvoiceDesk(this.store, this.letterheads, {required this.offerNumbers, required this.invoiceNumbers});
 
+  /// The desk of a store kept as history: numbers from its documents, in
+  /// this device's [series] (offers D<series>…, invoices <series>…).
+  factory InvoiceDesk.forHistory(InvoiceStore store, Map<String, Letterhead> letterheads, {String series = ''}) =>
+      InvoiceDesk(
+        store,
+        letterheads,
+        offerNumbers: InvoiceNumbering.fromDocuments(() => store.ofKind(InvoiceKind.estimate), prefix: 'D$series'),
+        invoiceNumbers: InvoiceNumbering.fromDocuments(() => store.ofKind(InvoiceKind.invoice), prefix: series),
+      );
+
   /// The desk of the store kept in [file] (counters next to it).
   factory InvoiceDesk.forFile(InvoiceStore store, File file, Map<String, Letterhead> letterheads) => InvoiceDesk(
         store,

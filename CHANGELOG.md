@@ -1,5 +1,13 @@
 # Unreleased
 
+  * facture -B <book>: archive and book from the book's history, every
+    command recorded as a change (bookings go into the same history). With
+    a history the numbers come from the documents themselves, in the
+    device's series (`LedgerRepo.series`: none for the device that started
+    the history, else its name — PHONE-2026-0001; set in <base>/series), so
+    two devices never give the same number. Tried end to end: desktop offer
+    → invoice → booking, phone paired, phone invoice PHONE-2026-0001 booked
+    offline, synced back, one history.
   * `LedgerRepo`: one book as encrypted history on this device
     (<base>/books/<book>/, the key in <base>/keys/<book>.key, the device's
     name in <base>/device). `LedgerDiff`: what an action changed (journal

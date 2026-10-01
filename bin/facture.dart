@@ -38,6 +38,8 @@ Future<void> main(List<String> arguments) async {
   final home = Platform.environment['HOME'] ?? '.';
   final parser = ArgParser()
     ..addOption('store', abbr: 's', help: 'the archive of offers, invoices and customers (JSON; created when missing)')
+    ..addOption('ledger', abbr: 'B', help: 'work on this book\'s history instead (see the ledger command): archive and book from it, changes recorded')
+    ..addOption('base', defaultsTo: '$home/.config/nohfibu', help: 'with --ledger: where histories and keys live')
     ..addOption('letterheads', abbr: 'l', defaultsTo: '$home/.config/nohfibu/letterheads', help: 'directory of the letterheads (*.yaml)')
     ..addOption('out', abbr: 'o', help: 'directory for the PDFs (default: next to the store)')
     ..addOption('book', abbr: 'b', help: 'book issued invoices and payments into this book (CSV)')
@@ -61,8 +63,8 @@ Future<void> main(List<String> arguments) async {
     print(usage());
     return;
   }
-  if (args['store'] == null) {
-    stderr.writeln('facture: which archive? give it with -s / --store (created when missing)\n\n${usage()}');
+  if (args['store'] == null && args['ledger'] == null) {
+    stderr.writeln('facture: which archive? give it with -s / --store (created when missing), or a book\'s history with -B\n\n${usage()}');
     exitCode = 64;
     return;
   }
@@ -73,11 +75,20 @@ Future<void> main(List<String> arguments) async {
     return;
   }
 
-  final storeFile = File(args['store'] as String);
-  final store = InvoiceStore.load(storeFile);
-  final letterheads = Letterhead.loadAll(Directory(args['letterheads'] as String));
-  final desk = InvoiceDesk.forFile(store, storeFile, letterheads);
-  final outDir = Directory((args['out'] as String?) ?? storeFile.absolute.parent.path);
+  // the archive: a JSON file, or a book's history (then the book too)
+  final repo = args['ledger'] == null ? null : await LedgerRepo.open(Directory(args['base'] as String), args['ledger'] as String);
+  final ledger = repo?.ledger;
+  final storeFile = File((args['store'] as String?) ?? '${repo!.historyDir.path}/factures.json');
+  final store = ledger?.store ?? InvoiceStore.load(storeFile);
+  final letterheads = {
+    if (ledger != null)
+      for (final e in ledger.letterheads.entries) e.key: Letterhead.parse(e.value, id: e.key),
+    ...Letterhead.loadAll(Directory(args['letterheads'] as String)),
+  };
+  final desk = repo == null
+      ? InvoiceDesk.forFile(store, storeFile, letterheads)
+      : InvoiceDesk.forHistory(store, letterheads, series: repo.series);
+  final outDir = Directory((args['out'] as String?) ?? (repo == null ? storeFile.absolute.parent.path : Directory.current.path));
   final date = args['date'] == null ? DateTime.now() : FibuDate.parse(args['date'] as String);
   if (date == null) {
     stderr.writeln('facture: --date ${args['date']} is no date');
@@ -85,7 +96,8 @@ Future<void> main(List<String> arguments) async {
     return;
   }
   final bookPath = args['book'] as String?;
-  final book = bookPath == null ? null : _loadBook(bookPath);
+  final book = ledger?.book ?? (bookPath == null ? null : _loadBook(bookPath));
+  final before = ledger == null ? null : LedgerDiff.capture(book: ledger.book, store: store);
   final booked = <JrlLine>[];
 
   String eur(int cents) => '${(cents / 100).toStringAsFixed(2)} €';
@@ -191,6 +203,16 @@ Future<void> main(List<String> arguments) async {
     return;
   }
 
+  if (repo != null) {
+    // booked lines into the book of the history, then everything recorded
+    for (final l in booked) {
+      print('  booked $l');
+      book!.jrl.add(l);
+    }
+    final change = await repo.record(LedgerDiff.since(before!, book: book, store: store));
+    if (change != null) print('recorded in ${repo.book} (${change.ops.length} changes) on ${repo.device}');
+    return;
+  }
   store.save(storeFile);
   if (book != null && booked.isNotEmpty) {
     for (final l in booked) {

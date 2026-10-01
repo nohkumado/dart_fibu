@@ -46,6 +46,16 @@ class LedgerRepo {
     return name;
   }
 
+  /// This device's invoice number series: `<base>/series` when set; else
+  /// none for the device that started the history, the device's name for
+  /// the others (PHONE-2026-0001) — two devices never give the same number.
+  String get series {
+    final f = File('${base.path}/series');
+    if (f.existsSync()) return f.readAsStringSync().trim();
+    final first = graph.ordered().firstOrNull;
+    return first == null || first.device == device ? '' : '${device.toUpperCase()}-';
+  }
+
   /// The book, archive and letterheads as the history says now.
   Ledger get ledger => Ledger.replay(graph);
 
