@@ -176,7 +176,9 @@ Future<void> main(List<String> arguments) async {
     stderr.writeln('ledger: ${e.message}');
     exitCode = 1;
   } on SocketException catch (e) {
-    stderr.writeln('ledger: cannot reach the hub (${e.message})');
+    stderr.writeln(command == 'serve'
+        ? 'ledger: cannot listen on port ${args['port']} — another program uses it? (--port …) (${e.message})'
+        : 'ledger: cannot reach the hub (${e.message})');
     exitCode = 1;
   }
 }
