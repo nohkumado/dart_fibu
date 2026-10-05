@@ -24,6 +24,7 @@ const _commands = {
   'serve': 'be the hub on the local network; shows the QR code to pair a device',
   'sync': '<invitation>: sync with a hub (the first time pairs this device)',
   'backup': '<file>: the whole history in one file, under a passphrase',
+  'key': '--to-rbw: keep the book\'s key in Bitwarden (rbw); --from-rbw: take it back from there',
   'restore': '<file>: bring a backup in (merged with what is here)',
 };
 
@@ -37,6 +38,8 @@ Future<void> main(List<String> arguments) async {
     ..addOption('letterheads', help: 'init/export: directory of letterheads (*.yaml)')
     ..addOption('csv', help: 'export: where to write the book')
     ..addOption('port', defaultsTo: '4711', help: 'serve: the port')
+    ..addFlag('to-rbw', negatable: false, help: 'key: keep the key in Bitwarden through rbw')
+    ..addFlag('from-rbw', negatable: false, help: 'key: take the key from Bitwarden through rbw (a new computer)')
     ..addFlag('help', abbr: 'h', negatable: false);
   String usage() => 'ledger — books as encrypted history, synced with the desktop\n\n'
       'ledger -B <book> <command> [arguments]\n\n'
@@ -61,6 +64,18 @@ Future<void> main(List<String> arguments) async {
   final arg = args.rest.length > 1 ? args.rest[1] : null;
 
   try {
+    if (command == 'key' && args['from-rbw'] as bool) {
+      final vault = const RbwVault();
+      if (!vault.available) throw StateError('rbw is not installed');
+      final key = vault.get(book) ?? (throw StateError('no "${RbwVault.entry(book)}" in Bitwarden'));
+      final keyFile = File('${base.path}/keys/$book.key');
+      if (keyFile.existsSync() && LedgerKey.inFile(keyFile).toBase64() != key.toBase64()) {
+        throw StateError('${keyFile.path} holds another key — move it away first, it may be needed');
+      }
+      await LedgerRepo.open(base, book, key: key);
+      print('key of $book taken from Bitwarden into ${keyFile.path}');
+      return;
+    }
     if (command == 'sync') {
       if (arg == null) throw StateError('sync needs the invitation (the text of the hub\'s QR code)');
       final invitation = SyncInvitation.parse(arg);
@@ -135,6 +150,12 @@ Future<void> main(List<String> arguments) async {
         print('\nor: ledger -B $book sync \'$invitation\'\n\nCtrl-C to stop.');
         await ProcessSignal.sigint.watch().first;
         await server.stop();
+      case 'key':
+        if (!(args['to-rbw'] as bool)) throw StateError('key: --to-rbw or --from-rbw');
+        final vault = const RbwVault();
+        if (!vault.available) throw StateError('rbw is not installed');
+        await vault.put(book, repo.key);
+        print('key of $book kept in Bitwarden as "${RbwVault.entry(book)}" (user ${RbwVault.user})');
       case 'backup':
         if (arg == null) throw StateError('backup needs the file to write');
         final pass = _passphrase('passphrase for the backup');

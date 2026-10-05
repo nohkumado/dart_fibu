@@ -1,5 +1,11 @@
 # Unreleased
 
+  * A book's key in Bitwarden through rbw: `ledger -B <book> key --to-rbw`
+    keeps it as the login "nohfibu <book>" (user ledger-key, folder
+    nohfibu), `--from-rbw` takes it back on a new computer (`RbwVault`). rbw
+    takes a password only through an editor: a one-time script plays the
+    editor, the key reaches it through the environment — never on a command
+    line. Tested against a stand-in rbw, not a real vault.
   * facture -B <book>: archive and book from the book's history, every
     command recorded as a change (bookings go into the same history). With
     a history the numbers come from the documents themselves, in the

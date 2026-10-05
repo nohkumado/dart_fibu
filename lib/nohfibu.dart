@@ -56,6 +56,7 @@ export 'src/sync/ledger_conflict.dart';
 export 'src/sync/ledger_diff.dart';
 export 'src/sync/ledger_key.dart';
 export 'src/sync/ledger_repo.dart';
+export 'src/sync/rbw_vault.dart';
 export 'src/sync/sync_client.dart';
 export 'src/sync/sync_invitation.dart';
 export 'src/sync/sync_message.dart';
